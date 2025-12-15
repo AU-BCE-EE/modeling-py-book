@@ -6,6 +6,7 @@ editor: visual
 ---
 
 # Preface
+
 This compendium is designed for the course “Modelling” in the Bachelor programmes in Biotechnology and Chemical Engineering at the Department of Biological and Chemical Engineering, Aarhus University.
 
 Its primary aim is to introduce students to heat and mass transfer modelling through examples and case studies closely connected to real challenges in biological and chemical engineering. The compendium emphasizes both the underlying physical principles and their practical implementation.
@@ -14,21 +15,38 @@ All computational examples are implemented using Python, enabling students to de
 
 ## Chapter 1. Modelling concepts and terminology
 
+Lumping, steady state, PDE, ODE, 
+
 ## Chapter 2. Model formulation without spacial dependence
+
+### Chapter 2.x Ficks and Fouriers law
+### Chapter 2.x Newtons law of cooling and Mass transfer equation
+### Chapter 2.x Conservation, governing, linking, constitutive equations
 
 ## Chapter 3. Model formulation with spacial dependence
 
-### 3.1 Method of lines
+### 3.1 From zero dimensions to one dimension
 
-### 3.2 Node and Cell based methods
 
-### 3.3 Boundary and initial conditions
+
+### 3.2 Governing equation and coordinate systems
+Advection, diffusion, source terms. Volumetric source terms vs boundary source terms
+
+
+### 3.3 Method of lines and descretization
+discretize space keep derivative of time. Different schemes for discretization
+
+### 3.4 Node and Cell based methods
+illustrations of cells and nodes. what does it mean at the boundaries
+
+### 3.5 Boundary and initial conditions
+
+dirictlet, neumann, robin
 
 ## Chapter 4. Model verification and validation
 
 ## Chapter 5. Parameter estimation
 
-## Chapter 6. Model simplification and variable inputs 
+## Chapter 6. Model simplification and variable inputs
 
 ## Appendices
-
