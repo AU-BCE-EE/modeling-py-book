@@ -1,0 +1,34 @@
+---
+title: "Modelling Compendium"
+author: "Frederik and Sasha"
+format: html
+editor: visual
+---
+
+# Preface
+This compendium is designed for the course “Modelling” in the Bachelor programmes in Biotechnology and Chemical Engineering at the Department of Biological and Chemical Engineering, Aarhus University.
+
+Its primary aim is to introduce students to heat and mass transfer modelling through examples and case studies closely connected to real challenges in biological and chemical engineering. The compendium emphasizes both the underlying physical principles and their practical implementation.
+
+All computational examples are implemented using Python, enabling students to develop transferable skills in scientific programming while exploring key modelling concepts.
+
+## Chapter 1. Modelling concepts and terminology
+
+## Chapter 2. Model formulation without spacial dependence
+
+## Chapter 3. Model formulation with spacial dependence
+
+### 3.1 Method of lines
+
+### 3.2 Node and Cell based methods
+
+### 3.3 Boundary and initial conditions
+
+## Chapter 4. Model verification and validation
+
+## Chapter 5. Parameter estimation
+
+## Chapter 6. Model simplification and variable inputs 
+
+## Appendices
+
