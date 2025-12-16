@@ -15,33 +15,49 @@ All computational examples are implemented using Python, enabling students to de
 
 ## Chapter 1. Modelling concepts and terminology
 
-Lumping, steady state, PDE, ODE, 
+Lumping, steady state, PDE, ODE,
 
 ## Chapter 2. Model formulation without spacial dependence
 
 ### Chapter 2.x Ficks and Fouriers law
+
 ### Chapter 2.x Newtons law of cooling and Mass transfer equation
+
 ### Chapter 2.x Conservation, governing, linking, constitutive equations
 
 ## Chapter 3. Model formulation with spacial dependence
 
 ### 3.1 From zero dimensions to one dimension
 
-
-
 ### 3.2 Governing equation and coordinate systems
+
 Advection, diffusion, source terms. Volumetric source terms vs boundary source terms
 
-
 ### 3.3 Method of lines and descretization
+
 discretize space keep derivative of time. Different schemes for discretization
 
 ### 3.4 Node and Cell based methods
+
 illustrations of cells and nodes. what does it mean at the boundaries
 
 ### 3.5 Boundary and initial conditions
 
-dirictlet, neumann, robin
+Boundary conditions dirictlet, neumann, robin... how many boundary conditions are needed, how many initial conditions are needed? Maybe move to end of this section.
+
+#### 3.5.1 Dirichlet boundary condition
+
+The Dirictlet BC is also referred to as a boundary condition of the first type. It describe the state variable value at the boundary. Referring to Figure x, the Dirichlet BC can be mathematically formulated as
+
+$c(x = a, t) = \alpha(t)$,
+
+where $a$ is at the boundary, that is $a = 0$ or $a = L$ in Figure x. The right hand side, $\alpha(t)$ implies that the value of the state variable at the boundary can depend on time, $t$, but does not have to.
+
+**Example case**
+
+A model that predicts how oxygen concentration changes with time and with depth of a small pond. At the top boundary (surface of the water) the concentration of oxygen is in equilibrium with the atmospheric oxygen concentration. At this boundary the value (oxygen concentration) does not change if the air is constantly exchanged, which is the case if the wind blows just mildly. This situation would be well described with a Dirichlet boundary condition. If we had put a closed chamber on top of the water, such that air could not be exchanged, then we could not do this because the concentration of oxygen in the air would decline over time as it diffuses into the water (assuming it was not saturated with oxygen already).
+
+**Implementation in Python**
 
 ## Chapter 4. Model verification and validation
 
