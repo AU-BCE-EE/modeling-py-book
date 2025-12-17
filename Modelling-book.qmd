@@ -59,6 +59,39 @@ A model that predicts how oxygen concentration changes with time and with depth 
 
 **Implementation in Python**
 
+The Dirichlet BC can be enforced in many ways. Below is an example where it is enforced by setting the initial condition equal to the boundary condition. Inside the `rates()` function we initially set the derivatives at all nodes to 0 through this command `dcdt = np.zeros_line(c)`. In the `for loop` we only loop through interior nodes, because the start index is 1 (`range(1, n)`). Hence `dcdt[0]` will stay as 0 (meaning change in c is zero) and effectively ensure that the state variable value at index 0 (the boundary node) never changes from its initial value. The initial value at index 0 is set to 10 in this command after the `rates()` function: `c0[0] = 10`. Notice that the for loop stops before index n (last index), because the last argument is exclusive in the `range()` function. This means that we also have a Dirichlet boundary condition at index n, which is 0 from this command: `c0 = np.zeros(len(x_grid))`. This may not be what we want, unless something is instantly consuming oxygen at the bottom of the pond. Therefore we might have to handle the bottom boundary with a different type of boundary condition.
+
+```{python}
+
+# importing libraries
+import numpy as np
+from scipy.integrate import solve_ivp 
+
+L = 1, # depth of pond, m 
+dx = 0.01 # spatial step size, m
+x_grid = np.arrange(0, 1 + dx, L) # x_grid
+
+D = 2.0 * 10**-9 # Diffusion coefficient, m2/s
+
+# function to describe the rate of change at every node
+def rates(t, c, D, dx):
+  
+  n = len(c)
+  dcdt = np.zeros_like(c)
+  
+  # interior loop from index 1 to, but excluding index n (last index)
+  for i in range(1, n):
+    dcdt[i] = D * (c[i-1] - 2*c[i] + c[i+1])/dx**2
+  
+  return dcdt
+
+c0 = np.zeros(len(x_grid)) # initial concentration at every node (is an array)
+c0[0] = 10 # at index 0 (surface of water) we change the initial concentration to the boundary condition
+
+sol = solve_ivp(rates, t_span = [0, tmax], y0 = c0)
+  
+```
+
 ## Chapter 4. Model verification and validation
 
 ## Chapter 5. Parameter estimation
