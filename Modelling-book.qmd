@@ -43,7 +43,7 @@ illustrations of cells and nodes. what does it mean at the boundaries
 
 ### 3.5 Boundary and initial conditions
 
-Boundary conditions dirictlet, neumann, robin... how many boundary conditions are needed, how many initial conditions are needed? Maybe move to end of this section.
+Boundary conditions (BCs) dirictlet, neumann, robin... how many boundary conditions are needed, how many initial conditions are needed? Maybe move to end of this section.
 
 #### 3.5.1 Dirichlet boundary condition
 
@@ -55,11 +55,11 @@ where $a$ is at the boundary, that is $a = 0$ or $a = L$ in Figure x. The right 
 
 **Example case**
 
-A model that predicts how oxygen concentration changes with time and with depth of a small pond. At the top boundary (surface of the water) the concentration of oxygen is in equilibrium with the atmospheric oxygen concentration. At this boundary the value (oxygen concentration) does not change if the air is constantly exchanged, which is the case if the wind blows just mildly. This situation would be well described with a Dirichlet boundary condition. If we had put a closed chamber on top of the water, such that air could not be exchanged, then we could not do this because the concentration of oxygen in the air would decline over time as it diffuses into the water (assuming it was not saturated with oxygen already).
+A model that predicts how oxygen concentration changes with time and with depth of a small pond. At the top boundary (surface of the water) the concentration of oxygen is in equilibrium with the atmospheric oxygen concentration. At this boundary the value (oxygen concentration) does not change if the air is constantly exchanged, which is the case if the wind blows just mildly. This situation would be well described with a Dirichlet BC. If we had put a closed chamber on top of the water, such that air could not be exchanged, then we could not do this because the concentration of oxygen in the air would decline over time as it diffuses into the water (assuming it was not saturated with oxygen already).
 
 **Implementation in Python**
 
-The Dirichlet BC can be enforced in many ways. Below is an example where it is enforced by setting the initial condition equal to the boundary condition. Inside the `rates()` function we initially set the derivatives at all nodes to 0 through this command `dcdt = np.zeros_line(c)`. In the `for loop` we only loop through interior nodes, because the start index is 1 (`range(1, n)`). Hence `dcdt[0]` will stay as 0 (meaning change in c is zero) and effectively ensure that the state variable value at index 0 (the boundary node) never changes from its initial value. The initial value at index 0 is set to 10 in this command after the `rates()` function: `c0[0] = 10`. Notice that the for loop stops before index n (last index), because the last argument is exclusive in the `range()` function. This means that we also have a Dirichlet boundary condition at index n, which is 0 from this command: `c0 = np.zeros(len(x_grid))`. This may not be what we want, unless something is instantly consuming oxygen at the bottom of the pond. Therefore we might have to handle the bottom boundary with a different type of boundary condition.
+The Dirichlet BC can be enforced in many ways. Below is an example where it is enforced by setting the initial condition equal to the BC. Inside the `rates()` function we initially set the derivatives at all nodes to 0 through this command `dcdt = np.zeros_line(c)`. In the `for loop` we only loop through interior nodes, because the start index is 1 (`range(1, n)`) and index n (last index) is exclusive. Hence `dcdt[0]` will stay as 0 (meaning change in c over change in time is zero) and effectively ensure that the state variable value at index 0 (the boundary node) never changes from its initial value. The initial value at index 0 is set to 10 in this command after the `rates()` function: `c0[0] = 10`. Notice that the for loop stops before index n (last index), because the last argument is exclusive in the `range()` function. This means that we also have a Dirichlet BC at index n, which is 0 from this command: `c0 = np.zeros(len(x_grid))`. This may not be what we want for the model, unless something is instantly consuming oxygen at the bottom of the pond. Therefore we might have to handle the bottom boundary with a different type of BC, but for simplicity we will keep the Dirichlet BCs at both ends of the domain.
 
 ```{python}
 
@@ -79,18 +79,27 @@ def rates(t, c, D, dx):
   n = len(c)
   dcdt = np.zeros_like(c)
   
-  # interior loop from index 1 to, but excluding index n (last index)
+  # interior loop from index 1 to index n exclusive
   for i in range(1, n):
     dcdt[i] = D * (c[i-1] - 2*c[i] + c[i+1])/dx**2
   
   return dcdt
 
 c0 = np.zeros(len(x_grid)) # initial concentration at every node (is an array)
-c0[0] = 10 # at index 0 (surface of water) we change the initial concentration to the boundary condition
+c0[0] = 10 # at index 0 (surface of water) we change the initial concentration to the BC
 
-sol = solve_ivp(rates, t_span = [0, tmax], y0 = c0)
+tmax = 10000 # seconds
+
+sol = solve_ivp(rates, t_span = [0, tmax], y0 = c0, 
+t_eval = np.linspace(0, tmax, 100))
+
+plt.plot(sol.t, sol.y[-1])
+plt.ylabel('O2 conc, mg/L')
+plt.xlabel('Time, seconds')
   
 ```
+
+If another person was to read and understand this code, we could write the Dirichlet BCs more explicitly by adding `dcdt[0] = 0` and `dcdt[-1] = 0` inside the `rates()`function just below the `dcdt = np.zeros_like(c)` line. This would not change behavior of the code, but make interpretation easier for outsiders. In more complex model code, we may unintentionally change the `dcdt` at the boundaries and in that case being explicit about the boundary conditions would help preventing that.
 
 ## Chapter 4. Model verification and validation
 
