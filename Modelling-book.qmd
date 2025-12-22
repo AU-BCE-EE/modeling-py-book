@@ -53,7 +53,7 @@ $c(x = a, t) = \alpha(t)$,
 
 where $a$ is at the boundary, that is $a = 0$ or $a = L$ in Figure x. The right hand side, $\alpha(t)$ implies that the value of the state variable at the boundary can depend on time, $t$, but does not have to.
 
-**Example case**
+**Example case 3.5.1.1**
 
 A model that predicts how oxygen concentration changes with time and with depth of a small pond. At the top boundary (surface of the water) the concentration of oxygen is in equilibrium with the atmospheric oxygen concentration. At this boundary the value (oxygen concentration) does not change if the air is constantly exchanged, which is the case if the wind blows just mildly. This situation would be well described with a Dirichlet BC. If we had put a closed chamber on top of the water, such that air could not be exchanged, then we could not do this because the concentration of oxygen in the air would decline over time as it diffuses into the water (assuming it was not saturated with oxygen already).
 
@@ -100,6 +100,49 @@ plt.xlabel('Time, seconds')
 ```
 
 If another person was to read and understand this code, we could write the Dirichlet BCs more explicitly by adding `dcdt[0] = 0` and `dcdt[-1] = 0` inside the `rates()`function just below the `dcdt = np.zeros_like(c)` line. This would not change behavior of the code, but make interpretation easier for outsiders. In more complex model code, we may unintentionally change the `dcdt` at the boundaries and in that case being explicit about the boundary conditions would help preventing that.
+
+#### 3.5.2 Neumann boundary condition
+
+The Neumann BC is also referred to as a boundary condition of the second type. It describes the derivative of the state variable with respect to the space variable. Thus it is closely related to the flux, with the exception that it does not specify D (the diffusion coefficient for mass transfer) or k (the conductivity for heat transfer), but only the gradient. Referring to Figure x, the Neumann BC can be mathematically formulated as:
+
+$\frac{\partial (x = a, t)}{\partial x} = \gamma(t)$,
+
+where $a$ is at the boundary, that is $a = 0$ or $a = L$ in Figure x. The right hand side, $\alpha(t)$ again implies that the value can depend on time, $t$, but does not have to. A very usefull and common Neumann BC would be:
+
+$\frac{\partial (x = a, t)}{\partial x} = 0$,
+
+When the Neumann BC is 0, it represents typically one of three cases.
+
+1\) When the boundary is closed (mass can not get through the boundary) or insulated (heat can not flow through the boundary). This is a very common situation and would for example be a good choice for the bottom boundary in example 3.5.1.1.
+
+2\) When we are dealing with a symmetric problem where x = 0 is a boundary e.g. in the middle of a sphere or cylinder that is symmetric around x = 0.
+
+3\) When we have a completely open boundary, but nothing is specified about the dynamics of the state variable at the other side of the boundary. Typically there would be no description of convection or negligible convection.
+
+**Example case 3.5.1.2**
+
+Imagine we have a living room with a heated floor and the heat seeks upwards to the ceiling. To prevent heat loss through living room through the ceiling it is therefore build with a thick layer of polyurethane (which has a very low heat conductivity, that we will assume is 0 for the sake of this example). In this case we could assume there is no heat flux through the ceiling and set the gradient to 0. The ceiling would be the top boundary and the BC could be formulated as below
+
+$\frac{\partial T(x=L, t)}{\partial x} = 0$
+
+At the boundary at the floor we could have a Dirichlet BC, because the floor temperature is maintained at a constant temperature of e.g. $22^\circ C$\
+$T(x = 0, t) = 22$
+
+**Implementation in Python**
+
+In order to implement the Neumann BC we can use a trick that involves a concept called a ghost point. Lets start with $\frac{\partial T(x=L, t)}{\partial x} = 0$ and replace the left hand side with the discretized form using finite central difference of the first derivative.
+
+$\frac{\partial T(x=L, t)}{\partial x} = \frac{T(x_{L+1}) - T(x_{L-1})}{2dx} = 0$
+
+Here we encounter a problem, which is $T(x_{L+1})$, because this is a point outside our model domain, since L is at the top boundary. We refer to this point as a ghost point. However, because the the LHS must be 0,
+
+$T(x_{L+1}) = T(x_{L-1})$
+
+In our governing equation we have
+
+\$\\rho C_p \\frac{\\partial T}{\\partial t} =
+
+T(x\_{L+1})
 
 ## Chapter 4. Model verification and validation
 
