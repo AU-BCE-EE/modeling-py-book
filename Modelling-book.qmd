@@ -138,11 +138,65 @@ Here we encounter a problem, which is $T(x_{L+1})$, because this is a point outs
 
 $T(x_{L+1}) = T(x_{L-1})$
 
-In our governing equation we have
+In our governing equation with rectangular coordinates we have
 
-\$\\rho C_p \\frac{\\partial T}{\\partial t} =
+$\rho C_p \frac{\partial T}{\partial t} = k \frac{\partial^2T}{\partial x^2} - v\frac{\partial T}{\partial x} + S$
 
-T(x\_{L+1})
+We can eliminate the advection term (no bulk heat flow) and the source term and descretize the remaining conduction term.
+
+$\rho C_p \frac{\partial T}{\partial t} = k \frac{T(x_{L+1}) - 2T(x_L) + T(x_{L-1})}{dx^2}$
+
+Here we see the ghost point again, but now we can substitute it with $T(x_{L-1})$, which gets us to
+
+$\rho C_p \frac{\partial T}{\partial t} = k \frac{2T(x_{L-1}) - 2T(x_L)}{dx^2}$
+
+This equation effective enforces the Neumann boundary condition at the top boundary, L.
+
+```{python}
+# importing libraries
+import numpy as np
+from scipy.integrate import solve_ivp 
+
+L = 2.5, # heigh of room, m 
+dx = 0.01 # spatial step size, m
+x_grid = np.arrange(0, 1 + dx, L) # x_grid
+
+k = 0.026 # , J/(s * m * K)
+Cp = 1006 # J/(kg * K)
+rho = 1.225 # kg/m3
+
+# function to describe the rate of change at every node
+def rates(t, T, k, Cp, rho, dx):
+  
+  n = len(T)
+  dTdt = np.zeros_like(T)
+  
+  # explicit showing that we have a Dirichlet BC at the bottom
+  dTdt[0] = 0
+  # Neumann BC at the last boundary (last index is: -1)
+  dTdt[-1] = k/(Cp*rho) * (2*T[-2] - 2*T[-1])/dx**2
+  
+  # interior loop from index 1 to index n exclusive
+  for i in range(1, n):
+    dTdt[i] = k/(Cp*rho) * (T[i-1] - 2*T[i] + T[i+1])/dx**2
+  
+  return dTdt
+
+T0 = np.zeros(len(x_grid)) # initial temperature of 0 at every node 
+T0[0] = 22 # at index 0 (floor surface) we change the initial temperature to the BC
+
+tmax = 10000 # seconds
+
+sol = solve_ivp(rates, t_span = [0, tmax], y0 = T0, 
+t_eval = np.linspace(0, tmax, 100))
+
+plt.plot(sol.t, sol.y[-1])
+plt.ylabel('Temp, deg C')
+plt.xlabel('Time, seconds')
+
+
+
+```
 
 ## Chapter 4. Model verification and validation
 
