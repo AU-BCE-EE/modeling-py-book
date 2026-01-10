@@ -54,7 +54,7 @@ Idea is to introduce different types of models and the important features throug
 7. Governing equation
 8. Analytical or numerical solution
 
-## 2. Conservation equations
+## Conservation equations
 Give a good solid introduction to mass and energy balances and even show how a simple "model" (or at least some system insights) can be developed from just a single conservation equation.
 * A fundamental component of all models, whether realized or not
 * Apply to energy and mass
@@ -67,7 +67,7 @@ Give a good solid introduction to mass and energy balances and even show how a s
     - Balance equation as start of model dev
     - Balance equation that can be used alone for insight or a simple "model"
 
-## 3. Constitutive equations
+## Constitutive equations
 Like balances, introduce reader to concept of constitutive equations and how they are a component of model dev.
 * Why rates matter
 * Example with Fourier's law
@@ -98,6 +98,7 @@ Introduce modes, mechanisms, and fundamental constitutive equations for heat tra
 * Modes: operational ways we classify heat flow
 
 ## Advection - simple bulk flow
+Add note on dispersion
 
 ## Conduction, Fourier's law, thermal conductivity
 * Derivative form
@@ -113,9 +114,26 @@ Introduce modes, mechanisms, and fundamental constitutive equations for heat tra
 -------------------------------------------------------------------
 # 4. Mass transfer
 -------------------------------------------------------------------
+Mass transfer essentials
+
+## Advection
+Add note on dispersion
+
+## Fick's laws and diffusion
+
+## Convection
+
+## Mass transfer coefficient approach
+
+## Interphase mass transfer through an inter*f*ace
+
+-------------------------------------------------------------------
+# 5. Analytical solutions - steady-state models
+-------------------------------------------------------------------
+
 
 # Derivatives and differential equations
-Not sure about having a separate chapter on this topic but seeing confusion from exam makes me think we should
+Not sure where to put this!
 * Derivative is a fundamental component in modeling
 * Rate of something over something over infintesimally small intervals (d = differential = very small change)
 * Examples: 
