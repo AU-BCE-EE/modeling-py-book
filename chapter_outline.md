@@ -1,7 +1,9 @@
 # Book topics
 A list of chapter topics and summary of contents to guide writing
 
+-------------------------------------------------------------------
 # 0. Preface
+-------------------------------------------------------------------
 This book is designed for the course “Modelling” in the Bachelor programmes in Biotechnology and Chemical Engineering at the Department of Biological and Chemical Engineering, Aarhus University.
 Its primary aim is to introduce students to heat and mass transfer modelling through examples and case studies closely connected to real challenges in biological and chemical engineering. 
 The book emphasizes both the underlying physical principles and their practical implementation.
@@ -39,8 +41,20 @@ Idea is to introduce different types of models and the important features throug
 * Model parameters
 
 -------------------------------------------------------------------
-# 2. Conservation equations
+# 2. Model formulation - getting to a governing equation
 -------------------------------------------------------------------
+
+## Basic steps
+1. Initial concepts and assumptions (boundary, state variables, sketches)
+2. Balance/conservation equations
+3. Constitutive equations (transfer or rate equations)
+4. Linking equations
+5. Spatial or other simplifications
+6. Initial or boundary conditions
+7. Governing equation
+8. Analytical or numerical solution
+
+## 2. Conservation equations
 Give a good solid introduction to mass and energy balances and even show how a simple "model" (or at least some system insights) can be developed from just a single conservation equation.
 * A fundamental component of all models, whether realized or not
 * Apply to energy and mass
@@ -53,9 +67,7 @@ Give a good solid introduction to mass and energy balances and even show how a s
     - Balance equation as start of model dev
     - Balance equation that can be used alone for insight or a simple "model"
 
--------------------------------------------------------------------
-# 3. Constitutive equations
--------------------------------------------------------------------
+## 3. Constitutive equations
 Like balances, introduce reader to concept of constitutive equations and how they are a component of model dev.
 * Why rates matter
 * Example with Fourier's law
@@ -63,29 +75,19 @@ Like balances, introduce reader to concept of constitutive equations and how the
 * Constitutive equations covered in much more detail in a following chapter
 * Constitutive equations depend on material properties and state variable
 
--------------------------------------------------------------------
-# 4. Model formulation - getting to a governing equation
--------------------------------------------------------------------
 Show how models are formulated (developed) by combining balance and constitutive equations, with help from linking equations, to get to the governing equation (GE).
 Just for 0D model here.
 Alternative is to find a complete GE and simplify--that approach is explained for 1D+ models in a following chapter.
 
-## Basic steps
-1. Initial concepts and assumptions (boundary, state variables, sketches)
-2. Balance/conservation equations
-3. Constitutive equations (transfer or rate equations)
-4. Linking equations
-5. Spatial or other simplifications
-6. Initial or boundary conditions
-7. Governing equation
-8. Analytical or numerical solution
-
 ## Examples
-* Simple coffee cooling model
+* Simple coffee cooling model formulated, solved, and applied
 
 -------------------------------------------------------------------
-# Heat transfer
+# 3. Heat transfer
 -------------------------------------------------------------------
+Present heat transfer essentials.
+Include examples of heat flux and flow calculations.
+
 ## Intro
 Introduce modes, mechanisms, and fundamental constitutive equations for heat transfer.
 * Heat is a form of energy
@@ -107,6 +109,10 @@ Introduce modes, mechanisms, and fundamental constitutive equations for heat tra
 ## Convection and Newton's law of cooling
 * Fundamental rate law or constitutive equation for convection has a dumb name!
 * Overall heat transfer and $U$
+
+-------------------------------------------------------------------
+# 4. Mass transfer
+-------------------------------------------------------------------
 
 # Derivatives and differential equations
 Not sure about having a separate chapter on this topic but seeing confusion from exam makes me think we should
