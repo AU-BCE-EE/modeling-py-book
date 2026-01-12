@@ -1,34 +1,30 @@
 # Book topics
 A list of chapter topics and summary of contents to guide writing
 
--------------------------------------------------------------------
 # 0. Preface
--------------------------------------------------------------------
 This book is designed for the course “Modelling” in the Bachelor programmes in Biotechnology and Chemical Engineering at the Department of Biological and Chemical Engineering, Aarhus University.
 Its primary aim is to introduce students to heat and mass transfer modelling through examples and case studies closely connected to real challenges in biological and chemical engineering. 
 The book emphasizes both the underlying physical principles and their practical implementation.
 All computational examples are implemented using Python, enabling students to develop transferable skills in scientific programming while exploring key modelling concepts.
 
--------------------------------------------------------------------
 # List of symbols
--------------------------------------------------------------------
 Modeling is a broad field with many different applications and both language and symbols are surprisingly inconsistent.
 We will try to be consistent with both.
 
--------------------------------------------------------------------
-# 1. Introduction to modeling - concepts, terminology, classification
--------------------------------------------------------------------
+# 1. Introduction to modeling
+Concepts, terminology, classification
 
 ## Brief intro
 * What is a model?
 * Uses of modeling
+* Simplification is key
 * Examples
 
 ## Types of models--model classification
 Idea is to introduce different types of models and the important features through classification.
 * Point of classification
 * Categories are not exclusive!
-* Conceptual, mathematical, computer (software)
+* Conceptual, mathematical, and computer (software)
 * Analytical vs. numerical
 * 1D (2D...) vs. 0D
 * Lumped vs. distributed parameter
@@ -46,10 +42,10 @@ Idea is to introduce different types of models and the important features throug
 * State variables
 * Indendependent variables
 * Model parameters
+* Model inputs
+* Model outputs
 
--------------------------------------------------------------------
-# 2. Model formulation - getting to a governing equation
--------------------------------------------------------------------
+# 2. Model formulation
 * Present, explain, and apply the basic steps
 * Bring a single example (cooling coffee) through all parts
 
@@ -60,11 +56,12 @@ Idea is to introduce different types of models and the important features throug
 4. Linking equations
 5. Spatial or other simplifications
 6. Initial or boundary conditions
-7. Governing equation
+7. Governing equation (GE) - key result
 8. Analytical or numerical solution
 
 ## Conservation equations
-Give a good solid introduction to mass and energy balances and even show how a simple "model" (or at least some system insights) can be developed from just a single conservation equation.
+Solid introduction to mass and energy balances and even show how a simple "model" (or at least some system insights) can be developed from just a single conservation equation
+
 * A fundamental component of all models, whether realized or not
 * Apply to energy and mass
 * Can start with a "cookbook" formula:
@@ -88,14 +85,12 @@ Show how models are formulated (developed) by combining balance and constitutive
 Just for 0D model here.
 Alternative is to find a complete GE and simplify--that approach is explained for 1D+ models in a following chapter.
 
--------------------------------------------------------------------
 # 3. Solving and implementing models 
--------------------------------------------------------------------
-
-## GE to code
+## Going from GE to code
 * Lots of variation in exactly how to do this
 * Numerical implementations can use separate balance and constiutive equations without even going to a single GE
 * Single GE can always be basis for numerical or analytical solutions and implementations
+* Spatial models will take some more work--see later chapter
 
 ## Numerical introduction: Euler's method
 * Continue with coffee example
@@ -117,11 +112,7 @@ Steady-state will be the main way we work with analytical models.
 ## Using Python modules
 Introduce module-based modelling approach
 
-Note: Spatial models will take some more work--see later chapter
-
--------------------------------------------------------------------
-# 3. Introduction to heat transfer
--------------------------------------------------------------------
+# 4. Heat transfer
 Present heat transfer essentials.
 Include examples of heat flux and flow calculations.
 
@@ -148,12 +139,13 @@ Include note on dispersion
 * Fundamental rate law or constitutive equation for convection has a dumb name!
 * Overall heat transfer and $U$
 
-## Example
-Include all modes in a single lumped-parameter model
+## Linkage equations
+* Specific heat capacity links energy and temperature
 
--------------------------------------------------------------------
-# 4. Introduction to mass transfer
--------------------------------------------------------------------
+## Example
+* Include all modes in a single lumped-parameter model
+
+# 5. Mass transfer
 Mass transfer essentials
 
 ## Advection
@@ -169,13 +161,27 @@ Include note on dispersion
 
 ## Interphase mass transfer through an inter*f*ace
 
+## Linking equations
+* Generally not needed; mass is mass
+
 ## Example
 Dissolved oxygen transport and consumption
 
--------------------------------------------------------------------
-# 6. Spatial models
--------------------------------------------------------------------
+# 6. Chemical reactions
+Very simple intro
 
+* First- and second-order reactions as useful simplifications
+* Law of mass action and chemical equilibrium
+* Stoichiometry
+* Examples: ammonia and carbon dioxide speciation
+
+# 7. Microbiology
+
+* Microbial rate of growth and biomass yield
+* Monod kinetics
+* Example: CSTR
+
+# 8. Spatial models
 ## Governing equations and coordinate systems
 * Advection, diffusion, source terms
 * Volumetric source terms vs boundary source terms
@@ -201,27 +207,53 @@ Dissolved oxygen transport and consumption
 * Number needed
 * Implementation: as part of a single GE (ghost points) or explicit (easier but more code)
 
+## Initial conditions
+* One per ODE
+* Uniform profiles common, not essential
+
 ## Implementation
 Show implementation through examples 
 * Start with small number of nodes/cells
 * Include different implementation and boundary condition approaches
+* Loops and slicing
 
--------------------------------------------------------------------
+## Grid size
+* Grid spacing (spatial "step") and time step decrease have opposite effects on solution stability
+* Grid spacing evaluation
 
--------------------------------------------------------------------
-# Appendix. Derivatives and differential equations
--------------------------------------------------------------------
-Not sure where to put this!
+# 9. Model verification and validation
+
+# 10. Parameter estimation
+* Basic approach
+* Implementation with `least_squares()`
+* Equifinality
+* Understanding whether measurements provide information about specific parameters
+
+# 12. Time-variable inputs
+
+# 13. Model simplification
+* Framework for simplification
+* Evaluation of simplification
+
+# Appendix A. Derivatives and differential equations
 * Derivative is a fundamental component in modeling
-* Rate of something over something over infintesimally small intervals (d = differential = very small change)
+* Rate of something over something else over infintesimally small intervals (d = differential = symbol (not variable) that means "a very small change in ...")
 * Examples: 
     dT/dt = rate of change of temperature over time
     dT/dx = *gradient* in temperature over space
 * ODEs
-* PDES are *partial* deriviatves--the "partial" (or del) symbol implies that the variable on the top also depends on other variables
-* Difference equations (do we use these at all?)
+* PDES are *partial* deriviatves--the "partial" (or del) symbol $\partial$ implies that the variable on the top also depends on other variables
 
--------------------------------------------------------------------
-# Appendix. Python style guide
--------------------------------------------------------------------
+# Appendix B. Python style guide
 Brief summary of PEP8 guide based on examples.
+
+# Appendix C. Python object types
+Concise clarification of types of objects used in Python
+
+* Tuple
+* List
+* NumPy array
+* Dictionary
+
+# Appendix D. Slicing in Python
+Explanation of slicing, with applications in spatial models
