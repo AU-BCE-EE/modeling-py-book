@@ -11,7 +11,7 @@ All computational examples are implemented using Python, enabling students to de
 Modeling is a broad field with many different applications and both language and symbols are surprisingly inconsistent.
 We will try to be consistent with both.
 
-# 1. Introduction to modeling
+# 1. Introduction to modeling (Sasha)
 Concepts, terminology, classification
 
 ## Brief intro
@@ -45,21 +45,8 @@ Idea is to introduce different types of models and the important features throug
 * Model inputs
 * Model outputs
 
-# 2. Model formulation
-* Present, explain, and apply the basic steps
-* Bring a single example (cooling coffee) through all parts
 
-## Basic steps
-1. Initial concepts and assumptions (boundary, state variables, sketches)
-2. Balance/conservation equations
-3. Constitutive equations (transfer or rate equations)
-4. Linking equations
-5. Spatial or other simplifications
-6. Initial or boundary conditions
-7. Governing equation (GE) - key result
-8. Analytical or numerical solution
-
-## Conservation equations
+# 2. Conservation equations (sasha)
 Solid introduction to mass and energy balances and even show how a simple "model" (or at least some system insights) can be developed from just a single conservation equation
 
 * A fundamental component of all models, whether realized or not
@@ -73,7 +60,9 @@ Solid introduction to mass and energy balances and even show how a simple "model
     - Balance equation as start of model dev
     - Balance equation that can be used alone for insight or a simple "model"
 
-## Constitutive equations
+# 3. Constitutive equations (sasha)
+
+
 Like balances, introduce reader to concept of constitutive equations and how they are a component of model dev.
 * Why rates matter
 * Example with Fourier's law
@@ -85,34 +74,7 @@ Show how models are formulated (developed) by combining balance and constitutive
 Just for 0D model here.
 Alternative is to find a complete GE and simplify--that approach is explained for 1D+ models in a following chapter.
 
-# 3. Solving and implementing models 
-## Going from GE to code
-* Lots of variation in exactly how to do this
-* Numerical implementations can use separate balance and constiutive equations without even going to a single GE
-* Single GE can always be basis for numerical or analytical solutions and implementations
-* Spatial models will take some more work--see later chapter
-
-## Numerical introduction: Euler's method
-* Continue with coffee example
-* Implement and explain
-* Show effect of time step
-
-## Higher-order methods: `solve_ivp()`
-* Continue with coffee example
-* Implement and explain
-
-## Closed-form models
-Introduce concept of closed-form (analytical) solution and apply in some steady-state examples.
-Steady-state will be the main way we work with analytical models.
-* Basic idea: start with GE, simplify and solve symbolically 
-* Show general form of solution to first-order models
-* Coffee example, comparison to numerical solutions
-* Heat and mass transfer examples, implementation, and application
-
-## Using Python modules
-Introduce module-based modelling approach
-
-# 4. Heat transfer
+Heat transfer
 Present heat transfer essentials.
 Include examples of heat flux and flow calculations.
 
@@ -181,7 +143,49 @@ Very simple intro
 * Monod kinetics
 * Example: CSTR
 
-# 8. Spatial models
+# 4. Model formulation (sasha)
+* Present, explain, and apply the basic steps
+* Bring a single example (cooling coffee) through all parts
+
+## Basic steps
+1. Initial concepts and assumptions (boundary, state variables, sketches, simplifications)
+2. Balance/conservation equations
+3. Constitutive equations (transfer or rate equations)
+4. Linking equations
+5. Spatial or other simplifications
+6. Initial or boundary conditions
+7. Governing equation (GE) - key result
+8. Analytical or numerical solution
+
+# 5. Solving and implementing models 
+## Going from GE to code
+* Lots of variation in exactly how to do this
+* Numerical implementations can use separate balance and constiutive equations without even going to a single GE
+* Single GE can always be basis for numerical or analytical solutions and implementations
+* Spatial models will take some more work--see later chapter
+
+## Numerical introduction: Euler's method
+* Continue with coffee example
+* Implement and explain
+* Show effect of time step
+
+## Higher-order methods: `solve_ivp()`
+* Continue with coffee example
+* Implement and explain
+
+## Closed-form models
+Introduce concept of closed-form (analytical) solution and apply in some steady-state examples.
+Steady-state will be the main way we work with analytical models.
+* Basic idea: start with GE, simplify and solve symbolically 
+* Show general form of solution to first-order models
+* Coffee example, comparison to numerical solutions
+* Heat and mass transfer examples, implementation, and application
+
+## Using Python modules
+Introduce module-based modelling approach
+
+
+# 8. Spatial models (frederik)
 ## Governing equations and coordinate systems
 * Advection, diffusion, source terms
 * Volumetric source terms vs boundary source terms
@@ -221,17 +225,17 @@ Show implementation through examples
 * Grid spacing (spatial "step") and time step decrease have opposite effects on solution stability
 * Grid spacing evaluation
 
-# 9. Model verification and validation
+# 9. Model verification and validation (sasha)
 
-# 10. Parameter estimation
+# 10. Parameter estimation  (sasha)
 * Basic approach
 * Implementation with `least_squares()`
 * Equifinality
 * Understanding whether measurements provide information about specific parameters
 
-# 12. Time-variable inputs
+# 12. Time-variable inputs  (sasha)
 
-# 13. Model simplification
+# 13. Model simplification  (sasha)
 * Framework for simplification
 * Evaluation of simplification
 
