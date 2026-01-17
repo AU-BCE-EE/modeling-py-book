@@ -1,0 +1,32 @@
+---
+---
+
+# Beginnings
+A model is a representation of a real system.
+The term itself is quite general.
+Students in science and engineering might generally assume a model means a piece of software or code.
+A software implementation of a model is called a *software model*.
+Or, if you think of a model as a bunch of equations, that would be a *mathematical model*.
+In this course we will work with both, and other types of models.
+
+For our purposes, a model is a simplified representation of a physcial, chemical, or biological system.
+What are they used for?
+* Prediction
+* Understanding
+* Design
+
+Examples
+
+Simplification is key to model development.
+You might have an idea that the more processes and dimensions you cram into a model, the more accurate and in general the better it is.
+That's not true.
+Simplifications are what make models useful.
+
+# Types of models
+There are multiple ways to group models, and the categories are useful for understanding, developing, and explaining models.
+
+A *conceptual model* is some kind of qualitative description of a system.
+For example, let's say we want to develop a model to describe how the coffee in a mug cools over time.
+Our conceptual model be. . .
+
+Formulation of a *mathematical model* is typically the following step.

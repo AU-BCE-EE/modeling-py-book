@@ -1,0 +1,135 @@
+---
+---
+
+# Introduction
+Constitutive equations described quantitatively how a state variable changes over time.
+They often directly describe some kind of transfer rate.
+For our cooling coffee example, the single constitutive equation in our model is Newton's law of cooling,
+
+$$$
+q = h \cdot (T_coffee - T_ambient),
+$$$
+
+where $q =$ heat flux from the coffee (W/m2), $h =$ convection heat transfer coefficient (W/m2-K), $T =$ temperature (C), and the subscripts are obvious.
+
+It is important to remember our conceptual model.
+Here we have a cup of coffee exposed to the air at the upper surface, and that is the only surface where heat is lost.
+
+Models may have multiple constitutive equations, depending on the processes thought to be important in the system and choices the modeller makes about simplification.
+
+As is usual, our constitutive equation describes a transfer rate as a flux.
+In engineering, the word *flux* refers to some kind of flow normalized by the area normal to the flow.
+The product of flux and total area is heat flow (W).
+Flux shows up because it, and not flow, is directly proportional to gradients or differences.
+So for our coffee example, the total heat flow from the surface, i.e., the rate of heat loss in W, is the product of flux and area.
+
+Constitutive equations typically have a gradient that depends on the state variable on the RHS.
+This is what links the LHS, or the transfer rate, to the state variable.
+Constitutive equations also typically depend on material properties of the system.
+In our example, these effects are rolled into the convection heat transfer coefficient $h$.
+If the material in our system were changed--say if the air was changed to denser pure carbon dioxide or the hot liquid coffee was replaced with solid frozen coffee--we would need a new value.
+
+In the following sections we'll look at some fundamental constitutive equations for heat and mass transfer along with chemical reaction and microbial activity.
+These will be building blocks of the models you will develop in this course.
+
+# Heat transfer
+Constitutive equations for heat transfer are grouped by *mode*, which is the way in which heat is transferred.
+The simplest mode is *advection*, which is bulk fluid (liquid or gas) flow.
+
+## Advection
+Assume 10 degC water has been flowing into a tank at a constant volumetric flow rate $F$ m3for a long time.
+What will happen to the temperature of water inside if the temperature of the incoming water is suddenly changed to 20 degC?
+It will increase of course, due to the bulk flow of warmer water into the pipe and the displacement of the original cooler water.
+
+If you think for a bit, you could probably come up with this equation,
+
+$$$
+\frac{dT}{dt} = F/V \cdot (T_{in} - T_{tank}),
+$$$
+
+where the LHS is the temperature derivative in the tank, $V$ is the tank volume, $T_{in}$ is the temperature of incoming water, and $T_{tank}$ the temperature in the well-mixed tank.
+That is a reasonable equation, but a more general and ultimately useful approach for heat flow is to express energy flow.
+Temperature is then related to energy flow using a linking equation, which will be explained in a later section ().
+As energy flow
+
+$$$
+Q = \rho \cdot c_p \cdot F \cdot (T_{in} - T_{tank}),
+$$$
+
+where $Q$ is net heat energy flow into the tank in W, $\rho$ is water density (), $c_p$ is the specific heat capacity that links energy and temperature change ().
+
+This first constitutive equation has a temperature *difference* on the RHS, like our cooling coffee example.
+
+For a pipe with constant even flow, we have to use the derivative instead, the infintesimal gradient in temperature.
+Here too we can start with temperature.
+
+$$$
+\frac{dT}{dt} = v \cdot \frac{dT}{dx} 
+$$$
+
+where the LHS is the temperature derivative at a fixed location in the pipe, $v$ is the velocity of bulk flow (the volumetric flow divided by the pipe cross section), $T_{in}$ is the temperature of incoming water, and $T_{pipe}$ the temperature at our fixed point in the pipe. 
+
+or energy
+
+$$$
+q = \rho \cdot c_p \cdot v \cdot \frac{dT}{dx} 
+$$$
+
+where $q$ is heat *flux*.
+
+Advection seldoms acts alone, but we'll discuss modes that interact later.
+
+## Condution
+While advection is related to bulk transport of a fluid, *condution* occurs without any bulk flow.
+It is due to 
+The fundamental constitutive equation is called Fourier's law:
+
+$$$
+q = k \cdot \frac{dT}{dx}.
+$$$
+
+The proportionaliy constant $k$ is called *thermal conductivity*, and it depends on the maerial.
+Conducting materials, such as metals, have high values.
+Insulating materials, e.g., expanded polyurethane ("foam") insulation, have low values.  
+
+Conduction occurs in solids, liquids, and gases.
+But when fluids are moving, dispersion is usually more important than conduction.
+
+Representative values for a few common materials are given below. 
+
+| Material                    |  Value               |
+|-------                      |-------               |
+| Steel                       |                      |
+| Air                         |                      |
+
+What does it mean when a temperature profile follows a straight line, for example, in the wall below?
+It means the temperature derivative or gradient is constant over the thickness of the wall.
+And according to Fourier's law, that means that temperature flux is the same everywhere.
+So any *control volume* in the wall will be receiving heat at the same rate it is losing heat, which means the wall is at steady-state.
+For this situation we can use a simpler form.
+
+$$$
+q = k \cdot \frac{\DeltaT}{L}.
+$$$
+
+where $L$ is the wall thickness.
+
+# Convection and Newton's law of cooling
+What process drives heat loss from the coffee surface?
+It is not simple, even if we focus on only a single fluid phase, say the air!
+Certainly there is some bulk movement of air.
+And air that passes close to the hot surface will pick up some heat and then remove it when it moves away, e.g., due to forced airflow or buoyancy-driven movement.
+But that kind of advection is not easy to measure!
+
+Close to the interface of the two fluids bulk flow is inhibited.
+The closer we get to the surface the less bulk motion there is, and it is common to assume that there is a "viscous sublayer" where only conduction occurs near to the interface.
+So even if there is a lot of air movement, this layer can limit heat transfer.
+
+*Convection* is the name of this combined mode. 
+And although the constitutive equation can be used for heat transfer in either direction, it is called Newton's law of cooling.
+
+$$$
+q = h \cdot (T_s - T_\Infty)
+$$$
+
+
