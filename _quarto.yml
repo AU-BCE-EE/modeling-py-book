@@ -32,6 +32,17 @@ book:
 format:
   html:
     theme: cosmo
-
+    include-in-header:
+      text: |
+        <script>
+        MathJax = {
+          tex: {
+            macros: {
+              degC: "{^\\circ\\mathrm{C}}",
+              Wpm: "{\\mathrm{W~m^{-2}}}"
+            }
+          }
+        };
+        </script>
 execute:
   freeze: auto
