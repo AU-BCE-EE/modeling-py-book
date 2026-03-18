@@ -27,6 +27,7 @@ book:
     - appendix_b_python_style.qmd
     - appendix_c_python_types.qmd
     - appendix_d_slicing.qmd
+    - appendix_e_symbols.qmd
 
 format:
   html:

@@ -51,9 +51,7 @@ Conceptual models can be explained and summarized with the help of a good sketch
 For example, let's say we want to develop a model to describe how the coffee in a mug cools over time.
 Our conceptual model could be summarized in the sketch below.
 
-![Conceptual model of coffee cooling.](drawings/coffee_cooling.png){#fig-coffee fig-alt="Sketch showing..."}                                                                          
-<!--fig-align="center" width="80%"} -->
-
+![Conceptual model of coffee cooling.](drawings/coffee1.png){#fig-coffee fig-alt="Sketch showing a conceptual model of coffee cooling."}                                                                          
 In our conceptual model there is some quantity of heat energy is present in the coffee and mug, and that amount determines its temperature.
 We know from experience that the coffee cools over time, meaning that heat energy is lost.
 In our model, the rate of heat loss depends on the temperature of the coffee and mug, the ambient temperature, and some heat transfer parameter.
@@ -61,10 +59,58 @@ Our model does not explicitly include heat transfer within the coffee, or separa
 A conceptual model and a sketch is a good place to start most model formulation exercises.
 
 Formulation of a *mathematical model* is typically the objective of a model formulation exercise.
-A mathematical model for our coffee example
+A mathematical model for our coffee example could be:
 
-We saw a *software model* above.
+$$
+\frac{dT}{dt} = c \cdot (T - T_{air}).
+$$
+
+Eq. (1) is actually a *differential equation* because it describes the rate of change in coffee temperature $T$ over time.
+It is also the *governing equation* for this model, or that complete equation that describes the system.
+
+We saw a *computer model* above.
 It is a piece of computer software that runs the model.
+
+```{python}
+# Import modules
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Times, up to 60 min (s)
+times = np.arange(0, 61, 1) * 60
+times
+
+# Heat transfer coefficient (W/m2-K)
+h = 25
+
+# Area (m2)
+A = 0.0258
+
+# Initial condition (degrees C)
+Tc0 = 80
+
+# Ambient temperature
+Tair = 20
+
+# Coffee mass (g)
+m = 300
+
+# Specific heat of water (J/g-K)
+cp = 4.2
+
+# Solution
+# First the constant that combines some variables and parameters
+c = A * h / (cp * m)
+# And the solution
+Tc = (Tc0 - Tair) * np.exp(-c * times) + Tair
+
+# Plot predictions
+plt.close()
+plt.plot(times / 60, Tc)
+plt.xlabel('Time (min)')
+plt.ylabel('Temperature $(^\circ~\mathregular{C})$')
+plt.show()
+```
 
 But a model can also be a set of equations--that would be a *mathematical model*.
 A mathematical model may exist only as a description written out on a piece of paper or printed in a book or even in someone's mind.
