@@ -1,0 +1,47 @@
+# Spatial Models {#sec-spatial}
+
+## Governing equations and coordinate systems
+
+<!-- Advection, diffusion, source terms.
+     Volumetric source terms vs. boundary source terms. -->
+
+## Method of lines and discretization
+
+<!-- Discretize space, keep time derivative continuous.
+     Different schemes for spatial discretization. -->
+
+## Nodes vs. cells
+
+<!-- Conceptual illustration.
+     Implications at boundaries.
+     Node-based: more efficient but harder to understand.
+     Cell-based: easier to understand and verify.
+     Book favors one approach (TBD). -->
+
+## Flux-based vs. state-variable implementation
+
+<!-- Analogous to the lumped-parameter choice in earlier chapters.
+     Flux-based: explicitly programs constitutive equations -- more code, easier to follow.
+     State-variable: implements a single GE -- compact but requires Python trickery. -->
+
+## Boundary conditions {#sec-bcs}
+
+<!-- Types: Dirichlet, Neumann, Robin.
+     Number of BCs needed.
+     Implementation: ghost points (within GE) or explicit (more code). -->
+
+## Initial conditions
+
+<!-- One per ODE.
+     Uniform profiles are common but not required. -->
+
+## Implementation
+
+<!-- Start with a small number of nodes/cells.
+     Show different implementation and BC approaches.
+     Loops and slicing. -->
+
+## Grid size and convergence
+
+<!-- Grid spacing and time step have opposite effects on stability.
+     Grid spacing evaluation / convergence check. -->

@@ -1,0 +1,43 @@
+# Model Components and Formulation {#sec-formulation}
+
+## Conservation equations {#sec-conservation}
+
+<!-- Fundamental component of all models.
+     Apply to energy and mass.
+     Cookbook formula: accumulation = in - out + gen - consumption.
+     Terms can be expanded; unused terms are typically dropped.
+     Domain: whole system (0D), control volume (symbolic), or cell/node (1D+). -->
+
+## Constitutive equations {#sec-constitutive}
+
+<!-- Why rates matter.
+     Brief preview with Fourier's law -- full treatment in @sec-heat.
+     CE often has a derivative or difference on the RHS.
+     CE depends on material properties and state variables. -->
+
+## Linking equations {#sec-linking}
+
+<!-- Connect different physical quantities (e.g., energy and temperature).
+     Needed when the state variable in the balance differs from the variable of interest. -->
+
+## Model formulation {#sec-formulation-steps}
+
+<!-- Show how balance + constitutive + linking equations combine to give the GE.
+     Scope here: 0D (lumped-parameter) models only.
+     Approach for 1D+ models (start from full GE, then simplify) introduced in @sec-spatial. -->
+
+### Basic steps
+
+1. Initial concepts and assumptions (system boundary, state variables, sketches, simplifications)
+2. Balance/conservation equations
+3. Constitutive equations (transfer or rate equations)
+4. Linking equations
+5. Spatial or other simplifications
+6. Initial or boundary conditions
+7. Governing equation (GE) --- key result
+8. Analytical or numerical solution
+
+### Example: cooling coffee
+
+<!-- Bring the coffee example through all steps to a governing equation.
+     Solution in @sec-solving. -->

@@ -1,0 +1,11 @@
+# Python Object Types {#sec-appx-types .unnumbered}
+
+<!-- Concise clarification of types used in this book. -->
+
+## Tuple
+
+## List
+
+## NumPy array
+
+## Dictionary

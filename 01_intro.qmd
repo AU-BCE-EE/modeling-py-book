@@ -1,54 +1,91 @@
----
----
 
-# Beginnings
-A model is a representation of a real system.
+
+## Models and their use {#sec-intro}s
+A *model* is a representation of a real system.
 The term itself is quite general.
 In this book, we will focus on models that are simplified representations of a physcial, chemical, or biological system.
-Students in science and engineering might assume a model means a piece of software or code.
-This can be the case, but is not the only meaning of the term "model".
-A software implementation of a model, i.e., some kind of a software program or script that can be run to make model predictions, is called a *software model*.
-Or, if you think of a model as a bunch of equations, that would be a *mathematical model*.
-A mathematical model may exist only as a description written out on a piece of paper or printed in a book or even in someone's mind.
-In this course we will work with both, as well as other types of models.
+
+Students in science and engineering might assume that a model means a piece of software or the underlying code.
+This can be the case, but is not the only meaning of the term model.
+A software implementation of a model, i.e., some kind of a software program or script that can be run to make model predictions, is called a *software model* or *computer model*.
 
 What are models used for?
 For several things.
 They are used to make useful predictions about the future.
-For example, national policy and international agreements on greenhouse gas emissions are based rely on sophisticated "general circulation models" of the atmosphere.
-These models are used to predict future climate under differnt input scenarios, including more or less greenhouse gases in the atmosphere.
+For example, national policy and international agreements on greenhouse gas emissions rely on sophisticated "general circulation models" of the atmosphere.
+These models are used to predict future climate under different input scenarios, including more or less greenhouse gases in the atmosphere.
 
 In research, models are used for understanding complex systems.
-
 And in product development, models are used for design.
+Expand. . .add a couple examples
 
-*Simplification* is key to model development.
-You might have an intuitive understanding that the more processes and dimensions you can cram into a model, the more accurate and in general the better it is.
+## Model simplification
+*Simplification* is key part of model development.
+You might have the feeling that the more processes and dimensions you can cram into a model, the more accurate and in general the better it is.
 That's not true.
-Simplifications are what make models useful.
+Simplifications are in fact what make models useful, and without significant simplifications, many models would require too many inputs to ever be used.
+
 It is true that models should include the essential processes and components in order to be accurate and useful.
-And it is also true that existing sophisticated models include many processes and components and generally increase in both complexity and accuracy over time.
+And it is also true that existing sophisticated models include many processes and components and generally increase in both complexity and accuracy as they are extended and refined over time.
 So do we have a bit of a contradiction here?
 Perhaps.
 But even the most sophisticated model is vastly simpler than the actual physical system it represents.
 And adding processes and components requires underlying math and associated parameter values.
 If either is uncertain, the accuracy of the model may not improve.
-Lastly, when necessary, model complexity should and usually does increase over time and as the result of contributions of multiple individuals.
-That is, good modeling advice is to start simple and add more complexity if necessary.
 
-# Types of models
+It is useful to remember that model complexity can and often does increase over time and as the result of contributions of multiple individuals.
+Good modeling advice is to start simple and add more complexity if necessary only after testing a model and identifying shortcomings.
+
+How simple should a model be?
+That depends--on the objectives of a project or the task requirements, on available resources, on the level of understanding of the real system, and on the opinion of developers or others who have a say.
+In this book we'll look at a variety of models that encompass a range of complexity.
+But in fact all of these models are relatively simple.
+
+## Types of models {#sec-classification}
 There are multiple ways to group models, and the categories are useful for understanding, developing, and explaining models.
+The different classification groups are 
 
+### Conceptual, mathematical, and computer models
 A *conceptual model* is some kind of qualitative description of a system.
-It is usually helpful to include a sketch.
+Conceptual models can be explained and summarized with the help of a good sketch.
 For example, let's say we want to develop a model to describe how the coffee in a mug cools over time.
 Our conceptual model could be summarized in the sketch below.
 
-FIGURE
+![Conceptual model of coffee cooling.](drawings/coffee_cooling.png){#fig-coffee fig-alt="Sketch showing..."}                                                                          
+<!--fig-align="center" width="80%"} -->
 
-In our conceptual model we assume that some quantity of heat energy is present in the coffee and mug, and that amount determines its temperature.
-The rate of heat loss depends on the temperature of the coffee and mug, the ambient temperature, and some heat transfer parameter.
+In our conceptual model there is some quantity of heat energy is present in the coffee and mug, and that amount determines its temperature.
+We know from experience that the coffee cools over time, meaning that heat energy is lost.
+In our model, the rate of heat loss depends on the temperature of the coffee and mug, the ambient temperature, and some heat transfer parameter.
 Our model does not explicitly include heat transfer within the coffee, or separate consideration of different routes of heat transfer, such as from the exposed coffee surface or through the wall or bottom of the mug.
 A conceptual model and a sketch is a good place to start most model formulation exercises.
 
-Formulation of a *mathematical model* is typically the objective of the following steps.
+Formulation of a *mathematical model* is typically the objective of a model formulation exercise.
+A mathematical model for our coffee example
+
+We saw a *software model* above.
+It is a piece of computer software that runs the model.
+
+But a model can also be a set of equations--that would be a *mathematical model*.
+A mathematical model may exist only as a description written out on a piece of paper or printed in a book or even in someone's mind.
+
+In this course we will develop mathematical models and then translate them into Python code in order to make computer models.
+
+
+<!-- Idea: introduce different types and important features through classification.
+     Point out that categories are not exclusive. -->
+
+
+### Analytical vs. numerical
+
+### Lumped vs. distributed parameter (0D vs. 1D+)
+
+### Steady-state vs. dynamic
+
+## Key terms {#sec-terms}
+
+<!-- PDE, ODE, steady-state, lumping, conservation equations, constitutive equations,
+     linking equations, governing equations, state variables, independent variables,
+     model parameters, model inputs, model outputs -->
+
+

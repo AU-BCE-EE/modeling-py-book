@@ -1,0 +1,17 @@
+# Chemical Reactions and Microbiology {#sec-reactions}
+
+<!-- Brief introduction to reaction kinetics and microbial growth as
+     source/sink terms in mass and energy balances. -->
+
+## Chemical reactions
+
+<!-- First- and second-order reactions as useful simplifications.
+     Law of mass action and chemical equilibrium.
+     Stoichiometry.
+     Examples: ammonia and carbon dioxide speciation. -->
+
+## Microbiology
+
+<!-- Microbial rate of growth and biomass yield.
+     Monod kinetics.
+     Example: CSTR. -->

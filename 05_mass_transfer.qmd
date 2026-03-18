@@ -1,0 +1,25 @@
+# Mass Transfer {#sec-mass}
+
+## Advection
+
+<!-- Simple bulk flow. Include note on dispersion. -->
+
+## Diffusion and Fick's laws {#sec-fick}
+
+<!-- Diffusivity D depends on both the diffusing species and the medium.
+     Approximate ranges for gases, liquids, solids. -->
+
+## Convection
+
+## Mass transfer coefficient approach
+
+## Interphase mass transfer {#sec-interphase}
+
+<!-- Transfer through an interface between two phases.
+     This section likely needs more depth than the others given the topic's importance. -->
+
+## Linking equations
+
+<!-- Generally not needed; mass is mass. -->
+
+## Example: dissolved oxygen transport and consumption

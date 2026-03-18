@@ -1,0 +1,31 @@
+# Solving and Implementing Models {#sec-solving}
+
+## From governing equation to code
+
+<!-- Lots of variation in how to do this.
+     Numerical implementations can use separate balance and constitutive equations without
+     forming a single GE.
+     A single GE can always serve as the basis for both numerical and analytical solutions.
+     Spatial models require more work -- see @sec-spatial. -->
+
+## Numerical solution: Euler's method
+
+<!-- Continue with the coffee example.
+     Implement and explain.
+     Show effect of time step size. -->
+
+## Higher-order methods: `solve_ivp()`
+
+<!-- Continue with the coffee example.
+     Implement and explain. -->
+
+## Closed-form (analytical) solutions
+
+<!-- Introduce concept of closed-form solution; steady-state is the main use case.
+     Start with GE, simplify, solve symbolically.
+     Show general form of solution to first-order models.
+     Coffee example; comparison to numerical solution. -->
+
+## Using Python modules
+
+<!-- Introduce module-based modelling approach. -->

@@ -1,0 +1,7 @@
+# Parameter Estimation {#sec-param-est}
+
+<!-- Basic approach.
+     Implementation with least_squares().
+     Equifinality.
+     Understanding whether measurements provide information about specific parameters.
+     Include example. -->

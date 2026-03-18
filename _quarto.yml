@@ -1,0 +1,36 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "Modelling"
+  author: "Sasha Hafner and Frederik Dalby"
+  chapters:
+    - index.qmd
+    - part: "Part I: Foundations"
+      chapters:
+        - 01_intro.qmd
+        - 02_components_formulation.qmd
+        - 03_solving.qmd
+    - part: "Part II: Applications"
+      chapters:
+        - 04_heat_transfer.qmd
+        - 05_mass_transfer.qmd
+        - 06_reactions_microbiology.qmd
+        - 07_spatial_models.qmd
+        - 08_stability.qmd
+        - 09_verification_validation.qmd
+        - 10_parameter_estimation.qmd
+        - 11_time_variable_inputs.qmd
+  appendices:
+    - appendix_a_derivatives.qmd
+    - appendix_b_python_style.qmd
+    - appendix_c_python_types.qmd
+    - appendix_d_slicing.qmd
+
+format:
+  html:
+    theme: cosmo
+
+execute:
+  freeze: auto

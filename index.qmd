@@ -1,0 +1,6 @@
+# Preface {.unnumbered}
+
+This book is designed for the course "Modelling" in the Bachelor programmes in Biotechnology and Chemical Engineering at the Department of Biological and Chemical Engineering, Aarhus University.
+Its primary aim is to introduce students to heat and mass transfer modelling through examples and case studies closely connected to real challenges in biological and chemical engineering.
+The book emphasizes both the underlying physical principles and their practical implementation.
+All computational examples are implemented using Python, enabling students to develop transferable skills in scientific programming while exploring key modelling concepts.

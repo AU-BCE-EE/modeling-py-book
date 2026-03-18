@@ -2,13 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.24">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Frederik and Sasha">
 
-<title>Modelling Compendium</title>
+<title>6&nbsp; Chemical Reactions and Microbiology – Modelling</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -24,42 +23,249 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="Modelling-book_files/libs/clipboard/clipboard.min.js"></script>
-<script src="Modelling-book_files/libs/quarto-html/quarto.js" type="module"></script>
-<script src="Modelling-book_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="Modelling-book_files/libs/quarto-html/popper.min.js"></script>
-<script src="Modelling-book_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="Modelling-book_files/libs/quarto-html/anchor.min.js"></script>
-<link href="Modelling-book_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="Modelling-book_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="Modelling-book_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="Modelling-book_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="Modelling-book_files/libs/bootstrap/bootstrap-bb462d781dde1847d9e3ccf7736099dd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./07_spatial_models.html" rel="next">
+<link href="./05_mass_transfer.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-03fb02fc132b93ec4eef7e9886d99257.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
 
 
 </head>
 
-<body class="fullcontent quarto-light">
+<body class="nav-sidebar floating quarto-light">
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04_heat_transfer.html">Part II: Applications</a></li><li class="breadcrumb-item"><a href="./06_reactions_microbiology.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chemical Reactions and Microbiology</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Modelling</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Part I: Foundations</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to Modeling</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_components_formulation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Model Components and Formulation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_solving.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Solving and Implementing Models</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Part II: Applications</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_heat_transfer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Heat Transfer</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05_mass_transfer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Mass Transfer</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06_reactions_microbiology.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chemical Reactions and Microbiology</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07_spatial_models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Spatial Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08_stability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Stability</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09_verification_validation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Model Verification and Validation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10_parameter_estimation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Parameter Estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11_time_variable_inputs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Time-Variable Inputs</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendix_a_derivatives.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Derivatives and Differential Equations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendix_b_python_style.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Python Style Guide</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendix_c_python_types.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Python Object Types</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendix_d_slicing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Slicing in Python</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#chemical-reactions" id="toc-chemical-reactions" class="nav-link active" data-scroll-target="#chemical-reactions"><span class="header-section-number">6.1</span> Chemical reactions</a></li>
+  <li><a href="#microbiology" id="toc-microbiology" class="nav-link" data-scroll-target="#microbiology"><span class="header-section-number">6.2</span> Microbiology</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04_heat_transfer.html">Part II: Applications</a></li><li class="breadcrumb-item"><a href="./06_reactions_microbiology.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chemical Reactions and Microbiology</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Modelling Compendium</h1>
+<h1 class="title"><span id="sec-reactions" class="quarto-section-identifier"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chemical Reactions and Microbiology</span></span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Frederik and Sasha </p>
-          </div>
-  </div>
     
   
     
@@ -70,65 +276,25 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="preface" class="level1">
-<h1>Preface</h1>
-<p>This compendium is designed for the course “Modelling” in the Bachelor programmes in Biotechnology and Chemical Engineering at the Department of Biological and Chemical Engineering, Aarhus University.</p>
-<p>Its primary aim is to introduce students to heat and mass transfer modelling through examples and case studies closely connected to real challenges in biological and chemical engineering. The compendium emphasizes both the underlying physical principles and their practical implementation.</p>
-<p>All computational examples are implemented using Python, enabling students to develop transferable skills in scientific programming while exploring key modelling concepts.</p>
-<section id="chapter-1.-modelling-concepts-and-terminology" class="level2">
-<h2 class="anchored" data-anchor-id="chapter-1.-modelling-concepts-and-terminology">Chapter 1. Modelling concepts and terminology</h2>
-<p>Lumping, steady state, PDE, ODE,</p>
+<!-- Brief introduction to reaction kinetics and microbial growth as
+     source/sink terms in mass and energy balances. -->
+<section id="chemical-reactions" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="chemical-reactions"><span class="header-section-number">6.1</span> Chemical reactions</h2>
+<!-- First- and second-order reactions as useful simplifications.
+     Law of mass action and chemical equilibrium.
+     Stoichiometry.
+     Examples: ammonia and carbon dioxide speciation. -->
 </section>
-<section id="chapter-2.-model-formulation-without-spacial-dependence" class="level2">
-<h2 class="anchored" data-anchor-id="chapter-2.-model-formulation-without-spacial-dependence">Chapter 2. Model formulation without spacial dependence</h2>
-<section id="chapter-2.x-ficks-and-fouriers-law" class="level3">
-<h3 class="anchored" data-anchor-id="chapter-2.x-ficks-and-fouriers-law">Chapter 2.x Ficks and Fouriers law</h3>
-</section>
-<section id="chapter-2.x-newtons-law-of-cooling-and-mass-transfer-equation" class="level3">
-<h3 class="anchored" data-anchor-id="chapter-2.x-newtons-law-of-cooling-and-mass-transfer-equation">Chapter 2.x Newtons law of cooling and Mass transfer equation</h3>
-</section>
-<section id="chapter-2.x-conservation-governing-linking-constitutive-equations" class="level3">
-<h3 class="anchored" data-anchor-id="chapter-2.x-conservation-governing-linking-constitutive-equations">Chapter 2.x Conservation, governing, linking, constitutive equations</h3>
-</section>
-</section>
-<section id="chapter-3.-model-formulation-with-spacial-dependence" class="level2">
-<h2 class="anchored" data-anchor-id="chapter-3.-model-formulation-with-spacial-dependence">Chapter 3. Model formulation with spacial dependence</h2>
-<section id="from-zero-dimensions-to-one-dimension" class="level3">
-<h3 class="anchored" data-anchor-id="from-zero-dimensions-to-one-dimension">3.1 From zero dimensions to one dimension</h3>
-</section>
-<section id="governing-equation-and-coordinate-systems" class="level3">
-<h3 class="anchored" data-anchor-id="governing-equation-and-coordinate-systems">3.2 Governing equation and coordinate systems</h3>
-<p>Advection, diffusion, source terms. Volumetric source terms vs boundary source terms</p>
-</section>
-<section id="method-of-lines-and-descretization" class="level3">
-<h3 class="anchored" data-anchor-id="method-of-lines-and-descretization">3.3 Method of lines and descretization</h3>
-<p>discretize space keep derivative of time. Different schemes for discretization</p>
-</section>
-<section id="node-and-cell-based-methods" class="level3">
-<h3 class="anchored" data-anchor-id="node-and-cell-based-methods">3.4 Node and Cell based methods</h3>
-<p>illustrations of cells and nodes. what does it mean at the boundaries</p>
-</section>
-<section id="boundary-and-initial-conditions" class="level3">
-<h3 class="anchored" data-anchor-id="boundary-and-initial-conditions">3.5 Boundary and initial conditions</h3>
-<p>dirictlet, neumann, robin</p>
-</section>
-</section>
-<section id="chapter-4.-model-verification-and-validation" class="level2">
-<h2 class="anchored" data-anchor-id="chapter-4.-model-verification-and-validation">Chapter 4. Model verification and validation</h2>
-</section>
-<section id="chapter-5.-parameter-estimation" class="level2">
-<h2 class="anchored" data-anchor-id="chapter-5.-parameter-estimation">Chapter 5. Parameter estimation</h2>
-</section>
-<section id="chapter-6.-model-simplification-and-variable-inputs" class="level2">
-<h2 class="anchored" data-anchor-id="chapter-6.-model-simplification-and-variable-inputs">Chapter 6. Model simplification and variable inputs</h2>
-</section>
-<section id="appendices" class="level2">
-<h2 class="anchored" data-anchor-id="appendices">Appendices</h2>
-</section>
+<section id="microbiology" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="microbiology"><span class="header-section-number">6.2</span> Microbiology</h2>
+<!-- Microbial rate of growth and biomass yield.
+     Monod kinetics.
+     Example: CSTR. -->
+
+
 </section>
 
-</main>
-<!-- /main column -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -180,13 +346,14 @@ ul.task-list li input[type="checkbox"] {
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -528,6 +695,18 @@ ul.task-list li input[type="checkbox"] {
     }
   });
   </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./05_mass_transfer.html" class="pagination-link" aria-label="Mass Transfer">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Mass Transfer</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./07_spatial_models.html" class="pagination-link" aria-label="Spatial Models">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Spatial Models</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 
 

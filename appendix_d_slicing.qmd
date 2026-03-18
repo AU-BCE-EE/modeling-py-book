@@ -1,0 +1,3 @@
+# Slicing in Python {#sec-appx-slicing .unnumbered}
+
+<!-- Explanation of slicing, with applications in spatial models. -->

@@ -1,0 +1,485 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Modelling",
+    "section": "",
+    "text": "Preface\nThis book is designed for the course “Modelling” in the Bachelor programmes in Biotechnology and Chemical Engineering at the Department of Biological and Chemical Engineering, Aarhus University. Its primary aim is to introduce students to heat and mass transfer modelling through examples and case studies closely connected to real challenges in biological and chemical engineering. The book emphasizes both the underlying physical principles and their practical implementation. All computational examples are implemented using Python, enabling students to develop transferable skills in scientific programming while exploring key modelling concepts.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "01_intro.html",
+    "href": "01_intro.html",
+    "title": "1  Introduction to Modeling",
+    "section": "",
+    "text": "1.1 What is a model?",
+    "crumbs": [
+      "Part I: Foundations",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction to Modeling</span>"
+    ]
+  },
+  {
+    "objectID": "01_intro.html#uses-of-modeling",
+    "href": "01_intro.html#uses-of-modeling",
+    "title": "1  Introduction to Modeling",
+    "section": "1.2 Uses of modeling",
+    "text": "1.2 Uses of modeling",
+    "crumbs": [
+      "Part I: Foundations",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction to Modeling</span>"
+    ]
+  },
+  {
+    "objectID": "01_intro.html#simplification-is-key",
+    "href": "01_intro.html#simplification-is-key",
+    "title": "1  Introduction to Modeling",
+    "section": "1.3 Simplification is key",
+    "text": "1.3 Simplification is key",
+    "crumbs": [
+      "Part I: Foundations",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction to Modeling</span>"
+    ]
+  },
+  {
+    "objectID": "01_intro.html#sec-classification",
+    "href": "01_intro.html#sec-classification",
+    "title": "1  Introduction to Modeling",
+    "section": "1.4 Types of models",
+    "text": "1.4 Types of models\n\n\n1.4.1 Conceptual, mathematical, and computer models\n\n\n1.4.2 Analytical vs. numerical\n\n\n1.4.3 Lumped vs. distributed parameter (0D vs. 1D+)\n\n\n1.4.4 Steady-state vs. dynamic",
+    "crumbs": [
+      "Part I: Foundations",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction to Modeling</span>"
+    ]
+  },
+  {
+    "objectID": "01_intro.html#sec-terms",
+    "href": "01_intro.html#sec-terms",
+    "title": "1  Introduction to Modeling",
+    "section": "1.5 Key terms",
+    "text": "1.5 Key terms",
+    "crumbs": [
+      "Part I: Foundations",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction to Modeling</span>"
+    ]
+  },
+  {
+    "objectID": "02_components_formulation.html",
+    "href": "02_components_formulation.html",
+    "title": "2  Model Components and Formulation",
+    "section": "",
+    "text": "2.1 Conservation equations",
+    "crumbs": [
+      "Part I: Foundations",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Model Components and Formulation</span>"
+    ]
+  },
+  {
+    "objectID": "02_components_formulation.html#sec-constitutive",
+    "href": "02_components_formulation.html#sec-constitutive",
+    "title": "2  Model Components and Formulation",
+    "section": "2.2 Constitutive equations",
+    "text": "2.2 Constitutive equations",
+    "crumbs": [
+      "Part I: Foundations",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Model Components and Formulation</span>"
+    ]
+  },
+  {
+    "objectID": "02_components_formulation.html#sec-linking",
+    "href": "02_components_formulation.html#sec-linking",
+    "title": "2  Model Components and Formulation",
+    "section": "2.3 Linking equations",
+    "text": "2.3 Linking equations",
+    "crumbs": [
+      "Part I: Foundations",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Model Components and Formulation</span>"
+    ]
+  },
+  {
+    "objectID": "02_components_formulation.html#sec-formulation-steps",
+    "href": "02_components_formulation.html#sec-formulation-steps",
+    "title": "2  Model Components and Formulation",
+    "section": "2.4 Model formulation",
+    "text": "2.4 Model formulation\n\n\n2.4.1 Basic steps\n\nInitial concepts and assumptions (system boundary, state variables, sketches, simplifications)\nBalance/conservation equations\nConstitutive equations (transfer or rate equations)\nLinking equations\nSpatial or other simplifications\nInitial or boundary conditions\nGoverning equation (GE) — key result\nAnalytical or numerical solution\n\n\n\n2.4.2 Example: cooling coffee",
+    "crumbs": [
+      "Part I: Foundations",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Model Components and Formulation</span>"
+    ]
+  },
+  {
+    "objectID": "03_solving.html",
+    "href": "03_solving.html",
+    "title": "3  Solving and Implementing Models",
+    "section": "",
+    "text": "3.1 From governing equation to code",
+    "crumbs": [
+      "Part I: Foundations",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Solving and Implementing Models</span>"
+    ]
+  },
+  {
+    "objectID": "03_solving.html#numerical-solution-eulers-method",
+    "href": "03_solving.html#numerical-solution-eulers-method",
+    "title": "3  Solving and Implementing Models",
+    "section": "3.2 Numerical solution: Euler’s method",
+    "text": "3.2 Numerical solution: Euler’s method",
+    "crumbs": [
+      "Part I: Foundations",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Solving and Implementing Models</span>"
+    ]
+  },
+  {
+    "objectID": "03_solving.html#higher-order-methods-solve_ivp",
+    "href": "03_solving.html#higher-order-methods-solve_ivp",
+    "title": "3  Solving and Implementing Models",
+    "section": "3.3 Higher-order methods: solve_ivp()",
+    "text": "3.3 Higher-order methods: solve_ivp()",
+    "crumbs": [
+      "Part I: Foundations",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Solving and Implementing Models</span>"
+    ]
+  },
+  {
+    "objectID": "03_solving.html#closed-form-analytical-solutions",
+    "href": "03_solving.html#closed-form-analytical-solutions",
+    "title": "3  Solving and Implementing Models",
+    "section": "3.4 Closed-form (analytical) solutions",
+    "text": "3.4 Closed-form (analytical) solutions",
+    "crumbs": [
+      "Part I: Foundations",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Solving and Implementing Models</span>"
+    ]
+  },
+  {
+    "objectID": "03_solving.html#using-python-modules",
+    "href": "03_solving.html#using-python-modules",
+    "title": "3  Solving and Implementing Models",
+    "section": "3.5 Using Python modules",
+    "text": "3.5 Using Python modules",
+    "crumbs": [
+      "Part I: Foundations",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Solving and Implementing Models</span>"
+    ]
+  },
+  {
+    "objectID": "04_heat_transfer.html",
+    "href": "04_heat_transfer.html",
+    "title": "4  Heat Transfer",
+    "section": "",
+    "text": "4.1 Introduction",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Heat Transfer</span>"
+    ]
+  },
+  {
+    "objectID": "04_heat_transfer.html#advection",
+    "href": "04_heat_transfer.html#advection",
+    "title": "4  Heat Transfer",
+    "section": "4.2 Advection",
+    "text": "4.2 Advection",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Heat Transfer</span>"
+    ]
+  },
+  {
+    "objectID": "04_heat_transfer.html#sec-fourier",
+    "href": "04_heat_transfer.html#sec-fourier",
+    "title": "4  Heat Transfer",
+    "section": "4.3 Conduction and Fourier’s law",
+    "text": "4.3 Conduction and Fourier’s law",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Heat Transfer</span>"
+    ]
+  },
+  {
+    "objectID": "04_heat_transfer.html#sec-newtons-law",
+    "href": "04_heat_transfer.html#sec-newtons-law",
+    "title": "4  Heat Transfer",
+    "section": "4.4 Convection and Newton’s law of cooling",
+    "text": "4.4 Convection and Newton’s law of cooling",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Heat Transfer</span>"
+    ]
+  },
+  {
+    "objectID": "04_heat_transfer.html#linking-equations",
+    "href": "04_heat_transfer.html#linking-equations",
+    "title": "4  Heat Transfer",
+    "section": "4.5 Linking equations",
+    "text": "4.5 Linking equations",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Heat Transfer</span>"
+    ]
+  },
+  {
+    "objectID": "04_heat_transfer.html#example-lumped-parameter-model-with-all-modes",
+    "href": "04_heat_transfer.html#example-lumped-parameter-model-with-all-modes",
+    "title": "4  Heat Transfer",
+    "section": "4.6 Example: lumped-parameter model with all modes",
+    "text": "4.6 Example: lumped-parameter model with all modes",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Heat Transfer</span>"
+    ]
+  },
+  {
+    "objectID": "05_mass_transfer.html",
+    "href": "05_mass_transfer.html",
+    "title": "5  Mass Transfer",
+    "section": "",
+    "text": "5.1 Advection",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Mass Transfer</span>"
+    ]
+  },
+  {
+    "objectID": "05_mass_transfer.html#sec-fick",
+    "href": "05_mass_transfer.html#sec-fick",
+    "title": "5  Mass Transfer",
+    "section": "5.2 Diffusion and Fick’s laws",
+    "text": "5.2 Diffusion and Fick’s laws",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Mass Transfer</span>"
+    ]
+  },
+  {
+    "objectID": "05_mass_transfer.html#convection",
+    "href": "05_mass_transfer.html#convection",
+    "title": "5  Mass Transfer",
+    "section": "5.3 Convection",
+    "text": "5.3 Convection",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Mass Transfer</span>"
+    ]
+  },
+  {
+    "objectID": "05_mass_transfer.html#mass-transfer-coefficient-approach",
+    "href": "05_mass_transfer.html#mass-transfer-coefficient-approach",
+    "title": "5  Mass Transfer",
+    "section": "5.4 Mass transfer coefficient approach",
+    "text": "5.4 Mass transfer coefficient approach",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Mass Transfer</span>"
+    ]
+  },
+  {
+    "objectID": "05_mass_transfer.html#sec-interphase",
+    "href": "05_mass_transfer.html#sec-interphase",
+    "title": "5  Mass Transfer",
+    "section": "5.5 Interphase mass transfer",
+    "text": "5.5 Interphase mass transfer",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Mass Transfer</span>"
+    ]
+  },
+  {
+    "objectID": "05_mass_transfer.html#linking-equations",
+    "href": "05_mass_transfer.html#linking-equations",
+    "title": "5  Mass Transfer",
+    "section": "5.6 Linking equations",
+    "text": "5.6 Linking equations",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Mass Transfer</span>"
+    ]
+  },
+  {
+    "objectID": "05_mass_transfer.html#example-dissolved-oxygen-transport-and-consumption",
+    "href": "05_mass_transfer.html#example-dissolved-oxygen-transport-and-consumption",
+    "title": "5  Mass Transfer",
+    "section": "5.7 Example: dissolved oxygen transport and consumption",
+    "text": "5.7 Example: dissolved oxygen transport and consumption",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Mass Transfer</span>"
+    ]
+  },
+  {
+    "objectID": "06_reactions_microbiology.html",
+    "href": "06_reactions_microbiology.html",
+    "title": "6  Chemical Reactions and Microbiology",
+    "section": "",
+    "text": "6.1 Chemical reactions",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Chemical Reactions and Microbiology</span>"
+    ]
+  },
+  {
+    "objectID": "06_reactions_microbiology.html#microbiology",
+    "href": "06_reactions_microbiology.html#microbiology",
+    "title": "6  Chemical Reactions and Microbiology",
+    "section": "6.2 Microbiology",
+    "text": "6.2 Microbiology",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Chemical Reactions and Microbiology</span>"
+    ]
+  },
+  {
+    "objectID": "07_spatial_models.html",
+    "href": "07_spatial_models.html",
+    "title": "7  Spatial Models",
+    "section": "",
+    "text": "7.1 Governing equations and coordinate systems",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Spatial Models</span>"
+    ]
+  },
+  {
+    "objectID": "07_spatial_models.html#method-of-lines-and-discretization",
+    "href": "07_spatial_models.html#method-of-lines-and-discretization",
+    "title": "7  Spatial Models",
+    "section": "7.2 Method of lines and discretization",
+    "text": "7.2 Method of lines and discretization",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Spatial Models</span>"
+    ]
+  },
+  {
+    "objectID": "07_spatial_models.html#nodes-vs.-cells",
+    "href": "07_spatial_models.html#nodes-vs.-cells",
+    "title": "7  Spatial Models",
+    "section": "7.3 Nodes vs. cells",
+    "text": "7.3 Nodes vs. cells",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Spatial Models</span>"
+    ]
+  },
+  {
+    "objectID": "07_spatial_models.html#flux-based-vs.-state-variable-implementation",
+    "href": "07_spatial_models.html#flux-based-vs.-state-variable-implementation",
+    "title": "7  Spatial Models",
+    "section": "7.4 Flux-based vs. state-variable implementation",
+    "text": "7.4 Flux-based vs. state-variable implementation",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Spatial Models</span>"
+    ]
+  },
+  {
+    "objectID": "07_spatial_models.html#sec-bcs",
+    "href": "07_spatial_models.html#sec-bcs",
+    "title": "7  Spatial Models",
+    "section": "7.5 Boundary conditions",
+    "text": "7.5 Boundary conditions",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Spatial Models</span>"
+    ]
+  },
+  {
+    "objectID": "07_spatial_models.html#initial-conditions",
+    "href": "07_spatial_models.html#initial-conditions",
+    "title": "7  Spatial Models",
+    "section": "7.6 Initial conditions",
+    "text": "7.6 Initial conditions",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Spatial Models</span>"
+    ]
+  },
+  {
+    "objectID": "07_spatial_models.html#implementation",
+    "href": "07_spatial_models.html#implementation",
+    "title": "7  Spatial Models",
+    "section": "7.7 Implementation",
+    "text": "7.7 Implementation",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Spatial Models</span>"
+    ]
+  },
+  {
+    "objectID": "07_spatial_models.html#grid-size-and-convergence",
+    "href": "07_spatial_models.html#grid-size-and-convergence",
+    "title": "7  Spatial Models",
+    "section": "7.8 Grid size and convergence",
+    "text": "7.8 Grid size and convergence",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Spatial Models</span>"
+    ]
+  },
+  {
+    "objectID": "09_verification_validation.html",
+    "href": "09_verification_validation.html",
+    "title": "9  Model Verification and Validation",
+    "section": "",
+    "text": "9.1 Verification",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Model Verification and Validation</span>"
+    ]
+  },
+  {
+    "objectID": "09_verification_validation.html#validation",
+    "href": "09_verification_validation.html#validation",
+    "title": "9  Model Verification and Validation",
+    "section": "9.2 Validation",
+    "text": "9.2 Validation",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Model Verification and Validation</span>"
+    ]
+  },
+  {
+    "objectID": "appendix_c_python_types.html",
+    "href": "appendix_c_python_types.html",
+    "title": "Python Object Types",
+    "section": "",
+    "text": "Tuple",
+    "crumbs": [
+      "Appendices",
+      "Python Object Types"
+    ]
+  },
+  {
+    "objectID": "appendix_c_python_types.html#list",
+    "href": "appendix_c_python_types.html#list",
+    "title": "Python Object Types",
+    "section": "List",
+    "text": "List",
+    "crumbs": [
+      "Appendices",
+      "Python Object Types"
+    ]
+  },
+  {
+    "objectID": "appendix_c_python_types.html#numpy-array",
+    "href": "appendix_c_python_types.html#numpy-array",
+    "title": "Python Object Types",
+    "section": "NumPy array",
+    "text": "NumPy array",
+    "crumbs": [
+      "Appendices",
+      "Python Object Types"
+    ]
+  },
+  {
+    "objectID": "appendix_c_python_types.html#dictionary",
+    "href": "appendix_c_python_types.html#dictionary",
+    "title": "Python Object Types",
+    "section": "Dictionary",
+    "text": "Dictionary",
+    "crumbs": [
+      "Appendices",
+      "Python Object Types"
+    ]
+  }
+]

@@ -1,0 +1,11 @@
+# Model Verification and Validation {#sec-vv}
+
+## Verification
+
+<!-- Units.
+     Code tests. -->
+
+## Validation
+
+<!-- Fit statistics.
+     Graphical comparison. -->

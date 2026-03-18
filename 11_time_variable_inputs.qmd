@@ -1,0 +1,4 @@
+# Time-Variable Inputs {#sec-time-var}
+
+<!-- Basic approach: discrete time inputs, interpolation function passed to solve_ivp().
+     Example. -->

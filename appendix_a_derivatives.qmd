@@ -1,0 +1,10 @@
+# Derivatives and Differential Equations {#sec-appx-deriv .unnumbered}
+
+<!-- Derivative as a fundamental component of modeling.
+     Rate of something over something else over infinitesimally small intervals.
+     d = differential = "a very small change in..."
+     Examples:
+       dT/dt = rate of change of temperature over time
+       dT/dx = gradient in temperature over space
+     ODEs.
+     PDEs: partial derivatives (symbol ∂) imply the numerator also depends on other variables. -->

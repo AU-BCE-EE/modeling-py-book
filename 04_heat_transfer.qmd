@@ -1,0 +1,34 @@
+# Heat Transfer {#sec-heat}
+
+## Introduction
+
+<!-- Heat is a form of energy.
+     Temperature measures heat energy indirectly.
+     Modelling temperature / energy loss means predicting rate of heat energy flow.
+     Flux vs. flow, and why the distinction matters.
+     Constitutive equations naturally describe flux.
+     Modes: conduction, convection, advection -- operational classification of heat flow. -->
+
+## Advection
+
+<!-- Simple bulk flow. Include note on dispersion. -->
+
+## Conduction and Fourier's law {#sec-fourier}
+
+<!-- Derivative form and difference form.
+     Thermal conductivity k is a material property.
+     Occurs in solids and fluids.
+     Typical k values. -->
+
+## Convection and Newton's law of cooling {#sec-newtons-law}
+
+<!-- Newton's law of cooling: the constitutive equation for convection.
+     Overall heat transfer coefficient U. -->
+
+## Linking equations
+
+<!-- Specific heat capacity links energy and temperature. -->
+
+## Example: lumped-parameter model with all modes
+
+<!-- Single 0D example combining conduction, convection, and advection. -->
