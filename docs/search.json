@@ -12,100 +12,100 @@
   {
     "objectID": "01_intro.html",
     "href": "01_intro.html",
-    "title": "1  Introduction to Modeling",
+    "title": "1  An introduction to models",
     "section": "",
-    "text": "1.1 What is a model?",
+    "text": "1.1 Model simplification\nA model is a representation of a real system. The term itself is quite general. In this book, we will focus on models that are simplified representations of a physcial, chemical, or biological system.\nStudents in science and engineering might assume that a model means a piece of software or the underlying code. This can be the case, but is not the only meaning of the term model. A software implementation of a model, i.e., some kind of a software program or script that can be run to make model predictions, is called a software model or computer model.\nWhat are models used for? For several things. They are used to make useful predictions about the future. For example, national policy and international agreements on greenhouse gas emissions rely on sophisticated “general circulation models” of the atmosphere. These models are used to predict future climate under different input scenarios, including more or less greenhouse gases in the atmosphere.\nIn research, models are used for understanding complex systems. And in product development, models are used for design. Expand. . .add a couple examples\nSimplification is key part of model development. You might have the feeling that the more processes and dimensions you can cram into a model, the more accurate and in general the better it is. That’s not true. Simplifications are in fact what make models useful, and without significant simplifications, many models would require too many inputs to ever be used.\nIt is true that models should include the essential processes and components in order to be accurate and useful. And it is also true that existing sophisticated models include many processes and components and generally increase in both complexity and accuracy as they are extended and refined over time. So do we have a bit of a contradiction here? Perhaps. But even the most sophisticated model is vastly simpler than the actual physical system it represents. And adding processes and components requires underlying math and associated parameter values. If either is uncertain, the accuracy of the model may not improve.\nIt is useful to remember that model complexity can and often does increase over time and as the result of contributions of multiple individuals. Good modeling advice is to start simple and add more complexity if necessary only after testing a model and identifying shortcomings.\nHow simple should a model be? That depends–on the objectives of a project or the task requirements, on available resources, on the level of understanding of the real system, and on the opinion of developers or others who have a say. In this book we’ll look at a variety of models that encompass a range of complexity. But in fact all of these models are relatively simple.",
     "crumbs": [
       "Part I: Foundations",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction to Modeling</span>"
-    ]
-  },
-  {
-    "objectID": "01_intro.html#uses-of-modeling",
-    "href": "01_intro.html#uses-of-modeling",
-    "title": "1  Introduction to Modeling",
-    "section": "1.2 Uses of modeling",
-    "text": "1.2 Uses of modeling",
-    "crumbs": [
-      "Part I: Foundations",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction to Modeling</span>"
-    ]
-  },
-  {
-    "objectID": "01_intro.html#simplification-is-key",
-    "href": "01_intro.html#simplification-is-key",
-    "title": "1  Introduction to Modeling",
-    "section": "1.3 Simplification is key",
-    "text": "1.3 Simplification is key",
-    "crumbs": [
-      "Part I: Foundations",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction to Modeling</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>An introduction to models</span>"
     ]
   },
   {
     "objectID": "01_intro.html#sec-classification",
     "href": "01_intro.html#sec-classification",
-    "title": "1  Introduction to Modeling",
-    "section": "1.4 Types of models",
-    "text": "1.4 Types of models\n\n\n1.4.1 Conceptual, mathematical, and computer models\n\n\n1.4.2 Analytical vs. numerical\n\n\n1.4.3 Lumped vs. distributed parameter (0D vs. 1D+)\n\n\n1.4.4 Steady-state vs. dynamic",
+    "title": "1  An introduction to models",
+    "section": "1.2 Types of models",
+    "text": "1.2 Types of models\nThere are multiple ways to group models, and the categories are useful for understanding, developing, and explaining models. The different classification groups are not exclusive, so a single model could be a lumped parameter analytical model.\n\n1.2.1 Conceptual, mathematical, and computer models\nConceptual, mathematical, and computer models are not really levels in a model classification scheme, but terms for the stage of model development. A conceptual model is some kind of qualitative description of a system. Conceptual models can be explained and summarized with the help of a good sketch. For example, let’s say we want to develop a model to describe how the coffee in a mug cools over time. Our conceptual model could be summarized in the sketch below.\n\nIn our conceptual model there is some quantity of heat energy is present in the coffee and mug, and that amount determines its temperature. We know from experience that the coffee cools over time, meaning that heat energy is lost. In our model, the rate of heat loss depends on the temperature of the coffee and mug, the ambient temperature, and some heat transfer parameter. Our model does not explicitly include heat transfer within the coffee, or separate consideration of different routes of heat transfer, such as from the exposed coffee surface or through the wall or bottom of the mug. A conceptual model and a sketch is a good place to start most model formulation exercises.\nFormulation of a mathematical model is typically the objective of a model formulation exercise. A mathematical model for our coffee example could be:\n\\[\n\\frac{dT}{dt} = c \\cdot (T - T_{air}).\n\\tag{1.1}\\]\nEquation 1.1 is actually a differential equation because it describes the rate of change in coffee temperature \\(T\\) over time. It is also the governing equation or GE for this model, or that complete equation that describes the system. Governing equations typically need to be solved in order for a model to be useful. In some cases a solution can be found using only mathematical tools and expressed as a simple closed-form equation. Eq. (1) is one such example, and a solution is:\n\\[\nT(t) = (T_0 - T_{air}) \\cdot e^{(-c \\cdot t)} + T_{air}.\n\\tag{1.2}\\]\nWe saw a computer model above. It is a piece of computer software that runs the model. Creating a computer model means implementing a mathematical model. We could also say that development of a software model means programming a mathematical model. Here is an implementation of the coffee model, i.e., a computer model for cooling coffee.\n\n# Import modules\nimport numpy as np\nimport matplotlib.pyplot as plt\n\n# Times, up to 60 min (s)\ntimes = np.arange(0, 61, 1) * 60\n\n# Initial condition (degrees C)\nTc0 = 80\n\n# Ambient temperature\nTair = 20\n\n# Set the constant that combines some variables and parameters\nc = 9e-4\n\n# And the solution\nTc = (Tc0 - Tair) * np.exp(-c * times) + Tair\n\n# Plot predictions\nplt.plot(times / 60, Tc)\nplt.xlabel('Time (min)')\nplt.ylabel(r'Temperature $(^\\circ~\\mathregular{C})$')\nplt.show()\n\n\n\n\n\n\n\n\n\n\n1.2.2 Analytical (closed-form) vs. numerical\nThe solution to the cooling coffee model above, Equation 1.2, is an example of an analytical or closed-form model. That means the model can be written as an equation that could be plugged into a calculator. The only part of Equation 1.2 that could not be solved with pencil and paper is the \\(e^{()}\\) bit. Analytical solutions are great because they are easy to implement or program. The model solution is entered on a single line of code in the example above. They can also provide insight into model behavior at the mathematical model stage. Equation 1.2 tells us that \\(T\\) will start at \\(T_0\\) and drop toward \\(T_{air}\\), quickly at first but then more and more slowly. These inferences require some experience with symbolic mathematics.\nSo why not use only analytical solutions? Because it is not possible in most cases. The GE in Equation 1.1 is a very simple ODE, and only simple ODEs can be solved analytically. In other cases, we will have to solve GEs numerically, without an explicit solution. Numerical solutions really take advantage of the power of computing and programming languages to arrive at a solution. Much of this book is focused on numerical models.\n\n\n1.2.3 Lumped vs. distributed parameter (0D vs. 1D+)\nOur coffee model is many things, including a lumped parameter model. Lumped parameter models do not explicitly include variation in the condition or state of the system (here our coffee and mug) over space. In it, we only consider a single “lumped” coffee + mug temperature \\(T\\). The name “lumped parameter” is a bit confusing because it isn’t model parameters that we are lumping, really.\nWhat if we created a two-dimensional (2D) model that explicitly included the temperature profile over space? That means our model would predict not just a single temperature, but the temperature for multiple locations within the coffee and mug, as well as the effect that differences in temperature over space have on cooling. That would be a much more complicated model, and potentially more accurate, and would be called a distributed parameter model. Deciding whether to use a lumped parameter approach is an important step in model simplification.\n\n\n1.2.4 Steady-state vs. dynamic\nOur cooling coffee model is an example of a dynamic model, because it predicts the coffee temperature over time. But we won’t always need a dynamic model. For example, it is the steady-state performance of a reactor that usually matters, i.e., how it performs once it has started up and is running steadily. The steady-state condition for our coffee model is not very interesting, but the process of finding a steady-state solution, i.e., developing a steady-state model, is the same in more complex models. We start with the GE, set the time derivative to zero, and simplify:\n\\[\nc \\cdot (T - T_{air}) = 0,\n\\]\n\\[\nT =  T_{air}.\n\\tag{1.3}\\]\nOur steady-state solution shows that the coffee temperature will be the same as the air temperature at steady state. In other cases the steady-state solution is much more interesting and useful.",
     "crumbs": [
       "Part I: Foundations",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction to Modeling</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>An introduction to models</span>"
     ]
   },
   {
     "objectID": "01_intro.html#sec-terms",
     "href": "01_intro.html#sec-terms",
-    "title": "1  Introduction to Modeling",
-    "section": "1.5 Key terms",
-    "text": "1.5 Key terms",
+    "title": "1  An introduction to models",
+    "section": "1.3 Key terms",
+    "text": "1.3 Key terms",
     "crumbs": [
       "Part I: Foundations",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction to Modeling</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>An introduction to models</span>"
     ]
   },
   {
     "objectID": "02_components_formulation.html",
     "href": "02_components_formulation.html",
-    "title": "2  Model Components and Formulation",
+    "title": "2  Model Formulation",
     "section": "",
-    "text": "2.1 Conservation equations",
+    "text": "2.1 Basic steps\nModel formulation or, more broadly, development, means producing a mathematical model. Once a mathematical model has been formulated, it usually has to be implemented to create a software model for use. This chapter presents a set of steps for formulating models.\nThe basic steps in model formulation are given below. In the following sections, these are described in detail.",
     "crumbs": [
       "Part I: Foundations",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Model Components and Formulation</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Model Formulation</span>"
+    ]
+  },
+  {
+    "objectID": "02_components_formulation.html#basic-steps",
+    "href": "02_components_formulation.html#basic-steps",
+    "title": "2  Model Formulation",
+    "section": "",
+    "text": "Initial concepts and assumptions (system boundary, state variables, sketches, simplifications)\nBalance/conservation equations\nConstitutive equations (transfer or rate equations)\nLinking equations\nSpatial or other simplifications\nInitial or boundary conditions\nGoverning equation (GE) — key result\nAnalytical or numerical solution",
+    "crumbs": [
+      "Part I: Foundations",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Model Formulation</span>"
+    ]
+  },
+  {
+    "objectID": "02_components_formulation.html#sec-conservation",
+    "href": "02_components_formulation.html#sec-conservation",
+    "title": "2  Model Formulation",
+    "section": "2.2 Conservation equations",
+    "text": "2.2 Conservation equations\nConservation equations or balance equations are a fundamental part of most models and all that we will consider, whether or not the equations are explicitly considered during model formulation. The word conservation simply means that something is preserved, i.e., not produced or destroyed. In our models, we will be concerned with conservation of energy and matter.\nWe can use a “cookbook” formula as a starting point for both energy and matter conservation: \\[\n\\text{accumulation} = \\text{in} - \\text{out} + \\text{generation} - \\text{consumption}.\n\\tag{2.1}\\]\nExactly what the terms mean, along with their dimensions and units, can vary. Of course dimensions and units must match for all terms. We will typically use rates for all terms, e.g., \\(\\Jps\\) = W for energy and \\(\\kgps\\) for mass.\nTo develop a conservation equation for a new model, start with Equation 2.1 and place the flows that exist and the physical system and eliminate the terms that are not relevant. For our coffee model (Section 1.2), the relevant conservation equation is \\[\n\\text{accumulation} = - \\text{out},\n\\tag{2.2}\\] because there is no heat coming in, only heat loss, and not heat generated (e.g., from electricity or a reaction) or consumed (e.g., through a reaction).\nThis is a very simple conservation equation. At the other extreme, it is common to have cases where each term in the cookbook equation includes multiple processes. For example, take a look at the diagram below, of the Aarhus University WET model of aquatic ecosystems.\n\n\n\n\n\n\nFigure 2.1: Conceptual model of the Aarhus University WET model (https://projects.au.dk/wet/about-qwet).\n\n\n\nWhat is an appropriate mass balance for the water column nitrogen (N), shown toward the lower right? There are several arrows coming in and several going out. An incomplete N balance might look like this:\n\\[                                                                                                                                                                                    \n\\begin{aligned}                                                                                                                                                                       \n\\text{accumulation} = &\\text{ fish decomposition} + \\text{plankton decomposition} \\\\                                                                                                  \n                     +&\\text{ transport from sediment} - \\text{macrophyte uptake} \\\\                                                                                                  \n                     -&\\text{ phytoplankton uptake} - \\text{transport into sediment}.\n\\end{aligned}                                                                                                                                                                         \n\\]\nThere highlights an important point: that conservation equations apply to a specific state variable and a specific domain. This clarity is necessary when developing a model. In the WET model example, the state variable could be the water column total N concentration, or perhaps the inorganic N concentration, or the inorganic N mass. We don’t know for sure, but if we were developing or even applying this model, we must! Units could be \\(\\kgpmcps\\) or \\(\\kgps\\).\nAnd the domain for the WET model (Figure 2.1) might be the entire water volume of a lake, if we were taking a lumped-parameter approach with this model. However, the domain could also be a single cell or node within the lake, if we were taking a spatial approach. During model development, it is common for the domain to be a control volume, which is some hypothetical small volume within the larger model domain. This can be convenient for GE development.\nEvery state variable in a model needs a conservation equation. Fortunately, most of the models we’ll cover in this book have a single state variable and so a single conservation equation. For the simple coffee model, the state variable is the coffee temperature and the domain is the entire cup of coffee. Units for our conservation equation, Equation 2.2, should be W, i.e., \\(\\Jps\\).",
+    "crumbs": [
+      "Part I: Foundations",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Model Formulation</span>"
     ]
   },
   {
     "objectID": "02_components_formulation.html#sec-constitutive",
     "href": "02_components_formulation.html#sec-constitutive",
-    "title": "2  Model Components and Formulation",
-    "section": "2.2 Constitutive equations",
-    "text": "2.2 Constitutive equations",
+    "title": "2  Model Formulation",
+    "section": "2.3 Constitutive equations",
+    "text": "2.3 Constitutive equations\nConstitutive equations describe how matter or energy are transferred. We will need a constitutive equation for each term in the model conservation equation. Figuring out what equations to use here requires familiarity with the different options. We’ll take a look at just a couple here and present more in Chapter 4, Chapter 5, and Chapter 6. These equations typically have a name like “someone’s law”. In general, constitutive equations include a difference or derivative and a proportionality constant on the right-hand side (RHS). The left-hand side (LHS) is usually some kind of flux, which is a flow rate per unit cross-sectional area.\nFor our coffee model, we only need one constitutive equation (take a look at Equation 2.2 to see why), and the appropriate one is called Newton’s law of cooling. It is:\n\\[\nq = h \\cdot (T_s - T_\\infty),\n\\tag{2.3}\\]\nwhere \\(q=\\) heat flux (\\(\\Wpms\\)), \\(h=\\) convection heat transfer coefficient (\\(\\WpmspK\\)), \\(T_s=\\) surface temperature of an object (K or \\(\\degC\\), either is fine because we are dealing with a temperature difference, not the absolute value), and \\(T_\\infty=\\) temperature of the surrounding fluid at some point where the object does not affect it. Applied to our cooling coffee system, \\(T_s=\\) the coffee temperature, uniform throughout, and \\(T_{\\infty}=\\) air temperature.\nConstitutive equations depend on the state of the system and material properties. Take a look at Equation 2.3. The “state of the system” component is clear in the presence of \\(T_s\\), which is the coffee temperature here. And the heat transfer coefficient \\(h\\) depends on the properties of air–it would be very different if the coffee were immersed in water!",
     "crumbs": [
       "Part I: Foundations",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Model Components and Formulation</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Model Formulation</span>"
     ]
   },
   {
     "objectID": "02_components_formulation.html#sec-linking",
     "href": "02_components_formulation.html#sec-linking",
-    "title": "2  Model Components and Formulation",
-    "section": "2.3 Linking equations",
-    "text": "2.3 Linking equations",
+    "title": "2  Model Formulation",
+    "section": "2.4 Linking equations",
+    "text": "2.4 Linking equations\nLinking equations are those relationships that are sometimes needed to connect or related different physical quantities included in the model. Not all models need linking equations. Our simple coffee model does though.",
     "crumbs": [
       "Part I: Foundations",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Model Components and Formulation</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Model Formulation</span>"
     ]
   },
   {
     "objectID": "02_components_formulation.html#sec-formulation-steps",
     "href": "02_components_formulation.html#sec-formulation-steps",
-    "title": "2  Model Components and Formulation",
-    "section": "2.4 Model formulation",
-    "text": "2.4 Model formulation\n\n\n2.4.1 Basic steps\n\nInitial concepts and assumptions (system boundary, state variables, sketches, simplifications)\nBalance/conservation equations\nConstitutive equations (transfer or rate equations)\nLinking equations\nSpatial or other simplifications\nInitial or boundary conditions\nGoverning equation (GE) — key result\nAnalytical or numerical solution\n\n\n\n2.4.2 Example: cooling coffee",
+    "title": "2  Model Formulation",
+    "section": "2.5 Model formulation",
+    "text": "2.5 Model formulation\n\n\n2.5.1 Example: cooling coffee",
     "crumbs": [
       "Part I: Foundations",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Model Components and Formulation</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Model Formulation</span>"
     ]
   },
   {
@@ -480,6 +480,17 @@
     "crumbs": [
       "Appendices",
       "Python Object Types"
+    ]
+  },
+  {
+    "objectID": "appendix_e_symbols.html",
+    "href": "appendix_e_symbols.html",
+    "title": "Appendix A — Symbols",
+    "section": "",
+    "text": "Below is a list of symbols used in the book. It is difficult to devise a unique set of symbols across multiple fields, and despite our efforts, some are not unique and others are probably not clear. Typical units are given for each symbol, and dimensions can be inferred from those. Words in parentheses are not always used when we describe the terms (e.g., we may say “specific heat” or “heat transfer coefficient”).\n\n\\(A\\) Cross-sectional area, typically \\(\\text{m}^2\\)\n\\(Q\\) Thermal energy, typically J\n\\(\\dot Q\\) Rate of thermal energy flow, typically \\(\\text{J}~\\text{s}^{-1} = \\text{W}\\)\n\\(q\\) Heat flux, typically \\(\\text{W}~\\text{m}^{-2}\\)\n\\(c_p\\) Specific heat (capacity), typically \\(\\text{kJ}~\\text{kg}^{-1}\\text{K}^{-1}\\)\n\\(h\\) (Convection) heat transfer coefficient, typically \\(\\text{W} ~ \\text{m}^{-2} ~ \\text{K}^{-1}\\)\n\\(U\\) Overall heat transfer coefficient, typically \\(\\text{W} ~ \\text{m}^{-2} ~ \\text{K}^{-1}\\)\n\\(D\\) Diffusivity, typically \\(\\text{m}^2 ~ \\text{s}^{-1}\\)\n\\(k\\) Thermal conductivity, typically \\(\\text{W} ~ \\text{m}^{-1} ~ \\text{K}^{-1}\\)\n\\(k_c\\) (Convection) mass transfer coefficient, typically \\(\\text{m}~\\text{s}^{-1}\\)\n\\(T\\) Temperature, typically \\(^\\circ\\text{C}\\) or K (equivalent for differences or derivatives)\n\\(\\theta\\) Normalized temperature, typically \\(^\\circ\\text{C}\\) or K\n\\(t\\) Time, typically \\(\\text{s}\\)\n\\(k\\) First-order rate constant, typically \\(\\text{s}^{-1}\\)\n\\(x\\) Position in 1D, typically \\(\\text{m}\\)\n\\(c\\) Concentration of a solute, chemical species, etc., typically \\(\\text{g} ~ \\text{m}^{-3}\\)\n\\(c\\) Arbitrary constant, units vary\n\\(m\\) Mass of something, typically \\(\\text{kg}\\)\n\\(\\dot m\\) Mass flow or conversion rate, typically \\(\\text{kg}~\\text{s}^{-1}\\)\n\\(J\\) Mass flux, typically \\(\\text{kg}~\\text{s}^{1}\\text{m}^{-2}\\)\n\\(n\\) Molar quantity of something, \\(\\text{mol}\\)\n\\(\\dot n\\) Molar flow or conversion rate, typically \\(\\text{mol}~\\text{s}^{-1}\\)\n\\(M\\) Molar mass of some chemical (identity indicated by subscript), \\(\\text{g}~\\text{mol}^{-1}\\)\n\\(r\\) Volumetric molar flow or conversion rate, \\(\\text{mol} ~ \\text{m}^{-3} ~ \\text{s}^{-1}\\)",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Symbols</span>"
     ]
   }
 ]

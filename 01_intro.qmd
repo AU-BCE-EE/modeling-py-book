@@ -1,6 +1,4 @@
-
-
-## Models and their use {#sec-intro}s
+## An introduction to models {#sec-intro}
 A *model* is a representation of a real system.
 The term itself is quite general.
 In this book, we will focus on models that are simplified representations of a physcial, chemical, or biological system.
@@ -43,9 +41,10 @@ But in fact all of these models are relatively simple.
 
 ## Types of models {#sec-classification}
 There are multiple ways to group models, and the categories are useful for understanding, developing, and explaining models.
-The different classification groups are 
+The different classification groups are not exclusive, so a single model could be a lumped parameter analytical model.
 
 ### Conceptual, mathematical, and computer models
+Conceptual, mathematical, and computer models are not really levels in a model classification scheme, but terms for the stage of model development.
 A *conceptual model* is some kind of qualitative description of a system.
 Conceptual models can be explained and summarized with the help of a good sketch.
 For example, let's say we want to develop a model to describe how the coffee in a mug cools over time.
@@ -62,14 +61,24 @@ Formulation of a *mathematical model* is typically the objective of a model form
 A mathematical model for our coffee example could be:
 
 $$
-\frac{dT}{dt} = c \cdot (T - T_{air}).
-$$
+\frac{dT}{dt} = c \cdot (T - T_{air}). 
+$$ {#eq-coffee-ge1}
 
-Eq. (1) is actually a *differential equation* because it describes the rate of change in coffee temperature $T$ over time.
-It is also the *governing equation* for this model, or that complete equation that describes the system.
+@eq-coffee-ge1 is actually a *differential equation* because it describes the rate of change in coffee temperature $T$ over time.
+It is also the *governing equation* or *GE* for this model, or that complete equation that describes the system.
+Governing equations typically need to be *solved* in order for a model to be useful.
+In some cases a solution can be found using only mathematical tools and expressed as a simple *closed-form* equation.
+Eq. (1) is one such example, and a solution is:
+
+$$
+T(t) = (T_0 - T_{air}) \cdot e^{(-c \cdot t)} + T_{air}.
+$$ {#eq-coffee-sol1}
 
 We saw a *computer model* above.
 It is a piece of computer software that runs the model.
+Creating a computer model means *implementing* a mathematical model.
+We could also say that development of a software model means *programming* a mathematical model.
+Here is an implementation of the coffee model, i.e., a computer model for cooling coffee.
 
 ```{python}
 # Import modules
@@ -78,13 +87,6 @@ import matplotlib.pyplot as plt
 
 # Times, up to 60 min (s)
 times = np.arange(0, 61, 1) * 60
-times
-
-# Heat transfer coefficient (W/m2-K)
-h = 25
-
-# Area (m2)
-A = 0.0258
 
 # Initial condition (degrees C)
 Tc0 = 80
@@ -92,41 +94,67 @@ Tc0 = 80
 # Ambient temperature
 Tair = 20
 
-# Coffee mass (g)
-m = 300
+# Set the constant that combines some variables and parameters
+c = 9e-4
 
-# Specific heat of water (J/g-K)
-cp = 4.2
-
-# Solution
-# First the constant that combines some variables and parameters
-c = A * h / (cp * m)
 # And the solution
 Tc = (Tc0 - Tair) * np.exp(-c * times) + Tair
 
 # Plot predictions
-plt.close()
 plt.plot(times / 60, Tc)
 plt.xlabel('Time (min)')
-plt.ylabel('Temperature $(^\circ~\mathregular{C})$')
+plt.ylabel(r'Temperature $(^\circ~\mathregular{C})$')
 plt.show()
 ```
 
-But a model can also be a set of equations--that would be a *mathematical model*.
-A mathematical model may exist only as a description written out on a piece of paper or printed in a book or even in someone's mind.
+### Analytical (closed-form) vs. numerical
 
-In this course we will develop mathematical models and then translate them into Python code in order to make computer models.
+The solution to the cooling coffee model above, @eq-coffee-sol1, is an example of an *analytical* or *closed-form* model.
+That means the model can be written as an equation that could be plugged into a calculator.
+The only part of @eq-coffee-sol1 that could not be solved with pencil and paper is the $e^{()}$ bit.
+Analytical solutions are great because they are easy to implement or program.
+The model solution is entered on a single line of code in the example above.
+They can also provide insight into model behavior at the mathematical model stage.
+@eq-coffee-sol1 tells us that $T$ will start at $T_0$ and drop toward $T_{air}$, quickly at first but then more and more slowly.
+These inferences require some experience with symbolic mathematics.
 
-
-<!-- Idea: introduce different types and important features through classification.
-     Point out that categories are not exclusive. -->
-
-
-### Analytical vs. numerical
+So why not use only analytical solutions?
+Because it is not possible in most cases.
+The GE in @eq-coffee-ge1 is a very simple ODE, and only simple ODEs can be solved analytically.
+In other cases, we will have to solve GEs numerically, without an *explicit* solution.
+Numerical solutions really take advantage of the power of computing and programming languages to arrive at a solution.
+Much of this book is focused on numerical models.
 
 ### Lumped vs. distributed parameter (0D vs. 1D+)
 
+Our coffee model is many things, including a *lumped parameter* model. 
+Lumped parameter models do not explicitly include variation in the condition or state of the system (here our coffee and mug) over space.
+In it, we only consider a single "lumped" coffee + mug temperature $T$.
+The name "lumped **parameter**" is a bit confusing because it isn't model parameters that we are lumping, really.
+
+What if we created a two-dimensional (*2D*) model that explicitly included the temperature *profile* over space?
+That means our model would predict not just a single temperature, but the temperature for multiple locations within the coffee and mug, as well as the effect that differences in temperature over space have on cooling.
+That would be a much more complicated model, and potentially more accurate, and would be called a *distributed parameter* model.
+Deciding whether to use a lumped parameter approach is an important step in model simplification.
+
 ### Steady-state vs. dynamic
+
+Our cooling coffee model is an example of a *dynamic* model, because it predicts the coffee temperature over time.
+But we won't always need a dynamic model.
+For example, it is the *steady-state* performance of a reactor that usually matters, i.e., how it performs once it has started up and is running steadily.
+The steady-state condition for our coffee model is not very interesting, but the process of finding a steady-state solution, i.e., developing a steady-state model, is the same in more complex models.
+We start with the GE, set the time derivative to zero, and simplify:
+
+$$
+c \cdot (T - T_{air}) = 0,
+$$ 
+
+$$
+T =  T_{air}.
+$$ {#eq-coffee-ss1}
+
+Our steady-state solution shows that the coffee temperature will be the same as the air temperature at steady state.
+In other cases the steady-state solution is much more interesting and useful.
 
 ## Key terms {#sec-terms}
 

@@ -39,7 +39,13 @@ format:
           tex: {
             macros: {
               degC: "{^\\circ\\mathrm{C}}",
-              Wpm: "{\\mathrm{W~m^{-2}}}"
+              Wpms: "{\\mathrm{W~m^{-2}}}",
+              WpmspK: "{\\mathrm{W~m^{-2}}}",
+              Jps: "{\\mathrm{J~s^{-1}}}",
+              kgps: "{\\mathrm{kg~s^{-1}}}",
+              kgpmc: "{\\mathrm{kg~m^{-3}}}",
+              kgpmcps: "{\\mathrm{kg~m^{-3}~s^{-1}}}",
+              gps: "{\\mathrm{g~s^{-1}}}"
             }
           }
         };

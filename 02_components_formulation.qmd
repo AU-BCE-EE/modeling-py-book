@@ -1,32 +1,13 @@
-# Model Components and Formulation {#sec-formulation}
+# Model Formulation {#sec-formulation}
 
-## Conservation equations {#sec-conservation}
+Model *formulation* or, more broadly, *development*, means producing a mathematical model. 
+Once a mathematical model has been formulated, it usually has to be implemented to create a software model for use.
+This chapter presents a set of steps for formulating models.
 
-<!-- Fundamental component of all models.
-     Apply to energy and mass.
-     Cookbook formula: accumulation = in - out + gen - consumption.
-     Terms can be expanded; unused terms are typically dropped.
-     Domain: whole system (0D), control volume (symbolic), or cell/node (1D+). -->
+## Basic steps
 
-## Constitutive equations {#sec-constitutive}
-
-<!-- Why rates matter.
-     Brief preview with Fourier's law -- full treatment in @sec-heat.
-     CE often has a derivative or difference on the RHS.
-     CE depends on material properties and state variables. -->
-
-## Linking equations {#sec-linking}
-
-<!-- Connect different physical quantities (e.g., energy and temperature).
-     Needed when the state variable in the balance differs from the variable of interest. -->
-
-## Model formulation {#sec-formulation-steps}
-
-<!-- Show how balance + constitutive + linking equations combine to give the GE.
-     Scope here: 0D (lumped-parameter) models only.
-     Approach for 1D+ models (start from full GE, then simplify) introduced in @sec-spatial. -->
-
-### Basic steps
+The basic steps in model formulation are given below.
+In the following sections, these are described in detail.
 
 1. Initial concepts and assumptions (system boundary, state variables, sketches, simplifications)
 2. Balance/conservation equations
@@ -36,6 +17,114 @@
 6. Initial or boundary conditions
 7. Governing equation (GE) --- key result
 8. Analytical or numerical solution
+
+## Conservation equations {#sec-conservation}
+
+*Conservation equations* or *balance equations* are a fundamental part of most models and all that we will consider, whether or not the equations are explicitly considered during model formulation.
+The word conservation simply means that something is preserved, i.e., not produced or destroyed.
+In our models, we will be concerned with conservation of *energy* and *matter*.
+
+We can use a "cookbook" formula as a starting point for both energy and matter conservation:
+$$
+\text{accumulation} = \text{in} - \text{out} + \text{generation} - \text{consumption}.
+$${#eq-conservation}
+
+Exactly what the terms mean, along with their dimensions and units, can vary. 
+Of course dimensions and units must match for all terms.
+We will typically use rates for all terms, e.g., $\Jps$ = W for energy and $\kgps$ for mass.
+
+To develop a conservation equation for a new model, start with  @eq-conservation and place the flows that exist and the physical system and eliminate the terms that are not relevant.
+For our coffee model (@sec-classification), the relevant conservation equation is
+$$
+\text{accumulation} = - \text{out}, 
+$${#eq-coffee-conservation}
+because there is no heat coming in, only heat loss, and not heat generated (e.g., from electricity or a reaction) or consumed (e.g., through a reaction).
+
+This is a very simple conservation equation.
+At the other extreme, it is common to have cases where each term in the cookbook equation includes multiple processes.
+For example, take a look at the diagram below, of the Aarhus University WET model of aquatic ecosystems.
+
+![Conceptual model of the Aarhus University WET model (https://projects.au.dk/wet/about-qwet).](web-images/AU_WET1.png){#fig-wet1 fig-alt="Diagram of a lake model."}           
+
+What is an appropriate mass balance for the water column nitrogen (N), shown toward the lower right?
+There are several arrows coming in and several going out.
+An incomplete N balance might look like this:
+
+$$                                                                                                                                                                                    
+\begin{aligned}                                                                                                                                                                       
+\text{accumulation} = &\text{ fish decomposition} + \text{plankton decomposition} \\                                                                                                  
+                     +&\text{ transport from sediment} - \text{macrophyte uptake} \\                                                                                                  
+                     -&\text{ phytoplankton uptake} - \text{transport into sediment}.
+\end{aligned}                                                                                                                                                                         
+$$    
+
+There highlights an important point: that conservation equations apply to a specific state variable and a specific *domain*.
+This clarity is necessary when developing a model.
+In the WET model example, the state variable could be the water column total N concentration, or perhaps the inorganic N concentration, or the inorganic N mass.
+We don't know for sure, but if we were developing or even applying this model, we must!
+Units could be $\kgpmcps$ or $\kgps$.
+
+And the domain for the WET model (@fig-wet1) might be the entire water volume of a lake, if we were taking a lumped-parameter approach with this model.
+However, the domain could also be a single *cell* or *node* within the lake, if we were taking a spatial approach.
+During model development, it is common for the domain to be a *control volume*, which is some hypothetical small volume within the larger model domain.
+This can be convenient for GE development.
+
+Every state variable in a model needs a conservation equation.
+Fortunately, most of the models we'll cover in this book have a single state variable and so a single conservation equation.
+For the simple coffee model, the state variable is the coffee temperature and the domain is the entire cup of coffee.
+Units for our conservation equation, @eq-coffee-conservation, should be W, i.e., $\Jps$.
+
+<!-- Fundamental component of all models.
+     Apply to energy and mass.
+     Cookbook formula: accumulation = in - out + gen - consumption.
+     Terms can be expanded; unused terms are typically dropped.
+     Domain: whole system (0D), control volume (symbolic), or cell/node (1D+). -->
+
+## Constitutive equations {#sec-constitutive}
+
+*Constitutive equations* describe how matter or energy are transferred.
+We will need a constitutive equation for each term in the model conservation equation.
+Figuring out what equations to use here requires familiarity with the different options.
+We'll take a look at just a couple here and present more in @sec-heat, @sec-mass, and @sec-reactions.
+These equations typically have a name like "someone's law".
+In general, constitutive equations include a difference or derivative and a proportionality constant on the right-hand side (RHS).
+The left-hand side (LHS) is usually some kind of *flux*, which is a flow rate per unit cross-sectional area.
+
+For our coffee model, we only need one constitutive equation (take a look at @eq-coffee-conservation to see why), and the appropriate one is called *Newton's law of cooling*.
+It is:
+
+$$
+q = h \cdot (T_s - T_\infty),
+$${#eq-nlc1}
+
+where $q=$ *heat flux* ($\Wpms$), $h=$ *convection heat transfer coefficient* ($\WpmspK$), $T_s=$ surface temperature of an object (K or $\degC$, either is fine because we are dealing with a temperature difference, not the absolute value), and $T_\infty=$ temperature of the surrounding fluid at some point where the object does not affect it.
+Applied to our cooling coffee system, $T_s=$ the coffee temperature, uniform throughout, and $T_{\infty}=$ air temperature.
+
+Constitutive equations depend on the state of the system and material properties.
+Take a look at @eq-nlc1.
+The "state of the system" component is clear in the presence of $T_s$, which is the coffee temperature here.
+And the heat transfer coefficient $h$ depends on the properties of air--it would be very different if the coffee were immersed in water!
+
+
+<!-- Why rates matter.
+     Brief preview with Fourier's law -- full treatment in @sec-heat.
+     CE often has a derivative or difference on the RHS.
+     CE depends on material properties and state variables. -->
+
+## Linking equations {#sec-linking}
+
+*Linking equations* are those relationships that are sometimes needed to connect or related different physical quantities included in the model.
+Not all models need linking equations.
+Our simple coffee model does though. 
+
+<!-- Connect different physical quantities (e.g., energy and temperature).
+     Needed when the state variable in the balance differs from the variable of interest. -->
+
+## Model formulation {#sec-formulation-steps}
+
+<!-- Show how balance + constitutive + linking equations combine to give the GE.
+     Scope here: 0D (lumped-parameter) models only.
+     Approach for 1D+ models (start from full GE, then simplify) introduced in @sec-spatial. -->
 
 ### Example: cooling coffee
 

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>1&nbsp; Introduction to Modeling – Modelling</title>
+<title>1&nbsp; An introduction to models – Modelling</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -70,7 +105,52 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script>
+MathJax = {
+  tex: {
+    macros: {
+      degC: "{^\\circ\\mathrm{C}}",
+      Wpms: "{\\mathrm{W~m^{-2}}}",
+      WpmspK: "{\\mathrm{W~m^{-2}}}",
+      Jps: "{\\mathrm{J~s^{-1}}}",
+      kgps: "{\\mathrm{kg~s^{-1}}}",
+      kgpmc: "{\\mathrm{kg~m^{-3}}}",
+      kgpmcps: "{\\mathrm{kg~m^{-3}~s^{-1}}}",
+      gps: "{\\mathrm{g~s^{-1}}}"
+    }
+  }
+};
+</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -83,7 +163,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_intro.html">Part I: Foundations</a></li><li class="breadcrumb-item"><a href="./01_intro.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to Modeling</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_intro.html">Part I: Foundations</a></li><li class="breadcrumb-item"><a href="./01_intro.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">An introduction to models</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -128,13 +208,13 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./01_intro.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to Modeling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">An introduction to models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02_components_formulation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Model Components and Formulation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Model Formulation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -237,6 +317,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Slicing in Python</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendix_e_symbols.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Symbols</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -249,26 +335,24 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#what-is-a-model" id="toc-what-is-a-model" class="nav-link active" data-scroll-target="#what-is-a-model"><span class="header-section-number">1.1</span> What is a model?</a></li>
-  <li><a href="#uses-of-modeling" id="toc-uses-of-modeling" class="nav-link" data-scroll-target="#uses-of-modeling"><span class="header-section-number">1.2</span> Uses of modeling</a></li>
-  <li><a href="#simplification-is-key" id="toc-simplification-is-key" class="nav-link" data-scroll-target="#simplification-is-key"><span class="header-section-number">1.3</span> Simplification is key</a></li>
-  <li><a href="#sec-classification" id="toc-sec-classification" class="nav-link" data-scroll-target="#sec-classification"><span class="header-section-number">1.4</span> Types of models</a>
+  <li><a href="#model-simplification" id="toc-model-simplification" class="nav-link active" data-scroll-target="#model-simplification"><span class="header-section-number">1.1</span> Model simplification</a></li>
+  <li><a href="#sec-classification" id="toc-sec-classification" class="nav-link" data-scroll-target="#sec-classification"><span class="header-section-number">1.2</span> Types of models</a>
   <ul class="collapse">
-  <li><a href="#conceptual-mathematical-and-computer-models" id="toc-conceptual-mathematical-and-computer-models" class="nav-link" data-scroll-target="#conceptual-mathematical-and-computer-models"><span class="header-section-number">1.4.1</span> Conceptual, mathematical, and computer models</a></li>
-  <li><a href="#analytical-vs.-numerical" id="toc-analytical-vs.-numerical" class="nav-link" data-scroll-target="#analytical-vs.-numerical"><span class="header-section-number">1.4.2</span> Analytical vs.&nbsp;numerical</a></li>
-  <li><a href="#lumped-vs.-distributed-parameter-0d-vs.-1d" id="toc-lumped-vs.-distributed-parameter-0d-vs.-1d" class="nav-link" data-scroll-target="#lumped-vs.-distributed-parameter-0d-vs.-1d"><span class="header-section-number">1.4.3</span> Lumped vs.&nbsp;distributed parameter (0D vs.&nbsp;1D+)</a></li>
-  <li><a href="#steady-state-vs.-dynamic" id="toc-steady-state-vs.-dynamic" class="nav-link" data-scroll-target="#steady-state-vs.-dynamic"><span class="header-section-number">1.4.4</span> Steady-state vs.&nbsp;dynamic</a></li>
+  <li><a href="#conceptual-mathematical-and-computer-models" id="toc-conceptual-mathematical-and-computer-models" class="nav-link" data-scroll-target="#conceptual-mathematical-and-computer-models"><span class="header-section-number">1.2.1</span> Conceptual, mathematical, and computer models</a></li>
+  <li><a href="#analytical-closed-form-vs.-numerical" id="toc-analytical-closed-form-vs.-numerical" class="nav-link" data-scroll-target="#analytical-closed-form-vs.-numerical"><span class="header-section-number">1.2.2</span> Analytical (closed-form) vs.&nbsp;numerical</a></li>
+  <li><a href="#lumped-vs.-distributed-parameter-0d-vs.-1d" id="toc-lumped-vs.-distributed-parameter-0d-vs.-1d" class="nav-link" data-scroll-target="#lumped-vs.-distributed-parameter-0d-vs.-1d"><span class="header-section-number">1.2.3</span> Lumped vs.&nbsp;distributed parameter (0D vs.&nbsp;1D+)</a></li>
+  <li><a href="#steady-state-vs.-dynamic" id="toc-steady-state-vs.-dynamic" class="nav-link" data-scroll-target="#steady-state-vs.-dynamic"><span class="header-section-number">1.2.4</span> Steady-state vs.&nbsp;dynamic</a></li>
   </ul></li>
-  <li><a href="#sec-terms" id="toc-sec-terms" class="nav-link" data-scroll-target="#sec-terms"><span class="header-section-number">1.5</span> Key terms</a></li>
+  <li><a href="#sec-terms" id="toc-sec-terms" class="nav-link" data-scroll-target="#sec-terms"><span class="header-section-number">1.3</span> Key terms</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_intro.html">Part I: Foundations</a></li><li class="breadcrumb-item"><a href="./01_intro.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to Modeling</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_intro.html">Part I: Foundations</a></li><li class="breadcrumb-item"><a href="./01_intro.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">An introduction to models</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-intro" class="quarto-section-identifier"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to Modeling</span></span></h1>
+<h1 class="title"><span id="sec-intro" class="quarto-section-identifier"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">An introduction to models</span></span></h1>
 </div>
 
 
@@ -285,34 +369,92 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="what-is-a-model" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="what-is-a-model"><span class="header-section-number">1.1</span> What is a model?</h2>
+<p>A <em>model</em> is a representation of a real system. The term itself is quite general. In this book, we will focus on models that are simplified representations of a physcial, chemical, or biological system.</p>
+<p>Students in science and engineering might assume that a model means a piece of software or the underlying code. This can be the case, but is not the only meaning of the term model. A software implementation of a model, i.e., some kind of a software program or script that can be run to make model predictions, is called a <em>software model</em> or <em>computer model</em>.</p>
+<p>What are models used for? For several things. They are used to make useful predictions about the future. For example, national policy and international agreements on greenhouse gas emissions rely on sophisticated “general circulation models” of the atmosphere. These models are used to predict future climate under different input scenarios, including more or less greenhouse gases in the atmosphere.</p>
+<p>In research, models are used for understanding complex systems. And in product development, models are used for design. Expand. . .add a couple examples</p>
+<section id="model-simplification" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="model-simplification"><span class="header-section-number">1.1</span> Model simplification</h2>
+<p><em>Simplification</em> is key part of model development. You might have the feeling that the more processes and dimensions you can cram into a model, the more accurate and in general the better it is. That’s not true. Simplifications are in fact what make models useful, and without significant simplifications, many models would require too many inputs to ever be used.</p>
+<p>It is true that models should include the essential processes and components in order to be accurate and useful. And it is also true that existing sophisticated models include many processes and components and generally increase in both complexity and accuracy as they are extended and refined over time. So do we have a bit of a contradiction here? Perhaps. But even the most sophisticated model is vastly simpler than the actual physical system it represents. And adding processes and components requires underlying math and associated parameter values. If either is uncertain, the accuracy of the model may not improve.</p>
+<p>It is useful to remember that model complexity can and often does increase over time and as the result of contributions of multiple individuals. Good modeling advice is to start simple and add more complexity if necessary only after testing a model and identifying shortcomings.</p>
+<p>How simple should a model be? That depends–on the objectives of a project or the task requirements, on available resources, on the level of understanding of the real system, and on the opinion of developers or others who have a say. In this book we’ll look at a variety of models that encompass a range of complexity. But in fact all of these models are relatively simple.</p>
 </section>
-<section id="uses-of-modeling" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="uses-of-modeling"><span class="header-section-number">1.2</span> Uses of modeling</h2>
+<section id="sec-classification" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="sec-classification"><span class="header-section-number">1.2</span> Types of models</h2>
+<p>There are multiple ways to group models, and the categories are useful for understanding, developing, and explaining models. The different classification groups are not exclusive, so a single model could be a lumped parameter analytical model.</p>
+<section id="conceptual-mathematical-and-computer-models" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="conceptual-mathematical-and-computer-models"><span class="header-section-number">1.2.1</span> Conceptual, mathematical, and computer models</h3>
+<p>Conceptual, mathematical, and computer models are not really levels in a model classification scheme, but terms for the stage of model development. A <em>conceptual model</em> is some kind of qualitative description of a system. Conceptual models can be explained and summarized with the help of a good sketch. For example, let’s say we want to develop a model to describe how the coffee in a mug cools over time. Our conceptual model could be summarized in the sketch below.</p>
+<p><img src="drawings/coffee1.png" id="fig-coffee" class="img-fluid" alt="Sketch showing a conceptual model of coffee cooling."><br>
+In our conceptual model there is some quantity of heat energy is present in the coffee and mug, and that amount determines its temperature. We know from experience that the coffee cools over time, meaning that heat energy is lost. In our model, the rate of heat loss depends on the temperature of the coffee and mug, the ambient temperature, and some heat transfer parameter. Our model does not explicitly include heat transfer within the coffee, or separate consideration of different routes of heat transfer, such as from the exposed coffee surface or through the wall or bottom of the mug. A conceptual model and a sketch is a good place to start most model formulation exercises.</p>
+<p>Formulation of a <em>mathematical model</em> is typically the objective of a model formulation exercise. A mathematical model for our coffee example could be:</p>
+<p><span id="eq-coffee-ge1"><span class="math display">\[
+\frac{dT}{dt} = c \cdot (T - T_{air}).
+\tag{1.1}\]</span></span></p>
+<p><a href="#eq-coffee-ge1" class="quarto-xref">Equation&nbsp;<span>1.1</span></a> is actually a <em>differential equation</em> because it describes the rate of change in coffee temperature <span class="math inline">\(T\)</span> over time. It is also the <em>governing equation</em> or <em>GE</em> for this model, or that complete equation that describes the system. Governing equations typically need to be <em>solved</em> in order for a model to be useful. In some cases a solution can be found using only mathematical tools and expressed as a simple <em>closed-form</em> equation. Eq. (1) is one such example, and a solution is:</p>
+<p><span id="eq-coffee-sol1"><span class="math display">\[
+T(t) = (T_0 - T_{air}) \cdot e^{(-c \cdot t)} + T_{air}.
+\tag{1.2}\]</span></span></p>
+<p>We saw a <em>computer model</em> above. It is a piece of computer software that runs the model. Creating a computer model means <em>implementing</em> a mathematical model. We could also say that development of a software model means <em>programming</em> a mathematical model. Here is an implementation of the coffee model, i.e., a computer model for cooling coffee.</p>
+<div id="93b284f8" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import modules</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Times, up to 60 min (s)</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>times <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">61</span>, <span class="dv">1</span>) <span class="op">*</span> <span class="dv">60</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Initial condition (degrees C)</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>Tc0 <span class="op">=</span> <span class="dv">80</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Ambient temperature</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>Tair <span class="op">=</span> <span class="dv">20</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the constant that combines some variables and parameters</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> <span class="fl">9e-4</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># And the solution</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>Tc <span class="op">=</span> (Tc0 <span class="op">-</span> Tair) <span class="op">*</span> np.exp(<span class="op">-</span>c <span class="op">*</span> times) <span class="op">+</span> Tair</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot predictions</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>plt.plot(times <span class="op">/</span> <span class="dv">60</span>, Tc)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Time (min)'</span>)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="vs">r'Temperature </span><span class="dv">$</span><span class="kw">(</span><span class="dv">^</span><span class="er">\</span><span class="vs">circ~</span><span class="dv">\m</span><span class="vs">athregular{C}</span><span class="kw">)</span><span class="dv">$</span><span class="vs">'</span>)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="01_intro_files/figure-html/cell-2-output-1.png" width="587" height="429" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
-<section id="simplification-is-key" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="simplification-is-key"><span class="header-section-number">1.3</span> Simplification is key</h2>
+<section id="analytical-closed-form-vs.-numerical" class="level3" data-number="1.2.2">
+<h3 data-number="1.2.2" class="anchored" data-anchor-id="analytical-closed-form-vs.-numerical"><span class="header-section-number">1.2.2</span> Analytical (closed-form) vs.&nbsp;numerical</h3>
+<p>The solution to the cooling coffee model above, <a href="#eq-coffee-sol1" class="quarto-xref">Equation&nbsp;<span>1.2</span></a>, is an example of an <em>analytical</em> or <em>closed-form</em> model. That means the model can be written as an equation that could be plugged into a calculator. The only part of <a href="#eq-coffee-sol1" class="quarto-xref">Equation&nbsp;<span>1.2</span></a> that could not be solved with pencil and paper is the <span class="math inline">\(e^{()}\)</span> bit. Analytical solutions are great because they are easy to implement or program. The model solution is entered on a single line of code in the example above. They can also provide insight into model behavior at the mathematical model stage. <a href="#eq-coffee-sol1" class="quarto-xref">Equation&nbsp;<span>1.2</span></a> tells us that <span class="math inline">\(T\)</span> will start at <span class="math inline">\(T_0\)</span> and drop toward <span class="math inline">\(T_{air}\)</span>, quickly at first but then more and more slowly. These inferences require some experience with symbolic mathematics.</p>
+<p>So why not use only analytical solutions? Because it is not possible in most cases. The GE in <a href="#eq-coffee-ge1" class="quarto-xref">Equation&nbsp;<span>1.1</span></a> is a very simple ODE, and only simple ODEs can be solved analytically. In other cases, we will have to solve GEs numerically, without an <em>explicit</em> solution. Numerical solutions really take advantage of the power of computing and programming languages to arrive at a solution. Much of this book is focused on numerical models.</p>
 </section>
-<section id="sec-classification" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="sec-classification"><span class="header-section-number">1.4</span> Types of models</h2>
-<!-- Idea: introduce different types and important features through classification.
-     Point out that categories are not exclusive. -->
-<section id="conceptual-mathematical-and-computer-models" class="level3" data-number="1.4.1">
-<h3 data-number="1.4.1" class="anchored" data-anchor-id="conceptual-mathematical-and-computer-models"><span class="header-section-number">1.4.1</span> Conceptual, mathematical, and computer models</h3>
+<section id="lumped-vs.-distributed-parameter-0d-vs.-1d" class="level3" data-number="1.2.3">
+<h3 data-number="1.2.3" class="anchored" data-anchor-id="lumped-vs.-distributed-parameter-0d-vs.-1d"><span class="header-section-number">1.2.3</span> Lumped vs.&nbsp;distributed parameter (0D vs.&nbsp;1D+)</h3>
+<p>Our coffee model is many things, including a <em>lumped parameter</em> model. Lumped parameter models do not explicitly include variation in the condition or state of the system (here our coffee and mug) over space. In it, we only consider a single “lumped” coffee + mug temperature <span class="math inline">\(T\)</span>. The name “lumped <strong>parameter</strong>” is a bit confusing because it isn’t model parameters that we are lumping, really.</p>
+<p>What if we created a two-dimensional (<em>2D</em>) model that explicitly included the temperature <em>profile</em> over space? That means our model would predict not just a single temperature, but the temperature for multiple locations within the coffee and mug, as well as the effect that differences in temperature over space have on cooling. That would be a much more complicated model, and potentially more accurate, and would be called a <em>distributed parameter</em> model. Deciding whether to use a lumped parameter approach is an important step in model simplification.</p>
 </section>
-<section id="analytical-vs.-numerical" class="level3" data-number="1.4.2">
-<h3 data-number="1.4.2" class="anchored" data-anchor-id="analytical-vs.-numerical"><span class="header-section-number">1.4.2</span> Analytical vs.&nbsp;numerical</h3>
+<section id="steady-state-vs.-dynamic" class="level3" data-number="1.2.4">
+<h3 data-number="1.2.4" class="anchored" data-anchor-id="steady-state-vs.-dynamic"><span class="header-section-number">1.2.4</span> Steady-state vs.&nbsp;dynamic</h3>
+<p>Our cooling coffee model is an example of a <em>dynamic</em> model, because it predicts the coffee temperature over time. But we won’t always need a dynamic model. For example, it is the <em>steady-state</em> performance of a reactor that usually matters, i.e., how it performs once it has started up and is running steadily. The steady-state condition for our coffee model is not very interesting, but the process of finding a steady-state solution, i.e., developing a steady-state model, is the same in more complex models. We start with the GE, set the time derivative to zero, and simplify:</p>
+<p><span class="math display">\[
+c \cdot (T - T_{air}) = 0,
+\]</span></p>
+<p><span id="eq-coffee-ss1"><span class="math display">\[
+T =  T_{air}.
+\tag{1.3}\]</span></span></p>
+<p>Our steady-state solution shows that the coffee temperature will be the same as the air temperature at steady state. In other cases the steady-state solution is much more interesting and useful.</p>
 </section>
-<section id="lumped-vs.-distributed-parameter-0d-vs.-1d" class="level3" data-number="1.4.3">
-<h3 data-number="1.4.3" class="anchored" data-anchor-id="lumped-vs.-distributed-parameter-0d-vs.-1d"><span class="header-section-number">1.4.3</span> Lumped vs.&nbsp;distributed parameter (0D vs.&nbsp;1D+)</h3>
 </section>
-<section id="steady-state-vs.-dynamic" class="level3" data-number="1.4.4">
-<h3 data-number="1.4.4" class="anchored" data-anchor-id="steady-state-vs.-dynamic"><span class="header-section-number">1.4.4</span> Steady-state vs.&nbsp;dynamic</h3>
-</section>
-</section>
-<section id="sec-terms" class="level2" data-number="1.5">
-<h2 data-number="1.5" class="anchored" data-anchor-id="sec-terms"><span class="header-section-number">1.5</span> Key terms</h2>
+<section id="sec-terms" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="sec-terms"><span class="header-section-number">1.3</span> Key terms</h2>
 <!-- PDE, ODE, steady-state, lumping, conservation equations, constitutive equations,
      linking equations, governing equations, state variables, independent variables,
      model parameters, model inputs, model outputs -->
@@ -728,8 +870,8 @@ ul.task-list li input[type="checkbox"] {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./02_components_formulation.html" class="pagination-link" aria-label="Model Components and Formulation">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Model Components and Formulation</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./02_components_formulation.html" class="pagination-link" aria-label="Model Formulation">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Model Formulation</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

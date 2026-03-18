@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2&nbsp; Model Components and Formulation – Modelling</title>
+<title>2&nbsp; Model Formulation – Modelling</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -70,7 +70,52 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script>
+MathJax = {
+  tex: {
+    macros: {
+      degC: "{^\\circ\\mathrm{C}}",
+      Wpms: "{\\mathrm{W~m^{-2}}}",
+      WpmspK: "{\\mathrm{W~m^{-2}}}",
+      Jps: "{\\mathrm{J~s^{-1}}}",
+      kgps: "{\\mathrm{kg~s^{-1}}}",
+      kgpmc: "{\\mathrm{kg~m^{-3}}}",
+      kgpmcps: "{\\mathrm{kg~m^{-3}~s^{-1}}}",
+      gps: "{\\mathrm{g~s^{-1}}}"
+    }
+  }
+};
+</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -83,7 +128,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_intro.html">Part I: Foundations</a></li><li class="breadcrumb-item"><a href="./02_components_formulation.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Model Components and Formulation</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_intro.html">Part I: Foundations</a></li><li class="breadcrumb-item"><a href="./02_components_formulation.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Model Formulation</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -128,13 +173,13 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./01_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to Modeling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">An introduction to models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02_components_formulation.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Model Components and Formulation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Model Formulation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -237,6 +282,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Slicing in Python</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendix_e_symbols.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Symbols</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -249,13 +300,13 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sec-conservation" id="toc-sec-conservation" class="nav-link active" data-scroll-target="#sec-conservation"><span class="header-section-number">2.1</span> Conservation equations</a></li>
-  <li><a href="#sec-constitutive" id="toc-sec-constitutive" class="nav-link" data-scroll-target="#sec-constitutive"><span class="header-section-number">2.2</span> Constitutive equations</a></li>
-  <li><a href="#sec-linking" id="toc-sec-linking" class="nav-link" data-scroll-target="#sec-linking"><span class="header-section-number">2.3</span> Linking equations</a></li>
-  <li><a href="#sec-formulation-steps" id="toc-sec-formulation-steps" class="nav-link" data-scroll-target="#sec-formulation-steps"><span class="header-section-number">2.4</span> Model formulation</a>
+  <li><a href="#basic-steps" id="toc-basic-steps" class="nav-link active" data-scroll-target="#basic-steps"><span class="header-section-number">2.1</span> Basic steps</a></li>
+  <li><a href="#sec-conservation" id="toc-sec-conservation" class="nav-link" data-scroll-target="#sec-conservation"><span class="header-section-number">2.2</span> Conservation equations</a></li>
+  <li><a href="#sec-constitutive" id="toc-sec-constitutive" class="nav-link" data-scroll-target="#sec-constitutive"><span class="header-section-number">2.3</span> Constitutive equations</a></li>
+  <li><a href="#sec-linking" id="toc-sec-linking" class="nav-link" data-scroll-target="#sec-linking"><span class="header-section-number">2.4</span> Linking equations</a></li>
+  <li><a href="#sec-formulation-steps" id="toc-sec-formulation-steps" class="nav-link" data-scroll-target="#sec-formulation-steps"><span class="header-section-number">2.5</span> Model formulation</a>
   <ul class="collapse">
-  <li><a href="#basic-steps" id="toc-basic-steps" class="nav-link" data-scroll-target="#basic-steps"><span class="header-section-number">2.4.1</span> Basic steps</a></li>
-  <li><a href="#example-cooling-coffee" id="toc-example-cooling-coffee" class="nav-link" data-scroll-target="#example-cooling-coffee"><span class="header-section-number">2.4.2</span> Example: cooling coffee</a></li>
+  <li><a href="#example-cooling-coffee" id="toc-example-cooling-coffee" class="nav-link" data-scroll-target="#example-cooling-coffee"><span class="header-section-number">2.5.1</span> Example: cooling coffee</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -263,9 +314,9 @@ ul.task-list li input[type="checkbox"] {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_intro.html">Part I: Foundations</a></li><li class="breadcrumb-item"><a href="./02_components_formulation.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Model Components and Formulation</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_intro.html">Part I: Foundations</a></li><li class="breadcrumb-item"><a href="./02_components_formulation.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Model Formulation</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-formulation" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Model Components and Formulation</span></span></h1>
+<h1 class="title"><span id="sec-formulation" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Model Formulation</span></span></h1>
 </div>
 
 
@@ -282,33 +333,10 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="sec-conservation" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="sec-conservation"><span class="header-section-number">2.1</span> Conservation equations</h2>
-<!-- Fundamental component of all models.
-     Apply to energy and mass.
-     Cookbook formula: accumulation = in - out + gen - consumption.
-     Terms can be expanded; unused terms are typically dropped.
-     Domain: whole system (0D), control volume (symbolic), or cell/node (1D+). -->
-</section>
-<section id="sec-constitutive" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="sec-constitutive"><span class="header-section-number">2.2</span> Constitutive equations</h2>
-<!-- Why rates matter.
-     Brief preview with Fourier's law -- full treatment in @sec-heat.
-     CE often has a derivative or difference on the RHS.
-     CE depends on material properties and state variables. -->
-</section>
-<section id="sec-linking" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="sec-linking"><span class="header-section-number">2.3</span> Linking equations</h2>
-<!-- Connect different physical quantities (e.g., energy and temperature).
-     Needed when the state variable in the balance differs from the variable of interest. -->
-</section>
-<section id="sec-formulation-steps" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="sec-formulation-steps"><span class="header-section-number">2.4</span> Model formulation</h2>
-<!-- Show how balance + constitutive + linking equations combine to give the GE.
-     Scope here: 0D (lumped-parameter) models only.
-     Approach for 1D+ models (start from full GE, then simplify) introduced in @sec-spatial. -->
-<section id="basic-steps" class="level3" data-number="2.4.1">
-<h3 data-number="2.4.1" class="anchored" data-anchor-id="basic-steps"><span class="header-section-number">2.4.1</span> Basic steps</h3>
+<p>Model <em>formulation</em> or, more broadly, <em>development</em>, means producing a mathematical model. Once a mathematical model has been formulated, it usually has to be implemented to create a software model for use. This chapter presents a set of steps for formulating models.</p>
+<section id="basic-steps" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="basic-steps"><span class="header-section-number">2.1</span> Basic steps</h2>
+<p>The basic steps in model formulation are given below. In the following sections, these are described in detail.</p>
 <ol type="1">
 <li>Initial concepts and assumptions (system boundary, state variables, sketches, simplifications)</li>
 <li>Balance/conservation equations</li>
@@ -320,8 +348,71 @@ ul.task-list li input[type="checkbox"] {
 <li>Analytical or numerical solution</li>
 </ol>
 </section>
-<section id="example-cooling-coffee" class="level3" data-number="2.4.2">
-<h3 data-number="2.4.2" class="anchored" data-anchor-id="example-cooling-coffee"><span class="header-section-number">2.4.2</span> Example: cooling coffee</h3>
+<section id="sec-conservation" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="sec-conservation"><span class="header-section-number">2.2</span> Conservation equations</h2>
+<p><em>Conservation equations</em> or <em>balance equations</em> are a fundamental part of most models and all that we will consider, whether or not the equations are explicitly considered during model formulation. The word conservation simply means that something is preserved, i.e., not produced or destroyed. In our models, we will be concerned with conservation of <em>energy</em> and <em>matter</em>.</p>
+<p>We can use a “cookbook” formula as a starting point for both energy and matter conservation: <span id="eq-conservation"><span class="math display">\[
+\text{accumulation} = \text{in} - \text{out} + \text{generation} - \text{consumption}.
+\tag{2.1}\]</span></span></p>
+<p>Exactly what the terms mean, along with their dimensions and units, can vary. Of course dimensions and units must match for all terms. We will typically use rates for all terms, e.g., <span class="math inline">\(\Jps\)</span> = W for energy and <span class="math inline">\(\kgps\)</span> for mass.</p>
+<p>To develop a conservation equation for a new model, start with <a href="#eq-conservation" class="quarto-xref">Equation&nbsp;<span>2.1</span></a> and place the flows that exist and the physical system and eliminate the terms that are not relevant. For our coffee model (<a href="01_intro.html#sec-classification" class="quarto-xref"><span>Section 1.2</span></a>), the relevant conservation equation is <span id="eq-coffee-conservation"><span class="math display">\[
+\text{accumulation} = - \text{out},
+\tag{2.2}\]</span></span> because there is no heat coming in, only heat loss, and not heat generated (e.g., from electricity or a reaction) or consumed (e.g., through a reaction).</p>
+<p>This is a very simple conservation equation. At the other extreme, it is common to have cases where each term in the cookbook equation includes multiple processes. For example, take a look at the diagram below, of the Aarhus University WET model of aquatic ecosystems.</p>
+<div id="fig-wet1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Diagram of a lake model.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-wet1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="web-images/AU_WET1.png" class="img-fluid figure-img" alt="Diagram of a lake model.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-wet1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.1: Conceptual model of the Aarhus University WET model (https://projects.au.dk/wet/about-qwet).
+</figcaption>
+</figure>
+</div>
+<p>What is an appropriate mass balance for the water column nitrogen (N), shown toward the lower right? There are several arrows coming in and several going out. An incomplete N balance might look like this:</p>
+<p><span class="math display">\[                                                                                                                                                                                    
+\begin{aligned}                                                                                                                                                                       
+\text{accumulation} = &amp;\text{ fish decomposition} + \text{plankton decomposition} \\                                                                                                  
+                     +&amp;\text{ transport from sediment} - \text{macrophyte uptake} \\                                                                                                  
+                     -&amp;\text{ phytoplankton uptake} - \text{transport into sediment}.
+\end{aligned}                                                                                                                                                                         
+\]</span></p>
+<p>There highlights an important point: that conservation equations apply to a specific state variable and a specific <em>domain</em>. This clarity is necessary when developing a model. In the WET model example, the state variable could be the water column total N concentration, or perhaps the inorganic N concentration, or the inorganic N mass. We don’t know for sure, but if we were developing or even applying this model, we must! Units could be <span class="math inline">\(\kgpmcps\)</span> or <span class="math inline">\(\kgps\)</span>.</p>
+<p>And the domain for the WET model (<a href="#fig-wet1" class="quarto-xref">Figure&nbsp;<span>2.1</span></a>) might be the entire water volume of a lake, if we were taking a lumped-parameter approach with this model. However, the domain could also be a single <em>cell</em> or <em>node</em> within the lake, if we were taking a spatial approach. During model development, it is common for the domain to be a <em>control volume</em>, which is some hypothetical small volume within the larger model domain. This can be convenient for GE development.</p>
+<p>Every state variable in a model needs a conservation equation. Fortunately, most of the models we’ll cover in this book have a single state variable and so a single conservation equation. For the simple coffee model, the state variable is the coffee temperature and the domain is the entire cup of coffee. Units for our conservation equation, <a href="#eq-coffee-conservation" class="quarto-xref">Equation&nbsp;<span>2.2</span></a>, should be W, i.e., <span class="math inline">\(\Jps\)</span>.</p>
+<!-- Fundamental component of all models.
+     Apply to energy and mass.
+     Cookbook formula: accumulation = in - out + gen - consumption.
+     Terms can be expanded; unused terms are typically dropped.
+     Domain: whole system (0D), control volume (symbolic), or cell/node (1D+). -->
+</section>
+<section id="sec-constitutive" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="sec-constitutive"><span class="header-section-number">2.3</span> Constitutive equations</h2>
+<p><em>Constitutive equations</em> describe how matter or energy are transferred. We will need a constitutive equation for each term in the model conservation equation. Figuring out what equations to use here requires familiarity with the different options. We’ll take a look at just a couple here and present more in <a href="04_heat_transfer.html" class="quarto-xref"><span>Chapter 4</span></a>, <a href="05_mass_transfer.html" class="quarto-xref"><span>Chapter 5</span></a>, and <a href="06_reactions_microbiology.html" class="quarto-xref"><span>Chapter 6</span></a>. These equations typically have a name like “someone’s law”. In general, constitutive equations include a difference or derivative and a proportionality constant on the right-hand side (RHS). The left-hand side (LHS) is usually some kind of <em>flux</em>, which is a flow rate per unit cross-sectional area.</p>
+<p>For our coffee model, we only need one constitutive equation (take a look at <a href="#eq-coffee-conservation" class="quarto-xref">Equation&nbsp;<span>2.2</span></a> to see why), and the appropriate one is called <em>Newton’s law of cooling</em>. It is:</p>
+<p><span id="eq-nlc1"><span class="math display">\[
+q = h \cdot (T_s - T_\infty),
+\tag{2.3}\]</span></span></p>
+<p>where <span class="math inline">\(q=\)</span> <em>heat flux</em> (<span class="math inline">\(\Wpms\)</span>), <span class="math inline">\(h=\)</span> <em>convection heat transfer coefficient</em> (<span class="math inline">\(\WpmspK\)</span>), <span class="math inline">\(T_s=\)</span> surface temperature of an object (K or <span class="math inline">\(\degC\)</span>, either is fine because we are dealing with a temperature difference, not the absolute value), and <span class="math inline">\(T_\infty=\)</span> temperature of the surrounding fluid at some point where the object does not affect it. Applied to our cooling coffee system, <span class="math inline">\(T_s=\)</span> the coffee temperature, uniform throughout, and <span class="math inline">\(T_{\infty}=\)</span> air temperature.</p>
+<p>Constitutive equations depend on the state of the system and material properties. Take a look at <a href="#eq-nlc1" class="quarto-xref">Equation&nbsp;<span>2.3</span></a>. The “state of the system” component is clear in the presence of <span class="math inline">\(T_s\)</span>, which is the coffee temperature here. And the heat transfer coefficient <span class="math inline">\(h\)</span> depends on the properties of air–it would be very different if the coffee were immersed in water!</p>
+<!-- Why rates matter.
+     Brief preview with Fourier's law -- full treatment in @sec-heat.
+     CE often has a derivative or difference on the RHS.
+     CE depends on material properties and state variables. -->
+</section>
+<section id="sec-linking" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="sec-linking"><span class="header-section-number">2.4</span> Linking equations</h2>
+<p><em>Linking equations</em> are those relationships that are sometimes needed to connect or related different physical quantities included in the model. Not all models need linking equations. Our simple coffee model does though.</p>
+<!-- Connect different physical quantities (e.g., energy and temperature).
+     Needed when the state variable in the balance differs from the variable of interest. -->
+</section>
+<section id="sec-formulation-steps" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="sec-formulation-steps"><span class="header-section-number">2.5</span> Model formulation</h2>
+<!-- Show how balance + constitutive + linking equations combine to give the GE.
+     Scope here: 0D (lumped-parameter) models only.
+     Approach for 1D+ models (start from full GE, then simplify) introduced in @sec-spatial. -->
+<section id="example-cooling-coffee" class="level3" data-number="2.5.1">
+<h3 data-number="2.5.1" class="anchored" data-anchor-id="example-cooling-coffee"><span class="header-section-number">2.5.1</span> Example: cooling coffee</h3>
 <!-- Bring the coffee example through all steps to a governing equation.
      Solution in @sec-solving. -->
 
@@ -732,8 +823,8 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./01_intro.html" class="pagination-link" aria-label="Introduction to Modeling">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to Modeling</span></span>
+      <a href="./01_intro.html" class="pagination-link" aria-label="An introduction to models">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">An introduction to models</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
