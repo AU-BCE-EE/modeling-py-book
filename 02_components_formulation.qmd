@@ -9,16 +9,51 @@ This chapter presents a set of steps for formulating models.
 The basic steps in model formulation are given below.
 In the following sections, these are described in detail.
 
-1. Initial concepts and assumptions (system boundary, state variables, sketches, simplifications)
+1. Conceptual model, including sketch showing: system boundary, state variables, essential inputs
 2. Balance/conservation equations
 3. Constitutive equations (transfer or rate equations)
 4. Linking equations
-5. Spatial or other simplifications
-6. Initial or boundary conditions
-7. Governing equation (GE) --- key result
-8. Analytical or numerical solution
+5. Initial or boundary conditions
+6. Governing equation (GE)
 
-## Conservation equations {#sec-conservation}
+## 1. Conceptual model {#sec-conceptual-model}
+A conceptual model should include several components:
+
+* *system boundary*,
+* *state variables*,
+* *external conditions* or *boundary conditions*, 
+* main *flows* of matter or energy,
+* *geometry*,
+* main model *parameters*, and
+* other key assumptions.
+
+Most of these can be effectively presented in a model sketch.
+You already encountered a sketch of a conceptual model in @sec-intro (@fig-coffee-concept).
+It is copied below (@fig-coffee-concept2).
+
+![Conceptual model of coffee cooling.](drawings/coffee2.png){#fig-coffee-concept2 fig-alt="Sketch showing a conceptual model of coffee cooling. This time, notice all the components and labels."}
+
+Let's go through the list of conceptual model components, using @fig-coffee-concept2 as an example.
+
+The system boundary exactly what is being modeled.
+In a sketch, it is common to represent the system boundary with a dashed line; a green dashed line is used in @fig-coffee-concept2.
+Here, the boundary shows that we are modeling the temperature of the coffee and the mug.
+Air temperature sits outside the boudary, implying that is a fixed external condition.
+
+The state variable in this model is the coffee temperature, or really, coffee + mug system temperature.
+For a lumped parameter model like this one, the only way our state variable can change is by flow of energy through the system boundary;
+here, that flow is shown by the wavy red arrows.
+
+We don't have much about geometry in this sketch.
+That can be hard to show clearly in a sketch, and a lumped parameter model doesn't really have any geometry.
+The $A$ that is shown in the model provides a hint that we are taking a simple approach here, and assuming surface temperature and so heat flux is uniform across the entire exposed surface, inclduing coffee and the mug.
+The uniform temperature, shown by the horizontal red line, also shows that we are dealing with a lumped parameter model here.
+
+We defined one main model parameter in the sketch--$h$, the convectin heat transfer coefficient.
+Area $A$ is another *model input*, and one could argue about whether it should be called a parameter or not.
+We could add more details (Doesn't the coffee + mug mass play a role? And specific heat capacity? Some of that will have to wait until @sec-heat.), but this is a sufficient sketch.
+
+## 2. Conservation equations {#sec-conservation}
 
 *Conservation equations* or *balance equations* are a fundamental part of most models and all that we will consider, whether or not the equations are explicitly considered during model formulation.
 The word conservation simply means that something is preserved, i.e., not produced or destroyed.
@@ -95,13 +130,13 @@ It is:
 
 $$
 q = h \cdot (T_s - T_\infty),
-$${#eq-nlc1}
+$${#eq-coffee-constitutive}
 
 where $q=$ *heat flux* ($\Wpms$), $h=$ *convection heat transfer coefficient* ($\WpmspK$), $T_s=$ surface temperature of an object (K or $\degC$, either is fine because we are dealing with a temperature difference, not the absolute value), and $T_\infty=$ temperature of the surrounding fluid at some point where the object does not affect it.
 Applied to our cooling coffee system, $T_s=$ the coffee temperature, uniform throughout, and $T_{\infty}=$ air temperature.
 
 Constitutive equations depend on the state of the system and material properties.
-Take a look at @eq-nlc1.
+Take a look at @eq-coffee-constitutive.
 The "state of the system" component is clear in the presence of $T_s$, which is the coffee temperature here.
 And the heat transfer coefficient $h$ depends on the properties of air--it would be very different if the coffee were immersed in water!
 
@@ -115,12 +150,57 @@ And the heat transfer coefficient $h$ depends on the properties of air--it would
 
 *Linking equations* are those relationships that are sometimes needed to connect or related different physical quantities included in the model.
 Not all models need linking equations.
-Our simple coffee model does though. 
+Our simple coffee model does though! 
+Why?
+Well, our state variable is temperature $T$, but our conservation equation, @eq-coffee-conservation, is for energy.
+The same is true for our constitutive equation, @eq-coffee-constitutive, which has $T$ on the RHS, but only energy on the LHS.
+So somehow we need to link the two, temperature and energy.
+To do so, we need to know something about heat energy and thermal temperature, but even without this knowledge we might guess that the two are directly proporational, i.e., $\Delta T = c \cdot \Delta Q$, where $c$ is some arbitrary constant.
+In fact this is correct, but $c$ depends on the material and the quantity present.
+So here, the linking equation that we need is:
+
+$$
+\Delta Q = c_p \cdot m \codt \Delta T,
+$$ {#eq-coffee-linking}
+
+where $\Delta Q=$ a change in thermal energy (J), $c_p=$ a new parameter called *specific heat capacity*, $m=$ the material mass, and $\Delta T=$ the corresponding change in material temperature.
+Somehow our three equations will have to be combined to derive our GE.
+This is explained in @sec-formulation-steps below.
 
 <!-- Connect different physical quantities (e.g., energy and temperature).
      Needed when the state variable in the balance differs from the variable of interest. -->
 
 ## Model formulation {#sec-formulation-steps}
+
+Now we have the components we need to formulate a mathematical model.
+How do we put them together to get a GE?
+
+Energy conservation in W:
+
+$$
+\text{accumulation} = - \text{out}. 
+$$
+
+The constitutive equation needs to be multiplied by area $A$ to get total heat flow in W:
+
+$$
+\dot Q = A \cdot h \cdot (T_s - T_\infty).
+$$
+
+And let's write the linking equation using derivatives:
+
+$$
+\frac{dQ}{dt} = c_p \cdot m \codt \fract{dT}{dt}.
+$$
+
+These three equations and an initial condition plus some inputs are all we need.
+
+Ultimately we want 
+
+Any dynamic model needs explicit initial conditions, a quantitative description of the state of the system at the start.
+For the coffee model, it means knowing the initial temperature of the coffee + mug system.
+In general, it means having a value for each state variable.
+
 
 <!-- Show how balance + constitutive + linking equations combine to give the GE.
      Scope here: 0D (lumped-parameter) models only.

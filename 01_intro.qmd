@@ -47,10 +47,14 @@ The different classification groups are not exclusive, so a single model could b
 Conceptual, mathematical, and computer models are not really levels in a model classification scheme, but terms for the stage of model development.
 A *conceptual model* is some kind of qualitative description of a system.
 Conceptual models can be explained and summarized with the help of a good sketch.
-For example, let's say we want to develop a model to describe how the coffee in a mug cools over time.
-Our conceptual model could be summarized in the sketch below.
+For example, let's say we want to develop a model to describe how the coffee in a mug (@fig-coffee) cools over time.
 
-![Conceptual model of coffee cooling.](drawings/coffee1.png){#fig-coffee fig-alt="Sketch showing a conceptual model of coffee cooling."}                                                                          
+![A cooling cup of coffee, losing heat to the surrounding air.](drawings/coffee1.png){#fig-coffee fig-alt="Sketch showing a cup of coffee."}
+
+Our conceptual model could be summarized in the sketch below (@fig-coffee-concept).
+
+![Conceptual model of coffee cooling.](drawings/coffee2.png){#fig-coffee-concept fig-alt="Sketch showing a conceptual model of coffee cooling."}
+
 In our conceptual model there is some quantity of heat energy is present in the coffee and mug, and that amount determines its temperature.
 We know from experience that the coffee cools over time, meaning that heat energy is lost.
 In our model, the rate of heat loss depends on the temperature of the coffee and mug, the ambient temperature, and some heat transfer parameter.
@@ -64,8 +68,10 @@ $$
 \frac{dT}{dt} = c \cdot (T - T_{air}). 
 $$ {#eq-coffee-ge1}
 
-@eq-coffee-ge1 is actually a *differential equation* because it describes the rate of change in coffee temperature $T$ over time.
-It is also the *governing equation* or *GE* for this model, or that complete equation that describes the system.
+@eq-coffee-ge1 is actually a *differential equation* (*DE*) because it describes the rate of change in coffee temperature $T$ over time.
+In particular, it is an *ordinary differential equation* (*ODE*) because the dependent variable (temperature) depends on only a single independent variable (time).
+
+@eq-coffee-ge1 is also the *governing equation* or *GE* for this model, or that complete equation that describes the system.
 Governing equations typically need to be *solved* in order for a model to be useful.
 In some cases a solution can be found using only mathematical tools and expressed as a simple *closed-form* equation.
 Eq. (1) is one such example, and a solution is:

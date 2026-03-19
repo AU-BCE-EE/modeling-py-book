@@ -301,12 +301,13 @@ window.Quarto = {
    
   <ul>
   <li><a href="#basic-steps" id="toc-basic-steps" class="nav-link active" data-scroll-target="#basic-steps"><span class="header-section-number">2.1</span> Basic steps</a></li>
-  <li><a href="#sec-conservation" id="toc-sec-conservation" class="nav-link" data-scroll-target="#sec-conservation"><span class="header-section-number">2.2</span> Conservation equations</a></li>
-  <li><a href="#sec-constitutive" id="toc-sec-constitutive" class="nav-link" data-scroll-target="#sec-constitutive"><span class="header-section-number">2.3</span> Constitutive equations</a></li>
-  <li><a href="#sec-linking" id="toc-sec-linking" class="nav-link" data-scroll-target="#sec-linking"><span class="header-section-number">2.4</span> Linking equations</a></li>
-  <li><a href="#sec-formulation-steps" id="toc-sec-formulation-steps" class="nav-link" data-scroll-target="#sec-formulation-steps"><span class="header-section-number">2.5</span> Model formulation</a>
+  <li><a href="#sec-conceptual-model" id="toc-sec-conceptual-model" class="nav-link" data-scroll-target="#sec-conceptual-model"><span class="header-section-number">2.2</span> 1. Conceptual model</a></li>
+  <li><a href="#sec-conservation" id="toc-sec-conservation" class="nav-link" data-scroll-target="#sec-conservation"><span class="header-section-number">2.3</span> 2. Conservation equations</a></li>
+  <li><a href="#sec-constitutive" id="toc-sec-constitutive" class="nav-link" data-scroll-target="#sec-constitutive"><span class="header-section-number">2.4</span> Constitutive equations</a></li>
+  <li><a href="#sec-linking" id="toc-sec-linking" class="nav-link" data-scroll-target="#sec-linking"><span class="header-section-number">2.5</span> Linking equations</a></li>
+  <li><a href="#sec-formulation-steps" id="toc-sec-formulation-steps" class="nav-link" data-scroll-target="#sec-formulation-steps"><span class="header-section-number">2.6</span> Model formulation</a>
   <ul class="collapse">
-  <li><a href="#example-cooling-coffee" id="toc-example-cooling-coffee" class="nav-link" data-scroll-target="#example-cooling-coffee"><span class="header-section-number">2.5.1</span> Example: cooling coffee</a></li>
+  <li><a href="#example-cooling-coffee" id="toc-example-cooling-coffee" class="nav-link" data-scroll-target="#example-cooling-coffee"><span class="header-section-number">2.6.1</span> Example: cooling coffee</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -338,7 +339,7 @@ window.Quarto = {
 <h2 data-number="2.1" class="anchored" data-anchor-id="basic-steps"><span class="header-section-number">2.1</span> Basic steps</h2>
 <p>The basic steps in model formulation are given below. In the following sections, these are described in detail.</p>
 <ol type="1">
-<li>Initial concepts and assumptions (system boundary, state variables, sketches, simplifications)</li>
+<li>Conceptual model, including sketch showing: system boundary, state variables, essential inputs</li>
 <li>Balance/conservation equations</li>
 <li>Constitutive equations (transfer or rate equations)</li>
 <li>Linking equations</li>
@@ -348,8 +349,37 @@ window.Quarto = {
 <li>Analytical or numerical solution</li>
 </ol>
 </section>
-<section id="sec-conservation" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="sec-conservation"><span class="header-section-number">2.2</span> Conservation equations</h2>
+<section id="sec-conceptual-model" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="sec-conceptual-model"><span class="header-section-number">2.2</span> 1. Conceptual model</h2>
+<p>A conceptual model should include several components:</p>
+<ul>
+<li><em>system boundary</em>,</li>
+<li><em>state variables</em>,</li>
+<li><em>external conditions</em> or <em>boundary conditions</em>,</li>
+<li>main <em>flows</em> of matter or energy,</li>
+<li><em>geometry</em>,</li>
+<li>main model <em>parameters</em>, and</li>
+<li>other key assumptions.</li>
+</ul>
+<p>Most of these can be effectively presented in a model sketch. You already encountered a sketch of a conceptual model in <a href="01_intro.html" class="quarto-xref"><span>Chapter 1</span></a> (<a href="01_intro.html#fig-coffee-concept" class="quarto-xref">Figure&nbsp;<span>1.2</span></a>). It is copied below (<a href="#fig-coffee-concept2" class="quarto-xref">Figure&nbsp;<span>2.1</span></a>).</p>
+<div id="fig-coffee-concept2" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Sketch showing a conceptual model of coffee cooling. This time, notice all the components and labels.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-coffee-concept2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="drawings/coffee2.png" class="img-fluid figure-img" alt="Sketch showing a conceptual model of coffee cooling. This time, notice all the components and labels.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-coffee-concept2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.1: Conceptual model of coffee cooling.
+</figcaption>
+</figure>
+</div>
+<p>Let’s go through the list of conceptual model components, using <a href="#fig-coffee-concept2" class="quarto-xref">Figure&nbsp;<span>2.1</span></a> as an example.</p>
+<p>The system boundary exactly what is being modeled. In a sketch, it is common to represent the system boundary with a dashed line; a green dashed line is used in <a href="#fig-coffee-concept2" class="quarto-xref">Figure&nbsp;<span>2.1</span></a>. Here, the boundary shows that we are modeling the temperature of the coffee and the mug. Air temperature sits outside the boudary, implying that is a fixed external condition.</p>
+<p>The state variable in this model is the coffee temperature, or really, coffee + mug system temperature. For a lumped parameter model like this one, the only way our state variable can change is by flow of energy through the system boundary; here, that flow is shown by the wavy red arrows.</p>
+<p>We don’t have much about geometry in this sketch. That can be hard to show clearly in a sketch, and a lumped parameter model doesn’t really have any geometry. The <span class="math inline">\(A\)</span> that is shown in the model provides a hint that we are taking a simple approach here, and assuming surface temperature and so heat flux is uniform across the entire exposed surface, inclduing coffee and the mug. The uniform temperature, shown by the horizontal red line, also shows that we are dealing with a lumped parameter model here.</p>
+<p>We defined one main model parameter in the sketch–<span class="math inline">\(h\)</span>, the convectin heat transfer coefficient. Area <span class="math inline">\(A\)</span> is another <em>model input</em>, and one could argue about whether it should be called a parameter or not. We could add more details (Doesn’t the coffee + mug mass play a role? And specific heat capacity? Some of that will have to wait until <a href="04_heat_transfer.html" class="quarto-xref"><span>Chapter 4</span></a>.), but this is a sufficient sketch.</p>
+</section>
+<section id="sec-conservation" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="sec-conservation"><span class="header-section-number">2.3</span> 2. Conservation equations</h2>
 <p><em>Conservation equations</em> or <em>balance equations</em> are a fundamental part of most models and all that we will consider, whether or not the equations are explicitly considered during model formulation. The word conservation simply means that something is preserved, i.e., not produced or destroyed. In our models, we will be concerned with conservation of <em>energy</em> and <em>matter</em>.</p>
 <p>We can use a “cookbook” formula as a starting point for both energy and matter conservation: <span id="eq-conservation"><span class="math display">\[
 \text{accumulation} = \text{in} - \text{out} + \text{generation} - \text{consumption}.
@@ -365,7 +395,7 @@ window.Quarto = {
 <img src="web-images/AU_WET1.png" class="img-fluid figure-img" alt="Diagram of a lake model.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-wet1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2.1: Conceptual model of the Aarhus University WET model (https://projects.au.dk/wet/about-qwet).
+Figure&nbsp;2.2: Conceptual model of the Aarhus University WET model (https://projects.au.dk/wet/about-qwet).
 </figcaption>
 </figure>
 </div>
@@ -378,7 +408,7 @@ Figure&nbsp;2.1: Conceptual model of the Aarhus University WET model (https://pr
 \end{aligned}                                                                                                                                                                         
 \]</span></p>
 <p>There highlights an important point: that conservation equations apply to a specific state variable and a specific <em>domain</em>. This clarity is necessary when developing a model. In the WET model example, the state variable could be the water column total N concentration, or perhaps the inorganic N concentration, or the inorganic N mass. We don’t know for sure, but if we were developing or even applying this model, we must! Units could be <span class="math inline">\(\kgpmcps\)</span> or <span class="math inline">\(\kgps\)</span>.</p>
-<p>And the domain for the WET model (<a href="#fig-wet1" class="quarto-xref">Figure&nbsp;<span>2.1</span></a>) might be the entire water volume of a lake, if we were taking a lumped-parameter approach with this model. However, the domain could also be a single <em>cell</em> or <em>node</em> within the lake, if we were taking a spatial approach. During model development, it is common for the domain to be a <em>control volume</em>, which is some hypothetical small volume within the larger model domain. This can be convenient for GE development.</p>
+<p>And the domain for the WET model (<a href="#fig-wet1" class="quarto-xref">Figure&nbsp;<span>2.2</span></a>) might be the entire water volume of a lake, if we were taking a lumped-parameter approach with this model. However, the domain could also be a single <em>cell</em> or <em>node</em> within the lake, if we were taking a spatial approach. During model development, it is common for the domain to be a <em>control volume</em>, which is some hypothetical small volume within the larger model domain. This can be convenient for GE development.</p>
 <p>Every state variable in a model needs a conservation equation. Fortunately, most of the models we’ll cover in this book have a single state variable and so a single conservation equation. For the simple coffee model, the state variable is the coffee temperature and the domain is the entire cup of coffee. Units for our conservation equation, <a href="#eq-coffee-conservation" class="quarto-xref">Equation&nbsp;<span>2.2</span></a>, should be W, i.e., <span class="math inline">\(\Jps\)</span>.</p>
 <!-- Fundamental component of all models.
      Apply to energy and mass.
@@ -386,33 +416,37 @@ Figure&nbsp;2.1: Conceptual model of the Aarhus University WET model (https://pr
      Terms can be expanded; unused terms are typically dropped.
      Domain: whole system (0D), control volume (symbolic), or cell/node (1D+). -->
 </section>
-<section id="sec-constitutive" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="sec-constitutive"><span class="header-section-number">2.3</span> Constitutive equations</h2>
+<section id="sec-constitutive" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="sec-constitutive"><span class="header-section-number">2.4</span> Constitutive equations</h2>
 <p><em>Constitutive equations</em> describe how matter or energy are transferred. We will need a constitutive equation for each term in the model conservation equation. Figuring out what equations to use here requires familiarity with the different options. We’ll take a look at just a couple here and present more in <a href="04_heat_transfer.html" class="quarto-xref"><span>Chapter 4</span></a>, <a href="05_mass_transfer.html" class="quarto-xref"><span>Chapter 5</span></a>, and <a href="06_reactions_microbiology.html" class="quarto-xref"><span>Chapter 6</span></a>. These equations typically have a name like “someone’s law”. In general, constitutive equations include a difference or derivative and a proportionality constant on the right-hand side (RHS). The left-hand side (LHS) is usually some kind of <em>flux</em>, which is a flow rate per unit cross-sectional area.</p>
 <p>For our coffee model, we only need one constitutive equation (take a look at <a href="#eq-coffee-conservation" class="quarto-xref">Equation&nbsp;<span>2.2</span></a> to see why), and the appropriate one is called <em>Newton’s law of cooling</em>. It is:</p>
-<p><span id="eq-nlc1"><span class="math display">\[
+<p><span id="eq-coffee-constitutive"><span class="math display">\[
 q = h \cdot (T_s - T_\infty),
 \tag{2.3}\]</span></span></p>
 <p>where <span class="math inline">\(q=\)</span> <em>heat flux</em> (<span class="math inline">\(\Wpms\)</span>), <span class="math inline">\(h=\)</span> <em>convection heat transfer coefficient</em> (<span class="math inline">\(\WpmspK\)</span>), <span class="math inline">\(T_s=\)</span> surface temperature of an object (K or <span class="math inline">\(\degC\)</span>, either is fine because we are dealing with a temperature difference, not the absolute value), and <span class="math inline">\(T_\infty=\)</span> temperature of the surrounding fluid at some point where the object does not affect it. Applied to our cooling coffee system, <span class="math inline">\(T_s=\)</span> the coffee temperature, uniform throughout, and <span class="math inline">\(T_{\infty}=\)</span> air temperature.</p>
-<p>Constitutive equations depend on the state of the system and material properties. Take a look at <a href="#eq-nlc1" class="quarto-xref">Equation&nbsp;<span>2.3</span></a>. The “state of the system” component is clear in the presence of <span class="math inline">\(T_s\)</span>, which is the coffee temperature here. And the heat transfer coefficient <span class="math inline">\(h\)</span> depends on the properties of air–it would be very different if the coffee were immersed in water!</p>
+<p>Constitutive equations depend on the state of the system and material properties. Take a look at <a href="#eq-coffee-constitutive" class="quarto-xref">Equation&nbsp;<span>2.3</span></a>. The “state of the system” component is clear in the presence of <span class="math inline">\(T_s\)</span>, which is the coffee temperature here. And the heat transfer coefficient <span class="math inline">\(h\)</span> depends on the properties of air–it would be very different if the coffee were immersed in water!</p>
 <!-- Why rates matter.
      Brief preview with Fourier's law -- full treatment in @sec-heat.
      CE often has a derivative or difference on the RHS.
      CE depends on material properties and state variables. -->
 </section>
-<section id="sec-linking" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="sec-linking"><span class="header-section-number">2.4</span> Linking equations</h2>
-<p><em>Linking equations</em> are those relationships that are sometimes needed to connect or related different physical quantities included in the model. Not all models need linking equations. Our simple coffee model does though.</p>
+<section id="sec-linking" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="sec-linking"><span class="header-section-number">2.5</span> Linking equations</h2>
+<p><em>Linking equations</em> are those relationships that are sometimes needed to connect or related different physical quantities included in the model. Not all models need linking equations. Our simple coffee model does though! Why? Well, our state variable is temperature <span class="math inline">\(T\)</span>, but our conservation equation, <a href="#eq-coffee-conservation" class="quarto-xref">Equation&nbsp;<span>2.2</span></a>, is for energy. The same is true for our constitutive equation, <a href="#eq-coffee-constitutive" class="quarto-xref">Equation&nbsp;<span>2.3</span></a>, which has <span class="math inline">\(T\)</span> on the RHS, but only energy on the LHS. So somehow we need to link the two, temperature and energy. To do so, we need to know something about heat energy and thermal temperature, but even without this knowledge we might guess that the two are directly proporational, i.e., <span class="math inline">\(\Delta T = c \cdot \Delta Q\)</span>, where <span class="math inline">\(c\)</span> is some arbitrary constant. In fact this is correct, but <span class="math inline">\(c\)</span> depends on the material and the quantity present. So here, the linking equation that we need is:</p>
+<p><span id="eq-coffee-linking"><span class="math display">\[
+\Delta Q = c_p \cdot m \codt \Delta T,
+\tag{2.4}\]</span></span></p>
+<p>where <span class="math inline">\(\Delta Q=\)</span> a change in thermal energy (J), <span class="math inline">\(c_p=\)</span> a new parameter called <em>specific heat capacity</em>, <span class="math inline">\(m=\)</span> the material mass, and <span class="math inline">\(\Delta T=\)</span> the corresponding change in material temperature.</p>
 <!-- Connect different physical quantities (e.g., energy and temperature).
      Needed when the state variable in the balance differs from the variable of interest. -->
 </section>
-<section id="sec-formulation-steps" class="level2" data-number="2.5">
-<h2 data-number="2.5" class="anchored" data-anchor-id="sec-formulation-steps"><span class="header-section-number">2.5</span> Model formulation</h2>
+<section id="sec-formulation-steps" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="sec-formulation-steps"><span class="header-section-number">2.6</span> Model formulation</h2>
 <!-- Show how balance + constitutive + linking equations combine to give the GE.
      Scope here: 0D (lumped-parameter) models only.
      Approach for 1D+ models (start from full GE, then simplify) introduced in @sec-spatial. -->
-<section id="example-cooling-coffee" class="level3" data-number="2.5.1">
-<h3 data-number="2.5.1" class="anchored" data-anchor-id="example-cooling-coffee"><span class="header-section-number">2.5.1</span> Example: cooling coffee</h3>
+<section id="example-cooling-coffee" class="level3" data-number="2.6.1">
+<h3 data-number="2.6.1" class="anchored" data-anchor-id="example-cooling-coffee"><span class="header-section-number">2.6.1</span> Example: cooling coffee</h3>
 <!-- Bring the coffee example through all steps to a governing equation.
      Solution in @sec-solving. -->
 
