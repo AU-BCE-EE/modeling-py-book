@@ -1,4 +1,4 @@
-## An introduction to models {#sec-intro}
+# An introduction to models {#sec-intro}
 A *model* is a representation of a real system.
 The term itself is quite general.
 In this book, we will focus on models that are simplified representations of a physcial, chemical, or biological system.
@@ -16,28 +16,6 @@ These models are used to predict future climate under different input scenarios,
 In research, models are used for understanding complex systems.
 And in product development, models are used for design.
 Expand. . .add a couple examples
-
-## Model simplification
-*Simplification* is key part of model development.
-You might have the feeling that the more processes and dimensions you can cram into a model, the more accurate and in general the better it is.
-That's not true.
-Simplifications are in fact what make models useful, and without significant simplifications, many models would require too many inputs to ever be used.
-
-It is true that models should include the essential processes and components in order to be accurate and useful.
-And it is also true that existing sophisticated models include many processes and components and generally increase in both complexity and accuracy as they are extended and refined over time.
-So do we have a bit of a contradiction here?
-Perhaps.
-But even the most sophisticated model is vastly simpler than the actual physical system it represents.
-And adding processes and components requires underlying math and associated parameter values.
-If either is uncertain, the accuracy of the model may not improve.
-
-It is useful to remember that model complexity can and often does increase over time and as the result of contributions of multiple individuals.
-Good modeling advice is to start simple and add more complexity if necessary only after testing a model and identifying shortcomings.
-
-How simple should a model be?
-That depends--on the objectives of a project or the task requirements, on available resources, on the level of understanding of the real system, and on the opinion of developers or others who have a say.
-In this book we'll look at a variety of models that encompass a range of complexity.
-But in fact all of these models are relatively simple.
 
 ## Types of models {#sec-classification}
 There are multiple ways to group models, and the categories are useful for understanding, developing, and explaining models.
@@ -113,7 +91,7 @@ plt.ylabel(r'Temperature $(^\circ~\mathregular{C})$')
 plt.show()
 ```
 
-### Analytical (closed-form) vs. numerical
+### Analytical (closed-form) vs. numerical {#sec-analytical-v-numerical}
 
 The solution to the cooling coffee model above, @eq-coffee-sol1, is an example of an *analytical* or *closed-form* model.
 That means the model can be written as an equation that could be plugged into a calculator.
@@ -160,7 +138,30 @@ T =  T_{air}.
 $$ {#eq-coffee-ss1}
 
 Our steady-state solution shows that the coffee temperature will be the same as the air temperature at steady state.
-In other cases the steady-state solution is much more interesting and useful.
+In other cases the steady-state solution is more interesting and useful.
+
+## Model simplification
+*Simplification* is key part of model development.
+You might have the feeling that the more processes and dimensions you can cram into a model, the more accurate and in general the better it is.
+That's not true.
+Simplifications are in fact what make models useful, and without significant simplifications, many models would require too many inputs to ever be used.
+
+It is true that models should include the essential processes and components in order to be accurate and useful.
+And it is also true that existing sophisticated models include many processes and components and generally increase in both complexity and accuracy as they are extended and refined over time.
+So do we have a bit of a contradiction here?
+Perhaps.
+But even the most sophisticated model is vastly simpler than the actual physical system it represents.
+And adding processes and components requires underlying math and associated parameter values.
+If either is uncertain, the accuracy of the model may not improve.
+
+It is useful to remember that model complexity can and often does increase over time and as the result of contributions of multiple individuals.
+Good modeling advice is to start simple and add more complexity if necessary only after testing a model and identifying shortcomings.
+
+How simple should a model be?
+That depends--on the objectives of a project or the task requirements, on available resources, on the level of understanding of the real system, and on the opinion of developers or others who have a say.
+In this book we'll look at a variety of models that encompass a range of complexity.
+But in fact all of these models are relatively simple.
+
 
 ## Key terms {#sec-terms}
 

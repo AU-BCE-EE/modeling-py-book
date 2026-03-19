@@ -29,6 +29,8 @@ book:
     - appendix_d_slicing.qmd
     - appendix_e_symbols.qmd
 
+bibliography: references.bib
+
 format:
   html:
     theme: cosmo

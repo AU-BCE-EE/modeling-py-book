@@ -16,7 +16,7 @@ In the following sections, these are described in detail.
 5. Initial or boundary conditions
 6. Governing equation (GE)
 
-## 1. Conceptual model {#sec-conceptual-model}
+## Conceptual model {#sec-conceptual-model}
 A conceptual model should include several components:
 
 * *system boundary*,
@@ -53,7 +53,7 @@ We defined one main model parameter in the sketch--$h$, the convectin heat trans
 Area $A$ is another *model input*, and one could argue about whether it should be called a parameter or not.
 We could add more details (Doesn't the coffee + mug mass play a role? And specific heat capacity? Some of that will have to wait until @sec-heat.), but this is a sufficient sketch.
 
-## 2. Conservation equations {#sec-conservation}
+## Conservation equations {#sec-conservation}
 
 *Conservation equations* or *balance equations* are a fundamental part of most models and all that we will consider, whether or not the equations are explicitly considered during model formulation.
 The word conservation simply means that something is preserved, i.e., not produced or destroyed.

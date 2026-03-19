@@ -301,8 +301,8 @@ window.Quarto = {
    
   <ul>
   <li><a href="#basic-steps" id="toc-basic-steps" class="nav-link active" data-scroll-target="#basic-steps"><span class="header-section-number">2.1</span> Basic steps</a></li>
-  <li><a href="#sec-conceptual-model" id="toc-sec-conceptual-model" class="nav-link" data-scroll-target="#sec-conceptual-model"><span class="header-section-number">2.2</span> 1. Conceptual model</a></li>
-  <li><a href="#sec-conservation" id="toc-sec-conservation" class="nav-link" data-scroll-target="#sec-conservation"><span class="header-section-number">2.3</span> 2. Conservation equations</a></li>
+  <li><a href="#sec-conceptual-model" id="toc-sec-conceptual-model" class="nav-link" data-scroll-target="#sec-conceptual-model"><span class="header-section-number">2.2</span> Conceptual model</a></li>
+  <li><a href="#sec-conservation" id="toc-sec-conservation" class="nav-link" data-scroll-target="#sec-conservation"><span class="header-section-number">2.3</span> Conservation equations</a></li>
   <li><a href="#sec-constitutive" id="toc-sec-constitutive" class="nav-link" data-scroll-target="#sec-constitutive"><span class="header-section-number">2.4</span> Constitutive equations</a></li>
   <li><a href="#sec-linking" id="toc-sec-linking" class="nav-link" data-scroll-target="#sec-linking"><span class="header-section-number">2.5</span> Linking equations</a></li>
   <li><a href="#sec-formulation-steps" id="toc-sec-formulation-steps" class="nav-link" data-scroll-target="#sec-formulation-steps"><span class="header-section-number">2.6</span> Model formulation</a></li>
@@ -345,7 +345,7 @@ window.Quarto = {
 </ol>
 </section>
 <section id="sec-conceptual-model" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="sec-conceptual-model"><span class="header-section-number">2.2</span> 1. Conceptual model</h2>
+<h2 data-number="2.2" class="anchored" data-anchor-id="sec-conceptual-model"><span class="header-section-number">2.2</span> Conceptual model</h2>
 <p>A conceptual model should include several components:</p>
 <ul>
 <li><em>system boundary</em>,</li>
@@ -374,13 +374,13 @@ Figure&nbsp;2.1: Conceptual model of coffee cooling.
 <p>We defined one main model parameter in the sketch–<span class="math inline">\(h\)</span>, the convectin heat transfer coefficient. Area <span class="math inline">\(A\)</span> is another <em>model input</em>, and one could argue about whether it should be called a parameter or not. We could add more details (Doesn’t the coffee + mug mass play a role? And specific heat capacity? Some of that will have to wait until <a href="04_heat_transfer.html" class="quarto-xref"><span>Chapter 4</span></a>.), but this is a sufficient sketch.</p>
 </section>
 <section id="sec-conservation" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="sec-conservation"><span class="header-section-number">2.3</span> 2. Conservation equations</h2>
+<h2 data-number="2.3" class="anchored" data-anchor-id="sec-conservation"><span class="header-section-number">2.3</span> Conservation equations</h2>
 <p><em>Conservation equations</em> or <em>balance equations</em> are a fundamental part of most models and all that we will consider, whether or not the equations are explicitly considered during model formulation. The word conservation simply means that something is preserved, i.e., not produced or destroyed. In our models, we will be concerned with conservation of <em>energy</em> and <em>matter</em>.</p>
 <p>We can use a “cookbook” formula as a starting point for both energy and matter conservation: <span id="eq-conservation"><span class="math display">\[
 \text{accumulation} = \text{in} - \text{out} + \text{generation} - \text{consumption}.
 \tag{2.1}\]</span></span></p>
 <p>Exactly what the terms mean, along with their dimensions and units, can vary. Of course dimensions and units must match for all terms. We will typically use rates for all terms, e.g., <span class="math inline">\(\Jps\)</span> = W for energy and <span class="math inline">\(\kgps\)</span> for mass.</p>
-<p>To develop a conservation equation for a new model, start with <a href="#eq-conservation" class="quarto-xref">Equation&nbsp;<span>2.1</span></a> and place the flows that exist and the physical system and eliminate the terms that are not relevant. For our coffee model (<a href="01_intro.html#sec-classification" class="quarto-xref"><span>Section 1.2</span></a>), the relevant conservation equation is <span id="eq-coffee-conservation"><span class="math display">\[
+<p>To develop a conservation equation for a new model, start with <a href="#eq-conservation" class="quarto-xref">Equation&nbsp;<span>2.1</span></a> and place the flows that exist and the physical system and eliminate the terms that are not relevant. For our coffee model (<a href="01_intro.html#sec-classification" class="quarto-xref"><span>Section 1.1</span></a>), the relevant conservation equation is <span id="eq-coffee-conservation"><span class="math display">\[
 \text{accumulation} = - \text{out},
 \tag{2.2}\]</span></span> because there is no heat coming in, only heat loss, and not heat generated (e.g., from electricity or a reaction) or consumed (e.g., through a reaction).</p>
 <p>This is a very simple conservation equation. At the other extreme, it is common to have cases where each term in the cookbook equation includes multiple processes. For example, take a look at the diagram below, of the Aarhus University WET model of aquatic ecosystems.</p>

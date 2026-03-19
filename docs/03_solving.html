@@ -20,7 +20,62 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -87,6 +142,35 @@ MathJax = {
 };
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -271,11 +355,10 @@ MathJax = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#from-governing-equation-to-code" id="toc-from-governing-equation-to-code" class="nav-link active" data-scroll-target="#from-governing-equation-to-code"><span class="header-section-number">3.1</span> From governing equation to code</a></li>
-  <li><a href="#numerical-solution-eulers-method" id="toc-numerical-solution-eulers-method" class="nav-link" data-scroll-target="#numerical-solution-eulers-method"><span class="header-section-number">3.2</span> Numerical solution: Euler’s method</a></li>
-  <li><a href="#higher-order-methods-solve_ivp" id="toc-higher-order-methods-solve_ivp" class="nav-link" data-scroll-target="#higher-order-methods-solve_ivp"><span class="header-section-number">3.3</span> Higher-order methods: <code>solve_ivp()</code></a></li>
-  <li><a href="#closed-form-analytical-solutions" id="toc-closed-form-analytical-solutions" class="nav-link" data-scroll-target="#closed-form-analytical-solutions"><span class="header-section-number">3.4</span> Closed-form (analytical) solutions</a></li>
-  <li><a href="#using-python-modules" id="toc-using-python-modules" class="nav-link" data-scroll-target="#using-python-modules"><span class="header-section-number">3.5</span> Using Python modules</a></li>
+  <li><a href="#numerical-solution-euler-method" id="toc-numerical-solution-euler-method" class="nav-link active" data-scroll-target="#numerical-solution-euler-method"><span class="header-section-number">3.1</span> Numerical solution: Euler method</a></li>
+  <li><a href="#higher-order-methods-solve_ivp" id="toc-higher-order-methods-solve_ivp" class="nav-link" data-scroll-target="#higher-order-methods-solve_ivp"><span class="header-section-number">3.2</span> Higher-order methods: <code>solve_ivp()</code></a></li>
+  <li><a href="#closed-form-analytical-solutions" id="toc-closed-form-analytical-solutions" class="nav-link" data-scroll-target="#closed-form-analytical-solutions"><span class="header-section-number">3.3</span> Closed-form (analytical) solutions</a></li>
+  <li><a href="#using-python-modules" id="toc-using-python-modules" class="nav-link" data-scroll-target="#using-python-modules"><span class="header-section-number">3.4</span> Using Python modules</a></li>
   </ul>
 </nav>
     </div>
@@ -301,38 +384,228 @@ MathJax = {
 </header>
 
 
-<section id="from-governing-equation-to-code" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="from-governing-equation-to-code"><span class="header-section-number">3.1</span> From governing equation to code</h2>
-<p>Any dynamic model needs explicit initial conditions, a quantitative description of the state of the system at the start. For the coffee model, it means knowing the initial temperature of the coffee + mug system. In general, it means having a value for each state variable.</p>
+<p>A GE, like <a href="02_components_formulation.html#eq-coffee-ge2" class="quarto-xref">Equation&nbsp;<span>2.8</span></a>, is a mathematical model. In order to get predictions, we need to solve the model. There are two general ways to do that: analytical versus numerical approaches. The conceptual difference between the two of these should be familiar from <a href="01_intro.html#sec-analytical-v-numerical" class="quarto-xref"><span>Section 1.1.2</span></a>. In this chapter we’ll explore the two types of models, also methods of solving models, in more detail.</p>
+<p>Numerical models are almost always associated with computer code. One exception is pencil-and-paper demonstration of numerical calculations that you might perform on an exam. But to actually make useful predictions using numerical methods, the ability of computers to perform numerous calculations quickly is necessary.</p>
+<p>In this book, analytical models will also be associated with code in the end.</p>
 <!-- Lots of variation in how to do this.
      Numerical implementations can use separate balance and constitutive equations without
      forming a single GE.
      A single GE can always serve as the basis for both numerical and analytical solutions.
      Spatial models require more work -- see @sec-spatial. -->
-</section>
-<section id="numerical-solution-eulers-method" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="numerical-solution-eulers-method"><span class="header-section-number">3.2</span> Numerical solution: Euler’s method</h2>
+<section id="numerical-solution-euler-method" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="numerical-solution-euler-method"><span class="header-section-number">3.1</span> Numerical solution: Euler method</h2>
+<p>The basic approach to numerical solutions of dynamic models is to repeatedly update the state of the system using the GE. Any dynamic model needs explicit initial conditions, a quantitative description of the state of the system at the start. For the coffee model, it means knowing the initial temperature of the coffee + mug system. In general, it means having a value for each state variable.</p>
+<p>In Python and other programming languages, explicit <em>for loops</em> can be used to implement a numerical model. The simplest numerical method is based on calculating the state variable derivative at each time and extrapolating into the future by some fixed <em>time step</em>. This approach is also called the <em>explicit forward finite difference method</em> or the <em>Euler method</em>. It was first described by Leonhard Euler more than 300 years ago. Let’s write some code to implement it using the coffee model.</p>
+<div id="dda28105" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load NumPy package</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># And plotting package</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Set model inputs</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>cp <span class="op">=</span> <span class="fl">4.2</span>       <span class="co"># J g-1 K-1</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>T_init <span class="op">=</span> <span class="dv">80</span>    <span class="co"># deg. C</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>T_air <span class="op">=</span> <span class="dv">20</span>     <span class="co"># deg. C</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>mass <span class="op">=</span> <span class="dv">300</span>     <span class="co"># g</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>area <span class="op">=</span> <span class="fl">0.026</span>   <span class="co"># m2</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>h <span class="op">=</span> <span class="dv">75</span>         <span class="co"># W m-2 K-1</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>dt <span class="op">=</span> <span class="dv">60</span> <span class="op">*</span> <span class="dv">5</span>    <span class="co"># 5 min time step (s)</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>times <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">3600</span> <span class="op">+</span> dt, dt) <span class="co"># Times (s)</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate model constant or coefficient, which does not change over time</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>con_cool <span class="op">=</span> area <span class="op">*</span> h <span class="op">/</span> (cp <span class="op">*</span> mass)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Create vector of temperatures to fill later</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>T_coffee <span class="op">=</span> np.zeros_like(times)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the first value</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>T_coffee[<span class="dv">0</span>] <span class="op">=</span> T_init</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Implement an explicit forward finite difference method in a loop</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="bu">len</span>(T_coffee)):</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    T_coffee[i] <span class="op">=</span> T_coffee[i <span class="op">-</span> <span class="dv">1</span>]  <span class="op">-</span> con_cool <span class="op">*</span> (T_coffee[i <span class="op">-</span> <span class="dv">1</span>] <span class="op">-</span> T_air) <span class="op">*</span> dt</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(T_coffee)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[80 52 37 29 24 22 21 20 20 20 20 20 20]</code></pre>
+</div>
+</div>
+<p>We can plot predictions to see what we got.</p>
+<div id="cell-fig-coffee-preds1" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>plt.plot(times <span class="op">/</span> <span class="dv">60</span>, T_coffee, <span class="st">'r-'</span>, label <span class="op">=</span> <span class="st">'Euler'</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>plt.plot(times <span class="op">/</span> <span class="dv">60</span>, T_coffee, <span class="st">'ro'</span>, label <span class="op">=</span> <span class="st">'Euler'</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Time (min)'</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="vs">r'Predicted coffee temperature </span><span class="dv">$</span><span class="kw">(</span><span class="dv">^</span><span class="er">\</span><span class="vs">circ</span><span class="dv">\m</span><span class="vs">athregular{C}</span><span class="kw">)</span><span class="dv">$</span><span class="vs">'</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="fig-coffee-preds1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-coffee-preds1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03_solving_files/figure-html/fig-coffee-preds1-output-1.png" width="587" height="429" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-coffee-preds1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.1: Predicted coffee temperature using Euler method.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>So there are some predictions from a simple numerical model (<a href="#fig-coffee-preds1" class="quarto-xref">Figure&nbsp;<span>3.1</span></a>). Whether or not it is accurate depends on the model structure as well as the input variables. We’ll leave that question for another time. Certainly predictions are plausible and the model provides the qualitative response that we had expected (see <a href="01_intro.html" class="quarto-xref"><span>Chapter 1</span></a>).</p>
+<p>The points in <a href="#fig-coffee-preds1" class="quarto-xref">Figure&nbsp;<span>3.1</span></a> show the model predictions for specific times. Our model made no predictions for other times, and in the plot the straight lines just connect points. We had to explicitly select a time step, called <code>dt</code> in the code; it was set to 10 minutes (600 s) above. We should try some different values to see the effect. While we could edit the chunk of code above, a more efficient and reproducible approach is to create a Python <em>function</em> of the model.</p>
+<div id="dd1fdc39" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cool_eu(T_init, T_air, mass, area, h, time_range, dt, cp<span class="op">=</span><span class="fl">4.2</span>):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Simulate coffee cooling using the Euler method.</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">    T_init : float</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">        Initial coffee temperature (degC)</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">    T_air : float</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">        Ambient air temperature (degC)</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">    mass : float</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">        Mass of coffee (g)</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">    area : float</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">        Surface area of mug (m2)</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">    h : float</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">        Convective heat transfer coefficient (W m-2 K-1)</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">    time_range : tuple</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">        Start and end time (s), e.g. (0, 3600)</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">    dt : float</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">        Time step (s)</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co">    cp : float, optional</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co">        Specific heat capacity of coffee (J g-1 K-1), default 4.2</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="co">    -------</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="co">    dict with keys 'times' (s) and 'T_coffee' (degC)</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate constant, which does not change over time</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    con_cool <span class="op">=</span> area <span class="op">*</span> h <span class="op">/</span> (cp <span class="op">*</span> mass)</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create vector of times and concentrations</span></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>    times <span class="op">=</span> np.arange(time_range[<span class="dv">0</span>], time_range[<span class="dv">1</span>] <span class="op">+</span> dt, dt)</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>    T_coffee <span class="op">=</span> np.zeros_like(times)</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>    T_coffee[<span class="dv">0</span>] <span class="op">=</span> T_init</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Implement an explicit forward finite difference method in a loop</span></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="bu">len</span>(T_coffee)):</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>        T_coffee[i] <span class="op">=</span> T_coffee[i <span class="op">-</span> <span class="dv">1</span>]  <span class="op">-</span> con_cool <span class="op">*</span> (T_coffee[i <span class="op">-</span> <span class="dv">1</span>] <span class="op">-</span> T_air) <span class="op">*</span> dt</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Return solution</span></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>        <span class="st">'times'</span>: times,</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>        <span class="st">'T_coffee'</span>: T_coffee,</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>    }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Now we can call the function and run the model with a single line of code.</p>
+<div id="b492dd9c" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pred_temp1 <span class="op">=</span> cool_eu(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    T_init<span class="op">=</span><span class="dv">80</span>, </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    T_air<span class="op">=</span><span class="dv">20</span>, </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    mass<span class="op">=</span><span class="dv">300</span>, </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    area<span class="op">=</span><span class="fl">0.026</span>, </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    h<span class="op">=</span><span class="dv">75</span>, </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    time_range<span class="op">=</span>(<span class="fl">0.</span>, <span class="dv">60</span> <span class="op">*</span> <span class="dv">60</span>), </span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    dt <span class="op">=</span> <span class="dv">5</span> <span class="op">*</span> <span class="dv">60</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>That result should exactly match our earlier result, because the inputs were identical.</p>
+<div id="4e2e4429" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pred_temp1[<span class="st">'T_coffee'</span>])</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(T_coffee)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[80.         52.14285714 37.21938776 29.22467201 24.94178858 22.64738674
+ 21.4182429  20.75977298 20.40702124 20.21804709 20.11681094 20.06257729
+ 20.03352355]
+[80 52 37 29 24 22 21 20 20 20 20 20 20]</code></pre>
+</div>
+</div>
+<p>Now let’s try a few different values for <code>dt</code>.</p>
+<div id="b321bd8c" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>pred1 <span class="op">=</span> cool_eu(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    T_init<span class="op">=</span><span class="dv">80</span>, </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    T_air<span class="op">=</span><span class="dv">20</span>, </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    mass<span class="op">=</span><span class="dv">300</span>, </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    area<span class="op">=</span><span class="fl">0.026</span>, </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    h<span class="op">=</span><span class="dv">75</span>, </span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    time_range<span class="op">=</span>(<span class="fl">0.</span>, <span class="dv">60</span> <span class="op">*</span> <span class="dv">60</span>), </span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    dt <span class="op">=</span> <span class="dv">5</span> <span class="op">*</span> <span class="dv">60</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>pred2 <span class="op">=</span> cool_eu(</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    T_init<span class="op">=</span><span class="dv">80</span>, </span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    T_air<span class="op">=</span><span class="dv">20</span>, </span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    mass<span class="op">=</span><span class="dv">300</span>, </span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    area<span class="op">=</span><span class="fl">0.026</span>, </span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    h<span class="op">=</span><span class="dv">75</span>, </span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    time_range<span class="op">=</span>(<span class="fl">0.</span>, <span class="dv">60</span> <span class="op">*</span> <span class="dv">60</span>), </span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    dt <span class="op">=</span> <span class="dv">10</span> <span class="op">*</span> <span class="dv">60</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>pred3 <span class="op">=</span> cool_eu(</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    T_init<span class="op">=</span><span class="dv">80</span>, </span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    T_air<span class="op">=</span><span class="dv">20</span>, </span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    mass<span class="op">=</span><span class="dv">300</span>, </span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    area<span class="op">=</span><span class="fl">0.026</span>, </span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    h<span class="op">=</span><span class="dv">75</span>, </span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    time_range<span class="op">=</span>(<span class="fl">0.</span>, <span class="dv">60</span> <span class="op">*</span> <span class="dv">60</span>), </span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>    dt <span class="op">=</span> <span class="dv">20</span> <span class="op">*</span> <span class="dv">60</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>And plot results.</p>
+<div id="cell-fig-coffee-preds2" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plt.plot(pred1[<span class="st">'times'</span>] <span class="op">/</span> <span class="dv">60</span>, pred1[<span class="st">'T_coffee'</span>], label <span class="op">=</span> <span class="st">'5 min.'</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>plt.plot(pred2[<span class="st">'times'</span>] <span class="op">/</span> <span class="dv">60</span>, pred2[<span class="st">'T_coffee'</span>], label <span class="op">=</span> <span class="st">'10 min.'</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>plt.plot(pred3[<span class="st">'times'</span>] <span class="op">/</span> <span class="dv">60</span>, pred3[<span class="st">'T_coffee'</span>], label <span class="op">=</span> <span class="st">'20 min.'</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Time (min)'</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="vs">r'Predicted coffee temperature </span><span class="dv">$</span><span class="kw">(</span><span class="dv">^</span><span class="er">\</span><span class="vs">circ</span><span class="dv">\m</span><span class="vs">athregular{C}</span><span class="kw">)</span><span class="dv">$</span><span class="vs">'</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="fig-coffee-preds2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-coffee-preds2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03_solving_files/figure-html/fig-coffee-preds2-output-1.png" width="598" height="429" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-coffee-preds2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.2: Predicted coffee temperature using Euler method, showing results for different time steps.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Well, what do you think? Can you see the problem with Euler method? In brief, the derivative of a state variable at some particular time is not always a good estimate of its value at later times. For the method to work well, the time step needs to be relatively small. The 20 minute time step fails spectacularly, predicting a coffee temperature below -20 <span class="math inline">\(\degC\)</span> after 20 minutes, a full 40 <span class="math inline">\(\degC\)</span> below air temperature, and then <em>warming</em> up to 60 <span class="math inline">\(\degC\)</span>, followed by another big drop in temperature. This type of <em>oscillating</em> response is an example of <em>numerical instability</em>, and reflects inaccuracy in the solution as well as solutions that depend on the details of the call, here, the solution depends strongly on the time step.</p>
+<p>Does this example prove that the Euler method is worthless? Nope! It was the method of choice for ecological models for years <span class="citation" data-cites="odum2000">Odum and Odum (<a href="#ref-odum2000" role="doc-biblioref">2000</a>)</span> and is most likely still used in many existing computer models. It is in fact still a useful method, as long as care is taken in selecting a reasonable time step. How might you know when a time step is small enough? In general, simply try a smaller value and see if there is any effect. We’ll cover this general topic more in a later section.</p>
 <!-- Continue with the coffee example.
      Implement and explain.
      Show effect of time step size. -->
 </section>
-<section id="higher-order-methods-solve_ivp" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="higher-order-methods-solve_ivp"><span class="header-section-number">3.3</span> Higher-order methods: <code>solve_ivp()</code></h2>
+<section id="higher-order-methods-solve_ivp" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="higher-order-methods-solve_ivp"><span class="header-section-number">3.2</span> Higher-order methods: <code>solve_ivp()</code></h2>
 <!-- Continue with the coffee example.
      Implement and explain. -->
 </section>
-<section id="closed-form-analytical-solutions" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="closed-form-analytical-solutions"><span class="header-section-number">3.4</span> Closed-form (analytical) solutions</h2>
+<section id="closed-form-analytical-solutions" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="closed-form-analytical-solutions"><span class="header-section-number">3.3</span> Closed-form (analytical) solutions</h2>
 <!-- Introduce concept of closed-form solution; steady-state is the main use case.
      Start with GE, simplify, solve symbolically.
      Show general form of solution to first-order models.
      Coffee example; comparison to numerical solution. -->
 </section>
-<section id="using-python-modules" class="level2" data-number="3.5">
-<h2 data-number="3.5" class="anchored" data-anchor-id="using-python-modules"><span class="header-section-number">3.5</span> Using Python modules</h2>
+<section id="using-python-modules" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="using-python-modules"><span class="header-section-number">3.4</span> Using Python modules</h2>
 <!-- Introduce module-based modelling approach. -->
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-odum2000" class="csl-entry" role="listitem">
+Odum, Howard T., and Elisabeth C. Odum. 2000. <em>Modeling for All Scales: An Introduction to System Simulation</em>. San Diego: Academic Press.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->

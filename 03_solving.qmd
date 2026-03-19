@@ -1,9 +1,16 @@
 # Solving and Implementing Models {#sec-solving}
 
-## From governing equation to code
-Any dynamic model needs explicit initial conditions, a quantitative description of the state of the system at the start.
-For the coffee model, it means knowing the initial temperature of the coffee + mug system.
-In general, it means having a value for each state variable.
+A GE, like @eq-coffee-ge2, is a mathematical model.
+In order to get predictions, we need to solve the model.
+There are two general ways to do that: analytical versus numerical approaches.
+The conceptual difference between the two of these should be familiar from @sec-analytical-v-numerical.
+In this chapter we'll explore the two types of models, also methods of solving models, in more detail.
+
+Numerical models are almost always associated with computer code.
+One exception is pencil-and-paper demonstration of numerical calculations that you might perform on an exam.
+But to actually make useful predictions using numerical methods, the ability of computers to perform numerous calculations quickly is necessary.
+
+In this book, analytical models will also be associated with code in the end.
 
 
 <!-- Lots of variation in how to do this.
@@ -12,13 +19,216 @@ In general, it means having a value for each state variable.
      A single GE can always serve as the basis for both numerical and analytical solutions.
      Spatial models require more work -- see @sec-spatial. -->
 
-## Numerical solution: Euler's method
+## Numerical solution: Euler method
+
+The basic approach to numerical solutions of dynamic models is to repeatedly update the state of the system using the GE.
+Any dynamic model needs explicit initial conditions, a quantitative description of the state of the system at the start.
+For the coffee model, it means knowing the initial temperature of the coffee + mug system.
+In general, it means having a value for each state variable.
+
+In Python and other programming languages, explicit *for loops* can be used to implement a numerical model.
+The simplest numerical method is based on calculating the state variable derivative at each time and extrapolating into the future by some fixed *time step*.
+This approach is also called the *explicit forward finite difference method* or the *Euler method*.
+It was first described by Leonhard Euler more than 300 years ago.
+Let's write some code to implement it using the coffee model.
+
+```{python}
+# Load NumPy package
+import numpy as np
+
+# And plotting package
+import matplotlib.pyplot as plt
+
+# Set model inputs
+cp = 4.2       # J g-1 K-1
+T_init = 80    # deg. C
+T_air = 20     # deg. C
+mass = 300     # g
+area = 0.026   # m2
+h = 75         # W m-2 K-1
+dt = 60 * 5    # 5 min time step (s)
+times = np.arange(0, 3600 + dt, dt) # Times (s)
+
+# Calculate model constant or coefficient, which does not change over time
+con_cool = area * h / (cp * mass)
+
+# Create vector of temperatures to fill later
+T_coffee = np.zeros_like(times)
+
+# Set the first value
+T_coffee[0] = T_init
+
+# Implement an explicit forward finite difference method in a loop
+for i in range(1, len(T_coffee)):
+    T_coffee[i] = T_coffee[i - 1]  - con_cool * (T_coffee[i - 1] - T_air) * dt
+
+print(T_coffee)
+```
+
+We can plot predictions to see what we got.
+
+```{python}
+#| label: fig-coffee-preds1
+#| fig-cap: "Predicted coffee temperature using Euler method."
+
+plt.plot(times / 60, T_coffee, 'r-', label = 'Euler')
+plt.plot(times / 60, T_coffee, 'ro', label = 'Euler')
+plt.legend()
+plt.xlabel('Time (min)')
+plt.ylabel(r'Predicted coffee temperature $(^\circ\mathregular{C})$')
+plt.show()
+```
+So there are some predictions from a simple numerical model (@fig-coffee-preds1).
+Whether or not it is accurate depends on the model structure as well as the input variables.
+We'll leave that question for another time.
+Certainly predictions are plausible and the model provides the qualitative response that we had expected (see @sec-intro).
+
+The points in @fig-coffee-preds1 show the model predictions for specific times.
+Our model made no predictions for other times, and in the plot the straight lines just connect points. 
+We had to explicitly select a time step, called `dt` in the code; it was set to 10 minutes (600 s) above.
+We should try some different values to see the effect.
+While we could edit the chunk of code above, a more efficient and reproducible approach is to create a Python *function* of the model.
+
+```{python}
+def cool_eu(T_init, T_air, mass, area, h, time_range, dt, cp=4.2):
+    """
+    Simulate coffee cooling using the Euler method.
+
+    Parameters
+    ----------
+    T_init : float
+        Initial coffee temperature (degC)
+    T_air : float
+        Ambient air temperature (degC)
+    mass : float
+        Mass of coffee (g)
+    area : float
+        Surface area of mug (m2)
+    h : float
+        Convective heat transfer coefficient (W m-2 K-1)
+    time_range : tuple
+        Start and end time (s), e.g. (0, 3600)
+    dt : float
+        Time step (s)
+    cp : float, optional
+        Specific heat capacity of coffee (J g-1 K-1), default 4.2
+
+    Returns
+    -------
+    dict with keys 'times' (s) and 'T_coffee' (degC)
+    """
+
+    # Calculate constant, which does not change over time
+    con_cool = area * h / (cp * mass)
+
+    # Create vector of times and concentrations
+    times = np.arange(time_range[0], time_range[1] + dt, dt)
+    T_coffee = np.zeros_like(times)
+    T_coffee[0] = T_init
+
+    # Implement an explicit forward finite difference method in a loop
+    for i in range(1, len(T_coffee)):
+        T_coffee[i] = T_coffee[i - 1]  - con_cool * (T_coffee[i - 1] - T_air) * dt
+
+    # Return solution
+    return {
+        'times': times,
+        'T_coffee': T_coffee,
+    }
+```
+
+Now we can call the function and run the model with a single line of code.
+
+```{python}
+pred_temp1 = cool_eu(
+    T_init=80, 
+    T_air=20, 
+    mass=300, 
+    area=0.026, 
+    h=75, 
+    time_range=(0., 60 * 60), 
+    dt = 5 * 60
+)
+```
+
+That result should exactly match our earlier result, because the inputs were identical.
+
+```{python}
+print(pred_temp1['T_coffee'])
+print(T_coffee)
+```
+
+Now let's try a few different values for `dt`.
+
+```{python}
+pred1 = cool_eu(
+    T_init=80, 
+    T_air=20, 
+    mass=300, 
+    area=0.026, 
+    h=75, 
+    time_range=(0., 60 * 60), 
+    dt = 5 * 60
+)
+
+pred2 = cool_eu(
+    T_init=80, 
+    T_air=20, 
+    mass=300, 
+    area=0.026, 
+    h=75, 
+    time_range=(0., 60 * 60), 
+    dt = 10 * 60
+)
+
+pred3 = cool_eu(
+    T_init=80, 
+    T_air=20, 
+    mass=300, 
+    area=0.026, 
+    h=75, 
+    time_range=(0., 60 * 60), 
+    dt = 20 * 60
+)
+```
+
+And plot results.
+
+```{python}
+#| label: fig-coffee-preds2
+#| fig-cap: "Predicted coffee temperature using Euler method, showing results for different time steps."
+
+plt.plot(pred1['times'] / 60, pred1['T_coffee'], label = '5 min.')
+plt.plot(pred2['times'] / 60, pred2['T_coffee'], label = '10 min.')
+plt.plot(pred3['times'] / 60, pred3['T_coffee'], label = '20 min.')
+plt.legend()
+plt.xlabel('Time (min)')
+plt.ylabel(r'Predicted coffee temperature $(^\circ\mathregular{C})$')
+plt.show()
+```
+
+Well, what do you think?
+Can you see the problem with Euler method?
+In brief, the derivative of a state variable at some particular time is not always a good estimate of its value at later times.
+For the method to work well, the time step needs to be relatively small.
+The 20 minute time step fails spectacularly, predicting a coffee temperature below -20 $\degC$ after 20 minutes, a full 40 $\degC$ below air temperature, and then *warming* up to 60 $\degC$, followed by another big drop in temperature.
+This type of *oscillating* response is an example of *numerical instability*, and reflects inaccuracy in the solution as well as solutions that depend on the details of the call, here, the solution depends strongly on the time step.
+
+Does this example prove that the Euler method is worthless?
+Nope!
+It was the method of choice for ecological models for years @odum2000 and is most likely still used in many existing computer models.
+It is in fact still a useful method, as long as care is taken in selecting a reasonable time step.
+How might you know when a time step is small enough?
+In general, simply try a smaller value and see if there is any effect.
+We'll cover this general topic more in a later section.
 
 <!-- Continue with the coffee example.
      Implement and explain.
      Show effect of time step size. -->
 
 ## Higher-order methods: `solve_ivp()`
+
+
 
 <!-- Continue with the coffee example.
      Implement and explain. -->

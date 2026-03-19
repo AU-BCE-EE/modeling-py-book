@@ -335,14 +335,14 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#model-simplification" id="toc-model-simplification" class="nav-link active" data-scroll-target="#model-simplification"><span class="header-section-number">1.1</span> Model simplification</a></li>
-  <li><a href="#sec-classification" id="toc-sec-classification" class="nav-link" data-scroll-target="#sec-classification"><span class="header-section-number">1.2</span> Types of models</a>
+  <li><a href="#sec-classification" id="toc-sec-classification" class="nav-link active" data-scroll-target="#sec-classification"><span class="header-section-number">1.1</span> Types of models</a>
   <ul class="collapse">
-  <li><a href="#conceptual-mathematical-and-computer-models" id="toc-conceptual-mathematical-and-computer-models" class="nav-link" data-scroll-target="#conceptual-mathematical-and-computer-models"><span class="header-section-number">1.2.1</span> Conceptual, mathematical, and computer models</a></li>
-  <li><a href="#analytical-closed-form-vs.-numerical" id="toc-analytical-closed-form-vs.-numerical" class="nav-link" data-scroll-target="#analytical-closed-form-vs.-numerical"><span class="header-section-number">1.2.2</span> Analytical (closed-form) vs.&nbsp;numerical</a></li>
-  <li><a href="#lumped-vs.-distributed-parameter-0d-vs.-1d" id="toc-lumped-vs.-distributed-parameter-0d-vs.-1d" class="nav-link" data-scroll-target="#lumped-vs.-distributed-parameter-0d-vs.-1d"><span class="header-section-number">1.2.3</span> Lumped vs.&nbsp;distributed parameter (0D vs.&nbsp;1D+)</a></li>
-  <li><a href="#steady-state-vs.-dynamic" id="toc-steady-state-vs.-dynamic" class="nav-link" data-scroll-target="#steady-state-vs.-dynamic"><span class="header-section-number">1.2.4</span> Steady-state vs.&nbsp;dynamic</a></li>
+  <li><a href="#conceptual-mathematical-and-computer-models" id="toc-conceptual-mathematical-and-computer-models" class="nav-link" data-scroll-target="#conceptual-mathematical-and-computer-models"><span class="header-section-number">1.1.1</span> Conceptual, mathematical, and computer models</a></li>
+  <li><a href="#sec-analytical-v-numerical" id="toc-sec-analytical-v-numerical" class="nav-link" data-scroll-target="#sec-analytical-v-numerical"><span class="header-section-number">1.1.2</span> Analytical (closed-form) vs.&nbsp;numerical</a></li>
+  <li><a href="#lumped-vs.-distributed-parameter-0d-vs.-1d" id="toc-lumped-vs.-distributed-parameter-0d-vs.-1d" class="nav-link" data-scroll-target="#lumped-vs.-distributed-parameter-0d-vs.-1d"><span class="header-section-number">1.1.3</span> Lumped vs.&nbsp;distributed parameter (0D vs.&nbsp;1D+)</a></li>
+  <li><a href="#steady-state-vs.-dynamic" id="toc-steady-state-vs.-dynamic" class="nav-link" data-scroll-target="#steady-state-vs.-dynamic"><span class="header-section-number">1.1.4</span> Steady-state vs.&nbsp;dynamic</a></li>
   </ul></li>
+  <li><a href="#model-simplification" id="toc-model-simplification" class="nav-link" data-scroll-target="#model-simplification"><span class="header-section-number">1.2</span> Model simplification</a></li>
   <li><a href="#sec-terms" id="toc-sec-terms" class="nav-link" data-scroll-target="#sec-terms"><span class="header-section-number">1.3</span> Key terms</a></li>
   </ul>
 </nav>
@@ -373,18 +373,11 @@ window.Quarto = {
 <p>Students in science and engineering might assume that a model means a piece of software or the underlying code. This can be the case, but is not the only meaning of the term model. A software implementation of a model, i.e., some kind of a software program or script that can be run to make model predictions, is called a <em>software model</em> or <em>computer model</em>.</p>
 <p>What are models used for? For several things. They are used to make useful predictions about the future. For example, national policy and international agreements on greenhouse gas emissions rely on sophisticated “general circulation models” of the atmosphere. These models are used to predict future climate under different input scenarios, including more or less greenhouse gases in the atmosphere.</p>
 <p>In research, models are used for understanding complex systems. And in product development, models are used for design. Expand. . .add a couple examples</p>
-<section id="model-simplification" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="model-simplification"><span class="header-section-number">1.1</span> Model simplification</h2>
-<p><em>Simplification</em> is key part of model development. You might have the feeling that the more processes and dimensions you can cram into a model, the more accurate and in general the better it is. That’s not true. Simplifications are in fact what make models useful, and without significant simplifications, many models would require too many inputs to ever be used.</p>
-<p>It is true that models should include the essential processes and components in order to be accurate and useful. And it is also true that existing sophisticated models include many processes and components and generally increase in both complexity and accuracy as they are extended and refined over time. So do we have a bit of a contradiction here? Perhaps. But even the most sophisticated model is vastly simpler than the actual physical system it represents. And adding processes and components requires underlying math and associated parameter values. If either is uncertain, the accuracy of the model may not improve.</p>
-<p>It is useful to remember that model complexity can and often does increase over time and as the result of contributions of multiple individuals. Good modeling advice is to start simple and add more complexity if necessary only after testing a model and identifying shortcomings.</p>
-<p>How simple should a model be? That depends–on the objectives of a project or the task requirements, on available resources, on the level of understanding of the real system, and on the opinion of developers or others who have a say. In this book we’ll look at a variety of models that encompass a range of complexity. But in fact all of these models are relatively simple.</p>
-</section>
-<section id="sec-classification" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="sec-classification"><span class="header-section-number">1.2</span> Types of models</h2>
+<section id="sec-classification" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="sec-classification"><span class="header-section-number">1.1</span> Types of models</h2>
 <p>There are multiple ways to group models, and the categories are useful for understanding, developing, and explaining models. The different classification groups are not exclusive, so a single model could be a lumped parameter analytical model.</p>
-<section id="conceptual-mathematical-and-computer-models" class="level3" data-number="1.2.1">
-<h3 data-number="1.2.1" class="anchored" data-anchor-id="conceptual-mathematical-and-computer-models"><span class="header-section-number">1.2.1</span> Conceptual, mathematical, and computer models</h3>
+<section id="conceptual-mathematical-and-computer-models" class="level3" data-number="1.1.1">
+<h3 data-number="1.1.1" class="anchored" data-anchor-id="conceptual-mathematical-and-computer-models"><span class="header-section-number">1.1.1</span> Conceptual, mathematical, and computer models</h3>
 <p>Conceptual, mathematical, and computer models are not really levels in a model classification scheme, but terms for the stage of model development. A <em>conceptual model</em> is some kind of qualitative description of a system. Conceptual models can be explained and summarized with the help of a good sketch. For example, let’s say we want to develop a model to describe how the coffee in a mug (<a href="#fig-coffee" class="quarto-xref">Figure&nbsp;<span>1.1</span></a>) cools over time.</p>
 <div id="fig-coffee" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Sketch showing a cup of coffee.">
 <figure class="quarto-float quarto-float-fig figure">
@@ -418,7 +411,7 @@ Figure&nbsp;1.2: Conceptual model of coffee cooling.
 T(t) = (T_0 - T_{air}) \cdot e^{(-c \cdot t)} + T_{air}.
 \tag{1.2}\]</span></span></p>
 <p>We saw a <em>computer model</em> above. It is a piece of computer software that runs the model. Creating a computer model means <em>implementing</em> a mathematical model. We could also say that development of a software model means <em>programming</em> a mathematical model. Here is an implementation of the coffee model, i.e., a computer model for cooling coffee.</p>
-<div id="c29b35c8" class="cell" data-execution_count="1">
+<div id="ac96c891" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import modules</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -452,18 +445,18 @@ T(t) = (T_0 - T_{air}) \cdot e^{(-c \cdot t)} + T_{air}.
 </div>
 </div>
 </section>
-<section id="analytical-closed-form-vs.-numerical" class="level3" data-number="1.2.2">
-<h3 data-number="1.2.2" class="anchored" data-anchor-id="analytical-closed-form-vs.-numerical"><span class="header-section-number">1.2.2</span> Analytical (closed-form) vs.&nbsp;numerical</h3>
+<section id="sec-analytical-v-numerical" class="level3" data-number="1.1.2">
+<h3 data-number="1.1.2" class="anchored" data-anchor-id="sec-analytical-v-numerical"><span class="header-section-number">1.1.2</span> Analytical (closed-form) vs.&nbsp;numerical</h3>
 <p>The solution to the cooling coffee model above, <a href="#eq-coffee-sol1" class="quarto-xref">Equation&nbsp;<span>1.2</span></a>, is an example of an <em>analytical</em> or <em>closed-form</em> model. That means the model can be written as an equation that could be plugged into a calculator. The only part of <a href="#eq-coffee-sol1" class="quarto-xref">Equation&nbsp;<span>1.2</span></a> that could not be solved with pencil and paper is the <span class="math inline">\(e^{()}\)</span> bit. Analytical solutions are great because they are easy to implement or program. The model solution is entered on a single line of code in the example above. They can also provide insight into model behavior at the mathematical model stage. <a href="#eq-coffee-sol1" class="quarto-xref">Equation&nbsp;<span>1.2</span></a> tells us that <span class="math inline">\(T\)</span> will start at <span class="math inline">\(T_0\)</span> and drop toward <span class="math inline">\(T_{air}\)</span>, quickly at first but then more and more slowly. These inferences require some experience with symbolic mathematics.</p>
 <p>So why not use only analytical solutions? Because it is not possible in most cases. The GE in <a href="#eq-coffee-ge1" class="quarto-xref">Equation&nbsp;<span>1.1</span></a> is a very simple ODE, and only simple ODEs can be solved analytically. In other cases, we will have to solve GEs numerically, without an <em>explicit</em> solution. Numerical solutions really take advantage of the power of computing and programming languages to arrive at a solution. Much of this book is focused on numerical models.</p>
 </section>
-<section id="lumped-vs.-distributed-parameter-0d-vs.-1d" class="level3" data-number="1.2.3">
-<h3 data-number="1.2.3" class="anchored" data-anchor-id="lumped-vs.-distributed-parameter-0d-vs.-1d"><span class="header-section-number">1.2.3</span> Lumped vs.&nbsp;distributed parameter (0D vs.&nbsp;1D+)</h3>
+<section id="lumped-vs.-distributed-parameter-0d-vs.-1d" class="level3" data-number="1.1.3">
+<h3 data-number="1.1.3" class="anchored" data-anchor-id="lumped-vs.-distributed-parameter-0d-vs.-1d"><span class="header-section-number">1.1.3</span> Lumped vs.&nbsp;distributed parameter (0D vs.&nbsp;1D+)</h3>
 <p>Our coffee model is many things, including a <em>lumped parameter</em> model. Lumped parameter models do not explicitly include variation in the condition or state of the system (here our coffee and mug) over space. In it, we only consider a single “lumped” coffee + mug temperature <span class="math inline">\(T\)</span>. The name “lumped <strong>parameter</strong>” is a bit confusing because it isn’t model parameters that we are lumping, really.</p>
 <p>What if we created a two-dimensional (<em>2D</em>) model that explicitly included the temperature <em>profile</em> over space? That means our model would predict not just a single temperature, but the temperature for multiple locations within the coffee and mug, as well as the effect that differences in temperature over space have on cooling. That would be a much more complicated model, and potentially more accurate, and would be called a <em>distributed parameter</em> model. Deciding whether to use a lumped parameter approach is an important step in model simplification.</p>
 </section>
-<section id="steady-state-vs.-dynamic" class="level3" data-number="1.2.4">
-<h3 data-number="1.2.4" class="anchored" data-anchor-id="steady-state-vs.-dynamic"><span class="header-section-number">1.2.4</span> Steady-state vs.&nbsp;dynamic</h3>
+<section id="steady-state-vs.-dynamic" class="level3" data-number="1.1.4">
+<h3 data-number="1.1.4" class="anchored" data-anchor-id="steady-state-vs.-dynamic"><span class="header-section-number">1.1.4</span> Steady-state vs.&nbsp;dynamic</h3>
 <p>Our cooling coffee model is an example of a <em>dynamic</em> model, because it predicts the coffee temperature over time. But we won’t always need a dynamic model. For example, it is the <em>steady-state</em> performance of a reactor that usually matters, i.e., how it performs once it has started up and is running steadily. The steady-state condition for our coffee model is not very interesting, but the process of finding a steady-state solution, i.e., developing a steady-state model, is the same in more complex models. We start with the GE, set the time derivative to zero, and simplify:</p>
 <p><span class="math display">\[
 c \cdot (T - T_{air}) = 0,
@@ -471,8 +464,15 @@ c \cdot (T - T_{air}) = 0,
 <p><span id="eq-coffee-ss1"><span class="math display">\[
 T =  T_{air}.
 \tag{1.3}\]</span></span></p>
-<p>Our steady-state solution shows that the coffee temperature will be the same as the air temperature at steady state. In other cases the steady-state solution is much more interesting and useful.</p>
+<p>Our steady-state solution shows that the coffee temperature will be the same as the air temperature at steady state. In other cases the steady-state solution is more interesting and useful.</p>
 </section>
+</section>
+<section id="model-simplification" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="model-simplification"><span class="header-section-number">1.2</span> Model simplification</h2>
+<p><em>Simplification</em> is key part of model development. You might have the feeling that the more processes and dimensions you can cram into a model, the more accurate and in general the better it is. That’s not true. Simplifications are in fact what make models useful, and without significant simplifications, many models would require too many inputs to ever be used.</p>
+<p>It is true that models should include the essential processes and components in order to be accurate and useful. And it is also true that existing sophisticated models include many processes and components and generally increase in both complexity and accuracy as they are extended and refined over time. So do we have a bit of a contradiction here? Perhaps. But even the most sophisticated model is vastly simpler than the actual physical system it represents. And adding processes and components requires underlying math and associated parameter values. If either is uncertain, the accuracy of the model may not improve.</p>
+<p>It is useful to remember that model complexity can and often does increase over time and as the result of contributions of multiple individuals. Good modeling advice is to start simple and add more complexity if necessary only after testing a model and identifying shortcomings.</p>
+<p>How simple should a model be? That depends–on the objectives of a project or the task requirements, on available resources, on the level of understanding of the real system, and on the opinion of developers or others who have a say. In this book we’ll look at a variety of models that encompass a range of complexity. But in fact all of these models are relatively simple.</p>
 </section>
 <section id="sec-terms" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="sec-terms"><span class="header-section-number">1.3</span> Key terms</h2>
