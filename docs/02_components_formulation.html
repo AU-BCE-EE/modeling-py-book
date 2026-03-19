@@ -305,10 +305,7 @@ window.Quarto = {
   <li><a href="#sec-conservation" id="toc-sec-conservation" class="nav-link" data-scroll-target="#sec-conservation"><span class="header-section-number">2.3</span> 2. Conservation equations</a></li>
   <li><a href="#sec-constitutive" id="toc-sec-constitutive" class="nav-link" data-scroll-target="#sec-constitutive"><span class="header-section-number">2.4</span> Constitutive equations</a></li>
   <li><a href="#sec-linking" id="toc-sec-linking" class="nav-link" data-scroll-target="#sec-linking"><span class="header-section-number">2.5</span> Linking equations</a></li>
-  <li><a href="#sec-formulation-steps" id="toc-sec-formulation-steps" class="nav-link" data-scroll-target="#sec-formulation-steps"><span class="header-section-number">2.6</span> Model formulation</a>
-  <ul class="collapse">
-  <li><a href="#example-cooling-coffee" id="toc-example-cooling-coffee" class="nav-link" data-scroll-target="#example-cooling-coffee"><span class="header-section-number">2.6.1</span> Example: cooling coffee</a></li>
-  </ul></li>
+  <li><a href="#sec-formulation-steps" id="toc-sec-formulation-steps" class="nav-link" data-scroll-target="#sec-formulation-steps"><span class="header-section-number">2.6</span> Model formulation</a></li>
   </ul>
 </nav>
     </div>
@@ -343,10 +340,8 @@ window.Quarto = {
 <li>Balance/conservation equations</li>
 <li>Constitutive equations (transfer or rate equations)</li>
 <li>Linking equations</li>
-<li>Spatial or other simplifications</li>
 <li>Initial or boundary conditions</li>
-<li>Governing equation (GE) — key result</li>
-<li>Analytical or numerical solution</li>
+<li>Governing equation (GE)</li>
 </ol>
 </section>
 <section id="sec-conceptual-model" class="level2" data-number="2.2">
@@ -434,24 +429,50 @@ q = h \cdot (T_s - T_\infty),
 <h2 data-number="2.5" class="anchored" data-anchor-id="sec-linking"><span class="header-section-number">2.5</span> Linking equations</h2>
 <p><em>Linking equations</em> are those relationships that are sometimes needed to connect or related different physical quantities included in the model. Not all models need linking equations. Our simple coffee model does though! Why? Well, our state variable is temperature <span class="math inline">\(T\)</span>, but our conservation equation, <a href="#eq-coffee-conservation" class="quarto-xref">Equation&nbsp;<span>2.2</span></a>, is for energy. The same is true for our constitutive equation, <a href="#eq-coffee-constitutive" class="quarto-xref">Equation&nbsp;<span>2.3</span></a>, which has <span class="math inline">\(T\)</span> on the RHS, but only energy on the LHS. So somehow we need to link the two, temperature and energy. To do so, we need to know something about heat energy and thermal temperature, but even without this knowledge we might guess that the two are directly proporational, i.e., <span class="math inline">\(\Delta T = c \cdot \Delta Q\)</span>, where <span class="math inline">\(c\)</span> is some arbitrary constant. In fact this is correct, but <span class="math inline">\(c\)</span> depends on the material and the quantity present. So here, the linking equation that we need is:</p>
 <p><span id="eq-coffee-linking"><span class="math display">\[
-\Delta Q = c_p \cdot m \codt \Delta T,
+\Delta Q = c_p \cdot m \cdot \Delta T,
 \tag{2.4}\]</span></span></p>
-<p>where <span class="math inline">\(\Delta Q=\)</span> a change in thermal energy (J), <span class="math inline">\(c_p=\)</span> a new parameter called <em>specific heat capacity</em>, <span class="math inline">\(m=\)</span> the material mass, and <span class="math inline">\(\Delta T=\)</span> the corresponding change in material temperature.</p>
+<p>where <span class="math inline">\(\Delta Q=\)</span> a change in thermal energy (J), <span class="math inline">\(c_p=\)</span> a new parameter called <em>specific heat capacity</em>, <span class="math inline">\(m=\)</span> the material mass, and <span class="math inline">\(\Delta T=\)</span> the corresponding change in material temperature. Somehow our three equations will have to be combined to derive our GE. This is explained in <a href="#sec-formulation-steps" class="quarto-xref"><span>Section 2.6</span></a> below.</p>
 <!-- Connect different physical quantities (e.g., energy and temperature).
      Needed when the state variable in the balance differs from the variable of interest. -->
 </section>
 <section id="sec-formulation-steps" class="level2" data-number="2.6">
 <h2 data-number="2.6" class="anchored" data-anchor-id="sec-formulation-steps"><span class="header-section-number">2.6</span> Model formulation</h2>
+<p>Now we have the components we need to formulate a mathematical model. How do we put them together to get a GE?</p>
+<p>Energy conservation in W:</p>
+<p><span id="eq-coffee-conservation2"><span class="math display">\[
+\text{accumulation} = - \text{out}.
+\tag{2.5}\]</span></span></p>
+<p>The constitutive equation needs to be multiplied by area <span class="math inline">\(A\)</span> to get total heat flow in W:</p>
+<p><span id="eq-coffee-constitutive2"><span class="math display">\[
+\dot Q = A \cdot h \cdot (T_s - T_\infty).
+\tag{2.6}\]</span></span></p>
+<p>And let’s write the linking equation using derivatives:</p>
+<p><span id="eq-coffee-linking2"><span class="math display">\[
+\frac{dQ}{dt} = c_p \cdot m \cdot \frac{dT}{dt}.
+\tag{2.7}\]</span></span></p>
+<p>These three equations and an initial condition plus some inputs are all we need.</p>
+<p>Ultimately we want a GE that gives an expression for a derivative for our state variable.</p>
+<p>Study the equations a bit–how are they related? A good place to start is to review what the terms in the conservation equation actually mean. Here, the LHS in <a href="#eq-coffee-conservation2" class="quarto-xref">Equation&nbsp;<span>2.5</span></a> is the accumulation of energy. Interestingly, that is what we also have in the LHS of <a href="#eq-coffee-linking2" class="quarto-xref">Equation&nbsp;<span>2.7</span></a>. What is the RHS of the conservation equation <a href="#eq-coffee-conservation2" class="quarto-xref">Equation&nbsp;<span>2.5</span></a>? It can help to refer back to the sketch, <a href="#fig-coffee-concept2" class="quarto-xref">Figure&nbsp;<span>2.1</span></a>. With that, you may realize that the RHS of the conservation equation is our convective heat loss, which is given by the constitutive equation, <a href="#eq-coffee-constitutive2" class="quarto-xref">Equation&nbsp;<span>2.6</span></a>.</p>
+<p>This all means we can substitute the RHS of <a href="#eq-coffee-linking2" class="quarto-xref">Equation&nbsp;<span>2.7</span></a> for the LHS of <a href="#eq-coffee-conservation2" class="quarto-xref">Equation&nbsp;<span>2.5</span></a>. And we can substitute the RHS of <a href="#eq-coffee-constitutive2" class="quarto-xref">Equation&nbsp;<span>2.6</span></a> for the RHS of <a href="#eq-coffee-conservation2" class="quarto-xref">Equation&nbsp;<span>2.5</span></a>. This gives:</p>
+<p><span class="math display">\[
+c_p \cdot m \cdot \frac{dT}{dt} = - A \cdot h \cdot (T_s - T_\infty)
+\]</span></p>
+<p>Almost there! We now have an expression that includes the derivative of our state variable <span class="math inline">\(T\)</span> (see the <span class="math inline">\(\frac{dT}{dt}\)</span> term?) so we have a DE. We just need to rearrange, by solving for that <span class="math inline">\(\frac{dT}{dt}\)</span> term.</p>
+<p><span id="eq-coffee-ge2"><span class="math display">\[
+\frac{dT}{dt} = - \frac{A \cdot h}{c_p \cdot m} \cdot (T_s - T_\infty)
+\tag{2.8}\]</span></span></p>
+<p>And there, <a href="#eq-coffee-ge2" class="quarto-xref">Equation&nbsp;<span>2.8</span></a>, is a GE for our model! It shows that the rate of temperature change depends on the size of the coffee + mug system (<span class="math inline">\(m\)</span> and <span class="math inline">\(A\)</span>), a heat transfer coefficient specific to the conditions of the surrounding air (<span class="math inline">\(h\)</span>), the air temperature of course (<span class="math inline">\(T_\infty\)</span>), and the temperature of the coffee itself (<span class="math inline">\(T\)</span>).</p>
+<p>We can’t simply plug numbers into the GE and get a solution, because it is an ODE, and only tells how the coffee temperature <em>changes</em> over time, not the actual value. We’ll look at actually getting results in <a href="03_solving.html" class="quarto-xref"><span>Chapter 3</span></a>. But here we can see what inputs will be needed.</p>
+<p>You might notice that this GE is different from the one presented in <a href="01_intro.html" class="quarto-xref"><span>Chapter 1</span></a>, <a href="01_intro.html#eq-coffee-ge1" class="quarto-xref">Equation&nbsp;<span>1.1</span></a>. In that simpler GE, several terms were combined together into a single constant:</p>
+<p><span class="math display">\[
+c = - \frac{A \cdot h}{c_p \cdot m}
+\]</span></p>
+<p>In fact, both approaches could give identical predictions. The difference implies something about what we know though, and that will be explored later.</p>
 <!-- Show how balance + constitutive + linking equations combine to give the GE.
      Scope here: 0D (lumped-parameter) models only.
      Approach for 1D+ models (start from full GE, then simplify) introduced in @sec-spatial. -->
-<section id="example-cooling-coffee" class="level3" data-number="2.6.1">
-<h3 data-number="2.6.1" class="anchored" data-anchor-id="example-cooling-coffee"><span class="header-section-number">2.6.1</span> Example: cooling coffee</h3>
-<!-- Bring the coffee example through all steps to a governing equation.
-     Solution in @sec-solving. -->
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

@@ -160,7 +160,7 @@ In fact this is correct, but $c$ depends on the material and the quantity presen
 So here, the linking equation that we need is:
 
 $$
-\Delta Q = c_p \cdot m \codt \Delta T,
+\Delta Q = c_p \cdot m \cdot \Delta T,
 $$ {#eq-coffee-linking}
 
 where $\Delta Q=$ a change in thermal energy (J), $c_p=$ a new parameter called *specific heat capacity*, $m=$ the material mass, and $\Delta T=$ the corresponding change in material temperature.
@@ -179,34 +179,65 @@ Energy conservation in W:
 
 $$
 \text{accumulation} = - \text{out}. 
-$$
+$$ {#eq-coffee-conservation2}
 
 The constitutive equation needs to be multiplied by area $A$ to get total heat flow in W:
 
 $$
 \dot Q = A \cdot h \cdot (T_s - T_\infty).
-$$
+$$ {#eq-coffee-constitutive2}
 
 And let's write the linking equation using derivatives:
 
 $$
-\frac{dQ}{dt} = c_p \cdot m \codt \fract{dT}{dt}.
-$$
+\frac{dQ}{dt} = c_p \cdot m \cdot \frac{dT}{dt}.
+$$ {#eq-coffee-linking2}
 
 These three equations and an initial condition plus some inputs are all we need.
 
-Ultimately we want 
+Ultimately we want a GE that gives an expression for a derivative for our state variable.
 
-Any dynamic model needs explicit initial conditions, a quantitative description of the state of the system at the start.
-For the coffee model, it means knowing the initial temperature of the coffee + mug system.
-In general, it means having a value for each state variable.
+Study the equations a bit--how are they related?
+A good place to start is to review what the terms in the conservation equation actually mean.
+Here, the LHS in @eq-coffee-conservation2 is the accumulation of energy.
+Interestingly, that is what we also have in the LHS of @eq-coffee-linking2.
+What is the RHS of the conservation equation @eq-coffee-conservation2?
+It can help to refer back to the sketch, @fig-coffee-concept2.
+With that, you may realize that the RHS of the conservation equation is our convective heat loss, which is given by the constitutive equation, @eq-coffee-constitutive2.
 
+This all means we can substitute the RHS of @eq-coffee-linking2 for the LHS of @eq-coffee-conservation2.
+And we can substitute the RHS of @eq-coffee-constitutive2 for the RHS of @eq-coffee-conservation2.
+This gives:
+
+$$
+c_p \cdot m \cdot \frac{dT}{dt} = - A \cdot h \cdot (T_s - T_\infty)
+$$
+
+Almost there!
+We now have an expression that includes the derivative of our state variable $T$ (see the $\frac{dT}{dt}$ term?) so we have a DE.
+We just need to rearrange, by solving for that $\frac{dT}{dt}$ term.
+
+$$
+\frac{dT}{dt} = - \frac{A \cdot h}{c_p \cdot m} \cdot (T_s - T_\infty)
+$$ {#eq-coffee-ge2}
+
+And there, @eq-coffee-ge2, is a GE for our model!
+It shows that the rate of temperature change depends on the size of the coffee + mug system ($m$ and $A$), a heat transfer coefficient specific to the conditions of the surrounding air ($h$), the air temperature of course ($T_\infty$), and the temperature of the coffee itself ($T$).
+
+We can't simply plug numbers into the GE and get a solution, because it is an ODE, and only tells how the coffee temperature *changes* over time, not the actual value.
+We'll look at actually getting results in @sec-solving.
+But here we can see what inputs will be needed.
+
+You might notice that this GE is different from the one presented in @sec-intro, @eq-coffee-ge1. 
+In that simpler GE, several terms were combined together into a single constant:
+
+$$
+c = - \frac{A \cdot h}{c_p \cdot m}
+$$
+
+In fact, both approaches could give identical predictions.
+The difference implies something about what we know though, and that will be explored later.
 
 <!-- Show how balance + constitutive + linking equations combine to give the GE.
      Scope here: 0D (lumped-parameter) models only.
      Approach for 1D+ models (start from full GE, then simplify) introduced in @sec-spatial. -->
-
-### Example: cooling coffee
-
-<!-- Bring the coffee example through all steps to a governing equation.
-     Solution in @sec-solving. -->
