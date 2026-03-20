@@ -140,6 +140,31 @@ $$ {#eq-coffee-ss1}
 Our steady-state solution shows that the coffee temperature will be the same as the air temperature at steady state.
 In other cases the steady-state solution is more interesting and useful.
 
+### Mechanistic versus empirical
+
+Models that include a representation the underlying physics, chemistry, or biology are called *mechanistic*.
+Conversely, models based on simple relationship between inputs and outputs that is independent of the underlying mechanisms are called *empirical*.
+In reality, all models include some empirical components.
+Let's compare the two using a single concrete system.
+
+In a biomethanation reactor hydrogen gas ($\text{H}_2$) is combined with carbon dioxide ($\text{CO}_2$) to form methane ($\text{CH}_4$).
+The rate of the reaction increases with temperature.
+So an empirical model could look like this, a simple equation:
+
+$$
+r = k_{T} \cdot T,
+$$
+
+where the reaction rate $r$ could be in $\kgps$, temperature $T$ in $\degC$, and $k_T$ is an empirical coefficient, determined from fitting to measurements.
+Some measurements might look like those shown in @fig-biomethmod1.
+
+@rafrafi2021
+
+![Hypothetical measurements of biomethanation rate.](drawings/biometh_mod1.png){#fig-biomethmod1 fig-alt="Hypothetical biomethanation measurements"}
+
+
+
+
 ## Model simplification
 *Simplification* is key part of model development.
 You might have the feeling that the more processes and dimensions you can cram into a model, the more accurate and in general the better it is.
@@ -169,4 +194,7 @@ But in fact all of these models are relatively simple.
      linking equations, governing equations, state variables, independent variables,
      model parameters, model inputs, model outputs -->
 
+## Problems
 
+1. Several models from the literature are described below. 
+   

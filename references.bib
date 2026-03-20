@@ -1,7 +1,62 @@
-@book{odum2000,
-  author    = {Odum, Howard T. and Odum, Elisabeth C.},
-  title     = {Modeling for All Scales: An Introduction to System Simulation},
-  year      = {2000},
-  publisher = {Academic Press},
-  address   = {San Diego},
+@article{dalby_mechanistic_2021,
+  abstract = {Liquid manure (slurry) from livestock releases methane (CH4) that contributes significantly to global warming. Existing models for slurry CH4 production\textemdash used for mitigation and inventories\textemdash include effects of organic matter loading, temperature, and retention time but cannot predict important effects of management, or adequately capture essential temperature-driven dynamics. Here we present a new model that includes multiple methanogenic groups whose relative abundance shifts in response to changes in temperature or other environmental conditions. By default, the temperature responses of five groups correspond to those of four methanogenic species and one uncultured methanogen, although any number of groups could be defined. We argue that this simple mechanistic approach is able to describe both short- and long-term responses to temperature where other existing approaches fall short. The model is available in the open-source R package ABM (https://github.com/sashahafner/ABM) as a single flexible function that can include effects of slurry management (e.g., removal frequency and treatment methods) and changes in environmental conditions over time. Model simulations suggest that the reduction of CH4 emission by frequent emptying of slurry pits is due to washout of active methanogens. Application of the model to represent a full-scale slurry storage tank showed it can reproduce important trends, including a delayed response to temperature changes. However, the magnitude of predicted emission is uncertain, primarily as a result of sensitivity to the hydrolysis rate constant, due to a wide range in reported values. Results indicated that with additional work\textemdash particularly on the magnitude of hydrolysis rate\textemdash the model could be a tool for estimation of CH4 emissions for inventories.},
+  author = {Dalby, Frederik R. and Hafner, Sasha D. and Petersen, S{\o}ren O. and Vanderzaag, Andrew and Habtewold, Jemaneh and Dunfield, Kari and Chantigny, Martin H. and Sommer, Sven G.},
+  doi = {10.1371/journal.pone.0252881},
+  issn = {1932-6203},
+  journal = {PLOS ONE},
+  keywords = {STM paper},
+  language = {en},
+  month = {June},
+  note = {Publisher: Public Library of Science},
+  number = {6},
+  pages = {e0252881},
+  title = {A mechanistic model of methane emission from animal slurry with a focus on microbial groups},
+  url = {https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0252881},
+  urldate = {2021-07-30},
+  volume = {16},
+  year = {2021},
+}
+
+@book{odum2000modeling,
+  author = {Odum, Howard T and Odum, Elisabeth C},
+  publisher = {Elsevier},
+  title = {Modeling for all scales: an introduction to system simulation},
+  year = {2000},
+}
+
+@article{sommer_algorithms_2004,
+  abstract = {Biogenic emissions of methane (CH4) and nitrous oxide (N2O) from animal manure are stimulated by the degradation of volatile solids (VS) which serves as an energy source and a sink for atmospheric oxygen. Algorithms are presented which link carbon and nitrogen turnover in a dynamic prediction of CH4 and N2O emissions during handling and use of liquid manure (slurry). A sub-model for CH4 emissions during storage relates CH4 emissions to VS, temperature and storage time, and estimates the reduction in VS. A second sub-model estimates N2O emissions from field-applied slurry as a function of VS, slurry N and soil water potential, but emissions are estimated using emission factors. The model indicated that daily flushing of slurry from cattle houses would reduce total annual CH4+N2O emissions by 35\textbackslash \% (CO2 eq.), and that cooling of pig slurry in-house would reduce total annual CH4+N2O emissions by 21\textbackslash \% (CO2 eq.). Anaerobic digestion of slurry and organic waste produces CH4 at the expense of VS. Accordingly, the model predicted a 90\textbackslash \% reduction of CH4 emissions from outside stores with digested slurry, and a {\textbackslash textgreater}50\textbackslash \% reduction of N2O emissions after spring application of digested as opposed to untreated slurry. The sensitivity of the model towards storage temperature and soil water potential was examined. This study indicates that simple algorithms to account for ambient climatic conditions may significantly improve the prediction of CH4 and N2O emissions from animal manure.},
+  annote = {At least for the methane production component: a typical poorly-done study.
+145. This appears to be the equation for calculating methane emission rate:
+F(T) = VS(d)\ast b(1)\ast exp(lnA - E\ast (1/RT)) + . . .
+This appears to be all. . . there seems to be no mass balance for VS!
+146. There is a Table 2 that at least includes a factor to go from VS to CH4, so perhaps a mass balance was included in the model. I suspect that Al did not include this in IFSM.
+},
+  author = {Sommer, SG and Petersen, SO and Moller, HB},
+  issn = {1385-1314},
+  journal = {NUTRIENT CYCLING IN AGROECOSYSTEMS},
+  keywords = {Anaerobic digestion, Methane emissions},
+  month = {June},
+  number = {2},
+  pages = {143--154},
+  title = {Algorithms for calculating methane and nitrous oxide emissions from manure management},
+  url = {http://apps.isiknowledge.com/full_record.do?product=WOS&search_mode=GeneralSearch&qid=1&SID=4AhaBilB7LckJ@DPFGj&page=1&doc=1},
+  urldate = {2009-10-13},
+  volume = {69},
+  year = {2004},
+}
+
+@article{rafrafi2021,
+  author = {Rafrafi, Yan and Laguillaumie, L{\'e}a and Dumas, Claire},
+  doi = {10.1007/s12649-020-01283-z},
+  issue = {10},
+  journal = {Waste and Biomass Valorization},
+  language = {en},
+  month = {10},
+  pages = {5259--5282},
+  publisher = {Springer Science and Business Media LLC},
+  title = {Biological Methanation of H2 and CO2 with Mixed Cultures: Current Advances, Hurdles and Challenges},
+  url = {https://doi.org/10.1007/s12649-020-01283-z},
+  volume = {12},
+  year = {2021},
 }

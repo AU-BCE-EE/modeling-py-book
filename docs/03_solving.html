@@ -55,27 +55,7 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -596,7 +576,7 @@ Figure&nbsp;3.2: Predicted coffee temperature using the Euler method, showing re
 </div>
 </div>
 <p>Well, what do you think? Can you see the problem with Euler method? In brief, the derivative of a state variable at some particular time is not always a good estimate of its value at later times. For the method to work well, the time step needs to be relatively small. The 20 minute time step fails spectacularly, predicting a coffee temperature below -20 <span class="math inline">\(\degC\)</span> after 20 minutes, a full 40 <span class="math inline">\(\degC\)</span> below air temperature, and then <em>warming</em> up to 60 <span class="math inline">\(\degC\)</span>, followed by another big drop in temperature. This type of <em>oscillating</em> response is an example of <em>numerical instability</em>, and reflects inaccuracy in the solution as well as solutions that depend on the details of the call, here, the solution depends strongly on the time step.</p>
-<p>Does this example prove that the Euler method is worthless? Nope! It was the method of choice for ecological models for years <span class="citation" data-cites="odum2000">Odum and Odum (<a href="#ref-odum2000" role="doc-biblioref">2000</a>)</span> and is most likely still used in many existing computer models. It is in fact still a useful method, as long as care is taken in selecting a reasonable time step. How do you know when a time step is small enough? In general, simply try a smaller value and see if there is any effect. We’ll cover this general topic more in a later section.</p>
+<p>Does this example prove that the Euler method is worthless? Nope! It was the method of choice for ecological models for years <span class="citation" data-cites="odum2000">(<a href="#ref-odum2000" role="doc-biblioref"><strong>odum2000?</strong></a>)</span> and is most likely still used in many existing computer models. It is in fact still a useful method, as long as care is taken in selecting a reasonable time step. How do you know when a time step is small enough? In general, simply try a smaller value and see if there is any effect. We’ll cover this general topic more in a later section.</p>
 <!-- Continue with the coffee example.
      Implement and explain.
      Show effect of time step size. -->
@@ -762,11 +742,6 @@ Figure&nbsp;3.4: Predicted coffee temperature using Euler method and an RK45 app
 <!-- Introduce module-based modelling approach. -->
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-odum2000" class="csl-entry" role="listitem">
-Odum, Howard T., and Elisabeth C. Odum. 2000. <em>Modeling for All Scales: An Introduction to System Simulation</em>. San Diego: Academic Press.
-</div>
-</div>
 </section>
 
 </main> <!-- /main -->

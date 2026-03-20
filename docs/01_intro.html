@@ -55,7 +55,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -358,9 +378,11 @@ window.Quarto = {
   <li><a href="#sec-analytical-v-numerical" id="toc-sec-analytical-v-numerical" class="nav-link" data-scroll-target="#sec-analytical-v-numerical"><span class="header-section-number">1.1.2</span> Analytical (closed-form) vs.&nbsp;numerical</a></li>
   <li><a href="#lumped-vs.-distributed-parameter-0d-vs.-1d" id="toc-lumped-vs.-distributed-parameter-0d-vs.-1d" class="nav-link" data-scroll-target="#lumped-vs.-distributed-parameter-0d-vs.-1d"><span class="header-section-number">1.1.3</span> Lumped vs.&nbsp;distributed parameter (0D vs.&nbsp;1D+)</a></li>
   <li><a href="#steady-state-vs.-dynamic" id="toc-steady-state-vs.-dynamic" class="nav-link" data-scroll-target="#steady-state-vs.-dynamic"><span class="header-section-number">1.1.4</span> Steady-state vs.&nbsp;dynamic</a></li>
+  <li><a href="#mechanistic-versus-empirical" id="toc-mechanistic-versus-empirical" class="nav-link" data-scroll-target="#mechanistic-versus-empirical"><span class="header-section-number">1.1.5</span> Mechanistic versus empirical</a></li>
   </ul></li>
   <li><a href="#model-simplification" id="toc-model-simplification" class="nav-link" data-scroll-target="#model-simplification"><span class="header-section-number">1.2</span> Model simplification</a></li>
   <li><a href="#sec-terms" id="toc-sec-terms" class="nav-link" data-scroll-target="#sec-terms"><span class="header-section-number">1.3</span> Key terms</a></li>
+  <li><a href="#problems" id="toc-problems" class="nav-link" data-scroll-target="#problems"><span class="header-section-number">1.4</span> Problems</a></li>
   </ul>
 </nav>
     </div>
@@ -428,7 +450,7 @@ Figure&nbsp;1.2: Conceptual model of coffee cooling.
 T(t) = (T_0 - T_{air}) \cdot e^{(-c \cdot t)} + T_{air}.
 \tag{1.2}\]</span></span></p>
 <p>We saw a <em>computer model</em> above. It is a piece of computer software that runs the model. Creating a computer model means <em>implementing</em> a mathematical model. We could also say that development of a software model means <em>programming</em> a mathematical model. Here is an implementation of the coffee model, i.e., a computer model for cooling coffee.</p>
-<div id="ac96c891" class="cell" data-execution_count="1">
+<div id="c591a131" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import modules</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -483,6 +505,26 @@ T =  T_{air}.
 \tag{1.3}\]</span></span></p>
 <p>Our steady-state solution shows that the coffee temperature will be the same as the air temperature at steady state. In other cases the steady-state solution is more interesting and useful.</p>
 </section>
+<section id="mechanistic-versus-empirical" class="level3" data-number="1.1.5">
+<h3 data-number="1.1.5" class="anchored" data-anchor-id="mechanistic-versus-empirical"><span class="header-section-number">1.1.5</span> Mechanistic versus empirical</h3>
+<p>Models that include a representation the underlying physics, chemistry, or biology are called <em>mechanistic</em>. Conversely, models based on simple relationship between inputs and outputs that is independent of the underlying mechanisms are called <em>empirical</em>. In reality, all models include some empirical components. Let’s compare the two using a single concrete system.</p>
+<p>In a biomethanation reactor hydrogen gas (<span class="math inline">\(\text{H}_2\)</span>) is combined with carbon dioxide (<span class="math inline">\(\text{CO}_2\)</span>) to form methane (<span class="math inline">\(\text{CH}_4\)</span>). The rate of the reaction increases with temperature. So an empirical model could look like this, a simple equation:</p>
+<p><span class="math display">\[
+r = k_{T} \cdot T,
+\]</span></p>
+<p>where the reaction rate <span class="math inline">\(r\)</span> could be in <span class="math inline">\(\kgps\)</span>, temperature <span class="math inline">\(T\)</span> in <span class="math inline">\(\degC\)</span>, and <span class="math inline">\(k_T\)</span> is an empirical coefficient, determined from fitting to measurements. Some measurements might look like those shown in <a href="#fig-biomethmod1" class="quarto-xref">Figure&nbsp;<span>1.3</span></a>.</p>
+<p><span class="citation" data-cites="rafrafi2021">Rafrafi, Laguillaumie, and Dumas (<a href="#ref-rafrafi2021" role="doc-biblioref">2021</a>)</span></p>
+<div id="fig-biomethmod1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Hypothetical biomethanation measurements">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-biomethmod1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="drawings/biometh_mod1.png" class="img-fluid figure-img" alt="Hypothetical biomethanation measurements">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biomethmod1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.3: Hypothetical measurements of biomethanation rate.
+</figcaption>
+</figure>
+</div>
+</section>
 </section>
 <section id="model-simplification" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="model-simplification"><span class="header-section-number">1.2</span> Model simplification</h2>
@@ -496,8 +538,19 @@ T =  T_{air}.
 <!-- PDE, ODE, steady-state, lumping, conservation equations, constitutive equations,
      linking equations, governing equations, state variables, independent variables,
      model parameters, model inputs, model outputs -->
+</section>
+<section id="problems" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="problems"><span class="header-section-number">1.4</span> Problems</h2>
+<ol type="1">
+<li>Several models from the literature are described below.</li>
+</ol>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-rafrafi2021" class="csl-entry" role="listitem">
+Rafrafi, Yan, Léa Laguillaumie, and Claire Dumas. 2021. <span>“Biological Methanation of H2 and CO2 with Mixed Cultures: Current Advances, Hurdles and Challenges.”</span> <em>Waste and Biomass Valorization</em> 12 (October): 5259–82. <a href="https://doi.org/10.1007/s12649-020-01283-z">https://doi.org/10.1007/s12649-020-01283-z</a>.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
