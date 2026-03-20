@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Appendix A — Symbols – Modelling</title>
+<title>Appendix A — Derivatives and Differential Equations – Modelling</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,7 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./appendix_d_slicing.html" rel="prev">
+<link href="./appx_python_style.html" rel="next">
+<link href="./11_time_variable_inputs.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -86,35 +87,6 @@ MathJax = {
 };
 </script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -127,7 +99,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./appendix_a_derivatives.html">Appendices</a></li><li class="breadcrumb-item"><a href="./appendix_e_symbols.html"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Symbols</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./appx_derivatives.html">Appendices</a></li><li class="breadcrumb-item"><a href="./appx_derivatives.html"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Derivatives and Differential Equations</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -259,32 +231,38 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appendix_a_derivatives.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Derivatives and Differential Equations</span></a>
+  <a href="./appx_derivatives.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Derivatives and Differential Equations</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appendix_b_python_style.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Python Style Guide</span></a>
+  <a href="./appx_python_style.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Python Style Guide</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appendix_c_python_types.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Python Object Types</span></a>
+  <a href="./appx_python_types.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Python data structures</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appendix_d_slicing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Slicing in Python</span></a>
+  <a href="./appx_slicing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Slicing in Python</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appendix_e_symbols.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Symbols</span></span></a>
+  <a href="./appx_symbols.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Symbols</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appx_parameter_values.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Parameter values</span></span></a>
   </div>
 </li>
       </ul>
@@ -300,9 +278,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./appendix_a_derivatives.html">Appendices</a></li><li class="breadcrumb-item"><a href="./appendix_e_symbols.html"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Symbols</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./appx_derivatives.html">Appendices</a></li><li class="breadcrumb-item"><a href="./appx_derivatives.html"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Derivatives and Differential Equations</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Appendix A — Symbols</h1>
+<h1 class="title"><span id="sec-appx-deriv" class="quarto-section-identifier">Appendix A — Derivatives and Differential Equations</span></h1>
 </div>
 
 
@@ -319,33 +297,14 @@ window.Quarto = {
 </header>
 
 
-<p>Below is a list of symbols used in the book. It is difficult to devise a unique set of symbols across multiple fields, and despite our efforts, some are not unique and others are probably not clear. Typical units are given for each symbol, and dimensions can be inferred from those. Words in parentheses are not always used when we describe the terms (e.g., we may say “specific heat” or “heat transfer coefficient”).</p>
-<ol type="1">
-<li><span class="math inline">\(A\)</span> Cross-sectional area, typically <span class="math inline">\(\text{m}^2\)</span></li>
-<li><span class="math inline">\(Q\)</span> Thermal energy, typically J</li>
-<li><span class="math inline">\(\dot Q\)</span> Rate of thermal energy flow, typically <span class="math inline">\(\text{J}~\text{s}^{-1} = \text{W}\)</span></li>
-<li><span class="math inline">\(q\)</span> Heat flux, typically <span class="math inline">\(\text{W}~\text{m}^{-2}\)</span></li>
-<li><span class="math inline">\(c_p\)</span> Specific heat (capacity), typically <span class="math inline">\(\text{kJ}~\text{kg}^{-1}\text{K}^{-1}\)</span></li>
-<li><span class="math inline">\(h\)</span> (Convection) heat transfer coefficient, typically <span class="math inline">\(\text{W} ~ \text{m}^{-2} ~ \text{K}^{-1}\)</span></li>
-<li><span class="math inline">\(U\)</span> Overall heat transfer coefficient, typically <span class="math inline">\(\text{W} ~ \text{m}^{-2} ~ \text{K}^{-1}\)</span></li>
-<li><span class="math inline">\(D\)</span> Diffusivity, typically <span class="math inline">\(\text{m}^2 ~ \text{s}^{-1}\)</span></li>
-<li><span class="math inline">\(k\)</span> Thermal conductivity, typically <span class="math inline">\(\text{W} ~ \text{m}^{-1} ~ \text{K}^{-1}\)</span></li>
-<li><span class="math inline">\(k_c\)</span> (Convection) mass transfer coefficient, typically <span class="math inline">\(\text{m}~\text{s}^{-1}\)</span></li>
-<li><span class="math inline">\(T\)</span> Temperature, typically <span class="math inline">\(^\circ\text{C}\)</span> or K (equivalent for differences or derivatives)</li>
-<li><span class="math inline">\(\theta\)</span> Normalized temperature, typically <span class="math inline">\(^\circ\text{C}\)</span> or K</li>
-<li><span class="math inline">\(t\)</span> Time, typically <span class="math inline">\(\text{s}\)</span></li>
-<li><span class="math inline">\(k\)</span> First-order rate constant, typically <span class="math inline">\(\text{s}^{-1}\)</span></li>
-<li><span class="math inline">\(x\)</span> Position in 1D, typically <span class="math inline">\(\text{m}\)</span></li>
-<li><span class="math inline">\(c\)</span> Concentration of a solute, chemical species, etc., typically <span class="math inline">\(\text{g} ~ \text{m}^{-3}\)</span></li>
-<li><span class="math inline">\(c\)</span> Arbitrary constant, units vary</li>
-<li><span class="math inline">\(m\)</span> Mass of something, typically <span class="math inline">\(\text{kg}\)</span></li>
-<li><span class="math inline">\(\dot m\)</span> Mass flow or conversion rate, typically <span class="math inline">\(\text{kg}~\text{s}^{-1}\)</span></li>
-<li><span class="math inline">\(J\)</span> Mass flux, typically <span class="math inline">\(\text{kg}~\text{s}^{1}\text{m}^{-2}\)</span></li>
-<li><span class="math inline">\(n\)</span> Molar quantity of something, <span class="math inline">\(\text{mol}\)</span></li>
-<li><span class="math inline">\(\dot n\)</span> Molar flow or conversion rate, typically <span class="math inline">\(\text{mol}~\text{s}^{-1}\)</span></li>
-<li><span class="math inline">\(M\)</span> Molar mass of some chemical (identity indicated by subscript), <span class="math inline">\(\text{g}~\text{mol}^{-1}\)</span></li>
-<li><span class="math inline">\(r\)</span> Volumetric molar flow or conversion rate, <span class="math inline">\(\text{mol} ~ \text{m}^{-3} ~ \text{s}^{-1}\)</span></li>
-</ol>
+<!-- Derivative as a fundamental component of modeling.
+     Rate of something over something else over infinitesimally small intervals.
+     d = differential = "a very small change in..."
+     Examples:
+       dT/dt = rate of change of temperature over time
+       dT/dx = gradient in temperature over space
+     ODEs.
+     PDEs: partial derivatives (symbol ∂) imply the numerator also depends on other variables. -->
 
 
 
@@ -752,11 +711,14 @@ window.Quarto = {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./appendix_d_slicing.html" class="pagination-link" aria-label="Slicing in Python">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Slicing in Python</span>
+      <a href="./11_time_variable_inputs.html" class="pagination-link" aria-label="Time-Variable Inputs">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Time-Variable Inputs</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./appx_python_style.html" class="pagination-link" aria-label="Python Style Guide">
+        <span class="nav-page-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Python Style Guide</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

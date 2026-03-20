@@ -1,3 +1,3 @@
-# Python Style Guide {#sec-appx-style .unnumbered}
+# Python Style Guide {#sec-appx-style}
 
 <!-- Brief summary of PEP 8 guide based on examples. -->

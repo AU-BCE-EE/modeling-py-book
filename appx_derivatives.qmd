@@ -1,4 +1,4 @@
-# Derivatives and Differential Equations {#sec-appx-deriv .unnumbered}
+# Derivatives and Differential Equations {#sec-appx-deriv}
 
 <!-- Derivative as a fundamental component of modeling.
      Rate of something over something else over infinitesimally small intervals.

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Slicing in Python – Modelling</title>
+<title>Appendix B — Python Style Guide – Modelling</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./appendix_e_symbols.html" rel="next">
-<link href="./appendix_c_python_types.html" rel="prev">
+<link href="./appx_python_types.html" rel="next">
+<link href="./appx_derivatives.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -99,7 +99,7 @@ MathJax = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./appendix_a_derivatives.html">Appendices</a></li><li class="breadcrumb-item"><a href="./appendix_d_slicing.html">Slicing in Python</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./appx_derivatives.html">Appendices</a></li><li class="breadcrumb-item"><a href="./appx_python_style.html"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Python Style Guide</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -231,32 +231,38 @@ MathJax = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appendix_a_derivatives.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Derivatives and Differential Equations</span></a>
+  <a href="./appx_derivatives.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Derivatives and Differential Equations</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appendix_b_python_style.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Python Style Guide</span></a>
+  <a href="./appx_python_style.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Python Style Guide</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appendix_c_python_types.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Python Object Types</span></a>
+  <a href="./appx_python_types.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Python data structures</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appendix_d_slicing.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Slicing in Python</span></a>
+  <a href="./appx_slicing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Slicing in Python</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appendix_e_symbols.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Symbols</span></span></a>
+  <a href="./appx_symbols.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Symbols</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appx_parameter_values.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Parameter values</span></span></a>
   </div>
 </li>
       </ul>
@@ -272,9 +278,9 @@ MathJax = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./appendix_a_derivatives.html">Appendices</a></li><li class="breadcrumb-item"><a href="./appendix_d_slicing.html">Slicing in Python</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./appx_derivatives.html">Appendices</a></li><li class="breadcrumb-item"><a href="./appx_python_style.html"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Python Style Guide</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-appx-slicing" class="quarto-section-identifier">Slicing in Python</span></h1>
+<h1 class="title"><span id="sec-appx-style" class="quarto-section-identifier">Appendix B — Python Style Guide</span></h1>
 </div>
 
 
@@ -291,7 +297,7 @@ MathJax = {
 </header>
 
 
-<!-- Explanation of slicing, with applications in spatial models. -->
+<!-- Brief summary of PEP 8 guide based on examples. -->
 
 
 
@@ -698,13 +704,13 @@ MathJax = {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./appendix_c_python_types.html" class="pagination-link" aria-label="Python Object Types">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Python Object Types</span>
+      <a href="./appx_derivatives.html" class="pagination-link" aria-label="Derivatives and Differential Equations">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Derivatives and Differential Equations</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./appendix_e_symbols.html" class="pagination-link" aria-label="Symbols">
-        <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Symbols</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./appx_python_types.html" class="pagination-link" aria-label="Python data structures">
+        <span class="nav-page-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Python data structures</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

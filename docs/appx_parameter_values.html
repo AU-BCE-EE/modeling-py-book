@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Python Style Guide – Modelling</title>
+<title>Appendix F — Parameter values – Modelling</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./appendix_c_python_types.html" rel="next">
-<link href="./appendix_a_derivatives.html" rel="prev">
+<link href="./appx_symbols.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -87,6 +86,35 @@ MathJax = {
 };
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -99,7 +127,7 @@ MathJax = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./appendix_a_derivatives.html">Appendices</a></li><li class="breadcrumb-item"><a href="./appendix_b_python_style.html">Python Style Guide</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./appx_derivatives.html">Appendices</a></li><li class="breadcrumb-item"><a href="./appx_parameter_values.html"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Parameter values</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -231,32 +259,38 @@ MathJax = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appendix_a_derivatives.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Derivatives and Differential Equations</span></a>
+  <a href="./appx_derivatives.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Derivatives and Differential Equations</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appendix_b_python_style.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Python Style Guide</span></a>
+  <a href="./appx_python_style.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Python Style Guide</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appendix_c_python_types.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Python Object Types</span></a>
+  <a href="./appx_python_types.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Python data structures</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appendix_d_slicing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Slicing in Python</span></a>
+  <a href="./appx_slicing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Slicing in Python</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appendix_e_symbols.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Symbols</span></span></a>
+  <a href="./appx_symbols.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Symbols</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appx_parameter_values.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Parameter values</span></span></a>
   </div>
 </li>
       </ul>
@@ -266,15 +300,27 @@ MathJax = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#typical-numeric-values" id="toc-typical-numeric-values" class="nav-link active" data-scroll-target="#typical-numeric-values"><span class="header-section-number">F.1</span> Typical numeric values</a></li>
+  <li><a href="#mass-transfer-coefficients-and-diffusivity" id="toc-mass-transfer-coefficients-and-diffusivity" class="nav-link" data-scroll-target="#mass-transfer-coefficients-and-diffusivity"><span class="header-section-number">F.2</span> Mass transfer coefficients and diffusivity</a></li>
+  <li><a href="#reaction-rates" id="toc-reaction-rates" class="nav-link" data-scroll-target="#reaction-rates"><span class="header-section-number">F.3</span> Reaction rates</a>
+  <ul class="collapse">
+  <li><a href="#first-order" id="toc-first-order" class="nav-link" data-scroll-target="#first-order"><span class="header-section-number">F.3.1</span> First-order</a></li>
+  <li><a href="#second-order" id="toc-second-order" class="nav-link" data-scroll-target="#second-order"><span class="header-section-number">F.3.2</span> Second-order</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./appendix_a_derivatives.html">Appendices</a></li><li class="breadcrumb-item"><a href="./appendix_b_python_style.html">Python Style Guide</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./appx_derivatives.html">Appendices</a></li><li class="breadcrumb-item"><a href="./appx_parameter_values.html"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Parameter values</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-appx-style" class="quarto-section-identifier">Python Style Guide</span></h1>
+<h1 class="title"><span id="sec-parameter-values" class="quarto-section-identifier">Appendix F — Parameter values</span></h1>
 </div>
 
 
@@ -291,9 +337,122 @@ MathJax = {
 </header>
 
 
-<!-- Brief summary of PEP 8 guide based on examples. -->
+<p>Selection of appropriate parameter values for validation or application of a model is not always simple. In some cases they can be determined from theory, but often measurements are needed. The information presented below includes some approximate estimates for some common parameters for simple systems and approaches for making estimates for other systems.</p>
+<section id="typical-numeric-values" class="level2" data-number="F.1">
+<h2 data-number="F.1" class="anchored" data-anchor-id="typical-numeric-values"><span class="header-section-number">F.1</span> Typical numeric values</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Typical symbol</th>
+<th>Conditions</th>
+<th>Units</th>
+<th>Value</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Diffusivity</td>
+<td><span class="math inline">\(D\)</span></td>
+<td><span class="math inline">\(\text{O}_2\)</span> in water</td>
+<td><span class="math inline">\(\text{m}^2 ~ \text{s}^{-1}\)</span></td>
+<td><span class="math inline">\(2.1 \cdot 10^{-9}\)</span></td>
+<td>Cussler (2009)</td>
+</tr>
+<tr class="even">
+<td>Diffusivity</td>
+<td><span class="math inline">\(D\)</span></td>
+<td><span class="math inline">\(\text{NaCl}\)</span> in water</td>
+<td><span class="math inline">\(\text{m}^2 ~ \text{s}^{-1}\)</span></td>
+<td><span class="math inline">\(1.6 \cdot 10^{-9}\)</span></td>
+<td>Cussler (2009)</td>
+</tr>
+<tr class="odd">
+<td>Diffusivity</td>
+<td><span class="math inline">\(D\)</span></td>
+<td><span class="math inline">\(\text{CO}_2\)</span> in air</td>
+<td><span class="math inline">\(\text{m}^2 ~ \text{s}^{-1}\)</span></td>
+<td><span class="math inline">\(1.4 \cdot 10^{-5}\)</span></td>
+<td>Cussler (2009)</td>
+</tr>
+<tr class="even">
+<td>Mass transfer coefficient</td>
+<td><span class="math inline">\(k_c\)</span></td>
+<td>Air blowing over flat plate</td>
+<td><span class="math inline">\(\text{m} ~ \text{s}^{-1}\)</span></td>
+<td><span class="math inline">\(0.001 - 0.01\)</span></td>
+<td>Calculated from correlations</td>
+</tr>
+<tr class="odd">
+<td>Heat transfer coefficient</td>
+<td><span class="math inline">\(h\)</span></td>
+<td>Gases, free and forced</td>
+<td><span class="math inline">\(\text{W} ~ \text{m}^{-2} ~ \text{K}^{-1}\)</span></td>
+<td><span class="math inline">\(2 - 250\)</span></td>
+<td>Incropera (2003)</td>
+</tr>
+<tr class="even">
+<td>Heat transfer coefficient</td>
+<td><span class="math inline">\(h\)</span></td>
+<td>Liquids, free and forced</td>
+<td><span class="math inline">\(\text{W} ~ \text{m}^{-2} ~ \text{K}^{-1}\)</span></td>
+<td><span class="math inline">\(50 - 20,000\)</span></td>
+<td>Incropera (2003)</td>
+</tr>
+<tr class="odd">
+<td>Heat transfer coefficient</td>
+<td><span class="math inline">\(h\)</span></td>
+<td>With a phase change</td>
+<td><span class="math inline">\(\text{W} ~ \text{m}^{-2} ~ \text{K}^{-1}\)</span></td>
+<td><span class="math inline">\(2,500 - 100,000\)</span></td>
+<td>Incropera (2003)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="mass-transfer-coefficients-and-diffusivity" class="level2" data-number="F.2">
+<h2 data-number="F.2" class="anchored" data-anchor-id="mass-transfer-coefficients-and-diffusivity"><span class="header-section-number">F.2</span> Mass transfer coefficients and diffusivity</h2>
+<p>If the primary resistance to mass transfer is through a thin film, diffusivity and the film thickness can be combined to estimate a mass transfer coefficient. The film may be real (e.g., a plastic membrane) or hypothesized (e.g., the stagnant fluid films at interfaces between phases). The appropriate equation can be derived from Fick’s law under steady-state conditions,</p>
+<p><span class="math display">\[
+k_c = \frac{D}{L},
+\]</span></p>
+<p>where <span class="math inline">\(L\)</span> is the film thickness (length, typically m), and <span class="math inline">\(D\)</span> is diffusivity (typically <span class="math inline">\(\text{m}^2 ~ \text{s}^{-1}\)</span>).</p>
+<p>Film thickness is usually calculated based on measurements of mass transfer, but once determined, can be instead used by modelers like us. For designated liquid mass transfer systems, values are usually around <span class="math inline">\(1 \cdot 10^{-4}\)</span> m (Cussler, 2009). For ponds, lakes, or oceans, effective values of the film thickness can be multiple mm, so up to, say, <span class="math inline">\(5 \cdot 10^{-3}\)</span> m.</p>
+<p>Diffusivity depends on both the diffusing component and what it is diffusing through. The values above give you some idea of what to expect (and you can find more values in <a href="https://brightspace.au.dk/d2l/le/lessons/184142/topics/2523814">Cussler’s Chapter 5</a>). In general, diffusion coefficients in water are around <span class="math inline">\(10^{-9} ~ \text{m}^2 ~ \text{s}^{-1}\)</span> and in air, around <span class="math inline">\(10^{-5} ~ \text{m}^2 ~ \text{s}^{-1}\)</span>. Diffusivity decreases with the size of the diffusing molecule. So for big molecules like sucrose, it is under <span class="math inline">\(1 \cdot 10^{-9} ~ \text{m}^2 ~ \text{s}^{-1}\)</span> and for huge molecules like hemogolbin it is under <span class="math inline">\(1 \cdot 10^{-10} ~ \text{m}^2 ~ \text{s}^{-1}\)</span>. Diffusivity for diffusion through solids can be several or many orders of magnitude lower.</p>
+</section>
+<section id="reaction-rates" class="level2" data-number="F.3">
+<h2 data-number="F.3" class="anchored" data-anchor-id="reaction-rates"><span class="header-section-number">F.3</span> Reaction rates</h2>
+<section id="first-order" class="level3" data-number="F.3.1">
+<h3 data-number="F.3.1" class="anchored" data-anchor-id="first-order"><span class="header-section-number">F.3.1</span> First-order</h3>
+<p>First-order reaction constants can be estimated given some knowledge (or a guess) about how fast a reaction proceeds. For a rough estimate, the relative rate of reaction can be taken directly as the rate constant. So, for example, if some reactant disappears at a rate of 3.5% per hour, the rate constant is around 0.035 <span class="math inline">\(\text{hr}^{-1}\)</span>, or <span class="math inline">\(9.7 \cdot 10^{-6} ~ \text{s}^{-1}\)</span>. Notice how small the values can be when expressed in the units we typically use!</p>
+<p>This approach fails if the measured change is large, e.g., 50% over some period. Instead, use the exact analytical approach,</p>
+<p><span class="math display">\[
+k = - \frac{\ln(c_t / c_0)}{\Delta t},
+\]</span></p>
+<p>where <span class="math inline">\(k\)</span> is the first-order rate constant, <span class="math inline">\(c_t\)</span> is the remaining reactant concentration after <span class="math inline">\(\Delta t\)</span> time, and <span class="math inline">\(c_0\)</span> is the initial value (mass could be used instead of concentration).</p>
+</section>
+<section id="second-order" class="level3" data-number="F.3.2">
+<h3 data-number="F.3.2" class="anchored" data-anchor-id="second-order"><span class="header-section-number">F.3.2</span> Second-order</h3>
+<p>Second-order reactions are a little trickier, but just a little. Here is a simple approach.</p>
+<ol type="1">
+<li>Determine the change in a reactant over time when the second reactant is held constant (or make a guess).</li>
+<li>Apply the equation above.</li>
+<li>Divide the result by the fixed concentration of the second reactant.</li>
+</ol>
+<p>Units on a second-order reaction rate constant are inverse concentration per unit time.</p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -698,14 +857,11 @@ MathJax = {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./appendix_a_derivatives.html" class="pagination-link" aria-label="Derivatives and Differential Equations">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Derivatives and Differential Equations</span>
+      <a href="./appx_symbols.html" class="pagination-link" aria-label="Symbols">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Symbols</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./appendix_c_python_types.html" class="pagination-link" aria-label="Python Object Types">
-        <span class="nav-page-text">Python Object Types</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

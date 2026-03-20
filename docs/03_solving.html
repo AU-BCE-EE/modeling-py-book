@@ -315,32 +315,38 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appendix_a_derivatives.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Derivatives and Differential Equations</span></a>
+  <a href="./appx_derivatives.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Derivatives and Differential Equations</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appendix_b_python_style.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Python Style Guide</span></a>
+  <a href="./appx_python_style.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Python Style Guide</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appendix_c_python_types.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Python Object Types</span></a>
+  <a href="./appx_python_types.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Python data structures</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appendix_d_slicing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Slicing in Python</span></a>
+  <a href="./appx_slicing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Slicing in Python</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appendix_e_symbols.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Symbols</span></span></a>
+  <a href="./appx_symbols.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Symbols</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appx_parameter_values.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Parameter values</span></span></a>
   </div>
 </li>
       </ul>
@@ -396,7 +402,7 @@ window.Quarto = {
 <h2 data-number="3.1" class="anchored" data-anchor-id="numerical-solution-euler-method"><span class="header-section-number">3.1</span> Numerical solution: Euler method</h2>
 <p>The basic approach to numerical solutions of dynamic models is to repeatedly update the state of the system using the GE. Any dynamic model needs explicit initial conditions, a quantitative description of the state of the system at the start. For the coffee model, it means knowing the initial temperature of the coffee + mug system. In general, it means having a value for each state variable.</p>
 <p>In Python and other programming languages, explicit <em>for loops</em> can be used to implement a numerical model. The simplest numerical method is based on calculating the state variable derivative at each time and extrapolating into the future by some fixed <em>time step</em>. This approach is also called the <em>explicit forward finite difference method</em> or the <em>Euler method</em>. It was first described by Leonhard Euler more than 300 years ago. Let’s write some code to implement it using the coffee model.</p>
-<div id="dda28105" class="cell" data-execution_count="1">
+<div id="ec374966" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load NumPy package</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -454,7 +460,7 @@ Figure&nbsp;3.1: Predicted coffee temperature using Euler method.
 </div>
 <p>So there are some predictions from a simple numerical model (<a href="#fig-coffee-preds1" class="quarto-xref">Figure&nbsp;<span>3.1</span></a>). Whether or not it is accurate depends on the model structure as well as the input variables. We’ll leave that question for another time. Certainly predictions are plausible and the model provides the qualitative response that we had expected (see <a href="01_intro.html" class="quarto-xref"><span>Chapter 1</span></a>).</p>
 <p>The points in <a href="#fig-coffee-preds1" class="quarto-xref">Figure&nbsp;<span>3.1</span></a> show the model predictions for specific times. Our model made no predictions for other times, and in the plot the straight lines just connect points. We had to explicitly select a time step, called <code>dt</code> in the code; it was set to 10 minutes (600 s) above. We should try some different values to see the effect. While we could edit the chunk of code above, a more efficient and reproducible approach is to create a Python <em>function</em> of the model.</p>
-<div id="dd1fdc39" class="cell" data-execution_count="3">
+<div id="1e5e7985" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cool_eu(T_init, T_air, mass, area, h, time_range, dt, cp<span class="op">=</span><span class="fl">4.2</span>):</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Simulate coffee cooling using the Euler method.</span></span>
@@ -502,7 +508,7 @@ Figure&nbsp;3.1: Predicted coffee temperature using Euler method.
 <span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>    }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Now we can call the function and run the model with a single line of code.</p>
-<div id="b492dd9c" class="cell" data-execution_count="4">
+<div id="6705c0dc" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pred_temp1 <span class="op">=</span> cool_eu(</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    T_init<span class="op">=</span><span class="dv">80</span>, </span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    T_air<span class="op">=</span><span class="dv">20</span>, </span>
@@ -514,7 +520,7 @@ Figure&nbsp;3.1: Predicted coffee temperature using Euler method.
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>That result should exactly match our earlier result, because the inputs were identical.</p>
-<div id="4e2e4429" class="cell" data-execution_count="5">
+<div id="811fb666" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pred_temp1[<span class="st">'T_coffee'</span>])</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(T_coffee)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -525,7 +531,7 @@ Figure&nbsp;3.1: Predicted coffee temperature using Euler method.
 </div>
 </div>
 <p>Now let’s try a few different values for <code>dt</code>.</p>
-<div id="b321bd8c" class="cell" data-execution_count="6">
+<div id="16c229bb" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>pred1 <span class="op">=</span> cool_eu(</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    T_init<span class="op">=</span><span class="dv">80</span>, </span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    T_air<span class="op">=</span><span class="dv">20</span>, </span>
@@ -579,13 +585,14 @@ Figure&nbsp;3.2: Predicted coffee temperature using Euler method, showing result
 </div>
 </div>
 <p>Well, what do you think? Can you see the problem with Euler method? In brief, the derivative of a state variable at some particular time is not always a good estimate of its value at later times. For the method to work well, the time step needs to be relatively small. The 20 minute time step fails spectacularly, predicting a coffee temperature below -20 <span class="math inline">\(\degC\)</span> after 20 minutes, a full 40 <span class="math inline">\(\degC\)</span> below air temperature, and then <em>warming</em> up to 60 <span class="math inline">\(\degC\)</span>, followed by another big drop in temperature. This type of <em>oscillating</em> response is an example of <em>numerical instability</em>, and reflects inaccuracy in the solution as well as solutions that depend on the details of the call, here, the solution depends strongly on the time step.</p>
-<p>Does this example prove that the Euler method is worthless? Nope! It was the method of choice for ecological models for years <span class="citation" data-cites="odum2000">Odum and Odum (<a href="#ref-odum2000" role="doc-biblioref">2000</a>)</span> and is most likely still used in many existing computer models. It is in fact still a useful method, as long as care is taken in selecting a reasonable time step. How might you know when a time step is small enough? In general, simply try a smaller value and see if there is any effect. We’ll cover this general topic more in a later section.</p>
+<p>Does this example prove that the Euler method is worthless? Nope! It was the method of choice for ecological models for years <span class="citation" data-cites="odum2000">Odum and Odum (<a href="#ref-odum2000" role="doc-biblioref">2000</a>)</span> and is most likely still used in many existing computer models. It is in fact still a useful method, as long as care is taken in selecting a reasonable time step. How do you know when a time step is small enough? In general, simply try a smaller value and see if there is any effect. We’ll cover this general topic more in a later section.</p>
 <!-- Continue with the coffee example.
      Implement and explain.
      Show effect of time step size. -->
 </section>
 <section id="higher-order-methods-solve_ivp" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="higher-order-methods-solve_ivp"><span class="header-section-number">3.2</span> Higher-order methods: <code>solve_ivp()</code></h2>
+<p>More sophisticated models usually use something called an <em>ODE solver</em>. ODE solvers are algorithms or computer functions that accept a GE and some initial conditions and return a solution. Just like the Euler method, the “solution” here is an actual numeric solution, i.e., the state of the system over time. In this book we’ll use the Python ODE solver <code>solve_ivp()</code> from the scipy package.</p>
 <!-- Continue with the coffee example.
      Implement and explain. -->
 </section>

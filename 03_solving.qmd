@@ -218,7 +218,7 @@ Does this example prove that the Euler method is worthless?
 Nope!
 It was the method of choice for ecological models for years @odum2000 and is most likely still used in many existing computer models.
 It is in fact still a useful method, as long as care is taken in selecting a reasonable time step.
-How might you know when a time step is small enough?
+How do you know when a time step is small enough?
 In general, simply try a smaller value and see if there is any effect.
 We'll cover this general topic more in a later section.
 
@@ -227,6 +227,12 @@ We'll cover this general topic more in a later section.
      Show effect of time step size. -->
 
 ## Higher-order methods: `solve_ivp()`
+
+More sophisticated models usually use something called an *ODE solver*.
+ODE solvers are algorithms or computer functions that accept a GE and some initial conditions and return a solution.
+Just like the Euler method, the "solution" here is an actual numeric solution, i.e., the state of the system over time.
+In this book we'll use the Python ODE solver `solve_ivp()` from the scipy package.
+
 
 
 
