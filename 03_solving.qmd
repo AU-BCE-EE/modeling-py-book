@@ -97,9 +97,9 @@ def cool_eu(T_init, T_air, mass, area, h, time_range, dt, cp=4.2):
     Parameters
     ----------
     T_init : float
-        Initial coffee temperature (degC)
+        Initial coffee temperature (deg. C)
     T_air : float
-        Ambient air temperature (degC)
+        Ambient air temperature (deg. C)
     mass : float
         Mass of coffee (g)
     area : float
@@ -196,7 +196,7 @@ And plot results.
 
 ```{python}
 #| label: fig-coffee-preds2
-#| fig-cap: "Predicted coffee temperature using Euler method, showing results for different time steps."
+#| fig-cap: "Predicted coffee temperature using the Euler method, showing results for different time steps."
 
 plt.plot(pred1['times'] / 60, pred1['T_coffee'], label = '5 min.')
 plt.plot(pred2['times'] / 60, pred2['T_coffee'], label = '10 min.')
@@ -233,11 +233,163 @@ ODE solvers are algorithms or computer functions that accept a GE and some initi
 Just like the Euler method, the "solution" here is an actual numeric solution, i.e., the state of the system over time.
 In this book we'll use the Python ODE solver `solve_ivp()` from the scipy package.
 
+The `solve_ivp()` approach has two major differences when compared to the Euler method:
+
+1. adaptive step size, and
+2. higher-order methods.
+
+The first of these means that we, the user, doesn't set a fixed step size `dt`.
+Instead, the algorithm implemented in `solve_ivp()` adjusts the value on the fly, as needed to ensure accurate results without long run times that could be avoided.
+When state variable derivatives change a lot over time or the problem is otherwise a *stiff* one, the solver will use a small step size.
+When a small step size is not needed, it will (or can, depending on the settings for some arguments) increase again to a larger (i.e., faster) value.
+
+The Euler method is a *first-order* method, because it is based completely on first derivatives.
+By applying it, we explicitly assume that the we can approximate the derivative over some time interval as equal to the exact value at the start of the interval.
+The `solve_ivp()` function implements *higher-order* methods that evaluate (calculate) the derivative at other times and use a weighted average value to move onto the next time step.
+The slopes considered in the 4th order Runge-Kutta method is in @fig-RK4-slopes.
+And the green asterisk shows the estimated value, which is quite close to the true response shown by the blue curve.
+Where would the the Euler method land?
+Hint: at $t_0 + h$, and look at $k_1$ for the single slope that is applied.
+
+![The slopes used in the classical Runge-Kutta method. $h=$ the time step. By HilberTraum <https://commons.wikimedia.org/w/index.php?curid=64366870>.](web-images/Runge-Kutta_slopes.png){#fig-RK4-slopes fig-alt="Runge-Kutta slopes."}
+
+So what does `solv_ivp()` look like in practice?
+In a way it is simpler to set up than the Euler method, because `solve_ivp()` takes care of the loop.
+On the other hand, we need to define a function for calculating the derivate(s) of the state variable(s).
+Here we will define that function within our model and call it `rates()`, which is a convention we'll use throughout this book.
+Here is an implementation of the coffee example.
+
+```{python}
+import numpy as np
+from scipy.integrate import solve_ivp
+
+def cool_rk(T_init, T_air, mass, area, h, time_range, dt, cp=4.2):
+    """
+    Simulate coffee cooling using the RK45 method in `solve_ivp()`.
+
+    Parameters
+    ----------
+    T_init : float
+        Initial coffee temperature (deg. C)
+    T_air : float
+        Ambient air temperature (deg. C)
+    mass : float
+        Mass of coffee (g)
+    area : float
+        Surface area of mug (m2)
+    h : float
+        Convective heat transfer coefficient (W m-2 K-1)
+    time_range : tuple
+        Start and end time (s), e.g. (0, 3600)
+    dt : float
+        Time step (s)
+    cp : float, optional
+        Specific heat capacity of coffee (J g-1 K-1), default 4.2
+
+    Returns
+    -------
+    dict with keys 'times' (s) and 'T_coffee' (degC)
+    """
+
+    # Calculate constant, which does not change over time
+    con_cool = area * h / (cp * mass)
+
+    # Define rates function
+    def rates(t, T_current):
+        return - con_cool * (T_current - T_air)
+
+    # And use the RK45 method with solve_ivp() defaults
+    res = solve_ivp(
+        rates, 
+        t_span=(min(times), max(times)), 
+        y0=[T_init], 
+        t_eval=times
+    )
+
+    # Return solution
+    return {
+        'times': res.t,
+        'T_coffee': res.y[0, :],
+    }
+
+```
+
+Let's see how it works, and compare it the the first solution from the Euler method.
 
 
+```{python}
+pred_eu = cool_eu(
+    T_init=80, 
+    T_air=20, 
+    mass=300, 
+    area=0.026, 
+    h=75, 
+    time_range=(0., 60 * 60), 
+    dt = 5 * 60
+)
 
-<!-- Continue with the coffee example.
-     Implement and explain. -->
+pred_rk = cool_rk(
+    T_init=80, 
+    T_air=20, 
+    mass=300, 
+    area=0.026, 
+    h=75, 
+    time_range=(0., 60 * 60), 
+    dt = 5 * 60
+)
+```
+
+```{python}
+#| label: fig-coffee-preds3
+#| fig-cap: "Predicted coffee temperature using Euler method and an RK45 approach based on `solve_ivp()`."
+
+plt.plot(pred_eu['times'] / 60, pred_eu['T_coffee'], label = 'Euler')
+plt.plot(pred_rk['times'] / 60, pred_rk['T_coffee'], label = 'RK45')
+plt.legend()
+plt.xlabel('Time (min)')
+plt.ylabel(r'Predicted coffee temperature $(^\circ\mathregular{C})$')
+plt.show()
+```
+
+What do you think?
+Could you make the two match?
+Give it a try.
+
+Now, the object returned by `solve_ivp()` can be a little tricky to work with.
+
+```{python,eval=FALSE}
+def cool_rk(T_init, T_air, mass, area, h, time_range, dt, cp=4.2):
+    """
+    ...
+    """
+
+    # Calculate constant, which does not change over time
+    con_cool = area * h / (cp * mass)
+
+    # Define rates function
+    def rates(t, T_current):
+        return - con_cool * (T_current - T_air)
+
+    # And use the RK45 method with solve_ivp() defaults
+    res = solve_ivp(
+        rates, 
+        t_span=(min(times), max(times)), 
+        y0=[T_init], 
+        t_eval=times
+    )
+
+    # We could use breakpoint()
+    breakpoint()
+
+    # print()
+    print(res)
+
+    # Or just return the whole thing to inspect it
+    return res
+
+```
+
+
 
 ## Closed-form (analytical) solutions
 

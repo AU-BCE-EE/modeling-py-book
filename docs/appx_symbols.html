@@ -76,12 +76,23 @@ MathJax = {
     macros: {
       degC: "{^\\circ\\mathrm{C}}",
       Wpms: "{\\mathrm{W~m^{-2}}}",
-      WpmspK: "{\\mathrm{W~m^{-2}}}",
+      WpmspK: "{\\mathrm{W~m^{-2}~K^{-1}}}",
+      WpmpK: "{\\mathrm{W~m^{-1}~K^{-1}}}",
       Jps: "{\\mathrm{J~s^{-1}}}",
       kgps: "{\\mathrm{kg~s^{-1}}}",
       kgpmc: "{\\mathrm{kg~m^{-3}}}",
       kgpmcps: "{\\mathrm{kg~m^{-3}~s^{-1}}}",
-      gps: "{\\mathrm{g~s^{-1}}}"
+      kgpspms: "{\\mathrm{kg~s^{-1}~m^{-2}}}",
+      gps: "{\\mathrm{g~s^{-1}}}",
+      gpmc: "{\\mathrm{g~m^{-3}}}",
+      gpmol: "{\\mathrm{g~mol^{-1}}}",
+      msq: "{\\mathrm{m^{2}}}",
+      mps: "{\\mathrm{m~s^{-1}}}",
+      msqps: "{\\mathrm{m^{2}~s^{-1}}}",
+      kJpkgpK: "{\\mathrm{kJ~kg^{-1}~K^{-1}}}",
+      molps: "{\\mathrm{mol~s^{-1}}}",
+      molpmcps: "{\\mathrm{mol~m^{-3}~s^{-1}}}",
+      pers: "{\\mathrm{s^{-1}}}"
     }
   }
 };
@@ -326,13 +337,8 @@ window.Quarto = {
 </header>
 
 
-<p>Below is a list of symbols used in the book. It is difficult to devise a unique set of symbols across multiple fields, and despite our efforts, some are not unique and others are probably not clear. Typical units are given for each symbol, and dimensions can be inferred from those. Words in parentheses are not always used when we describe the terms (e.g., we may say “specific heat” or “heat transfer coefficient”).</p>
+<p>Below is a list of symbols used in the book. It is difficult to devise a unique set of symbols across multiple fields, and despite our efforts, some are not unique and others are probably not clear. Typical units are given for each symbol, and dimensions can be inferred from those. Words in parentheses are not always used when we describe the terms (e.g., we may write “specific heat” instead of “specific heat capacity” or “heat transfer coefficient” instead of “convection heat transfer coefficient”). Note that for temperature, both K and <span class="math inline">\(\degC\)</span> show up in the table and in the rest of the book. Kelvin is the more fundamental unit, and it is conventional to write heat transfer parameters using it. But for all the types of heat transfer parameters we use, the two are completely interchangeable, because a temperature <em>difference</em> or <em>gradient</em> is identical in the two. Of course, an actual temperature is not.</p>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 22%">
-<col style="width: 36%">
-<col style="width: 41%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Symbol</th>
@@ -344,82 +350,82 @@ window.Quarto = {
 <tr class="odd">
 <td><span class="math inline">\(A\)</span></td>
 <td>Cross-sectional area</td>
-<td><span class="math inline">\(\text{m}^2\)</span></td>
+<td><span class="math inline">\(\msq\)</span></td>
 </tr>
 <tr class="even">
 <td><span class="math inline">\(Q\)</span></td>
 <td>Thermal energy</td>
-<td><span class="math inline">\(\text{J}\)</span></td>
+<td><span class="math inline">\(\mathrm{J}\)</span></td>
 </tr>
 <tr class="odd">
 <td><span class="math inline">\(\dot{Q}\)</span></td>
 <td>Rate of thermal energy flow</td>
-<td><span class="math inline">\(\text{J}~\text{s}^{-1} = \text{W}\)</span></td>
+<td><span class="math inline">\(\Jps = \mathrm{W}\)</span></td>
 </tr>
 <tr class="even">
 <td><span class="math inline">\(q\)</span></td>
 <td>Heat flux</td>
-<td><span class="math inline">\(\text{W}~\text{m}^{-2}\)</span></td>
+<td><span class="math inline">\(\Wpms\)</span></td>
 </tr>
 <tr class="odd">
 <td><span class="math inline">\(c_p\)</span></td>
 <td>Specific heat (capacity)</td>
-<td><span class="math inline">\(\text{kJ}~\text{kg}^{-1}~\text{K}^{-1}\)</span></td>
+<td><span class="math inline">\(\kJpkgpK\)</span></td>
 </tr>
 <tr class="even">
 <td><span class="math inline">\(h\)</span></td>
 <td>(Convection) heat transfer coefficient</td>
-<td><span class="math inline">\(\text{W}~\text{m}^{-2}~\text{K}^{-1}\)</span></td>
+<td><span class="math inline">\(\WpmspK\)</span></td>
 </tr>
 <tr class="odd">
 <td><span class="math inline">\(U\)</span></td>
 <td>Overall heat transfer coefficient</td>
-<td><span class="math inline">\(\text{W}~\text{m}^{-2}~\text{K}^{-1}\)</span></td>
+<td><span class="math inline">\(\WpmspK\)</span></td>
 </tr>
 <tr class="even">
 <td><span class="math inline">\(k\)</span></td>
 <td>Thermal conductivity</td>
-<td><span class="math inline">\(\text{W}~\text{m}^{-1}~\text{K}^{-1}\)</span></td>
+<td><span class="math inline">\(\WpmpK\)</span></td>
 </tr>
 <tr class="odd">
 <td><span class="math inline">\(k\)</span></td>
 <td>First-order rate constant</td>
-<td><span class="math inline">\(\text{s}^{-1}\)</span></td>
+<td><span class="math inline">\(\pers\)</span></td>
 </tr>
 <tr class="even">
 <td><span class="math inline">\(k_c\)</span></td>
 <td>(Convection) mass transfer coefficient</td>
-<td><span class="math inline">\(\text{m}~\text{s}^{-1}\)</span></td>
+<td><span class="math inline">\(\mps\)</span></td>
 </tr>
 <tr class="odd">
 <td><span class="math inline">\(D\)</span></td>
 <td>Diffusivity</td>
-<td><span class="math inline">\(\text{m}^2~\text{s}^{-1}\)</span></td>
+<td><span class="math inline">\(\msqps\)</span></td>
 </tr>
 <tr class="even">
 <td><span class="math inline">\(T\)</span></td>
 <td>Temperature</td>
-<td><span class="math inline">\(^\circ\text{C}\)</span> or K</td>
+<td><span class="math inline">\(\degC\)</span> or K</td>
 </tr>
 <tr class="odd">
 <td><span class="math inline">\(\theta\)</span></td>
 <td>Normalized temperature</td>
-<td><span class="math inline">\(^\circ\text{C}\)</span> or K</td>
+<td><span class="math inline">\(\degC\)</span> or K</td>
 </tr>
 <tr class="even">
 <td><span class="math inline">\(t\)</span></td>
 <td>Time</td>
-<td><span class="math inline">\(\text{s}\)</span></td>
+<td><span class="math inline">\(\mathrm{s}\)</span></td>
 </tr>
 <tr class="odd">
 <td><span class="math inline">\(x\)</span></td>
 <td>Position in 1D</td>
-<td><span class="math inline">\(\text{m}\)</span></td>
+<td><span class="math inline">\(\mathrm{m}\)</span></td>
 </tr>
 <tr class="even">
 <td><span class="math inline">\(c\)</span></td>
 <td>Concentration of a solute, chemical species, etc.</td>
-<td><span class="math inline">\(\text{g}~\text{m}^{-3}\)</span></td>
+<td><span class="math inline">\(\gpmc\)</span></td>
 </tr>
 <tr class="odd">
 <td><span class="math inline">\(c\)</span></td>
@@ -429,37 +435,37 @@ window.Quarto = {
 <tr class="even">
 <td><span class="math inline">\(m\)</span></td>
 <td>Mass</td>
-<td><span class="math inline">\(\text{kg}\)</span></td>
+<td><span class="math inline">\(\mathrm{kg}\)</span></td>
 </tr>
 <tr class="odd">
 <td><span class="math inline">\(\dot{m}\)</span></td>
 <td>Mass flow or conversion rate</td>
-<td><span class="math inline">\(\text{kg}~\text{s}^{-1}\)</span></td>
+<td><span class="math inline">\(\kgps\)</span></td>
 </tr>
 <tr class="even">
 <td><span class="math inline">\(J\)</span></td>
 <td>Mass flux</td>
-<td><span class="math inline">\(\text{kg}~\text{s}^{-1}~\text{m}^{-2}\)</span></td>
+<td><span class="math inline">\(\kgpspms\)</span></td>
 </tr>
 <tr class="odd">
 <td><span class="math inline">\(n\)</span></td>
 <td>Molar quantity</td>
-<td><span class="math inline">\(\text{mol}\)</span></td>
+<td><span class="math inline">\(\mathrm{mol}\)</span></td>
 </tr>
 <tr class="even">
 <td><span class="math inline">\(\dot{n}\)</span></td>
 <td>Molar flow or conversion rate</td>
-<td><span class="math inline">\(\text{mol}~\text{s}^{-1}\)</span></td>
+<td><span class="math inline">\(\molps\)</span></td>
 </tr>
 <tr class="odd">
 <td><span class="math inline">\(M\)</span></td>
 <td>Molar mass (identity indicated by subscript)</td>
-<td><span class="math inline">\(\text{g}~\text{mol}^{-1}\)</span></td>
+<td><span class="math inline">\(\gpmol\)</span></td>
 </tr>
 <tr class="even">
 <td><span class="math inline">\(r\)</span></td>
 <td>Volumetric molar reaction rate</td>
-<td><span class="math inline">\(\text{mol}~\text{m}^{-3}~\text{s}^{-1}\)</span></td>
+<td><span class="math inline">\(\molpmcps\)</span></td>
 </tr>
 </tbody>
 </table>

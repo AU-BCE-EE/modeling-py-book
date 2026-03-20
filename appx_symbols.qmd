@@ -3,32 +3,36 @@
 Below is a list of symbols used in the book.
 It is difficult to devise a unique set of symbols across multiple fields, and despite our efforts, some are not unique and others are probably not clear.
 Typical units are given for each symbol, and dimensions can be inferred from those.
-Words in parentheses are not always used when we describe the terms (e.g., we may say "specific heat" or "heat transfer coefficient").
+Words in parentheses are not always used when we describe the terms (e.g., we may write "specific heat" instead of "specific heat capacity" or "heat transfer coefficient" instead of "convection heat transfer coefficient").
+Note that for temperature, both K and $\degC$ show up in the table and in the rest of the book.
+Kelvin is the more fundamental unit, and it is conventional to write heat transfer parameters using it.
+But for all the types of heat transfer parameters we use, the two are completely interchangeable, because a temperature *difference* or *gradient* is identical in the two.
+Of course, an actual temperature is not.
 
 | Symbol | Description | Typical units |
 |--------|-------------|---------------|
-| $A$ | Cross-sectional area | $\text{m}^2$ |
-| $Q$ | Thermal energy | $\text{J}$ |
-| $\dot{Q}$ | Rate of thermal energy flow | $\text{J}~\text{s}^{-1} = \text{W}$ |
-| $q$ | Heat flux | $\text{W}~\text{m}^{-2}$ |
-| $c_p$ | Specific heat (capacity) | $\text{kJ}~\text{kg}^{-1}~\text{K}^{-1}$ |
-| $h$ | (Convection) heat transfer coefficient | $\text{W}~\text{m}^{-2}~\text{K}^{-1}$ |
-| $U$ | Overall heat transfer coefficient | $\text{W}~\text{m}^{-2}~\text{K}^{-1}$ |
-| $k$ | Thermal conductivity | $\text{W}~\text{m}^{-1}~\text{K}^{-1}$ |
-| $k$ | First-order rate constant | $\text{s}^{-1}$ |
-| $k_c$ | (Convection) mass transfer coefficient | $\text{m}~\text{s}^{-1}$ |
-| $D$ | Diffusivity | $\text{m}^2~\text{s}^{-1}$ |
-| $T$ | Temperature | $^\circ\text{C}$ or K |
-| $\theta$ | Normalized temperature | $^\circ\text{C}$ or K |
-| $t$ | Time | $\text{s}$ |
-| $x$ | Position in 1D | $\text{m}$ |
-| $c$ | Concentration of a solute, chemical species, etc. | $\text{g}~\text{m}^{-3}$ |
+| $A$ | Cross-sectional area | $\msq$ |
+| $Q$ | Thermal energy | $\mathrm{J}$ |
+| $\dot{Q}$ | Rate of thermal energy flow | $\Jps = \mathrm{W}$ |
+| $q$ | Heat flux | $\Wpms$ |
+| $c_p$ | Specific heat (capacity) | $\kJpkgpK$ |
+| $h$ | (Convection) heat transfer coefficient | $\WpmspK$ |
+| $U$ | Overall heat transfer coefficient | $\WpmspK$ |
+| $k$ | Thermal conductivity | $\WpmpK$ |
+| $k$ | First-order rate constant | $\pers$ |
+| $k_c$ | (Convection) mass transfer coefficient | $\mps$ |
+| $D$ | Diffusivity | $\msqps$ |
+| $T$ | Temperature | $\degC$ or K |
+| $\theta$ | Normalized temperature | $\degC$ or K |
+| $t$ | Time | $\mathrm{s}$ |
+| $x$ | Position in 1D | $\mathrm{m}$ |
+| $c$ | Concentration of a solute, chemical species, etc. | $\gpmc$ |
 | $c$ | Arbitrary constant | varies |
-| $m$ | Mass | $\text{kg}$ |
-| $\dot{m}$ | Mass flow or conversion rate | $\text{kg}~\text{s}^{-1}$ |
-| $J$ | Mass flux | $\text{kg}~\text{s}^{-1}~\text{m}^{-2}$ |
-| $n$ | Molar quantity | $\text{mol}$ |
-| $\dot{n}$ | Molar flow or conversion rate | $\text{mol}~\text{s}^{-1}$ |
-| $M$ | Molar mass (identity indicated by subscript) | $\text{g}~\text{mol}^{-1}$ |
-| $r$ | Volumetric molar reaction rate | $\text{mol}~\text{m}^{-3}~\text{s}^{-1}$ |
+| $m$ | Mass | $\mathrm{kg}$ |
+| $\dot{m}$ | Mass flow or conversion rate | $\kgps$ |
+| $J$ | Mass flux | $\kgpspms$ |
+| $n$ | Molar quantity | $\mathrm{mol}$ |
+| $\dot{n}$ | Molar flow or conversion rate | $\molps$ |
+| $M$ | Molar mass (identity indicated by subscript) | $\gpmol$ |
+| $r$ | Volumetric molar reaction rate | $\molpmcps$ |
 
