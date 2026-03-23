@@ -231,6 +231,7 @@ We'll cover this general topic more in a later section.
 More sophisticated models usually use something called an *ODE solver*.
 ODE solvers are algorithms or computer functions that accept a GE and some initial conditions and return a solution.
 Just like the Euler method, the "solution" here is an actual numeric solution, i.e., the state of the system over time.
+This is another numerical approach.
 In this book we'll use the Python ODE solver `solve_ivp()` from the scipy package.
 
 The `solve_ivp()` approach has two major differences when compared to the Euler method:
@@ -355,7 +356,8 @@ What do you think?
 Could you make the two match?
 Give it a try.
 
-Now, the object returned by `solve_ivp()` can be a little tricky to work with.
+The object returned by `solve_ivp()` can be a little tricky to work with.
+Below there are three different ways of checking its structure, which we need to know if we want to extract components.
 
 ```{python,eval=FALSE}
 def cool_rk(T_init, T_air, mass, area, h, time_range, dt, cp=4.2):
