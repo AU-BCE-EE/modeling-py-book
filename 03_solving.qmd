@@ -648,22 +648,141 @@ plt.ylabel(r'Predicted coffee temperature $(^\circ\mathregular{C})$')
 plt.show()
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-<!-- Introduce concept of closed-form solution; steady-state is the main use case.
-     Start with GE, simplify, solve symbolically.
-     Show general form of solution to first-order models.
-     Coffee example; comparison to numerical solution. -->
-
 ## Using Python modules
 
-<!-- Introduce module-based modelling approach. -->
+Now, we are going to take the "model function" approach one step further.
+How should you implement or program a model in Python?
+Here are three options.
+
+1. Script
+    * Everything in a single `.py` file (a script)
+    * Model may be written with (as in most examples above) or without (as in first example) functions
+    * Simple and quick
+    * Not very modular or reusable
+    * Model and model application code mixed together in single file
+2. Module
+    * Model is defined using functions in a `.py` file (a module)
+    * The model module must then be imported for use
+    * Model could be used interactively or in a second `.py` file (a script)
+    * Better organized, clearer, more modular than option 1
+3. Package
+    * Model is defined within multiple modules 
+    * Good for organizing complicated models or projects
+    * Not used in this course
+
+For your assignments and other coursework, you should use approach 2.
+Why? 
+Because it
+* is standard Python practice,
+* gives you a cleaner result that is easier for everyone to understand, 
+* helps you think explicitly about the model inputs and outputs,
+* makes code reuse easy, and
+* introduces you to concepts that will be useful if you continue working with Python.
+
+
+How does it work in practice?
+Let's demonstrate with the RK45 model.
+
+First, we need to create a `.py` file with the function definition from above.
+Here, we'll name the file `cooling_mods.py`.
+Here are the contents:
+
+```{python}
+#| eval: false
+"""
+File: cooling_mods.py
+Authors: Sasha D. Hafner and Frederik R. Dalby
+Course: Modelling 2026
+
+Description:
+    A module with a single function implementing a numerical
+    model for a cooling cup of coffee.
+"""
+
+import numpy as np
+from scipy.integrate import solve_ivp
+
+def cool(T_init, T_air, mass, area, h, time_range, dt, cp=4.2):
+    """
+    Simulate coffee cooling using the RK45 method in `solve_ivp()`.
+
+    Parameters
+    ----------
+    T_init : float
+        Initial coffee temperature (deg. C)
+    T_air : float
+        Ambient air temperature (deg. C)
+    mass : float
+        Mass of coffee (g)
+    area : float
+        Surface area of mug (m2)
+    h : float
+        Convective heat transfer coefficient (W m-2 K-1)
+    time_range : tuple
+        Start and end time (s), e.g. (0, 3600)
+    dt : float
+        Time step (s)
+    cp : float, optional
+        Specific heat capacity of coffee (J g-1 K-1), default 4.2
+
+    Returns
+    -------
+    dict with keys 'times' (s) and 'T_coffee' (degC)
+    """
+
+    # Calculate constant, which does not change over time
+    con_cool = area * h / (cp * mass)
+
+    # Create an array of times
+    times = np.arange(time_range[0], time_range[1] + dt, dt)
+
+    # Define rates function
+    def rates(t, T_current):
+        return - con_cool * (T_current - T_air)
+
+    # And use the RK45 method with solve_ivp() defaults
+    res = solve_ivp(
+        rates, 
+        t_span=time_range, 
+        y0=[T_init], 
+        t_eval=times
+    )
+
+    # Return solution
+    return {
+        'times': res.t,
+        'T_coffee': res.y[0, :],
+    }
+
+```
+
+Then, to use the model, we first *import* the module we defined and then run the function, like this:
+
+
+```{python}
+"""
+File: cool_pred.py
+Authors: Sasha D. Hafner and Frederik R. Dalby
+Course: Modelling 2026
+
+Description:
+    Application of the `cool_rk()` model function.
+"""
+
+import cooling_mods as cm
+
+preds = cm.cool(
+    T_init=80, 
+    T_air=20, 
+    mass=300, 
+    area=0.026, 
+    h=75, 
+    time_range=(0., 60 * 60), 
+    dt = 5 * 60
+)
+
+print(preds)
+```
+
+
+
