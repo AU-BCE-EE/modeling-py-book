@@ -1,5 +1,27 @@
 # Quarto troubleshooting tips
 
+## Rendering the book
+
+Activate the shared Python venv before running `quarto render`, otherwise Quarto will use the system Python which lacks Jupyter/nbformat:
+
+```bash
+source ~/GitHub_repos/pyenv/bin/activate
+quarto render
+```
+
+This venv at `~/GitHub_repos/pyenv/` is the standard environment for all Python work on this machine.
+
+## Sending code chunks to IPython REPL (Iron.nvim)
+
+Multi-line Python functions with blank lines inside (e.g., blank lines in docstrings) break chunk-sending in the standard `python3` REPL — blank lines terminate the block. The fix is to use IPython with bracketed paste mode.
+
+**Current setup in `~/.config/nvim/init.lua`:**
+- Iron.nvim launches IPython with `--no-autoindent` (prevents progressive indentation)
+- `send_to_current_repl()` wraps Python code in bracketed paste escape sequences (`\x1b[200~`...`\x1b[201~`) so IPython receives the whole block at once
+- R chunks are unaffected (the bracketed paste path is gated on `repl == "python"`)
+
+IPython may show extra blank lines and duplicated `In []` numbers in the output — this is cosmetic, the code runs correctly.
+
 ## Cross-references not resolving
 
 - **Blank lines:** Quarto requires a blank line before and after a figure, table, or equation block for it to be parsed as a block element. Missing blank lines are easy to miss if there are trailing spaces on the preceding line.
@@ -20,6 +42,17 @@
   $$ {#eq-my-label}
   ```
   Putting `{#eq-my-label}` on its own line below `$$` will break the reference.
+
+## Chunk options (Python vs R syntax)
+
+Python chunks use YAML-style cell options, not R/knitr inline syntax. For example:
+
+```
+```{python}
+#| eval: false
+```
+
+Not `{python,eval=FALSE}` (that's knitr syntax and will be silently ignored by Quarto for Python chunks).
 
 ## Figures
 
