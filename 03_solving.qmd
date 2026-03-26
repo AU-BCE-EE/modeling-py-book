@@ -71,8 +71,7 @@ We can plot predictions to see what we got.
 #| label: fig-coffee-preds1
 #| fig-cap: "Predicted coffee temperature using Euler method."
 
-plt.plot(times / 60, T_coffee, 'r-', label = 'Euler')
-plt.plot(times / 60, T_coffee, 'ro', label = 'Euler')
+plt.plot(times / 60, T_coffee, 'ro-', label = 'Euler')
 plt.legend()
 plt.xlabel('Time (min)')
 plt.ylabel(r'Predicted coffee temperature $(^\circ\mathregular{C})$')
@@ -295,6 +294,9 @@ def cool_rk(T_init, T_air, mass, area, h, time_range, dt, cp=4.2):
     # Calculate constant, which does not change over time
     con_cool = area * h / (cp * mass)
 
+    # Create an array of times
+    times = np.arange(time_range[0], time_range[1] + dt, dt)
+
     # Define rates function
     def rates(t, T_current):
         return - con_cool * (T_current - T_air)
@@ -302,7 +304,7 @@ def cool_rk(T_init, T_air, mass, area, h, time_range, dt, cp=4.2):
     # And use the RK45 method with solve_ivp() defaults
     res = solve_ivp(
         rates, 
-        t_span=(min(times), max(times)), 
+        t_span=time_range, 
         y0=[T_init], 
         t_eval=times
     )
@@ -359,14 +361,18 @@ Give it a try.
 The object returned by `solve_ivp()` can be a little tricky to work with.
 Below there are three different ways of checking its structure, which we need to know if we want to extract components.
 
-```{python,eval=FALSE}
-def cool_rk(T_init, T_air, mass, area, h, time_range, dt, cp=4.2):
+```{python}
+#| eval: false
+def cool_rk_debug(T_init, T_air, mass, area, h, time_range, dt, cp=4.2):
     """
     ...
     """
 
     # Calculate constant, which does not change over time
     con_cool = area * h / (cp * mass)
+
+    # Create an array of times
+    times = np.arange(time_range[0], time_range[1] + dt, dt)
 
     # Define rates function
     def rates(t, T_current):
@@ -375,7 +381,7 @@ def cool_rk(T_init, T_air, mass, area, h, time_range, dt, cp=4.2):
     # And use the RK45 method with solve_ivp() defaults
     res = solve_ivp(
         rates, 
-        t_span=(min(times), max(times)), 
+        t_span=time_range, 
         y0=[T_init], 
         t_eval=times
     )
@@ -391,9 +397,267 @@ def cool_rk(T_init, T_air, mass, area, h, time_range, dt, cp=4.2):
 
 ```
 
-
-
 ## Closed-form (analytical) solutions
+
+Closed-form solutions are different.
+(Refer back to @sec-analytical-v-numerical if you don't remember what a closed-form solution is.)
+Here, the challenge is in the mathematical (symbolic) derivation; the programming part is simple.
+As soon a model becomes a bit complicated analytical solutions become impossible.
+Even in these cases though, it can be possible to derive an analtyical solution to a limiting case, often steady-state.
+
+There are many different ODEs that can be solved analytically.
+Here we will work with one that appears in many different applications, including our cooling coffee model.
+
+It is
+
+$$
+\frac{dx}{dt} = k \cdot x.
+$${#eq-exp-ode}
+
+It is a linear, first-order ODE. 
+Where does it show up? 
+All over! 
+For example:
+
+1. In first-order chemical reactions, where $x$ might be a the concentration or mass of a reactant and $k$ is entered as the negative of the first-order rate constant. 
+Note that "first-order" here is different from a first-order ODE.
+
+2. For unlimited growth of bacteria or any other organism, where $x$ is microbial biomass or other measure of population size and $k$ is the intrinsic rate of growth.
+
+3. In heat transfer by a lumped capacitance method, where $x$ is temperature, $k$ has a negative sign and includes a convection heat transfer coefficient, specific heat capacity, probably exposed surface area and object mass as well, and possibly other sources of surface or near-surface resistance. 
+We'll use it like this in our cooling coffee model.
+
+So you really do need to be able to solve this type of ODE. 
+Below we'll go through the steps in solving it, but ultimately you will probably find it easiest to just memorize the solution. 
+Remember you can always check a solution as shown below.
+
+### A general solution
+
+Start with the ODE
+
+$$
+\frac{dx}{dt} = k \cdot x.
+$$ 
+
+Separate variables
+
+$$
+\frac{1}{x} \cdot dx = k \cdot dt,
+$$
+
+and integrate both sides
+
+$$
+\int \frac{1}{x} \cdot dx = \int k \cdot dt.
+$$
+
+The solution to the LHS integral could be found in a table, but you should know the solution to the RHS!
+
+$$
+\ln{\left|x\right|} + c_1 = k \cdot t + c_2.
+$$
+
+The $c$ values are just constants of integration.
+We can combine them together:
+
+$$
+\ln{\left|x\right|} = k \cdot t + c.
+$$
+
+Now exponentiate both sides (take the antilog), for:
+
+
+$$
+\left|x\right| = e^{k \cdot t + c}.
+$$
+
+And remember your exponent rules.
+
+
+$$
+\left|x\right| = e^{k \cdot t} \cdot e^{c}.
+$$
+
+The last term on the RHS is a constant, and we can roll the $\pm$ from the LHS into it as well.
+We'll call the new constant $x_0$ for a reason that you'll see below.
+So, an analytical solution to @eq-exp-ode is:
+
+$$
+x = x_0 \cdot e^{k \cdot t}.
+$${#eq-exp-solution}
+
+### Application to cooling coffee model
+
+Let's apply @eq-exp-solution to our cooling coffee model.
+Doing so just requires a bit of symbolic math manipulation.
+
+Let's copy our GE from @eq-coffee-ge2.
+
+$$
+\frac{dT}{dt} = - \frac{A \cdot h}{c_p \cdot m} \cdot (T - T_\infty)
+$$ 
+
+To use the solution to @eq-exp-ode we need to express our GE in the same form.
+We can lump those constants on the RHS into a single one we'll call $k_{cool}$.
+
+$$
+k_{cool} = \frac{A \cdot h}{c_p \cdot m},
+$$ 
+
+$$ 
+\frac{dT}{dt} = -k_{cool} \cdot (T - T_\infty).
+$$ 
+
+What corresponds with our dependent variable $x$ in the generic form @eq-exp-ode and @eq-exp-solution?
+It must be $T$, the coffee temperature.
+But then the RHS is not in the right form.
+To get it into the right form, we will have to define a new dependent variable $\theta$.
+
+$$
+\theta = T - T_\infty
+$$
+
+Of course,
+
+$$
+\frac{d(T - T_\infty)}{dt} = \frac{dT}{dt},
+$$
+
+so,
+
+$$ 
+\frac{d\theta}{dt} = -k_{cool} \cdot \theta.
+$${#eq-theta-ode} 
+
+This substitution is actually a common form of model simplification.
+Here $\theta$ is a *normalized temperature* and in other cases we'll divide our response variable by some constants to normalize it.
+This approach makes our model more *general*.
+
+Moving on, do you see how  @eq-theta-ode now looks like @eq-exp-ode?
+So, applying the solution @eq-exp-solution we get:
+
+$$
+\theta = \theta_0 \cdot e^{-k_cool \cdot t}.
+$${#eq-cooling-an-sol}
+
+So this is our solution--an equation that gives us the coffee temperature at any time depending on the input that go into the $k_{cool}$ term.
+We could have used any name for the contant of integration called $\theta_0$ here, but by plugging in $t=0$ we can see that $\theta_0$ is the initial value of $\theta$, or the normalized temperature at the start of exposure to air. 
+
+### Implementation
+
+Implementing @eq-cooling-an-sol in Python is easier than implementing a numerical approach.
+Maybe the only tricky part is going between $\theta$ and $T$.
+
+```{python}
+import numpy as np
+from scipy.integrate import solve_ivp
+
+def cool_an(T_init, T_air, mass, area, h, time_range, dt, cp=4.2):
+    """
+    Simulate coffee cooling using an analytical solution.
+
+    Parameters
+    ----------
+    T_init : float
+        Initial coffee temperature (deg. C)
+    T_air : float
+        Ambient air temperature (deg. C)
+    mass : float
+        Mass of coffee (g)
+    area : float
+        Surface area of mug (m2)
+    h : float
+        Convective heat transfer coefficient (W m-2 K-1)
+    time_range : tuple
+        Start and end time (s), e.g. (0, 3600)
+    dt : float
+        Time step (s)
+    cp : float, optional
+        Specific heat capacity of coffee (J g-1 K-1), default 4.2
+
+    Returns
+    -------
+    dict with keys 'times' (s) and 'T_coffee' (degC)
+    """
+
+    # Calculate constant, which does not change over time
+    con_cool = area * h / (cp * mass)
+
+    # Create an array of times
+    times = np.arange(time_range[0], time_range[1] + dt, dt)
+
+    # Solve for coffee temperature
+    theta_init = T_init - T_air
+    theta = theta_init * np.exp(- con_cool * times)
+    T_coffee = theta + T_air
+
+    # Return solution
+    return {
+        'times': times,
+        'T_coffee': T_coffee,
+    }
+
+```
+
+Finally, we can compare all three approaches, using identical inputs of course.
+
+```{python}
+pred_eu = cool_eu(
+    T_init=80, 
+    T_air=20, 
+    mass=300, 
+    area=0.026, 
+    h=75, 
+    time_range=(0., 60 * 60), 
+    dt = 5 * 60
+)
+
+pred_rk = cool_rk(
+    T_init=80, 
+    T_air=20, 
+    mass=300, 
+    area=0.026, 
+    h=75, 
+    time_range=(0., 60 * 60), 
+    dt = 5 * 60
+)
+
+pred_an = cool_an(
+    T_init=80, 
+    T_air=20, 
+    mass=300, 
+    area=0.026, 
+    h=75, 
+    time_range=(0., 60 * 60), 
+    dt = 5 * 60
+)
+```
+
+
+```{python}
+#| label: fig-coffee-preds4
+#| fig-cap: "Predicted coffee temperature using Euler method, an RK45 approach based on `solve_ivp()`, and an analytical solution."
+
+plt.plot(pred_eu['times'] / 60, pred_eu['T_coffee'], label = 'Euler')
+plt.plot(pred_rk['times'] / 60, pred_rk['T_coffee'], label = 'RK45')
+plt.plot(pred_an['times'] / 60, pred_an['T_coffee'], label = 'Analytical', 
+         linestyle = 'dashed')
+plt.legend()
+plt.xlabel('Time (min)')
+plt.ylabel(r'Predicted coffee temperature $(^\circ\mathregular{C})$')
+plt.show()
+```
+
+
+
+
+
+
+
+
+
+
+
 
 <!-- Introduce concept of closed-form solution; steady-state is the main use case.
      Start with GE, simplify, solve symbolically.

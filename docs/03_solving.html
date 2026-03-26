@@ -55,7 +55,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -354,7 +374,12 @@ window.Quarto = {
   <ul>
   <li><a href="#numerical-solution-euler-method" id="toc-numerical-solution-euler-method" class="nav-link active" data-scroll-target="#numerical-solution-euler-method"><span class="header-section-number">3.1</span> Numerical solution: Euler method</a></li>
   <li><a href="#higher-order-methods-solve_ivp" id="toc-higher-order-methods-solve_ivp" class="nav-link" data-scroll-target="#higher-order-methods-solve_ivp"><span class="header-section-number">3.2</span> Higher-order methods: <code>solve_ivp()</code></a></li>
-  <li><a href="#closed-form-analytical-solutions" id="toc-closed-form-analytical-solutions" class="nav-link" data-scroll-target="#closed-form-analytical-solutions"><span class="header-section-number">3.3</span> Closed-form (analytical) solutions</a></li>
+  <li><a href="#closed-form-analytical-solutions" id="toc-closed-form-analytical-solutions" class="nav-link" data-scroll-target="#closed-form-analytical-solutions"><span class="header-section-number">3.3</span> Closed-form (analytical) solutions</a>
+  <ul class="collapse">
+  <li><a href="#a-general-solution" id="toc-a-general-solution" class="nav-link" data-scroll-target="#a-general-solution"><span class="header-section-number">3.3.1</span> A general solution</a></li>
+  <li><a href="#application-to-cooling-coffee-model" id="toc-application-to-cooling-coffee-model" class="nav-link" data-scroll-target="#application-to-cooling-coffee-model"><span class="header-section-number">3.3.2</span> Application to cooling coffee model</a></li>
+  <li><a href="#implementation" id="toc-implementation" class="nav-link" data-scroll-target="#implementation"><span class="header-section-number">3.3.3</span> Implementation</a></li>
+  </ul></li>
   <li><a href="#using-python-modules" id="toc-using-python-modules" class="nav-link" data-scroll-target="#using-python-modules"><span class="header-section-number">3.4</span> Using Python modules</a></li>
   </ul>
 </nav>
@@ -393,7 +418,7 @@ window.Quarto = {
 <h2 data-number="3.1" class="anchored" data-anchor-id="numerical-solution-euler-method"><span class="header-section-number">3.1</span> Numerical solution: Euler method</h2>
 <p>The basic approach to numerical solutions of dynamic models is to repeatedly update the state of the system using the GE. Any dynamic model needs explicit initial conditions, a quantitative description of the state of the system at the start. For the coffee model, it means knowing the initial temperature of the coffee + mug system. In general, it means having a value for each state variable.</p>
 <p>In Python and other programming languages, explicit <em>for loops</em> can be used to implement a numerical model. The simplest numerical method is based on calculating the state variable derivative at each time and extrapolating into the future by some fixed <em>time step</em>. This approach is also called the <em>explicit forward finite difference method</em> or the <em>Euler method</em>. It was first described by Leonhard Euler more than 300 years ago. Let’s write some code to implement it using the coffee model.</p>
-<div id="71fcb483" class="cell" data-execution_count="1">
+<div id="e636c548" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load NumPy package</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -430,12 +455,11 @@ window.Quarto = {
 </div>
 <p>We can plot predictions to see what we got.</p>
 <div id="cell-fig-coffee-preds1" class="cell" data-execution_count="2">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>plt.plot(times <span class="op">/</span> <span class="dv">60</span>, T_coffee, <span class="st">'r-'</span>, label <span class="op">=</span> <span class="st">'Euler'</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>plt.plot(times <span class="op">/</span> <span class="dv">60</span>, T_coffee, <span class="st">'ro'</span>, label <span class="op">=</span> <span class="st">'Euler'</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Time (min)'</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="vs">r'Predicted coffee temperature </span><span class="dv">$</span><span class="kw">(</span><span class="dv">^</span><span class="er">\</span><span class="vs">circ</span><span class="dv">\m</span><span class="vs">athregular{C}</span><span class="kw">)</span><span class="dv">$</span><span class="vs">'</span>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>plt.plot(times <span class="op">/</span> <span class="dv">60</span>, T_coffee, <span class="st">'ro-'</span>, label <span class="op">=</span> <span class="st">'Euler'</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Time (min)'</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="vs">r'Predicted coffee temperature </span><span class="dv">$</span><span class="kw">(</span><span class="dv">^</span><span class="er">\</span><span class="vs">circ</span><span class="dv">\m</span><span class="vs">athregular{C}</span><span class="kw">)</span><span class="dv">$</span><span class="vs">'</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="fig-coffee-preds1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -451,7 +475,7 @@ Figure&nbsp;3.1: Predicted coffee temperature using Euler method.
 </div>
 <p>So there are some predictions from a simple numerical model (<a href="#fig-coffee-preds1" class="quarto-xref">Figure&nbsp;<span>3.1</span></a>). Whether or not it is accurate depends on the model structure as well as the input variables. We’ll leave that question for another time. Certainly predictions are plausible and the model provides the qualitative response that we had expected (see <a href="01_intro.html" class="quarto-xref"><span>Chapter 1</span></a>).</p>
 <p>The points in <a href="#fig-coffee-preds1" class="quarto-xref">Figure&nbsp;<span>3.1</span></a> show the model predictions for specific times. Our model made no predictions for other times, and in the plot the straight lines just connect points. We had to explicitly select a time step, called <code>dt</code> in the code; it was set to 10 minutes (600 s) above. We should try some different values to see the effect. While we could edit the chunk of code above, a more efficient and reproducible approach is to create a Python <em>function</em> of the model.</p>
-<div id="a3c39028" class="cell" data-execution_count="3">
+<div id="b622b77f" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cool_eu(T_init, T_air, mass, area, h, time_range, dt, cp<span class="op">=</span><span class="fl">4.2</span>):</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Simulate coffee cooling using the Euler method.</span></span>
@@ -499,7 +523,7 @@ Figure&nbsp;3.1: Predicted coffee temperature using Euler method.
 <span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>    }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Now we can call the function and run the model with a single line of code.</p>
-<div id="f9ec43cf" class="cell" data-execution_count="4">
+<div id="0e0a9bd0" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pred_temp1 <span class="op">=</span> cool_eu(</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    T_init<span class="op">=</span><span class="dv">80</span>, </span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    T_air<span class="op">=</span><span class="dv">20</span>, </span>
@@ -511,7 +535,7 @@ Figure&nbsp;3.1: Predicted coffee temperature using Euler method.
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>That result should exactly match our earlier result, because the inputs were identical.</p>
-<div id="82e46e03" class="cell" data-execution_count="5">
+<div id="81cd5860" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pred_temp1[<span class="st">'T_coffee'</span>])</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(T_coffee)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -522,7 +546,7 @@ Figure&nbsp;3.1: Predicted coffee temperature using Euler method.
 </div>
 </div>
 <p>Now let’s try a few different values for <code>dt</code>.</p>
-<div id="5f77d012" class="cell" data-execution_count="6">
+<div id="648437d4" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>pred1 <span class="op">=</span> cool_eu(</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    T_init<span class="op">=</span><span class="dv">80</span>, </span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    T_air<span class="op">=</span><span class="dv">20</span>, </span>
@@ -576,14 +600,14 @@ Figure&nbsp;3.2: Predicted coffee temperature using the Euler method, showing re
 </div>
 </div>
 <p>Well, what do you think? Can you see the problem with Euler method? In brief, the derivative of a state variable at some particular time is not always a good estimate of its value at later times. For the method to work well, the time step needs to be relatively small. The 20 minute time step fails spectacularly, predicting a coffee temperature below -20 <span class="math inline">\(\degC\)</span> after 20 minutes, a full 40 <span class="math inline">\(\degC\)</span> below air temperature, and then <em>warming</em> up to 60 <span class="math inline">\(\degC\)</span>, followed by another big drop in temperature. This type of <em>oscillating</em> response is an example of <em>numerical instability</em>, and reflects inaccuracy in the solution as well as solutions that depend on the details of the call, here, the solution depends strongly on the time step.</p>
-<p>Does this example prove that the Euler method is worthless? Nope! It was the method of choice for ecological models for years <span class="citation" data-cites="odum2000">(<a href="#ref-odum2000" role="doc-biblioref"><strong>odum2000?</strong></a>)</span> and is most likely still used in many existing computer models. It is in fact still a useful method, as long as care is taken in selecting a reasonable time step. How do you know when a time step is small enough? In general, simply try a smaller value and see if there is any effect. We’ll cover this general topic more in a later section.</p>
+<p>Does this example prove that the Euler method is worthless? Nope! It was the method of choice for ecological models for years <span class="citation" data-cites="odum2000modeling">Odum and Odum (<a href="#ref-odum2000modeling" role="doc-biblioref">2000</a>)</span> and is most likely still used in many existing computer models. It is in fact still a useful method, as long as care is taken in selecting a reasonable time step. How do you know when a time step is small enough? In general, simply try a smaller value and see if there is any effect. We’ll cover this general topic more in a later section.</p>
 <!-- Continue with the coffee example.
      Implement and explain.
      Show effect of time step size. -->
 </section>
 <section id="higher-order-methods-solve_ivp" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="higher-order-methods-solve_ivp"><span class="header-section-number">3.2</span> Higher-order methods: <code>solve_ivp()</code></h2>
-<p>More sophisticated models usually use something called an <em>ODE solver</em>. ODE solvers are algorithms or computer functions that accept a GE and some initial conditions and return a solution. Just like the Euler method, the “solution” here is an actual numeric solution, i.e., the state of the system over time. In this book we’ll use the Python ODE solver <code>solve_ivp()</code> from the scipy package.</p>
+<p>More sophisticated models usually use something called an <em>ODE solver</em>. ODE solvers are algorithms or computer functions that accept a GE and some initial conditions and return a solution. Just like the Euler method, the “solution” here is an actual numeric solution, i.e., the state of the system over time. This is another numerical approach. In this book we’ll use the Python ODE solver <code>solve_ivp()</code> from the scipy package.</p>
 <p>The <code>solve_ivp()</code> approach has two major differences when compared to the Euler method:</p>
 <ol type="1">
 <li>adaptive step size, and</li>
@@ -602,7 +626,7 @@ Figure&nbsp;3.3: The slopes used in the classical Runge-Kutta method. <span clas
 </figure>
 </div>
 <p>So what does <code>solv_ivp()</code> look like in practice? In a way it is simpler to set up than the Euler method, because <code>solve_ivp()</code> takes care of the loop. On the other hand, we need to define a function for calculating the derivate(s) of the state variable(s). Here we will define that function within our model and call it <code>rates()</code>, which is a convention we’ll use throughout this book. Here is an implementation of the coffee example.</p>
-<div id="deb53615" class="cell" data-execution_count="8">
+<div id="f7dbbbe7" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> solve_ivp</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -637,26 +661,29 @@ Figure&nbsp;3.3: The slopes used in the classical Runge-Kutta method. <span clas
 <span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate constant, which does not change over time</span></span>
 <span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>    con_cool <span class="op">=</span> area <span class="op">*</span> h <span class="op">/</span> (cp <span class="op">*</span> mass)</span>
 <span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Define rates function</span></span>
-<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> rates(t, T_current):</span>
-<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="op">-</span> con_cool <span class="op">*</span> (T_current <span class="op">-</span> T_air)</span>
-<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>    <span class="co"># And use the RK45 method with solve_ivp() defaults</span></span>
-<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>    res <span class="op">=</span> solve_ivp(</span>
-<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>        rates, </span>
-<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>        t_span<span class="op">=</span>(<span class="bu">min</span>(times), <span class="bu">max</span>(times)), </span>
-<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>        y0<span class="op">=</span>[T_init], </span>
-<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>        t_eval<span class="op">=</span>times</span>
-<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Return solution</span></span>
-<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
-<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a>        <span class="st">'times'</span>: res.t,</span>
-<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a>        <span class="st">'T_coffee'</span>: res.y[<span class="dv">0</span>, :],</span>
-<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a>    }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create an array of times</span></span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>    times <span class="op">=</span> np.arange(time_range[<span class="dv">0</span>], time_range[<span class="dv">1</span>] <span class="op">+</span> dt, dt)</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Define rates function</span></span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> rates(t, T_current):</span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="op">-</span> con_cool <span class="op">*</span> (T_current <span class="op">-</span> T_air)</span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>    <span class="co"># And use the RK45 method with solve_ivp() defaults</span></span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>    res <span class="op">=</span> solve_ivp(</span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>        rates, </span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>        t_span<span class="op">=</span>time_range, </span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>        y0<span class="op">=</span>[T_init], </span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>        t_eval<span class="op">=</span>times</span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Return solution</span></span>
+<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
+<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a>        <span class="st">'times'</span>: res.t,</span>
+<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a>        <span class="st">'T_coffee'</span>: res.y[<span class="dv">0</span>, :],</span>
+<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a>    }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Let’s see how it works, and compare it the the first solution from the Euler method.</p>
-<div id="dd1d66fd" class="cell" data-execution_count="9">
+<div id="95db5df9" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>pred_eu <span class="op">=</span> cool_eu(</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    T_init<span class="op">=</span><span class="dv">80</span>, </span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    T_air<span class="op">=</span><span class="dv">20</span>, </span>
@@ -698,9 +725,9 @@ Figure&nbsp;3.4: Predicted coffee temperature using Euler method and an RK45 app
 </div>
 </div>
 <p>What do you think? Could you make the two match? Give it a try.</p>
-<p>Now, the object returned by <code>solve_ivp()</code> can be a little tricky to work with.</p>
-<div id="9519b14b" class="cell" data-execution_count="11">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cool_rk(T_init, T_air, mass, area, h, time_range, dt, cp<span class="op">=</span><span class="fl">4.2</span>):</span>
+<p>The object returned by <code>solve_ivp()</code> can be a little tricky to work with. Below there are three different ways of checking its structure, which we need to know if we want to extract components.</p>
+<div id="d30a2f56" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cool_rk_debug(T_init, T_air, mass, area, h, time_range, dt, cp<span class="op">=</span><span class="fl">4.2</span>):</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">    ...</span></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
@@ -708,40 +735,235 @@ Figure&nbsp;3.4: Predicted coffee temperature using Euler method and an RK45 app
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate constant, which does not change over time</span></span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    con_cool <span class="op">=</span> area <span class="op">*</span> h <span class="op">/</span> (cp <span class="op">*</span> mass)</span>
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Define rates function</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> rates(t, T_current):</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="op">-</span> con_cool <span class="op">*</span> (T_current <span class="op">-</span> T_air)</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># And use the RK45 method with solve_ivp() defaults</span></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    res <span class="op">=</span> solve_ivp(</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>        rates, </span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>        t_span<span class="op">=</span>(<span class="bu">min</span>(times), <span class="bu">max</span>(times)), </span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>        y0<span class="op">=</span>[T_init], </span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>        t_eval<span class="op">=</span>times</span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># We could use breakpoint()</span></span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">breakpoint</span>()</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create an array of times</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    times <span class="op">=</span> np.arange(time_range[<span class="dv">0</span>], time_range[<span class="dv">1</span>] <span class="op">+</span> dt, dt)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Define rates function</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> rates(t, T_current):</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="op">-</span> con_cool <span class="op">*</span> (T_current <span class="op">-</span> T_air)</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># And use the RK45 method with solve_ivp() defaults</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    res <span class="op">=</span> solve_ivp(</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>        rates, </span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>        t_span<span class="op">=</span>time_range, </span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>        y0<span class="op">=</span>[T_init], </span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>        t_eval<span class="op">=</span>times</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># print()</span></span>
-<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(res)</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># We could use breakpoint()</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>    <span class="bu">breakpoint</span>()</span>
 <span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Or just return the whole thing to inspect it</span></span>
-<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> res</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># print()</span></span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(res)</span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Or just return the whole thing to inspect it</span></span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> res</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="closed-form-analytical-solutions" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="closed-form-analytical-solutions"><span class="header-section-number">3.3</span> Closed-form (analytical) solutions</h2>
+<p>Closed-form solutions are different. (Refer back to <a href="01_intro.html#sec-analytical-v-numerical" class="quarto-xref"><span>Section 1.1.2</span></a> if you don’t remember what a closed-form solution is.) Here, the challenge is in the mathematical (symbolic) derivation; the programming part is simple. As soon a model becomes a bit complicated analytical solutions become impossible. Even in these cases though, it can be possible to derive an analtyical solution to a limiting case, often steady-state.</p>
+<p>There are many different ODEs that can be solved analytically. Here we will work with one that appears in many different applications, including our cooling coffee model.</p>
+<p>It is</p>
+<p><span id="eq-exp-ode"><span class="math display">\[
+\frac{dx}{dt} = k \cdot x.
+\tag{3.1}\]</span></span></p>
+<p>It is a linear, first-order ODE. Where does it show up? All over! For example:</p>
+<ol type="1">
+<li><p>In first-order chemical reactions, where <span class="math inline">\(x\)</span> might be a the concentration or mass of a reactant and <span class="math inline">\(k\)</span> is entered as the negative of the first-order rate constant. Note that “first-order” here is different from a first-order ODE.</p></li>
+<li><p>For unlimited growth of bacteria or any other organism, where <span class="math inline">\(x\)</span> is microbial biomass or other measure of population size and <span class="math inline">\(k\)</span> is the intrinsic rate of growth.</p></li>
+<li><p>In heat transfer by a lumped capacitance method, where <span class="math inline">\(x\)</span> is temperature, <span class="math inline">\(k\)</span> has a negative sign and includes a convection heat transfer coefficient, specific heat capacity, probably exposed surface area and object mass as well, and possibly other sources of surface or near-surface resistance. We’ll use it like this in our cooling coffee model.</p></li>
+</ol>
+<p>So you really do need to be able to solve this type of ODE. Below we’ll go through the steps in solving it, but ultimately you will probably find it easiest to just memorize the solution. Remember you can always check a solution as shown below.</p>
+<section id="a-general-solution" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="a-general-solution"><span class="header-section-number">3.3.1</span> A general solution</h3>
+<p>Start with the ODE</p>
+<p><span class="math display">\[
+\frac{dx}{dt} = k \cdot x.
+\]</span></p>
+<p>Separate variables</p>
+<p><span class="math display">\[
+\frac{1}{x} \cdot dx = k \cdot dt,
+\]</span></p>
+<p>and integrate both sides</p>
+<p><span class="math display">\[
+\int \frac{1}{x} \cdot dx = \int k \cdot dt.
+\]</span></p>
+<p>The solution to the LHS integral could be found in a table, but you should know the solution to the RHS!</p>
+<p><span class="math display">\[
+\ln{\left|x\right|} + c_1 = k \cdot t + c_2.
+\]</span></p>
+<p>The <span class="math inline">\(c\)</span> values are just constants of integration. We can combine them together:</p>
+<p><span class="math display">\[
+\ln{\left|x\right|} = k \cdot t + c.
+\]</span></p>
+<p>Now exponentiate both sides (take the antilog), for:</p>
+<p><span class="math display">\[
+\left|x\right| = e^{k \cdot t + c}.
+\]</span></p>
+<p>And remember your exponent rules.</p>
+<p><span class="math display">\[
+\left|x\right| = e^{k \cdot t} \cdot e^{c}.
+\]</span></p>
+<p>The last term on the RHS is a constant, and we can roll the <span class="math inline">\(\pm\)</span> from the LHS into it as well. We’ll call the new constant <span class="math inline">\(x_0\)</span> for a reason that you’ll see below. So, an analytical solution to <a href="#eq-exp-ode" class="quarto-xref">Equation&nbsp;<span>3.1</span></a> is:</p>
+<p><span id="eq-exp-solution"><span class="math display">\[
+x = x_0 \cdot e^{k \cdot t}.
+\tag{3.2}\]</span></span></p>
+</section>
+<section id="application-to-cooling-coffee-model" class="level3" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="application-to-cooling-coffee-model"><span class="header-section-number">3.3.2</span> Application to cooling coffee model</h3>
+<p>Let’s apply <a href="#eq-exp-solution" class="quarto-xref">Equation&nbsp;<span>3.2</span></a> to our cooling coffee model. Doing so just requires a bit of symbolic math manipulation.</p>
+<p>Let’s copy our GE from <a href="02_components_formulation.html#eq-coffee-ge2" class="quarto-xref">Equation&nbsp;<span>2.8</span></a>.</p>
+<p><span class="math display">\[
+\frac{dT}{dt} = - \frac{A \cdot h}{c_p \cdot m} \cdot (T - T_\infty)
+\]</span></p>
+<p>To use the solution to <a href="#eq-exp-ode" class="quarto-xref">Equation&nbsp;<span>3.1</span></a> we need to express our GE in the same form. We can lump those constants on the RHS into a single one we’ll call <span class="math inline">\(k_{cool}\)</span>.</p>
+<p><span class="math display">\[
+k_{cool} = \frac{A \cdot h}{c_p \cdot m},
+\]</span></p>
+<p><span class="math display">\[
+\frac{dT}{dt} = -k_{cool} \cdot (T - T_\infty).
+\]</span></p>
+<p>What corresponds with our dependent variable <span class="math inline">\(x\)</span> in the generic form <a href="#eq-exp-ode" class="quarto-xref">Equation&nbsp;<span>3.1</span></a> and <a href="#eq-exp-solution" class="quarto-xref">Equation&nbsp;<span>3.2</span></a>? It must be <span class="math inline">\(T\)</span>, the coffee temperature. But then the RHS is not in the right form. To get it into the right form, we will have to define a new dependent variable <span class="math inline">\(\theta\)</span>.</p>
+<p><span class="math display">\[
+\theta = T - T_\infty
+\]</span></p>
+<p>Of course,</p>
+<p><span class="math display">\[
+\frac{d(T - T_\infty)}{dt} = \frac{dT}{dt},
+\]</span></p>
+<p>so,</p>
+<p><span id="eq-theta-ode"><span class="math display">\[
+\frac{d\theta}{dt} = -k_{cool} \cdot \theta.
+\tag{3.3}\]</span></span></p>
+<p>This substitution is actually a common form of model simplification. Here <span class="math inline">\(\theta\)</span> is a <em>normalized temperature</em> and in other cases we’ll divide our response variable by some constants to normalize it. This approach makes our model more <em>general</em>.</p>
+<p>Moving on, do you see how <a href="#eq-theta-ode" class="quarto-xref">Equation&nbsp;<span>3.3</span></a> now looks like <a href="#eq-exp-ode" class="quarto-xref">Equation&nbsp;<span>3.1</span></a>? So, applying the solution <a href="#eq-exp-solution" class="quarto-xref">Equation&nbsp;<span>3.2</span></a> we get:</p>
+<p><span id="eq-cooling-an-sol"><span class="math display">\[
+\theta = \theta_0 \cdot e^{-k_cool \cdot t}.
+\tag{3.4}\]</span></span></p>
+<p>So this is our solution–an equation that gives us the coffee temperature at any time depending on the input that go into the <span class="math inline">\(k_{cool}\)</span> term. We could have used any name for the contant of integration called <span class="math inline">\(\theta_0\)</span> here, but by plugging in <span class="math inline">\(t=0\)</span> we can see that <span class="math inline">\(\theta_0\)</span> is the initial value of <span class="math inline">\(\theta\)</span>, or the normalized temperature at the start of exposure to air.</p>
+</section>
+<section id="implementation" class="level3" data-number="3.3.3">
+<h3 data-number="3.3.3" class="anchored" data-anchor-id="implementation"><span class="header-section-number">3.3.3</span> Implementation</h3>
+<p>Implementing <a href="#eq-cooling-an-sol" class="quarto-xref">Equation&nbsp;<span>3.4</span></a> in Python is easier than implementing a numerical approach. Maybe the only tricky part is going between <span class="math inline">\(\theta\)</span> and <span class="math inline">\(T\)</span>.</p>
+<div id="d830c158" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> solve_ivp</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cool_an(T_init, T_air, mass, area, h, time_range, dt, cp<span class="op">=</span><span class="fl">4.2</span>):</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Simulate coffee cooling using an analytical solution.</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co">    T_init : float</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co">        Initial coffee temperature (deg. C)</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co">    T_air : float</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="co">        Ambient air temperature (deg. C)</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="co">    mass : float</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="co">        Mass of coffee (g)</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="co">    area : float</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="co">        Surface area of mug (m2)</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="co">    h : float</span></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="co">        Convective heat transfer coefficient (W m-2 K-1)</span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="co">    time_range : tuple</span></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="co">        Start and end time (s), e.g. (0, 3600)</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a><span class="co">    dt : float</span></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a><span class="co">        Time step (s)</span></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a><span class="co">    cp : float, optional</span></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a><span class="co">        Specific heat capacity of coffee (J g-1 K-1), default 4.2</span></span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a><span class="co">    -------</span></span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a><span class="co">    dict with keys 'times' (s) and 'T_coffee' (degC)</span></span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate constant, which does not change over time</span></span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a>    con_cool <span class="op">=</span> area <span class="op">*</span> h <span class="op">/</span> (cp <span class="op">*</span> mass)</span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create an array of times</span></span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a>    times <span class="op">=</span> np.arange(time_range[<span class="dv">0</span>], time_range[<span class="dv">1</span>] <span class="op">+</span> dt, dt)</span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Solve for coffee temperature</span></span>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a>    theta_init <span class="op">=</span> T_init <span class="op">-</span> T_air</span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a>    theta <span class="op">=</span> theta_init <span class="op">*</span> np.exp(<span class="op">-</span> con_cool <span class="op">*</span> times)</span>
+<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a>    T_coffee <span class="op">=</span> theta <span class="op">+</span> T_air</span>
+<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Return solution</span></span>
+<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
+<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a>        <span class="st">'times'</span>: times,</span>
+<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a>        <span class="st">'T_coffee'</span>: T_coffee,</span>
+<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a>    }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Finally, we can compare all three approaches, using identical inputs of course.</p>
+<div id="61b6da2a" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>pred_eu <span class="op">=</span> cool_eu(</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    T_init<span class="op">=</span><span class="dv">80</span>, </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    T_air<span class="op">=</span><span class="dv">20</span>, </span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    mass<span class="op">=</span><span class="dv">300</span>, </span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    area<span class="op">=</span><span class="fl">0.026</span>, </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    h<span class="op">=</span><span class="dv">75</span>, </span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    time_range<span class="op">=</span>(<span class="fl">0.</span>, <span class="dv">60</span> <span class="op">*</span> <span class="dv">60</span>), </span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    dt <span class="op">=</span> <span class="dv">5</span> <span class="op">*</span> <span class="dv">60</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>pred_rk <span class="op">=</span> cool_rk(</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    T_init<span class="op">=</span><span class="dv">80</span>, </span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    T_air<span class="op">=</span><span class="dv">20</span>, </span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    mass<span class="op">=</span><span class="dv">300</span>, </span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    area<span class="op">=</span><span class="fl">0.026</span>, </span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    h<span class="op">=</span><span class="dv">75</span>, </span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>    time_range<span class="op">=</span>(<span class="fl">0.</span>, <span class="dv">60</span> <span class="op">*</span> <span class="dv">60</span>), </span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>    dt <span class="op">=</span> <span class="dv">5</span> <span class="op">*</span> <span class="dv">60</span></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>pred_an <span class="op">=</span> cool_an(</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>    T_init<span class="op">=</span><span class="dv">80</span>, </span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>    T_air<span class="op">=</span><span class="dv">20</span>, </span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>    mass<span class="op">=</span><span class="dv">300</span>, </span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>    area<span class="op">=</span><span class="fl">0.026</span>, </span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>    h<span class="op">=</span><span class="dv">75</span>, </span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>    time_range<span class="op">=</span>(<span class="fl">0.</span>, <span class="dv">60</span> <span class="op">*</span> <span class="dv">60</span>), </span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>    dt <span class="op">=</span> <span class="dv">5</span> <span class="op">*</span> <span class="dv">60</span></span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="cell-fig-coffee-preds4" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>plt.plot(pred_eu[<span class="st">'times'</span>] <span class="op">/</span> <span class="dv">60</span>, pred_eu[<span class="st">'T_coffee'</span>], label <span class="op">=</span> <span class="st">'Euler'</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>plt.plot(pred_rk[<span class="st">'times'</span>] <span class="op">/</span> <span class="dv">60</span>, pred_rk[<span class="st">'T_coffee'</span>], label <span class="op">=</span> <span class="st">'RK45'</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>plt.plot(pred_an[<span class="st">'times'</span>] <span class="op">/</span> <span class="dv">60</span>, pred_an[<span class="st">'T_coffee'</span>], label <span class="op">=</span> <span class="st">'Analytical'</span>, linestyle <span class="op">=</span> <span class="st">'dashed'</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Time (min)'</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="vs">r'Predicted coffee temperature </span><span class="dv">$</span><span class="kw">(</span><span class="dv">^</span><span class="er">\</span><span class="vs">circ</span><span class="dv">\m</span><span class="vs">athregular{C}</span><span class="kw">)</span><span class="dv">$</span><span class="vs">'</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="fig-coffee-preds4" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-coffee-preds4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03_solving_files/figure-html/fig-coffee-preds4-output-1.png" width="587" height="429" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-coffee-preds4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.5: Predicted coffee temperature using Euler method, an RK45 approach based on <code>solve_ivp()</code>, and an analytical solution.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
 <!-- Introduce concept of closed-form solution; steady-state is the main use case.
      Start with GE, simplify, solve symbolically.
      Show general form of solution to first-order models.
      Coffee example; comparison to numerical solution. -->
+</section>
 </section>
 <section id="using-python-modules" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="using-python-modules"><span class="header-section-number">3.4</span> Using Python modules</h2>
 <!-- Introduce module-based modelling approach. -->
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-odum2000modeling" class="csl-entry" role="listitem">
+Odum, Howard T, and Elisabeth C Odum. 2000. <em>Modeling for All Scales: An Introduction to System Simulation</em>. Elsevier.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->

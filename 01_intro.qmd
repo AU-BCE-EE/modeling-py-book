@@ -98,12 +98,13 @@ That means the model can be written as an equation that could be plugged into a 
 The only part of @eq-coffee-sol1 that could not be solved with pencil and paper is the $e^{()}$ bit.
 Analytical solutions are great because they are easy to implement or program.
 The model solution is entered on a single line of code in the example above.
-They can also provide insight into model behavior at the mathematical model stage.
-@eq-coffee-sol1 tells us that $T$ will start at $T_0$ and drop toward $T_{air}$, quickly at first but then more and more slowly.
+They can also provide insight into model behavior at the mathematical model stage, without actually performing a single calculation.
+This is another major advantage of closed-form solutions.
+For example, @eq-coffee-sol1 tells us that $T$ will start at $T_0$ and drop toward $T_{air}$, quickly at first but then more and more slowly.
 These inferences require some experience with symbolic mathematics.
 
 So why not use only analytical solutions?
-Because it is not possible in most cases.
+Because it is not possible to derive an analytical solution in most cases.
 The GE in @eq-coffee-ge1 is a very simple ODE, and only simple ODEs can be solved analytically.
 In other cases, we will have to solve GEs numerically, without an *explicit* solution.
 Numerical solutions really take advantage of the power of computing and programming languages to arrive at a solution.
