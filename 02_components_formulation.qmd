@@ -163,7 +163,7 @@ $$
 \Delta Q = c_p \cdot m \cdot \Delta T,
 $$ {#eq-coffee-linking}
 
-where $\Delta Q=$ a change in thermal energy (J), $c_p=$ a new parameter called *specific heat capacity*, $m=$ the material mass, and $\Delta T=$ the corresponding change in material temperature.
+where $\Delta Q=$ a change in thermal energy (J), $c_p=$ a new parameter called *specific heat capacity* ($\kJpkgpK$), $m=$ the material mass (kg), and $\Delta T=$ the corresponding change in material temperature (K or $\degC$).
 Somehow our three equations will have to be combined to derive our GE.
 This is explained in @sec-formulation-steps below.
 

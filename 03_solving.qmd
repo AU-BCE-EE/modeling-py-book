@@ -673,6 +673,7 @@ Here are three options.
 For your assignments and other coursework, you should use approach 2.
 Why? 
 Because it
+
 * is standard Python practice,
 * gives you a cleaner result that is easier for everyone to understand, 
 * helps you think explicitly about the model inputs and outputs,

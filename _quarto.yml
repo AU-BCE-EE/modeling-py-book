@@ -15,20 +15,20 @@ book:
     - part: "Part II: Applications"
       chapters:
         - 04_heat_transfer.qmd
-        - 05_mass_transfer.qmd
-        - 06_reactions_microbiology.qmd
-        - 07_spatial_models.qmd
-        - 08_stability.qmd
-        - 09_verification_validation.qmd
-        - 10_parameter_estimation.qmd
-        - 11_time_variable_inputs.qmd
-  appendices:
-    - appx_derivatives.qmd
-    - appx_python_style.qmd
-    - appx_python_types.qmd
-    - appx_slicing.qmd
-    - appx_symbols.qmd
-    - appx_parameter_values.qmd
+#        - 05_mass_transfer.qmd
+#        - 06_reactions_microbiology.qmd
+#        - 07_spatial_models.qmd
+#        - 08_stability.qmd
+#        - 09_verification_validation.qmd
+#        - 10_parameter_estimation.qmd
+#        - 11_time_variable_inputs.qmd
+#  appendices:
+#    - appx_derivatives.qmd
+#    - appx_python_style.qmd
+#    - appx_python_types.qmd
+#    - appx_slicing.qmd
+#    - appx_symbols.qmd
+#    - appx_parameter_values.qmd
 
 bibliography: references.bib
 
@@ -59,7 +59,8 @@ format:
               kJpkgpK: "{\\mathrm{kJ~kg^{-1}~K^{-1}}}",
               molps: "{\\mathrm{mol~s^{-1}}}",
               molpmcps: "{\\mathrm{mol~m^{-3}~s^{-1}}}",
-              pers: "{\\mathrm{s^{-1}}}"
+              pers: "{\\mathrm{s^{-1}}}",
+              mcbps: "{\\mathrm{m^{3}~s^{-1}}}"
             }
           }
         };

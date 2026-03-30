@@ -147,7 +147,8 @@ MathJax = {
       kJpkgpK: "{\\mathrm{kJ~kg^{-1}~K^{-1}}}",
       molps: "{\\mathrm{mol~s^{-1}}}",
       molpmcps: "{\\mathrm{mol~m^{-3}~s^{-1}}}",
-      pers: "{\\mathrm{s^{-1}}}"
+      pers: "{\\mathrm{s^{-1}}}",
+      mcbps: "{\\mathrm{m^{3}~s^{-1}}}"
     }
   }
 };
@@ -271,95 +272,6 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Heat Transfer</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./05_mass_transfer.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Mass Transfer</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./06_reactions_microbiology.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chemical Reactions and Microbiology</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./07_spatial_models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Spatial Models</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./08_stability.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Stability</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./09_verification_validation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Model Verification and Validation</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./10_parameter_estimation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Parameter Estimation</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./11_time_variable_inputs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Time-Variable Inputs</span></span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Appendices</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./appx_derivatives.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Derivatives and Differential Equations</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./appx_python_style.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Python Style Guide</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./appx_python_types.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Python data structures</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./appx_slicing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Slicing in Python</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./appx_symbols.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Symbols</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./appx_parameter_values.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Parameter values</span></span></a>
-  </div>
-</li>
       </ul>
   </li>
     </ul>
@@ -418,7 +330,7 @@ window.Quarto = {
 <h2 data-number="3.1" class="anchored" data-anchor-id="numerical-solution-euler-method"><span class="header-section-number">3.1</span> Numerical solution: Euler method</h2>
 <p>The basic approach to numerical solutions of dynamic models is to repeatedly update the state of the system using the GE. Any dynamic model needs explicit initial conditions, a quantitative description of the state of the system at the start. For the coffee model, it means knowing the initial temperature of the coffee + mug system. In general, it means having a value for each state variable.</p>
 <p>In Python and other programming languages, explicit <em>for loops</em> can be used to implement a numerical model. The simplest numerical method is based on calculating the state variable derivative at each time and extrapolating into the future by some fixed <em>time step</em>. This approach is also called the <em>explicit forward finite difference method</em> or the <em>Euler method</em>. It was first described by Leonhard Euler more than 300 years ago. Let’s write some code to implement it using the coffee model.</p>
-<div id="ebed6fe6" class="cell" data-execution_count="1">
+<div id="5edb8b15" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load NumPy package</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -475,7 +387,7 @@ Figure&nbsp;3.1: Predicted coffee temperature using Euler method.
 </div>
 <p>So there are some predictions from a simple numerical model (<a href="#fig-coffee-preds1" class="quarto-xref">Figure&nbsp;<span>3.1</span></a>). Whether or not it is accurate depends on the model structure as well as the input variables. We’ll leave that question for another time. Certainly predictions are plausible and the model provides the qualitative response that we had expected (see <a href="01_intro.html" class="quarto-xref"><span>Chapter 1</span></a>).</p>
 <p>The points in <a href="#fig-coffee-preds1" class="quarto-xref">Figure&nbsp;<span>3.1</span></a> show the model predictions for specific times. Our model made no predictions for other times, and in the plot the straight lines just connect points. We had to explicitly select a time step, called <code>dt</code> in the code; it was set to 10 minutes (600 s) above. We should try some different values to see the effect. While we could edit the chunk of code above, a more efficient and reproducible approach is to create a Python <em>function</em> of the model.</p>
-<div id="3e01657f" class="cell" data-execution_count="3">
+<div id="2696b3ba" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cool_eu(T_init, T_air, mass, area, h, time_range, dt, cp<span class="op">=</span><span class="fl">4.2</span>):</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Simulate coffee cooling using the Euler method.</span></span>
@@ -523,7 +435,7 @@ Figure&nbsp;3.1: Predicted coffee temperature using Euler method.
 <span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>    }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Now we can call the function and run the model with a single line of code.</p>
-<div id="72389d57" class="cell" data-execution_count="4">
+<div id="d790b077" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pred_temp1 <span class="op">=</span> cool_eu(</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    T_init<span class="op">=</span><span class="dv">80</span>, </span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    T_air<span class="op">=</span><span class="dv">20</span>, </span>
@@ -535,7 +447,7 @@ Figure&nbsp;3.1: Predicted coffee temperature using Euler method.
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>That result should exactly match our earlier result, because the inputs were identical.</p>
-<div id="1db77284" class="cell" data-execution_count="5">
+<div id="f8d9109c" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pred_temp1[<span class="st">'T_coffee'</span>])</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(T_coffee)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -546,7 +458,7 @@ Figure&nbsp;3.1: Predicted coffee temperature using Euler method.
 </div>
 </div>
 <p>Now let’s try a few different values for <code>dt</code>.</p>
-<div id="ffd7247a" class="cell" data-execution_count="6">
+<div id="a295929f" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>pred1 <span class="op">=</span> cool_eu(</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    T_init<span class="op">=</span><span class="dv">80</span>, </span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    T_air<span class="op">=</span><span class="dv">20</span>, </span>
@@ -626,7 +538,7 @@ Figure&nbsp;3.3: The slopes used in the classical Runge-Kutta method. <span clas
 </figure>
 </div>
 <p>So what does <code>solv_ivp()</code> look like in practice? In a way it is simpler to set up than the Euler method, because <code>solve_ivp()</code> takes care of the loop. On the other hand, we need to define a function for calculating the derivate(s) of the state variable(s). Here we will define that function within our model and call it <code>rates()</code>, which is a convention we’ll use throughout this book. Here is an implementation of the coffee example.</p>
-<div id="8c83bac4" class="cell" data-execution_count="8">
+<div id="2351cb37" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> solve_ivp</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -683,7 +595,7 @@ Figure&nbsp;3.3: The slopes used in the classical Runge-Kutta method. <span clas
 <span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a>    }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Let’s see how it works, and compare it the the first solution from the Euler method.</p>
-<div id="870d00b5" class="cell" data-execution_count="9">
+<div id="4ce8a2f7" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>pred_eu <span class="op">=</span> cool_eu(</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    T_init<span class="op">=</span><span class="dv">80</span>, </span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    T_air<span class="op">=</span><span class="dv">20</span>, </span>
@@ -726,7 +638,7 @@ Figure&nbsp;3.4: Predicted coffee temperature using Euler method and an RK45 app
 </div>
 <p>What do you think? Could you make the two match? Give it a try.</p>
 <p>The object returned by <code>solve_ivp()</code> can be a little tricky to work with. Below there are three different ways of checking its structure, which we need to know if we want to extract components.</p>
-<div id="3c5fcdd0" class="cell" data-execution_count="11">
+<div id="66a7f966" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cool_rk_debug(T_init, T_air, mass, area, h, time_range, dt, cp<span class="op">=</span><span class="fl">4.2</span>):</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">    ...</span></span>
@@ -846,7 +758,7 @@ k_{cool} = \frac{A \cdot h}{c_p \cdot m},
 <section id="implementation" class="level3" data-number="3.3.3">
 <h3 data-number="3.3.3" class="anchored" data-anchor-id="implementation"><span class="header-section-number">3.3.3</span> Implementation</h3>
 <p>Implementing <a href="#eq-cooling-an-sol" class="quarto-xref">Equation&nbsp;<span>3.4</span></a> in Python is easier than implementing a numerical approach. Maybe the only tricky part is going between <span class="math inline">\(\theta\)</span> and <span class="math inline">\(T\)</span>.</p>
-<div id="f9cef5ea" class="cell" data-execution_count="12">
+<div id="c16186cd" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> solve_ivp</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -896,7 +808,7 @@ k_{cool} = \frac{A \cdot h}{c_p \cdot m},
 <span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a>    }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Finally, we can compare all three approaches, using identical inputs of course.</p>
-<div id="76a2d13b" class="cell" data-execution_count="13">
+<div id="e0923e3a" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>pred_eu <span class="op">=</span> cool_eu(</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    T_init<span class="op">=</span><span class="dv">80</span>, </span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    T_air<span class="op">=</span><span class="dv">20</span>, </span>
@@ -977,10 +889,17 @@ Figure&nbsp;3.5: Predicted coffee temperature using Euler method, an RK45 approa
 <li>Not used in this course</li>
 </ul></li>
 </ol>
-<p>For your assignments and other coursework, you should use approach 2. Why? Because it * is standard Python practice, * gives you a cleaner result that is easier for everyone to understand, * helps you think explicitly about the model inputs and outputs, * makes code reuse easy, and * introduces you to concepts that will be useful if you continue working with Python.</p>
+<p>For your assignments and other coursework, you should use approach 2. Why? Because it</p>
+<ul>
+<li>is standard Python practice,</li>
+<li>gives you a cleaner result that is easier for everyone to understand,</li>
+<li>helps you think explicitly about the model inputs and outputs,</li>
+<li>makes code reuse easy, and</li>
+<li>introduces you to concepts that will be useful if you continue working with Python.</li>
+</ul>
 <p>How does it work in practice? Let’s demonstrate with the RK45 model.</p>
 <p>First, we need to create a <code>.py</code> file with the function definition from above. Here, we’ll name the file <code>cooling_mods.py</code>. Here are the contents:</p>
-<div id="d61e5003" class="cell" data-execution_count="15">
+<div id="f9a40f36" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">File: cooling_mods.py</span></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co">Authors: Sasha D. Hafner and Frederik R. Dalby</span></span>
@@ -1047,7 +966,7 @@ Figure&nbsp;3.5: Predicted coffee temperature using Euler method, an RK45 approa
 <span id="cb17-64"><a href="#cb17-64" aria-hidden="true" tabindex="-1"></a>    }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Then, to use the model, we first <em>import</em> the module we defined and then run the function, like this:</p>
-<div id="c654b1da" class="cell" data-execution_count="16">
+<div id="45937c93" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co">File: cool_pred.py</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co">Authors: Sasha D. Hafner and Frederik R. Dalby</span></span>

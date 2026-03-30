@@ -20,7 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -30,7 +50,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./05_mass_transfer.html" rel="next">
 <link href="./03_solving.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -92,12 +111,42 @@ MathJax = {
       kJpkgpK: "{\\mathrm{kJ~kg^{-1}~K^{-1}}}",
       molps: "{\\mathrm{mol~s^{-1}}}",
       molpmcps: "{\\mathrm{mol~m^{-3}~s^{-1}}}",
-      pers: "{\\mathrm{s^{-1}}}"
+      pers: "{\\mathrm{s^{-1}}}",
+      mcbps: "{\\mathrm{m^{3}~s^{-1}}}"
     }
   }
 };
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -187,95 +236,6 @@ MathJax = {
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Heat Transfer</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./05_mass_transfer.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Mass Transfer</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./06_reactions_microbiology.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chemical Reactions and Microbiology</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./07_spatial_models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Spatial Models</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./08_stability.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Stability</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./09_verification_validation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Model Verification and Validation</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./10_parameter_estimation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Parameter Estimation</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./11_time_variable_inputs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Time-Variable Inputs</span></span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Appendices</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./appx_derivatives.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Derivatives and Differential Equations</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./appx_python_style.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Python Style Guide</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./appx_python_types.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Python data structures</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./appx_slicing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Slicing in Python</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./appx_symbols.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Symbols</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./appx_parameter_values.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Parameter values</span></span></a>
-  </div>
-</li>
       </ul>
   </li>
     </ul>
@@ -321,19 +281,101 @@ MathJax = {
 
 <section id="introduction" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">4.1</span> Introduction</h2>
-<!-- Heat is a form of energy.
+<p>Heat is a form of energy, associated with random motion of molecules or atoms. Heat transfer is concerned with the net movement of that energy from high temperature to low. Generally, heat transfer is associated with a temperature change, so measurement of temperature change is one way to quantify heat flow, but the change in temperature over time is also a common output from heat transfer models.</p>
+<p>Heat transfer occurs in different ways that are modeled differently. These are called <em>modes</em>, and we will cover the following:</p>
+<ul>
+<li>Advection, transfer of heat energy due to bulk fluid movement.</li>
+<li>Conduction, diffusion of heat energy through solids or fluids.</li>
+<li>Convection, a more empirical mode to describe heat transfer between a surface and a fluid.</li>
+</ul>
+<p>From our modeling perspective, we need to recognize the relevant mode of heat transfer in order to select an appropriate constitutive equation (see <a href="02_components_formulation.html#sec-constitutive" class="quarto-xref"><span>Section 2.4</span></a> for a review if needed). There are a couple fundamental concepts we’ll cover first. For a lot more information on heat transfer, see <span class="citation" data-cites="Bergman2013">Bergman et al. (<a href="#ref-Bergman2013" role="doc-biblioref">2013</a>)</span>. <!-- Heat is a form of energy.
      Temperature measures heat energy indirectly.
      Modelling temperature / energy loss means predicting rate of heat energy flow.
      Flux vs. flow, and why the distinction matters.
      Constitutive equations naturally describe flux.
-     Modes: conduction, convection, advection -- operational classification of heat flow. -->
+     Modes: conduction, convection, advection -- operational classification of heat flow. --></p>
 </section>
 <section id="advection" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="advection"><span class="header-section-number">4.2</span> Advection</h2>
-<!-- Simple bulk flow. Include note on dispersion. -->
+<p>When a fluid flows into a location originally containing fluid with a different temperature, the temperature at that location or in that volume changes. The thermal energy has therefore changed as well. That is advection. It is a relatively easy process to measure and think about.</p>
+<p>Let’s take a tank, for example the water tank in <a href="#fig-tank1" class="quarto-xref">Figure&nbsp;<span>4.1</span></a>, with a fixed volume and fixed flow rate <span class="math inline">\(\dot{V}\)</span> in and out of the tank.</p>
+<div id="fig-tank1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Sketch showing a water tank.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-tank1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="drawings/water_tank1.png" class="img-fluid figure-img" alt="Sketch showing a water tank.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tank1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.1: A tank of water with a fixed volume <span class="math inline">\(V\)</span> and flow rate <span class="math inline">\(\dot{V}\)</span>.
+</figcaption>
+</figure>
+</div>
+<p>If the temperature of water flowing into the tank <span class="math inline">\(T_{inflow}\)</span> differs from the current tank temperature <span class="math inline">\(T_{tank}\)</span>, then <span class="math inline">\(T_{tank}\)</span> must be changing over time. This is advection. If <span class="math inline">\(T_{inflow}\)</span> is higher than <span class="math inline">\(T_{tank}\)</span>, the tank temperature is increasing; if lower, <span class="math inline">\(T_{tank}\)</span> is decreasing.</p>
+<p>How about the quantitative constitutive equation? For this tank:</p>
+<p><span id="eq-tank1"><span class="math display">\[
+\text{energy transfer rate} = \dot{Q} = \dot{V} \cdot{\rho} \cdot c_p \cdot (T_{inflow} - T_{tank}),
+\tag{4.1}\]</span></span></p>
+<p>where <span class="math inline">\(\dot{Q}\)</span> is energy flow in W, <span class="math inline">\(\rho=\)</span> fluid density in <span class="math inline">\(\kgpmc\)</span>, and <span class="math inline">\(c_p=\)</span> specific heat capacity (<span class="math inline">\(\kJpkgpK\)</span>).</p>
+<p>As long as density and specific heat capacity are constant (we will always assume they are in this book), we could derive an equation for the rate of temperature change by recognizing that <span class="math inline">\(dT = \frac{\dot{Q}}{\dot{V} \cdot{\rho} \cdot c_p}\)</span>. Start with substitution:</p>
+<p><span class="math display">\[
+\frac{dT}{dt} = \frac{\dot{V} \cdot{\rho} \cdot c_p \cdot (T_{inflow} - T_{tank})}{V \cdot{\rho} \cdot c_p}.
+\]</span></p>
+<p>Then simplify for</p>
+<p><span id="eq-tank2"><span class="math display">\[
+\frac{dT}{dt} = \frac{\dot{V} \cdot (T_{inflow} - T_{tank})}{V}.
+\tag{4.2}\]</span></span></p>
+<p>Advection becomes trickier when we don’t have a constant volume (or mass) within our model domain or control volume. Fortunately, most models do, and we won’t cover those other cases.</p>
+<p>Another simple advection scenario is a shown in <a href="#fig-pipe1" class="quarto-xref">Figure&nbsp;<span>4.2</span></a>.</p>
+<div id="fig-pipe1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Sketch showing a fluid flowing through a constant-diameter round pipe at a constant flow rate.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pipe1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="drawings/pipe1.png" class="img-fluid figure-img" alt="Sketch showing a fluid flowing through a constant-diameter round pipe at a constant flow rate.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pipe1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.2: A fluid flowing through a constant-diameter round pipe at a constant flow rate.
+</figcaption>
+</figure>
+</div>
+<p>The small section at the bottom can be called a <em>control volume</em>–a hypothetical volume used for deriving flow equations. We can treat that control volume like the tank above (<a href="#fig-tank1" class="quarto-xref">Figure&nbsp;<span>4.1</span></a>, <a href="#eq-tank1" class="quarto-xref">Equation&nbsp;<span>4.1</span></a>). The instantaneous rate of net energy flow into the control volume by advection is:</p>
+<p><span id="eq-advection2"><span class="math display">\[
+\dot{Q} = \dot{V} \cdot{\rho} \cdot c_p \cdot (T_{left} - T_{right}),
+\tag{4.3}\]</span></span></p>
+<p>where <span class="math inline">\(T_{left}\)</span> and <span class="math inline">\(T_{right}\)</span> are at the boundaries of the control volume. How about the rate of temperature change? That is what we are really after.</p>
+<p><span id="eq-advection3"><span class="math display">\[
+\frac{dT}{dt} = \frac{\dot{Q}}{V \cdot A \cdot {\rho} \cdot c_p}
+\tag{4.4}\]</span></span></p>
+<p>And we can then substitute the RHS of <a href="#eq-advection2" class="quarto-xref">Equation&nbsp;<span>4.3</span></a> for <span class="math inline">\(\dot{Q}\)</span> in <a href="#eq-advection3" class="quarto-xref">Equation&nbsp;<span>4.4</span></a>.</p>
+<p><span id="eq-advection4"><span class="math display">\[
+\frac{dT}{dt} = \frac{\dot{V} \cdot{\rho} \cdot c_p \cdot (T_{left} - T_{right})}{\Delta x \cdot A \cdot {\rho} \cdot c_p}
+\tag{4.5}\]</span></span></p>
+<p>And simplify <a href="#eq-advection4" class="quarto-xref">Equation&nbsp;<span>4.5</span></a>, recognizing that <span class="math inline">\(\frac{\dot{V}}{A} = v_x =\)</span> superficial fluid velocity:</p>
+<p><span id="eq-advection5"><span class="math display">\[
+\frac{dT}{dt} = v_x \cdot \frac{(T_{left} - T_{right})}{\Delta x}.
+\tag{4.6}\]</span></span></p>
+<p>And that quotient on the RHS of <a href="#eq-advection5" class="quarto-xref">Equation&nbsp;<span>4.6</span></a> becomes the definition of a derivative as <span class="math inline">\(\Delta x\)</span> approaches 0, so the associated ODE is:</p>
+<p><span id="eq-advection-ode1"><span class="math display">\[
+\frac{dT}{dt} = v_x \cdot \frac{dT}{dx}.
+\tag{4.7}\]</span></span></p>
+<p><a href="#eq-advection-ode1" class="quarto-xref">Equation&nbsp;<span>4.7</span></a>, is actually pretty intuitive. It says that the rate of temperature change at a fixed location is equal to the temperature derivative over space and the rate at which fluid flows over that same space.</p>
+<p><a href="#eq-advection-ode1" class="quarto-xref">Equation&nbsp;<span>4.7</span></a>, along with <a href="#eq-advection3" class="quarto-xref">Equation&nbsp;<span>4.4</span></a> and <a href="#eq-advection5" class="quarto-xref">Equation&nbsp;<span>4.6</span></a> will together suffice for the constitutive equations for advection in most of the systems we’ll encounter in this book. For others, derivation of an advection equation is pretty simple.</p>
+<p>In our pipe conceptual model, we’ve implicitly assumed that radial position has no bearing on transfer. In reality,</p>
 </section>
 <section id="sec-fourier" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="sec-fourier"><span class="header-section-number">4.3</span> Conduction and Fourier’s law</h2>
+<p><em>Conduction</em> is the transfer of heat through solids and fluids by random motion of molecules or atoms (electrons also play a role, at least in metals). It can also be called <em>thermal diffusion</em>.</p>
+<p>Heat energy flows from high temperature to low temperature. That simple concept underlies a simple tool for inferring heat transfer and temperature change from temperature differences, gradients, or derivatives.</p>
+<p>A <em>temperature profile</em> is a graphical representation of temperature over space. For example, <a href="#fig-wall1" class="quarto-xref">Figure&nbsp;<span>4.3</span></a> shows the temperature profile of a wall with one fixed temperature at the left surface, <span class="math inline">\(T_o\)</span>, where <span class="math inline">\(o\)</span> is for outside, and another at the right surface, <span class="math inline">\(T_i\)</span>. It is common to show space horizontally–here the <span class="math inline">\(x\)</span> dimension–and temperature vertically.</p>
+<div id="fig-wall1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Wall temperature profile.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-wall1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="drawings/wall_temp_prof1.png" class="img-fluid figure-img" alt="Wall temperature profile.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-wall1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.3: A temperature profile through a slab wall.
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-wall1" class="quarto-xref">Figure&nbsp;<span>4.3</span></a> and similar simple sketches are best for one dimensional (1D) problems where the temperature varies only over one dimension and is uniform in all others. Here, that means that the profile for 1 mm from the bottom of the wall is the same as the one at 2 m–moving up or down has no effect on the profile. In fact, <a href="#fig-wall1" class="quarto-xref">Figure&nbsp;<span>4.3</span></a> does not really show any vertical dimension, or wall height. The vertical position of a point on the red <span class="math inline">\(T\)</span> line shows the temperature at a particular depth in the wall.</p>
+<p>The slope of the red line in <a href="#fig-wall1" class="quarto-xref">Figure&nbsp;<span>4.3</span></a> is the derivative of temperature with respect to the <span class="math inline">\(x\)</span> dimension. Here, because the red <span class="math inline">\(T\)</span> line is straight, the derivative is uniform with <span class="math inline">\(x\)</span>, which is characteristic steady-state for plane walls. These concepts are expanded below.</p>
 <!-- Derivative form and difference form.
      Thermal conductivity k is a material property.
      Occurs in solids and fluids.
@@ -353,6 +395,11 @@ MathJax = {
 <!-- Single 0D example combining conduction, convection, and advection. -->
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-Bergman2013" class="csl-entry" role="listitem">
+Bergman, Theodore L.., David P. DeWitt, Frank P. Incropera, and Adrienne S.. Lavine. 2013. <em>Principles of Heat and Mass Transfer : International Student Version</em>. Seventh edition. Hoboken (N.J.): John Wiley <span>\&amp;</span> Sons.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
@@ -763,9 +810,6 @@ MathJax = {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./05_mass_transfer.html" class="pagination-link" aria-label="Mass Transfer">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Mass Transfer</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

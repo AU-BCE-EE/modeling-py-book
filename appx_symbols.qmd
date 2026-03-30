@@ -11,7 +11,7 @@ Of course, an actual temperature is not.
 
 | Symbol | Description | Typical units |
 |--------|-------------|---------------|
-| $A$ | Cross-sectional area | $\msq$ |
+| $A$ | Surface or cross-sectional area | $\msq$ |
 | $Q$ | Thermal energy | $\mathrm{J}$ |
 | $\dot{Q}$ | Rate of thermal energy flow | $\Jps = \mathrm{W}$ |
 | $q$ | Heat flux | $\Wpms$ |
@@ -27,7 +27,6 @@ Of course, an actual temperature is not.
 | $t$ | Time | $\mathrm{s}$ |
 | $x$ | Position in 1D | $\mathrm{m}$ |
 | $c$ | Concentration of a solute, chemical species, etc. | $\gpmc$ |
-| $c$ | Arbitrary constant | varies |
 | $m$ | Mass | $\mathrm{kg}$ |
 | $\dot{m}$ | Mass flow or conversion rate | $\kgps$ |
 | $J$ | Mass flux | $\kgpspms$ |
@@ -35,4 +34,6 @@ Of course, an actual temperature is not.
 | $\dot{n}$ | Molar flow or conversion rate | $\molps$ |
 | $M$ | Molar mass (identity indicated by subscript) | $\gpmol$ |
 | $r$ | Volumetric molar reaction rate | $\molpmcps$ |
+| $\rho$ | Density | $\kgpmc$ |
+| $\dot{V}$ | Volumetric flow rate | $\mcbps$ |
 

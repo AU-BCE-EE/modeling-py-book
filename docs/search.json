@@ -113,7 +113,7 @@
     "href": "02_components_formulation.html#sec-constitutive",
     "title": "2  Model Formulation",
     "section": "2.4 Constitutive equations",
-    "text": "2.4 Constitutive equations\nConstitutive equations describe how matter or energy are transferred. We will need a constitutive equation for each term in the model conservation equation. Figuring out what equations to use here requires familiarity with the different options. We’ll take a look at just a couple here and present more in Chapter 4, Chapter 5, and Chapter 6. These equations typically have a name like “someone’s law”. In general, constitutive equations include a difference or derivative and a proportionality constant on the right-hand side (RHS). The left-hand side (LHS) is usually some kind of flux, which is a flow rate per unit cross-sectional area.\nFor our coffee model, we only need one constitutive equation (take a look at Equation 2.2 to see why), and the appropriate one is called Newton’s law of cooling. It is:\n\\[\nq = h \\cdot (T_s - T_\\infty),\n\\tag{2.3}\\]\nwhere \\(q=\\) heat flux (\\(\\Wpms\\)), \\(h=\\) convection heat transfer coefficient (\\(\\WpmspK\\)), \\(T_s=\\) surface temperature of an object (K or \\(\\degC\\), either is fine because we are dealing with a temperature difference, not the absolute value), and \\(T_\\infty=\\) temperature of the surrounding fluid at some point where the object does not affect it. Applied to our cooling coffee system, \\(T_s=\\) the coffee temperature, uniform throughout, and \\(T_{\\infty}=\\) air temperature.\nConstitutive equations depend on the state of the system and material properties. Take a look at Equation 2.3. The “state of the system” component is clear in the presence of \\(T_s\\), which is the coffee temperature here. And the heat transfer coefficient \\(h\\) depends on the properties of air–it would be very different if the coffee were immersed in water!",
+    "text": "2.4 Constitutive equations\nConstitutive equations describe how matter or energy are transferred. We will need a constitutive equation for each term in the model conservation equation. Figuring out what equations to use here requires familiarity with the different options. We’ll take a look at just a couple here and present more in Chapter 4, ?sec-mass, and ?sec-reactions. These equations typically have a name like “someone’s law”. In general, constitutive equations include a difference or derivative and a proportionality constant on the right-hand side (RHS). The left-hand side (LHS) is usually some kind of flux, which is a flow rate per unit cross-sectional area.\nFor our coffee model, we only need one constitutive equation (take a look at Equation 2.2 to see why), and the appropriate one is called Newton’s law of cooling. It is:\n\\[\nq = h \\cdot (T_s - T_\\infty),\n\\tag{2.3}\\]\nwhere \\(q=\\) heat flux (\\(\\Wpms\\)), \\(h=\\) convection heat transfer coefficient (\\(\\WpmspK\\)), \\(T_s=\\) surface temperature of an object (K or \\(\\degC\\), either is fine because we are dealing with a temperature difference, not the absolute value), and \\(T_\\infty=\\) temperature of the surrounding fluid at some point where the object does not affect it. Applied to our cooling coffee system, \\(T_s=\\) the coffee temperature, uniform throughout, and \\(T_{\\infty}=\\) air temperature.\nConstitutive equations depend on the state of the system and material properties. Take a look at Equation 2.3. The “state of the system” component is clear in the presence of \\(T_s\\), which is the coffee temperature here. And the heat transfer coefficient \\(h\\) depends on the properties of air–it would be very different if the coffee were immersed in water!",
     "crumbs": [
       "Part I: Foundations",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Model Formulation</span>"
@@ -124,7 +124,7 @@
     "href": "02_components_formulation.html#sec-linking",
     "title": "2  Model Formulation",
     "section": "2.5 Linking equations",
-    "text": "2.5 Linking equations\nLinking equations are those relationships that are sometimes needed to connect or related different physical quantities included in the model. Not all models need linking equations. Our simple coffee model does though! Why? Well, our state variable is temperature \\(T\\), but our conservation equation, Equation 2.2, is for energy. The same is true for our constitutive equation, Equation 2.3, which has \\(T\\) on the RHS, but only energy on the LHS. So somehow we need to link the two, temperature and energy. To do so, we need to know something about heat energy and thermal temperature, but even without this knowledge we might guess that the two are directly proporational, i.e., \\(\\Delta T = c \\cdot \\Delta Q\\), where \\(c\\) is some arbitrary constant. In fact this is correct, but \\(c\\) depends on the material and the quantity present. So here, the linking equation that we need is:\n\\[\n\\Delta Q = c_p \\cdot m \\cdot \\Delta T,\n\\tag{2.4}\\]\nwhere \\(\\Delta Q=\\) a change in thermal energy (J), \\(c_p=\\) a new parameter called specific heat capacity, \\(m=\\) the material mass, and \\(\\Delta T=\\) the corresponding change in material temperature. Somehow our three equations will have to be combined to derive our GE. This is explained in Section 2.6 below.",
+    "text": "2.5 Linking equations\nLinking equations are those relationships that are sometimes needed to connect or related different physical quantities included in the model. Not all models need linking equations. Our simple coffee model does though! Why? Well, our state variable is temperature \\(T\\), but our conservation equation, Equation 2.2, is for energy. The same is true for our constitutive equation, Equation 2.3, which has \\(T\\) on the RHS, but only energy on the LHS. So somehow we need to link the two, temperature and energy. To do so, we need to know something about heat energy and thermal temperature, but even without this knowledge we might guess that the two are directly proporational, i.e., \\(\\Delta T = c \\cdot \\Delta Q\\), where \\(c\\) is some arbitrary constant. In fact this is correct, but \\(c\\) depends on the material and the quantity present. So here, the linking equation that we need is:\n\\[\n\\Delta Q = c_p \\cdot m \\cdot \\Delta T,\n\\tag{2.4}\\]\nwhere \\(\\Delta Q=\\) a change in thermal energy (J), \\(c_p=\\) a new parameter called specific heat capacity (\\(\\kJpkgpK\\)), \\(m=\\) the material mass (kg), and \\(\\Delta T=\\) the corresponding change in material temperature (K or \\(\\degC\\)). Somehow our three equations will have to be combined to derive our GE. This is explained in Section 2.6 below.",
     "crumbs": [
       "Part I: Foundations",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Model Formulation</span>"
@@ -179,7 +179,7 @@
     "href": "03_solving.html#using-python-modules",
     "title": "3  Solving and Implementing Models",
     "section": "3.4 Using Python modules",
-    "text": "3.4 Using Python modules\nNow, we are going to take the “model function” approach one step further. How should you implement or program a model in Python? Here are three options.\n\nScript\n\nEverything in a single .py file (a script)\nModel may be written with (as in most examples above) or without (as in first example) functions\nSimple and quick\nNot very modular or reusable\nModel and model application code mixed together in single file\n\nModule\n\nModel is defined using functions in a .py file (a module)\nThe model module must then be imported for use\nModel could be used interactively or in a second .py file (a script)\nBetter organized, clearer, more modular than option 1\n\nPackage\n\nModel is defined within multiple modules\nGood for organizing complicated models or projects\nNot used in this course\n\n\nFor your assignments and other coursework, you should use approach 2. Why? Because it * is standard Python practice, * gives you a cleaner result that is easier for everyone to understand, * helps you think explicitly about the model inputs and outputs, * makes code reuse easy, and * introduces you to concepts that will be useful if you continue working with Python.\nHow does it work in practice? Let’s demonstrate with the RK45 model.\nFirst, we need to create a .py file with the function definition from above. Here, we’ll name the file cooling_mods.py. Here are the contents:\n\n\"\"\"\nFile: cooling_mods.py\nAuthors: Sasha D. Hafner and Frederik R. Dalby\nCourse: Modelling 2026\n\nDescription:\n    A module with a single function implementing a numerical\n    model for a cooling cup of coffee.\n\"\"\"\n\nimport numpy as np\nfrom scipy.integrate import solve_ivp\n\ndef cool(T_init, T_air, mass, area, h, time_range, dt, cp=4.2):\n    \"\"\"\n    Simulate coffee cooling using the RK45 method in `solve_ivp()`.\n\n    Parameters\n    ----------\n    T_init : float\n        Initial coffee temperature (deg. C)\n    T_air : float\n        Ambient air temperature (deg. C)\n    mass : float\n        Mass of coffee (g)\n    area : float\n        Surface area of mug (m2)\n    h : float\n        Convective heat transfer coefficient (W m-2 K-1)\n    time_range : tuple\n        Start and end time (s), e.g. (0, 3600)\n    dt : float\n        Time step (s)\n    cp : float, optional\n        Specific heat capacity of coffee (J g-1 K-1), default 4.2\n\n    Returns\n    -------\n    dict with keys 'times' (s) and 'T_coffee' (degC)\n    \"\"\"\n\n    # Calculate constant, which does not change over time\n    con_cool = area * h / (cp * mass)\n\n    # Create an array of times\n    times = np.arange(time_range[0], time_range[1] + dt, dt)\n\n    # Define rates function\n    def rates(t, T_current):\n        return - con_cool * (T_current - T_air)\n\n    # And use the RK45 method with solve_ivp() defaults\n    res = solve_ivp(\n        rates, \n        t_span=time_range, \n        y0=[T_init], \n        t_eval=times\n    )\n\n    # Return solution\n    return {\n        'times': res.t,\n        'T_coffee': res.y[0, :],\n    }\n\nThen, to use the model, we first import the module we defined and then run the function, like this:\n\n\"\"\"\nFile: cool_pred.py\nAuthors: Sasha D. Hafner and Frederik R. Dalby\nCourse: Modelling 2026\n\nDescription:\n    Application of the `cool_rk()` model function.\n\"\"\"\n\nimport cooling_mods as cm\n\npreds = cm.cool(\n    T_init=80, \n    T_air=20, \n    mass=300, \n    area=0.026, \n    h=75, \n    time_range=(0., 60 * 60), \n    dt = 5 * 60\n)\n\nprint(preds)\n\n{'times': array([   0.,  300.,  600.,  900., 1200., 1500., 1800., 2100., 2400.,\n       2700., 3000., 3300., 3600.]), 'T_coffee': array([80.        , 57.71380501, 43.69419246, 34.90155755, 29.37050362,\n       25.89183041, 23.70565386, 22.32781616, 21.46773261, 20.91910358,\n       20.58098179, 20.36647379, 20.23041304])}\n\n\n\n\n\n\nOdum, Howard T, and Elisabeth C Odum. 2000. Modeling for All Scales: An Introduction to System Simulation. Elsevier.",
+    "text": "3.4 Using Python modules\nNow, we are going to take the “model function” approach one step further. How should you implement or program a model in Python? Here are three options.\n\nScript\n\nEverything in a single .py file (a script)\nModel may be written with (as in most examples above) or without (as in first example) functions\nSimple and quick\nNot very modular or reusable\nModel and model application code mixed together in single file\n\nModule\n\nModel is defined using functions in a .py file (a module)\nThe model module must then be imported for use\nModel could be used interactively or in a second .py file (a script)\nBetter organized, clearer, more modular than option 1\n\nPackage\n\nModel is defined within multiple modules\nGood for organizing complicated models or projects\nNot used in this course\n\n\nFor your assignments and other coursework, you should use approach 2. Why? Because it\n\nis standard Python practice,\ngives you a cleaner result that is easier for everyone to understand,\nhelps you think explicitly about the model inputs and outputs,\nmakes code reuse easy, and\nintroduces you to concepts that will be useful if you continue working with Python.\n\nHow does it work in practice? Let’s demonstrate with the RK45 model.\nFirst, we need to create a .py file with the function definition from above. Here, we’ll name the file cooling_mods.py. Here are the contents:\n\n\"\"\"\nFile: cooling_mods.py\nAuthors: Sasha D. Hafner and Frederik R. Dalby\nCourse: Modelling 2026\n\nDescription:\n    A module with a single function implementing a numerical\n    model for a cooling cup of coffee.\n\"\"\"\n\nimport numpy as np\nfrom scipy.integrate import solve_ivp\n\ndef cool(T_init, T_air, mass, area, h, time_range, dt, cp=4.2):\n    \"\"\"\n    Simulate coffee cooling using the RK45 method in `solve_ivp()`.\n\n    Parameters\n    ----------\n    T_init : float\n        Initial coffee temperature (deg. C)\n    T_air : float\n        Ambient air temperature (deg. C)\n    mass : float\n        Mass of coffee (g)\n    area : float\n        Surface area of mug (m2)\n    h : float\n        Convective heat transfer coefficient (W m-2 K-1)\n    time_range : tuple\n        Start and end time (s), e.g. (0, 3600)\n    dt : float\n        Time step (s)\n    cp : float, optional\n        Specific heat capacity of coffee (J g-1 K-1), default 4.2\n\n    Returns\n    -------\n    dict with keys 'times' (s) and 'T_coffee' (degC)\n    \"\"\"\n\n    # Calculate constant, which does not change over time\n    con_cool = area * h / (cp * mass)\n\n    # Create an array of times\n    times = np.arange(time_range[0], time_range[1] + dt, dt)\n\n    # Define rates function\n    def rates(t, T_current):\n        return - con_cool * (T_current - T_air)\n\n    # And use the RK45 method with solve_ivp() defaults\n    res = solve_ivp(\n        rates, \n        t_span=time_range, \n        y0=[T_init], \n        t_eval=times\n    )\n\n    # Return solution\n    return {\n        'times': res.t,\n        'T_coffee': res.y[0, :],\n    }\n\nThen, to use the model, we first import the module we defined and then run the function, like this:\n\n\"\"\"\nFile: cool_pred.py\nAuthors: Sasha D. Hafner and Frederik R. Dalby\nCourse: Modelling 2026\n\nDescription:\n    Application of the `cool_rk()` model function.\n\"\"\"\n\nimport cooling_mods as cm\n\npreds = cm.cool(\n    T_init=80, \n    T_air=20, \n    mass=300, \n    area=0.026, \n    h=75, \n    time_range=(0., 60 * 60), \n    dt = 5 * 60\n)\n\nprint(preds)\n\n{'times': array([   0.,  300.,  600.,  900., 1200., 1500., 1800., 2100., 2400.,\n       2700., 3000., 3300., 3600.]), 'T_coffee': array([80.        , 57.71380501, 43.69419246, 34.90155755, 29.37050362,\n       25.89183041, 23.70565386, 22.32781616, 21.46773261, 20.91910358,\n       20.58098179, 20.36647379, 20.23041304])}\n\n\n\n\n\n\nOdum, Howard T, and Elisabeth C Odum. 2000. Modeling for All Scales: An Introduction to System Simulation. Elsevier.",
     "crumbs": [
       "Part I: Foundations",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Solving and Implementing Models</span>"
@@ -190,7 +190,18 @@
     "href": "04_heat_transfer.html",
     "title": "4  Heat Transfer",
     "section": "",
-    "text": "4.1 Introduction",
+    "text": "4.1 Introduction\nHeat is a form of energy, associated with random motion of molecules or atoms. Heat transfer is concerned with the net movement of that energy from high temperature to low. Generally, heat transfer is associated with a temperature change, so measurement of temperature change is one way to quantify heat flow, but the change in temperature over time is also a common output from heat transfer models.\nHeat transfer occurs in different ways that are modeled differently. These are called modes, and we will cover the following:\nFrom our modeling perspective, we need to recognize the relevant mode of heat transfer in order to select an appropriate constitutive equation (see Section 2.4 for a review if needed). There are a couple fundamental concepts we’ll cover first. For a lot more information on heat transfer, see Bergman et al. (2013).",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Heat Transfer</span>"
+    ]
+  },
+  {
+    "objectID": "04_heat_transfer.html#introduction",
+    "href": "04_heat_transfer.html#introduction",
+    "title": "4  Heat Transfer",
+    "section": "",
+    "text": "Advection, transfer of heat energy due to bulk fluid movement.\nConduction, diffusion of heat energy through solids or fluids.\nConvection, a more empirical mode to describe heat transfer between a surface and a fluid.",
     "crumbs": [
       "Part II: Applications",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Heat Transfer</span>"
@@ -201,7 +212,7 @@
     "href": "04_heat_transfer.html#advection",
     "title": "4  Heat Transfer",
     "section": "4.2 Advection",
-    "text": "4.2 Advection",
+    "text": "4.2 Advection\nWhen a fluid flows into a location originally containing fluid with a different temperature, the temperature at that location or in that volume changes. The thermal energy has therefore changed as well. That is advection. It is a relatively easy process to measure and think about.\nLet’s take a tank, for example the water tank in Figure 4.1, with a fixed volume and fixed flow rate \\(\\dot{V}\\) in and out of the tank.\n\n\n\n\n\n\nFigure 4.1: A tank of water with a fixed volume \\(V\\) and flow rate \\(\\dot{V}\\).\n\n\n\nIf the temperature of water flowing into the tank \\(T_{inflow}\\) differs from the current tank temperature \\(T_{tank}\\), then \\(T_{tank}\\) must be changing over time. This is advection. If \\(T_{inflow}\\) is higher than \\(T_{tank}\\), the tank temperature is increasing; if lower, \\(T_{tank}\\) is decreasing.\nHow about the quantitative constitutive equation? For this tank:\n\\[\n\\text{energy transfer rate} = \\dot{Q} = \\dot{V} \\cdot{\\rho} \\cdot c_p \\cdot (T_{inflow} - T_{tank}),\n\\tag{4.1}\\]\nwhere \\(\\dot{Q}\\) is energy flow in W, \\(\\rho=\\) fluid density in \\(\\kgpmc\\), and \\(c_p=\\) specific heat capacity (\\(\\kJpkgpK\\)).\nAs long as density and specific heat capacity are constant (we will always assume they are in this book), we could derive an equation for the rate of temperature change by recognizing that \\(dT = \\frac{\\dot{Q}}{\\dot{V} \\cdot{\\rho} \\cdot c_p}\\). Start with substitution:\n\\[\n\\frac{dT}{dt} = \\frac{\\dot{V} \\cdot{\\rho} \\cdot c_p \\cdot (T_{inflow} - T_{tank})}{V \\cdot{\\rho} \\cdot c_p}.\n\\]\nThen simplify for\n\\[\n\\frac{dT}{dt} = \\frac{\\dot{V} \\cdot (T_{inflow} - T_{tank})}{V}.\n\\tag{4.2}\\]\nAdvection becomes trickier when we don’t have a constant volume (or mass) within our model domain or control volume. Fortunately, most models do, and we won’t cover those other cases.\nAnother simple advection scenario is a shown in Figure 4.2.\n\n\n\n\n\n\nFigure 4.2: A fluid flowing through a constant-diameter round pipe at a constant flow rate.\n\n\n\nThe small section at the bottom can be called a control volume–a hypothetical volume used for deriving flow equations. We can treat that control volume like the tank above (Figure 4.1, Equation 4.1). The instantaneous rate of net energy flow into the control volume by advection is:\n\\[\n\\dot{Q} = \\dot{V} \\cdot{\\rho} \\cdot c_p \\cdot (T_{left} - T_{right}),\n\\tag{4.3}\\]\nwhere \\(T_{left}\\) and \\(T_{right}\\) are at the boundaries of the control volume. How about the rate of temperature change? That is what we are really after.\n\\[\n\\frac{dT}{dt} = \\frac{\\dot{Q}}{V \\cdot A \\cdot {\\rho} \\cdot c_p}\n\\tag{4.4}\\]\nAnd we can then substitute the RHS of Equation 4.3 for \\(\\dot{Q}\\) in Equation 4.4.\n\\[\n\\frac{dT}{dt} = \\frac{\\dot{V} \\cdot{\\rho} \\cdot c_p \\cdot (T_{left} - T_{right})}{\\Delta x \\cdot A \\cdot {\\rho} \\cdot c_p}\n\\tag{4.5}\\]\nAnd simplify Equation 4.5, recognizing that \\(\\frac{\\dot{V}}{A} = v_x =\\) superficial fluid velocity:\n\\[\n\\frac{dT}{dt} = v_x \\cdot \\frac{(T_{left} - T_{right})}{\\Delta x}.\n\\tag{4.6}\\]\nAnd that quotient on the RHS of Equation 4.6 becomes the definition of a derivative as \\(\\Delta x\\) approaches 0, so the associated ODE is:\n\\[\n\\frac{dT}{dt} = v_x \\cdot \\frac{dT}{dx}.\n\\tag{4.7}\\]\nEquation 4.7, is actually pretty intuitive. It says that the rate of temperature change at a fixed location is equal to the temperature derivative over space and the rate at which fluid flows over that same space.\nEquation 4.7, along with Equation 4.4 and Equation 4.6 will together suffice for the constitutive equations for advection in most of the systems we’ll encounter in this book. For others, derivation of an advection equation is pretty simple.\nIn our pipe conceptual model, we’ve implicitly assumed that radial position has no bearing on transfer. In reality,",
     "crumbs": [
       "Part II: Applications",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Heat Transfer</span>"
@@ -212,7 +223,7 @@
     "href": "04_heat_transfer.html#sec-fourier",
     "title": "4  Heat Transfer",
     "section": "4.3 Conduction and Fourier’s law",
-    "text": "4.3 Conduction and Fourier’s law",
+    "text": "4.3 Conduction and Fourier’s law\nConduction is the transfer of heat through solids and fluids by random motion of molecules or atoms (electrons also play a role, at least in metals). It can also be called thermal diffusion.\nHeat energy flows from high temperature to low temperature. That simple concept underlies a simple tool for inferring heat transfer and temperature change from temperature differences, gradients, or derivatives.\nA temperature profile is a graphical representation of temperature over space. For example, Figure 4.3 shows the temperature profile of a wall with one fixed temperature at the left surface, \\(T_o\\), where \\(o\\) is for outside, and another at the right surface, \\(T_i\\). It is common to show space horizontally–here the \\(x\\) dimension–and temperature vertically.\n\n\n\n\n\n\nFigure 4.3: A temperature profile through a slab wall.\n\n\n\nFigure 4.3 and similar simple sketches are best for one dimensional (1D) problems where the temperature varies only over one dimension and is uniform in all others. Here, that means that the profile for 1 mm from the bottom of the wall is the same as the one at 2 m–moving up or down has no effect on the profile. In fact, Figure 4.3 does not really show any vertical dimension, or wall height. The vertical position of a point on the red \\(T\\) line shows the temperature at a particular depth in the wall.\nThe slope of the red line in Figure 4.3 is the derivative of temperature with respect to the \\(x\\) dimension. Here, because the red \\(T\\) line is straight, the derivative is uniform with \\(x\\), which is characteristic steady-state for plane walls. These concepts are expanded below.",
     "crumbs": [
       "Part II: Applications",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Heat Transfer</span>"
@@ -245,351 +256,10 @@
     "href": "04_heat_transfer.html#example-lumped-parameter-model-with-all-modes",
     "title": "4  Heat Transfer",
     "section": "4.6 Example: lumped-parameter model with all modes",
-    "text": "4.6 Example: lumped-parameter model with all modes",
+    "text": "4.6 Example: lumped-parameter model with all modes\n\n\n\n\n\nBergman, Theodore L.., David P. DeWitt, Frank P. Incropera, and Adrienne S.. Lavine. 2013. Principles of Heat and Mass Transfer : International Student Version. Seventh edition. Hoboken (N.J.): John Wiley \\& Sons.",
     "crumbs": [
       "Part II: Applications",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Heat Transfer</span>"
-    ]
-  },
-  {
-    "objectID": "05_mass_transfer.html",
-    "href": "05_mass_transfer.html",
-    "title": "5  Mass Transfer",
-    "section": "",
-    "text": "5.1 Advection",
-    "crumbs": [
-      "Part II: Applications",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Mass Transfer</span>"
-    ]
-  },
-  {
-    "objectID": "05_mass_transfer.html#sec-fick",
-    "href": "05_mass_transfer.html#sec-fick",
-    "title": "5  Mass Transfer",
-    "section": "5.2 Diffusion and Fick’s laws",
-    "text": "5.2 Diffusion and Fick’s laws",
-    "crumbs": [
-      "Part II: Applications",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Mass Transfer</span>"
-    ]
-  },
-  {
-    "objectID": "05_mass_transfer.html#convection",
-    "href": "05_mass_transfer.html#convection",
-    "title": "5  Mass Transfer",
-    "section": "5.3 Convection",
-    "text": "5.3 Convection",
-    "crumbs": [
-      "Part II: Applications",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Mass Transfer</span>"
-    ]
-  },
-  {
-    "objectID": "05_mass_transfer.html#mass-transfer-coefficient-approach",
-    "href": "05_mass_transfer.html#mass-transfer-coefficient-approach",
-    "title": "5  Mass Transfer",
-    "section": "5.4 Mass transfer coefficient approach",
-    "text": "5.4 Mass transfer coefficient approach",
-    "crumbs": [
-      "Part II: Applications",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Mass Transfer</span>"
-    ]
-  },
-  {
-    "objectID": "05_mass_transfer.html#sec-interphase",
-    "href": "05_mass_transfer.html#sec-interphase",
-    "title": "5  Mass Transfer",
-    "section": "5.5 Interphase mass transfer",
-    "text": "5.5 Interphase mass transfer",
-    "crumbs": [
-      "Part II: Applications",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Mass Transfer</span>"
-    ]
-  },
-  {
-    "objectID": "05_mass_transfer.html#linking-equations",
-    "href": "05_mass_transfer.html#linking-equations",
-    "title": "5  Mass Transfer",
-    "section": "5.6 Linking equations",
-    "text": "5.6 Linking equations",
-    "crumbs": [
-      "Part II: Applications",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Mass Transfer</span>"
-    ]
-  },
-  {
-    "objectID": "05_mass_transfer.html#example-dissolved-oxygen-transport-and-consumption",
-    "href": "05_mass_transfer.html#example-dissolved-oxygen-transport-and-consumption",
-    "title": "5  Mass Transfer",
-    "section": "5.7 Example: dissolved oxygen transport and consumption",
-    "text": "5.7 Example: dissolved oxygen transport and consumption",
-    "crumbs": [
-      "Part II: Applications",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Mass Transfer</span>"
-    ]
-  },
-  {
-    "objectID": "06_reactions_microbiology.html",
-    "href": "06_reactions_microbiology.html",
-    "title": "6  Chemical Reactions and Microbiology",
-    "section": "",
-    "text": "6.1 Chemical reactions",
-    "crumbs": [
-      "Part II: Applications",
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Chemical Reactions and Microbiology</span>"
-    ]
-  },
-  {
-    "objectID": "06_reactions_microbiology.html#microbiology",
-    "href": "06_reactions_microbiology.html#microbiology",
-    "title": "6  Chemical Reactions and Microbiology",
-    "section": "6.2 Microbiology",
-    "text": "6.2 Microbiology",
-    "crumbs": [
-      "Part II: Applications",
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Chemical Reactions and Microbiology</span>"
-    ]
-  },
-  {
-    "objectID": "07_spatial_models.html",
-    "href": "07_spatial_models.html",
-    "title": "7  Spatial Models",
-    "section": "",
-    "text": "7.1 Governing equations and coordinate systems",
-    "crumbs": [
-      "Part II: Applications",
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Spatial Models</span>"
-    ]
-  },
-  {
-    "objectID": "07_spatial_models.html#method-of-lines-and-discretization",
-    "href": "07_spatial_models.html#method-of-lines-and-discretization",
-    "title": "7  Spatial Models",
-    "section": "7.2 Method of lines and discretization",
-    "text": "7.2 Method of lines and discretization",
-    "crumbs": [
-      "Part II: Applications",
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Spatial Models</span>"
-    ]
-  },
-  {
-    "objectID": "07_spatial_models.html#nodes-vs.-cells",
-    "href": "07_spatial_models.html#nodes-vs.-cells",
-    "title": "7  Spatial Models",
-    "section": "7.3 Nodes vs. cells",
-    "text": "7.3 Nodes vs. cells",
-    "crumbs": [
-      "Part II: Applications",
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Spatial Models</span>"
-    ]
-  },
-  {
-    "objectID": "07_spatial_models.html#flux-based-vs.-state-variable-implementation",
-    "href": "07_spatial_models.html#flux-based-vs.-state-variable-implementation",
-    "title": "7  Spatial Models",
-    "section": "7.4 Flux-based vs. state-variable implementation",
-    "text": "7.4 Flux-based vs. state-variable implementation",
-    "crumbs": [
-      "Part II: Applications",
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Spatial Models</span>"
-    ]
-  },
-  {
-    "objectID": "07_spatial_models.html#sec-bcs",
-    "href": "07_spatial_models.html#sec-bcs",
-    "title": "7  Spatial Models",
-    "section": "7.5 Boundary conditions",
-    "text": "7.5 Boundary conditions",
-    "crumbs": [
-      "Part II: Applications",
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Spatial Models</span>"
-    ]
-  },
-  {
-    "objectID": "07_spatial_models.html#initial-conditions",
-    "href": "07_spatial_models.html#initial-conditions",
-    "title": "7  Spatial Models",
-    "section": "7.6 Initial conditions",
-    "text": "7.6 Initial conditions",
-    "crumbs": [
-      "Part II: Applications",
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Spatial Models</span>"
-    ]
-  },
-  {
-    "objectID": "07_spatial_models.html#implementation",
-    "href": "07_spatial_models.html#implementation",
-    "title": "7  Spatial Models",
-    "section": "7.7 Implementation",
-    "text": "7.7 Implementation",
-    "crumbs": [
-      "Part II: Applications",
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Spatial Models</span>"
-    ]
-  },
-  {
-    "objectID": "07_spatial_models.html#grid-size-and-convergence",
-    "href": "07_spatial_models.html#grid-size-and-convergence",
-    "title": "7  Spatial Models",
-    "section": "7.8 Grid size and convergence",
-    "text": "7.8 Grid size and convergence",
-    "crumbs": [
-      "Part II: Applications",
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Spatial Models</span>"
-    ]
-  },
-  {
-    "objectID": "09_verification_validation.html",
-    "href": "09_verification_validation.html",
-    "title": "9  Model Verification and Validation",
-    "section": "",
-    "text": "9.1 Verification",
-    "crumbs": [
-      "Part II: Applications",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Model Verification and Validation</span>"
-    ]
-  },
-  {
-    "objectID": "09_verification_validation.html#validation",
-    "href": "09_verification_validation.html#validation",
-    "title": "9  Model Verification and Validation",
-    "section": "9.2 Validation",
-    "text": "9.2 Validation",
-    "crumbs": [
-      "Part II: Applications",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Model Verification and Validation</span>"
-    ]
-  },
-  {
-    "objectID": "appx_python_types.html",
-    "href": "appx_python_types.html",
-    "title": "Appendix C — Python data structures",
-    "section": "",
-    "text": "C.1 2. Scalars\nThis document provides a review of basic Python structures that are important for modeling. Data structures are the software objects that hold the numbers or other types of data that are used in modeling. While it might be possible to do a lot of modeling with scalars, e.g., a real number, called a float in Python, putting multiple values in a single object makes writing and using the model much simpler. You should always know the type of object used in your code. Remember that the type() function can be used to check within Python. The multi-element data structures covered in this document are summarized in the table below.\nThe three essential types of scalars, or single-element objects, built into Python are:\nIn some cases we’ll use these directly. In others they will be stored within larger data structures.\nx = 1\nprint(x)\nprint(type(x))\n\n1\n&lt;class 'int'&gt;\nIntegers will be converted to floats if used in arthmetic.\nprint(type(x / 2))\n\n&lt;class 'float'&gt;\npi = 3.14159\nprint(pi)\nprint(type(pi))\n\n3.14159\n&lt;class 'float'&gt;\nb = True\nprint(b)\nprint(type(b))\n\nTrue\n&lt;class 'bool'&gt;\nBoolean objects can also be converted to integers or floats. In that case True is coerced (changed) into the integer 1 and False to 0.\nprint(b + 1)\nprint(type(b + 1))\n\n2\n&lt;class 'int'&gt;\nprint(b + 0.5)\nprint(type(b + 0.5))\n\n1.5\n&lt;class 'float'&gt;\nLastly, strings are used for storing text data in Python. Double or single quotes can be used, but double are more common.\ns = \"Time (h)\"\nprint(s)\n\nTime (h)",
-    "crumbs": [
-      "Appendices",
-      "<span class='chapter-number'>C</span>  <span class='chapter-title'>Python data structures</span>"
-    ]
-  },
-  {
-    "objectID": "appx_python_types.html#scalars",
-    "href": "appx_python_types.html#scalars",
-    "title": "Appendix C — Python data structures",
-    "section": "",
-    "text": "int: integers\nfloat: real numbers or an approximation (float is for floating point)\nbool: logical values (True and False, with bool for Boolean)",
-    "crumbs": [
-      "Appendices",
-      "<span class='chapter-number'>C</span>  <span class='chapter-title'>Python data structures</span>"
-    ]
-  },
-  {
-    "objectID": "appx_python_types.html#lists",
-    "href": "appx_python_types.html#lists",
-    "title": "Appendix C — Python data structures",
-    "section": "C.2 3. Lists",
-    "text": "C.2 3. Lists\nLists are can contain multiple elements. There are multiple ways to create them, but the simplest is with square brackets: [ and ]. For example,\n\ny = [1, 2.3, 4.5, 1.4]\nprint(y)\n\n[1, 2.3, 4.5, 1.4]\n\n\nLists can hold any scalar type (and can even take a mix of types, but this can create confusion). The individual elements in a list can even be other lists. This feature provides a way to simulate arrays using lists. For example, you can effectively simulate a matrix like this\n\nm = [[1, 2, 3, 4], \n    [5, 6, 7, 8],\n    [9, 10, 11, 12]]\n\nWhat is each element of m?\n\nprint(type(m[0]))\n\n&lt;class 'list'&gt;\n\n\nA list. And we can think of each one as a row. But the array functionality from the NumPy package is more efficient and we’ll use that approach in this course.\nThere are many built-in methods for lists. Remember that methods are special functions that are always associated with a particular object. They are called with a dot .. Below the append() method is used.\n\ny = [1, 2.3, 4.5, 1.4]\n\ny.append(10)\n\nprint(y)\n\n[1, 2.3, 4.5, 1.4, 10]\n\n\nLists support indexing or slicing, which is a powerful tool for data manipulation that will be used extensively in our course. For example, we can extract the first element like this.\n\ny[0]\n\n1\n\n\nSecond element.\n\ny[1]\n\n2.3\n\n\nFor reference, here is the entire list again.\n\ny\n\n[1, 2.3, 4.5, 1.4, 10]\n\n\nHere is syntax for the last element.\n\ny[-1]\n\n10\n\n\nOr take what is called a “slice” using a colon operator.\n\ny[1:3]\n\n[2.3, 4.5]\n\n\nThis gives elements in position 1 and 2, which is confusing for many. Note that the syntax is the same as the range() function.\nOmitting one of the indices returns everything from or up to the other index.\n\ny[1:]\ny[:1]\n\n[1]\n\n\n\ny[2:]\ny[:2]\n\n[1, 2.3]\n\n\nIndexing can be used for assignment as well.\n\ny\ny[1] = 0\ny\n\n[1, 0, 4.5, 1.4, 10]\n\n\nBut to use the slice notation to assign to more than one position, we need a list (or other “iterable”) on the right, like this.\n\ny\ny[1:3] = [100, -100]\ny\n\n[1, 100, -100, 1.4, 10]",
-    "crumbs": [
-      "Appendices",
-      "<span class='chapter-number'>C</span>  <span class='chapter-title'>Python data structures</span>"
-    ]
-  },
-  {
-    "objectID": "appx_python_types.html#tuples",
-    "href": "appx_python_types.html#tuples",
-    "title": "Appendix C — Python data structures",
-    "section": "C.3 4. Tuples",
-    "text": "C.3 4. Tuples\nTuples look similar to lists, but there are differences. The most important is that tuples are immutable.\n\nt = (1, 2, 3)\nprint(t)\n\n(1, 2, 3)\n\n\nIndexing is similar to lists.\n\nt[2]\n\n3\n\n\nBeing immutable means you cannot change the value of any elements. This may be convenient sometimes, e.g., for model parameter storage.\n\nt[1] = 2\n\n\n---------------------------------------------------------------------------\nTypeError                                 Traceback (most recent call last)\nCell In[23], line 1\n----&gt; 1 t[1] = 2\n\nTypeError: 'tuple' object does not support item assignment\n\n\n\nAnother difference between the two data structures is that there are fewer methods available for tuples.",
-    "crumbs": [
-      "Appendices",
-      "<span class='chapter-number'>C</span>  <span class='chapter-title'>Python data structures</span>"
-    ]
-  },
-  {
-    "objectID": "appx_python_types.html#arrays",
-    "href": "appx_python_types.html#arrays",
-    "title": "Appendix C — Python data structures",
-    "section": "C.4 5. Arrays",
-    "text": "C.4 5. Arrays\nProper NumPy arrays are typically better than lists (and certainly tuples) for working with array-like data when developing models in Python. There are many different ways to create NumPy arrays. For example, we can use lists. Here is a one-dimensional (1D) array, or a vector, for example.\n\nimport numpy as np\n\na = np.array([1, 2, 3, 4])\nprint(a)\nprint(type(a))\n\n[1 2 3 4]\n&lt;class 'numpy.ndarray'&gt;\n\n\nLists can even be used to create arrays with more dimensions. (Notice the similarity here between the np.array() argument and the use of lists as arrays shown above.)\n\na2 = np.array([[1, 2], \n               [3, 4]])\n\nprint(a2)\n               \na3 = np.array([[[1, 2], [3, 4]], \n               [[5, 6], [7, 8]]])\n\nprint(a3)\n\n[[1 2]\n [3 4]]\n[[[1 2]\n  [3 4]]\n\n [[5 6]\n  [7 8]]]\n\n\nYou can check the dimensions with the shape attribute.\n\nprint(a.shape)\nprint(a2.shape)\nprint(a3.shape)\n\n(4,)\n(2, 2)\n(2, 2, 2)\n\n\nOr, for just the number of dimensions:\n\nprint(len(a3.shape))\n\n3\n\n\nThere are other convenient ways to make arrays. Here are a few.\n\nz1 = np.zeros(10)\nprint(z1)\n\nz2 = np.zeros((3, 3))\nprint(z2)\n\nz3 = np.zeros((2, 2, 2))\nprint(z3)\n\n[0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]\n[[0. 0. 0.]\n [0. 0. 0.]\n [0. 0. 0.]]\n[[[0. 0.]\n  [0. 0.]]\n\n [[0. 0.]\n  [0. 0.]]]\n\n\nThere is an analogous ones() function in NumPy as well.\nArrays support indexing (extraction and assignment) as well.\n\na2 = np.array([[1, 2], \n               [3, 4]])\n\na2\n\narray([[1, 2],\n       [3, 4]])\n\n\nSeparate the indices for different dimensions with commas.\n\na2[1, 1]\n\nnp.int64(4)\n\n\nAssingment works too.\n\na2[1, 1] = 0\na2\n\narray([[1, 2],\n       [3, 0]])\n\n\nAnd so does slicing, for both extraction and assignment.\n\na2[0:2, 1] \n\narray([2, 0])\n\n\nOmit the indices but leave the colon to get all elements in a particular dimension.\n\na2[:, 1] \n\narray([2, 0])\n\n\n\na2[0, :] = [-10, -10] \na2\n\narray([[-10, -10],\n       [  3,   0]])\n\n\nArrays also support vectorized operations, which is very useful. So, for example, to multiple every element in a2 by 10.\n\na20 = 10 * a2\na20\n\narray([[-100, -100],\n       [  30,    0]])\n\n\nThis might seem trivial, but it has not been the norm in programming languages, and does not work in lists, for example.\n\n3 * [1, 2, 3]\n\n[1, 2, 3, 1, 2, 3, 1, 2, 3]\n\n\nInstead, Python does what is called sequence repetition.",
-    "crumbs": [
-      "Appendices",
-      "<span class='chapter-number'>C</span>  <span class='chapter-title'>Python data structures</span>"
-    ]
-  },
-  {
-    "objectID": "appx_python_types.html#dictionaries",
-    "href": "appx_python_types.html#dictionaries",
-    "title": "Appendix C — Python data structures",
-    "section": "C.5 6. Dictionaries",
-    "text": "C.5 6. Dictionaries\nDictionaries are handy when data elements need some kind of label or name to go along with them, such as with model output.\n\nout = {\n  \"model\": \"Diff1D\",\n  \"iterations\": 3,\n  \"fit\": 0.9\n}\n\nout\n\n{'model': 'Diff1D', 'iterations': 3, 'fit': 0.9}\n\n\nOf course they are more useful when the values are linked to symbolic variables! The keys (names) are used to extact or set elements.\n\nout['fit']\n\n0.9\n\n\nThere is also a get() method.\n\nout.get('fit')\n\n0.9\n\n\nAnd the keys() method is handy for larger dictionaries.\n\nout.keys()\n\ndict_keys(['model', 'iterations', 'fit'])",
-    "crumbs": [
-      "Appendices",
-      "<span class='chapter-number'>C</span>  <span class='chapter-title'>Python data structures</span>"
-    ]
-  },
-  {
-    "objectID": "appx_python_types.html#dataframes",
-    "href": "appx_python_types.html#dataframes",
-    "title": "Appendix C — Python data structures",
-    "section": "C.6 7. DataFrames",
-    "text": "C.6 7. DataFrames\nThe pandas package provides a data structure suitable for tabular data called a data frame, or, in pandas parlance, a DataFrame (note the capitalization, but “pandas” itself is not capitalized). Unlike an array, a data frame can contain data of different types. See the mm object below for an example.\n\nimport pandas as pd\nmm = pd.read_csv('data/mol_mass.csv', skiprows = 0)\n\n\nprint(mm)\n\n     form  mol_mass\n0    CH4O    32.042\n1    C7H8    92.134\n2    C5H8    68.114\n3   C7H6O   106.118\n4   C3H6O    58.078\n5   C2H4O    44.052\n6  C2H4O2    60.052\n7   C4H8O    72.104\n8  C10H16   136.228\n\n\nThese molar mass have data of type string in the first column, and floating point in the second. The mm DataFrame has column names, which can be used to refer to individual columns.\nThe pandas package provides tools for processing complete DataFrames or individual columns (Series in pandas terminology). And it contains features to maintain the connections between the columns, so, for example, the formula in the second row is always associated with the correct molar mass.\nWe may use DataFrames for importing and exporting data, and possibly for some data processing. But in most cases, the other data types are simpler for our work.\nWhat if we want to work with a column of data? We can use either a dot . or the general Python and NumPy indexing operator square brackets [ ], as shown above.\n\nprint(mm.mol_mass)\n\n0     32.042\n1     92.134\n2     68.114\n3    106.118\n4     58.078\n5     44.052\n6     60.052\n7     72.104\n8    136.228\nName: mol_mass, dtype: float64\n\n\n\nmm_vals = mm.mol_mass\nprint(mm_vals)\n\n0     32.042\n1     92.134\n2     68.114\n3    106.118\n4     58.078\n5     44.052\n6     60.052\n7     72.104\n8    136.228\nName: mol_mass, dtype: float64\n\n\n\nmm_vals = mm['mol_mass']\nprint(mm_vals)\n\n0     32.042\n1     92.134\n2     68.114\n3    106.118\n4     58.078\n5     44.052\n6     60.052\n7     72.104\n8    136.228\nName: mol_mass, dtype: float64\n\n\nWe can then work with the “extracted” values. But be careful! The class is Series, a special pandas class, not a simple array. Second, the mm_vals object is still part of the larger DataFrame.\nTypically, a better option is to extract the values with the array attribute.\n\nmm_vals2 = mm.mol_mass.array\nprint(mm_vals2)\n\n&lt;NumpyExtensionArray&gt;\n[32.042, 92.134, 68.114, 106.118, 58.078, 44.052, 60.052, 72.104, 136.228]\nLength: 9, dtype: float64\n\n\nNow we can use these as any other array.\n\nprint(min(mm_vals2))\nprint(mm_vals2.mean())\n\n32.042\n74.32466666666667\n\n\n(Which mean() method do you think are we using in the second line above? Remember that it depends on the class of the object.)\nAlternatively, the to_numpy() method may have some advantages.\n\nmm_vals3 = mm.mol_mass.to_numpy()\nprint(mm_vals3)\n\n[ 32.042  92.134  68.114 106.118  58.078  44.052  60.052  72.104 136.228]\n\n\nOriginally the pandas documentation recommended using the .values attribute to get the underlying values, but does no longer (see here for some explanation: https://pandas.pydata.org/docs/user_guide/basics.html). But you will still see .values in answers and more online.",
-    "crumbs": [
-      "Appendices",
-      "<span class='chapter-number'>C</span>  <span class='chapter-title'>Python data structures</span>"
-    ]
-  },
-  {
-    "objectID": "appx_symbols.html",
-    "href": "appx_symbols.html",
-    "title": "Appendix E — Symbols",
-    "section": "",
-    "text": "Below is a list of symbols used in the book. It is difficult to devise a unique set of symbols across multiple fields, and despite our efforts, some are not unique and others are probably not clear. Typical units are given for each symbol, and dimensions can be inferred from those. Words in parentheses are not always used when we describe the terms (e.g., we may write “specific heat” instead of “specific heat capacity” or “heat transfer coefficient” instead of “convection heat transfer coefficient”). Note that for temperature, both K and \\(\\degC\\) show up in the table and in the rest of the book. Kelvin is the more fundamental unit, and it is conventional to write heat transfer parameters using it. But for all the types of heat transfer parameters we use, the two are completely interchangeable, because a temperature difference or gradient is identical in the two. Of course, an actual temperature is not.\n\n\n\nSymbol\nDescription\nTypical units\n\n\n\n\n\\(A\\)\nCross-sectional area\n\\(\\msq\\)\n\n\n\\(Q\\)\nThermal energy\n\\(\\mathrm{J}\\)\n\n\n\\(\\dot{Q}\\)\nRate of thermal energy flow\n\\(\\Jps = \\mathrm{W}\\)\n\n\n\\(q\\)\nHeat flux\n\\(\\Wpms\\)\n\n\n\\(c_p\\)\nSpecific heat (capacity)\n\\(\\kJpkgpK\\)\n\n\n\\(h\\)\n(Convection) heat transfer coefficient\n\\(\\WpmspK\\)\n\n\n\\(U\\)\nOverall heat transfer coefficient\n\\(\\WpmspK\\)\n\n\n\\(k\\)\nThermal conductivity\n\\(\\WpmpK\\)\n\n\n\\(k\\)\nFirst-order rate constant\n\\(\\pers\\)\n\n\n\\(k_c\\)\n(Convection) mass transfer coefficient\n\\(\\mps\\)\n\n\n\\(D\\)\nDiffusivity\n\\(\\msqps\\)\n\n\n\\(T\\)\nTemperature\n\\(\\degC\\) or K\n\n\n\\(\\theta\\)\nNormalized temperature\n\\(\\degC\\) or K\n\n\n\\(t\\)\nTime\n\\(\\mathrm{s}\\)\n\n\n\\(x\\)\nPosition in 1D\n\\(\\mathrm{m}\\)\n\n\n\\(c\\)\nConcentration of a solute, chemical species, etc.\n\\(\\gpmc\\)\n\n\n\\(c\\)\nArbitrary constant\nvaries\n\n\n\\(m\\)\nMass\n\\(\\mathrm{kg}\\)\n\n\n\\(\\dot{m}\\)\nMass flow or conversion rate\n\\(\\kgps\\)\n\n\n\\(J\\)\nMass flux\n\\(\\kgpspms\\)\n\n\n\\(n\\)\nMolar quantity\n\\(\\mathrm{mol}\\)\n\n\n\\(\\dot{n}\\)\nMolar flow or conversion rate\n\\(\\molps\\)\n\n\n\\(M\\)\nMolar mass (identity indicated by subscript)\n\\(\\gpmol\\)\n\n\n\\(r\\)\nVolumetric molar reaction rate\n\\(\\molpmcps\\)",
-    "crumbs": [
-      "Appendices",
-      "<span class='chapter-number'>E</span>  <span class='chapter-title'>Symbols</span>"
-    ]
-  },
-  {
-    "objectID": "appx_parameter_values.html",
-    "href": "appx_parameter_values.html",
-    "title": "Appendix F — Parameter values",
-    "section": "",
-    "text": "F.1 Typical numeric values\nSelection of appropriate parameter values for validation or application of a model is not always simple. In some cases they can be determined from theory, but often measurements are needed. The information presented below includes some approximate estimates for some common parameters for simple systems and approaches for making estimates for other systems.",
-    "crumbs": [
-      "Appendices",
-      "<span class='chapter-number'>F</span>  <span class='chapter-title'>Parameter values</span>"
-    ]
-  },
-  {
-    "objectID": "appx_parameter_values.html#typical-numeric-values",
-    "href": "appx_parameter_values.html#typical-numeric-values",
-    "title": "Appendix F — Parameter values",
-    "section": "",
-    "text": "Parameter\nTypical symbol\nConditions\nUnits\nValue\nSource\n\n\n\n\nDiffusivity\n\\(D\\)\n\\(\\text{O}_2\\) in water\n\\(\\text{m}^2 ~ \\text{s}^{-1}\\)\n\\(2.1 \\cdot 10^{-9}\\)\nCussler (2009)\n\n\nDiffusivity\n\\(D\\)\n\\(\\text{NaCl}\\) in water\n\\(\\text{m}^2 ~ \\text{s}^{-1}\\)\n\\(1.6 \\cdot 10^{-9}\\)\nCussler (2009)\n\n\nDiffusivity\n\\(D\\)\n\\(\\text{CO}_2\\) in air\n\\(\\text{m}^2 ~ \\text{s}^{-1}\\)\n\\(1.4 \\cdot 10^{-5}\\)\nCussler (2009)\n\n\nMass transfer coefficient\n\\(k_c\\)\nAir blowing over flat plate\n\\(\\text{m} ~ \\text{s}^{-1}\\)\n\\(0.001 - 0.01\\)\nCalculated from correlations\n\n\nHeat transfer coefficient\n\\(h\\)\nGases, free and forced\n\\(\\text{W} ~ \\text{m}^{-2} ~ \\text{K}^{-1}\\)\n\\(2 - 250\\)\nIncropera (2003)\n\n\nHeat transfer coefficient\n\\(h\\)\nLiquids, free and forced\n\\(\\text{W} ~ \\text{m}^{-2} ~ \\text{K}^{-1}\\)\n\\(50 - 20,000\\)\nIncropera (2003)\n\n\nHeat transfer coefficient\n\\(h\\)\nWith a phase change\n\\(\\text{W} ~ \\text{m}^{-2} ~ \\text{K}^{-1}\\)\n\\(2,500 - 100,000\\)\nIncropera (2003)",
-    "crumbs": [
-      "Appendices",
-      "<span class='chapter-number'>F</span>  <span class='chapter-title'>Parameter values</span>"
-    ]
-  },
-  {
-    "objectID": "appx_parameter_values.html#mass-transfer-coefficients-and-diffusivity",
-    "href": "appx_parameter_values.html#mass-transfer-coefficients-and-diffusivity",
-    "title": "Appendix F — Parameter values",
-    "section": "F.2 Mass transfer coefficients and diffusivity",
-    "text": "F.2 Mass transfer coefficients and diffusivity\nIf the primary resistance to mass transfer is through a thin film, diffusivity and the film thickness can be combined to estimate a mass transfer coefficient. The film may be real (e.g., a plastic membrane) or hypothesized (e.g., the stagnant fluid films at interfaces between phases). The appropriate equation can be derived from Fick’s law under steady-state conditions,\n\\[\nk_c = \\frac{D}{L},\n\\]\nwhere \\(L\\) is the film thickness (length, typically m), and \\(D\\) is diffusivity (typically \\(\\text{m}^2 ~ \\text{s}^{-1}\\)).\nFilm thickness is usually calculated based on measurements of mass transfer, but once determined, can be instead used by modelers like us. For designated liquid mass transfer systems, values are usually around \\(1 \\cdot 10^{-4}\\) m (Cussler, 2009). For ponds, lakes, or oceans, effective values of the film thickness can be multiple mm, so up to, say, \\(5 \\cdot 10^{-3}\\) m.\nDiffusivity depends on both the diffusing component and what it is diffusing through. The values above give you some idea of what to expect (and you can find more values in Cussler’s Chapter 5). In general, diffusion coefficients in water are around \\(10^{-9} ~ \\text{m}^2 ~ \\text{s}^{-1}\\) and in air, around \\(10^{-5} ~ \\text{m}^2 ~ \\text{s}^{-1}\\). Diffusivity decreases with the size of the diffusing molecule. So for big molecules like sucrose, it is under \\(1 \\cdot 10^{-9} ~ \\text{m}^2 ~ \\text{s}^{-1}\\) and for huge molecules like hemogolbin it is under \\(1 \\cdot 10^{-10} ~ \\text{m}^2 ~ \\text{s}^{-1}\\). Diffusivity for diffusion through solids can be several or many orders of magnitude lower.",
-    "crumbs": [
-      "Appendices",
-      "<span class='chapter-number'>F</span>  <span class='chapter-title'>Parameter values</span>"
-    ]
-  },
-  {
-    "objectID": "appx_parameter_values.html#reaction-rates",
-    "href": "appx_parameter_values.html#reaction-rates",
-    "title": "Appendix F — Parameter values",
-    "section": "F.3 Reaction rates",
-    "text": "F.3 Reaction rates\n\nF.3.1 First-order\nFirst-order reaction constants can be estimated given some knowledge (or a guess) about how fast a reaction proceeds. For a rough estimate, the relative rate of reaction can be taken directly as the rate constant. So, for example, if some reactant disappears at a rate of 3.5% per hour, the rate constant is around 0.035 \\(\\text{hr}^{-1}\\), or \\(9.7 \\cdot 10^{-6} ~ \\text{s}^{-1}\\). Notice how small the values can be when expressed in the units we typically use!\nThis approach fails if the measured change is large, e.g., 50% over some period. Instead, use the exact analytical approach,\n\\[\nk = - \\frac{\\ln(c_t / c_0)}{\\Delta t},\n\\]\nwhere \\(k\\) is the first-order rate constant, \\(c_t\\) is the remaining reactant concentration after \\(\\Delta t\\) time, and \\(c_0\\) is the initial value (mass could be used instead of concentration).\n\n\nF.3.2 Second-order\nSecond-order reactions are a little trickier, but just a little. Here is a simple approach.\n\nDetermine the change in a reactant over time when the second reactant is held constant (or make a guess).\nApply the equation above.\nDivide the result by the fixed concentration of the second reactant.\n\nUnits on a second-order reaction rate constant are inverse concentration per unit time.",
-    "crumbs": [
-      "Appendices",
-      "<span class='chapter-number'>F</span>  <span class='chapter-title'>Parameter values</span>"
     ]
   }
 ]
