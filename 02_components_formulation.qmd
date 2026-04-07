@@ -2,7 +2,7 @@
 
 Model *formulation* or, more broadly, *development*, means producing a mathematical model. 
 Once a mathematical model has been formulated, it usually has to be implemented to create a software model for use.
-This chapter presents a set of steps for formulating models.
+This chapter presents steps for formulating models.
 
 ## Basic steps
 

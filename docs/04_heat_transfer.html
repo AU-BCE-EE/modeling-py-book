@@ -94,6 +94,7 @@ MathJax = {
   tex: {
     macros: {
       degC: "{^\\circ\\mathrm{C}}",
+      degCpm: "{^\\circ\\mathrm{C}~m^{-1}}",
       Wpms: "{\\mathrm{W~m^{-2}}}",
       WpmspK: "{\\mathrm{W~m^{-2}~K^{-1}}}",
       WpmpK: "{\\mathrm{W~m^{-1}~K^{-1}}}",
@@ -297,7 +298,7 @@ window.Quarto = {
 </section>
 <section id="advection" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="advection"><span class="header-section-number">4.2</span> Advection</h2>
-<p>When a fluid flows into a location originally containing fluid with a different temperature, the temperature at that location or in that volume changes. The thermal energy has therefore changed as well. That is advection. It is a relatively easy process to measure and think about.</p>
+<p>When a fluid flows into a location originally containing fluid with a different temperature, the temperature at that location or in that volume changes. The thermal energy has therefore changed as well. That is advection. It is a relatively easy process to understand and model.</p>
 <p>Let’s take a tank, for example the water tank in <a href="#fig-tank1" class="quarto-xref">Figure&nbsp;<span>4.1</span></a>, with a fixed volume and fixed flow rate <span class="math inline">\(\dot{V}\)</span> in and out of the tank.</p>
 <div id="fig-tank1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Sketch showing a water tank.">
 <figure class="quarto-float quarto-float-fig figure">
@@ -310,19 +311,23 @@ Figure&nbsp;4.1: A tank of water with a fixed volume <span class="math inline">\
 </figure>
 </div>
 <p>If the temperature of water flowing into the tank <span class="math inline">\(T_{inflow}\)</span> differs from the current tank temperature <span class="math inline">\(T_{tank}\)</span>, then <span class="math inline">\(T_{tank}\)</span> must be changing over time. This is advection. If <span class="math inline">\(T_{inflow}\)</span> is higher than <span class="math inline">\(T_{tank}\)</span>, the tank temperature is increasing; if lower, <span class="math inline">\(T_{tank}\)</span> is decreasing.</p>
-<p>How about the quantitative constitutive equation? For this tank:</p>
-<p><span id="eq-tank1"><span class="math display">\[
-\text{energy transfer rate} = \dot{Q} = \dot{V} \cdot{\rho} \cdot c_p \cdot (T_{inflow} - T_{tank}),
+<p>The fundamental advection equation for heat transfer needs a <em>reference temperature</em>, which we’ll call <span class="math inline">\(T_{ref}\)</span> here. The value used will not matter in our work, because it should always cancel in our applications because our domain will have constant volume. Advection becomes trickier when we don’t have a constant volume (or mass) within our model domain or control volume.</p>
+<p><span id="eq-advection1"><span class="math display">\[
+\dot{Q} = \dot{V} \cdot{\rho} \cdot c_p \cdot (T - T_{ref}),
 \tag{4.1}\]</span></span></p>
-<p>where <span class="math inline">\(\dot{Q}\)</span> is energy flow in W, <span class="math inline">\(\rho=\)</span> fluid density in <span class="math inline">\(\kgpmc\)</span>, and <span class="math inline">\(c_p=\)</span> specific heat capacity (<span class="math inline">\(\kJpkgpK\)</span>).</p>
-<p>As long as density and specific heat capacity are constant (we will always assume they are in this book), we could derive an equation for the rate of temperature change by recognizing that <span class="math inline">\(dT = \frac{\dot{Q}}{\dot{V} \cdot{\rho} \cdot c_p}\)</span>. Start with substitution:</p>
+<p>where <span class="math inline">\(\dot{Q}\)</span> is energy flow in W, <span class="math inline">\(\rho=\)</span> fluid density in <span class="math inline">\(\kgpmc\)</span>, and <span class="math inline">\(c_p=\)</span> specific heat capacity (<span class="math inline">\(\kJpkgpK\)</span>). That, <a href="#eq-advection1" class="quarto-xref">Equation&nbsp;<span>4.1</span></a>, is the fundamental constitutive equation for advection. For our tank example, it would be applied to flow in and flow out, both based on the same constant value <span class="math inline">\(\dot{V}\)</span>. Then net energy flow would be calculated by difference, giving:</p>
+<p><span id="eq-tank1"><span class="math display">\[
+\dot{Q}_{in} - \dot{Q}_{out} = \dot{V} \cdot{\rho} \cdot c_p \cdot (T_{inflow} - T_{tank}).
+\tag{4.2}\]</span></span></p>
+<p>Do you see how <span class="math inline">\(T_{ref}\)</span> drops out?</p>
+<p>As long as density and specific heat capacity are constant (we will always assume they are in this book), we can always derive an equation for the rate of temperature change by recognizing that <span class="math inline">\(dT = \frac{\dot{Q}}{\dot{V} \cdot{\rho} \cdot c_p}\)</span>. Start with substitution:</p>
 <p><span class="math display">\[
 \frac{dT}{dt} = \frac{\dot{V} \cdot{\rho} \cdot c_p \cdot (T_{inflow} - T_{tank})}{V \cdot{\rho} \cdot c_p}.
 \]</span></p>
 <p>Then simplify for</p>
 <p><span id="eq-tank2"><span class="math display">\[
 \frac{dT}{dt} = \frac{\dot{V} \cdot (T_{inflow} - T_{tank})}{V}.
-\tag{4.2}\]</span></span></p>
+\tag{4.3}\]</span></span></p>
 <p>Advection becomes trickier when we don’t have a constant volume (or mass) within our model domain or control volume. Fortunately, most models do, and we won’t cover those other cases.</p>
 <p>Another simple advection scenario is a shown in <a href="#fig-pipe1" class="quarto-xref">Figure&nbsp;<span>4.2</span></a>.</p>
 <div id="fig-pipe1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Sketch showing a fluid flowing through a constant-diameter round pipe at a constant flow rate.">
@@ -335,35 +340,57 @@ Figure&nbsp;4.2: A fluid flowing through a constant-diameter round pipe at a con
 </figcaption>
 </figure>
 </div>
-<p>The small section at the bottom can be called a <em>control volume</em>–a hypothetical volume used for deriving flow equations. We can treat that control volume like the tank above (<a href="#fig-tank1" class="quarto-xref">Figure&nbsp;<span>4.1</span></a>, <a href="#eq-tank1" class="quarto-xref">Equation&nbsp;<span>4.1</span></a>). The instantaneous rate of net energy flow into the control volume by advection is:</p>
+<p>The small section at the bottom can be called a <em>control volume</em>–a hypothetical volume used for deriving flow equations. We can treat that control volume like the tank above (<a href="#fig-tank1" class="quarto-xref">Figure&nbsp;<span>4.1</span></a>, <a href="#eq-tank1" class="quarto-xref">Equation&nbsp;<span>4.2</span></a>). The instantaneous rate of net energy flow into the control volume by advection is:</p>
 <p><span id="eq-advection2"><span class="math display">\[
 \dot{Q} = \dot{V} \cdot{\rho} \cdot c_p \cdot (T_{left} - T_{right}),
-\tag{4.3}\]</span></span></p>
+\tag{4.4}\]</span></span></p>
 <p>where <span class="math inline">\(T_{left}\)</span> and <span class="math inline">\(T_{right}\)</span> are at the boundaries of the control volume. How about the rate of temperature change? That is what we are really after.</p>
 <p><span id="eq-advection3"><span class="math display">\[
-\frac{dT}{dt} = \frac{\dot{Q}}{V \cdot A \cdot {\rho} \cdot c_p}
-\tag{4.4}\]</span></span></p>
-<p>And we can then substitute the RHS of <a href="#eq-advection2" class="quarto-xref">Equation&nbsp;<span>4.3</span></a> for <span class="math inline">\(\dot{Q}\)</span> in <a href="#eq-advection3" class="quarto-xref">Equation&nbsp;<span>4.4</span></a>.</p>
-<p><span id="eq-advection4"><span class="math display">\[
-\frac{dT}{dt} = \frac{\dot{V} \cdot{\rho} \cdot c_p \cdot (T_{left} - T_{right})}{\Delta x \cdot A \cdot {\rho} \cdot c_p}
+\frac{dT}{dt} = \frac{\dot{Q}}{V \cdot {\rho} \cdot c_p}
 \tag{4.5}\]</span></span></p>
-<p>And simplify <a href="#eq-advection4" class="quarto-xref">Equation&nbsp;<span>4.5</span></a>, recognizing that <span class="math inline">\(\frac{\dot{V}}{A} = v_x =\)</span> superficial fluid velocity:</p>
-<p><span id="eq-advection5"><span class="math display">\[
-\frac{dT}{dt} = v_x \cdot \frac{(T_{left} - T_{right})}{\Delta x}.
+<p>Or, recognizing that <span class="math inline">\(V = \Delta x \cdot A\)</span>,</p>
+<p><span id="eq-advection3.5"><span class="math display">\[
+\frac{dT}{dt} = \frac{\dot{Q}}{\Delta x \cdot A \cdot {\rho} \cdot c_p}
 \tag{4.6}\]</span></span></p>
-<p>And that quotient on the RHS of <a href="#eq-advection5" class="quarto-xref">Equation&nbsp;<span>4.6</span></a> becomes the definition of a derivative as <span class="math inline">\(\Delta x\)</span> approaches 0, so the associated ODE is:</p>
+<p>And we can then substitute the RHS of <a href="#eq-advection2" class="quarto-xref">Equation&nbsp;<span>4.4</span></a> for <span class="math inline">\(\dot{Q}\)</span> in <a href="#eq-advection3" class="quarto-xref">Equation&nbsp;<span>4.5</span></a>.</p>
+<p><span id="eq-advection4"><span class="math display">\[
+\frac{dT}{dt} = \frac{\dot{V} \cdot{\rho} \cdot c_p \cdot (T_{x=0} - T_{x=\Delta x})}{\Delta x \cdot A \cdot {\rho} \cdot c_p}
+\tag{4.7}\]</span></span></p>
+<p>And simplify <a href="#eq-advection4" class="quarto-xref">Equation&nbsp;<span>4.7</span></a>, recognizing that <span class="math inline">\(\frac{\dot{V}}{A} = v_x =\)</span> superficial fluid velocity:</p>
+<p><span id="eq-advection5"><span class="math display">\[
+\frac{dT}{dt} = v_x \cdot \frac{(T_{x=0} - T_{x=\Delta x})}{\Delta x}.
+\tag{4.8}\]</span></span></p>
+<p>And that quotient on the RHS of <a href="#eq-advection5" class="quarto-xref">Equation&nbsp;<span>4.8</span></a> becomes the definition of a derivative as <span class="math inline">\(\Delta x\)</span> approaches 0, so the associated ODE is:</p>
 <p><span id="eq-advection-ode1"><span class="math display">\[
 \frac{dT}{dt} = v_x \cdot \frac{dT}{dx}.
-\tag{4.7}\]</span></span></p>
-<p><a href="#eq-advection-ode1" class="quarto-xref">Equation&nbsp;<span>4.7</span></a>, is actually pretty intuitive. It says that the rate of temperature change at a fixed location is equal to the temperature derivative over space and the rate at which fluid flows over that same space.</p>
-<p><a href="#eq-advection-ode1" class="quarto-xref">Equation&nbsp;<span>4.7</span></a>, along with <a href="#eq-advection3" class="quarto-xref">Equation&nbsp;<span>4.4</span></a> and <a href="#eq-advection5" class="quarto-xref">Equation&nbsp;<span>4.6</span></a> will together suffice for the constitutive equations for advection in most of the systems we’ll encounter in this book. For others, derivation of an advection equation is pretty simple.</p>
+\tag{4.9}\]</span></span></p>
+<p><a href="#eq-advection-ode1" class="quarto-xref">Equation&nbsp;<span>4.9</span></a>, is actually pretty intuitive. It says that the rate of temperature change at a fixed location is equal to the temperature derivative over space and the rate at which fluid flows over that same space.</p>
+<p><a href="#eq-advection-ode1" class="quarto-xref">Equation&nbsp;<span>4.9</span></a>, along with <a href="#eq-advection1" class="quarto-xref">Equation&nbsp;<span>4.1</span></a>, will together suffice for the constitutive equations for advection in most of the systems we’ll encounter in this book. For others, derivation of an advection equation is pretty simple.</p>
 <p>In our pipe conceptual model, we’ve implicitly assumed that radial position has no bearing on transfer. In reality,</p>
+<p>In heat transfer models (as well as mass transfer), it is common to work with flow rates normalized by the cross-sectional area of the space through which the flow is moving, i.e., heat <em>flux</em>. Our heat flow units are typically W and heat flow <span class="math inline">\(\Wpms\)</span>. One reason to use flux is because it gives us more general models that are easy to apply at different scales without making any changes. For example, thinking about the second advection example above, the pipe (<a href="#fig-pipe1" class="quarto-xref">Figure&nbsp;<span>4.2</span></a>), does the diameter of the pipe play any role?</p>
+<p>Well, the heat flow at one location, say <span class="math inline">\(x=0\)</span> is:</p>
+<p><span id="eq-advection10"><span class="math display">\[
+\dot{Q}_{x=0} = \dot{V} \cdot{\rho} \cdot c_p \cdot (T_{x=0} - T_{ref}).
+\tag{4.10}\]</span></span></p>
+<p>If we divide by area <span class="math inline">\(A\)</span>,</p>
+<p><span id="eq-advection11"><span class="math display">\[
+q_{x=0} = v_x \cdot{\rho} \cdot c_p \cdot (T_{x=0} - T_{ref}),
+\tag{4.11}\]</span></span></p>
+<p>we get an equation that does not depend on pipe size, but only the superficial fluid velocity. So for a given velocity, the diameter is immaterial. (Of course this is true only if our assumption about uniform radial profile, i.e., a 1D system, is accurate.)</p>
+<p>…</p>
+<p>((Do we need to start with integration to go from flux to dT/dt already here? Kind of have some above on advection accidentially))</p>
 </section>
 <section id="sec-fourier" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="sec-fourier"><span class="header-section-number">4.3</span> Conduction and Fourier’s law</h2>
 <p><em>Conduction</em> is the transfer of heat through solids and fluids by random motion of molecules or atoms (electrons also play a role, at least in metals). It can also be called <em>thermal diffusion</em>.</p>
-<p>Heat energy flows from high temperature to low temperature. That simple concept underlies a simple tool for inferring heat transfer and temperature change from temperature differences, gradients, or derivatives.</p>
-<p>A <em>temperature profile</em> is a graphical representation of temperature over space. For example, <a href="#fig-wall1" class="quarto-xref">Figure&nbsp;<span>4.3</span></a> shows the temperature profile of a wall with one fixed temperature at the left surface, <span class="math inline">\(T_o\)</span>, where <span class="math inline">\(o\)</span> is for outside, and another at the right surface, <span class="math inline">\(T_i\)</span>. It is common to show space horizontally–here the <span class="math inline">\(x\)</span> dimension–and temperature vertically.</p>
+<p>The fundamental heat transfer law, the relevant constitutive equation, is called <em>Fourier’s law</em>, <a href="#eq-fouriers-law1" class="quarto-xref">Equation&nbsp;<span>4.12</span></a>.</p>
+<p><span id="eq-fouriers-law1"><span class="math display">\[
+q = -k \cdot \frac{dT}{dx}
+\tag{4.12}\]</span></span></p>
+<p><a href="#eq-fouriers-law1" class="quarto-xref">Equation&nbsp;<span>4.12</span></a> says that the heat flux in the <span class="math inline">\(x\)</span> direction is proporational to derivative of temperature with respect to <span class="math inline">\(x\)</span>, or the temperature gradient. The two–heat flux and temperature gradient–are linked through a proporationality constant called <span class="math inline">\(thermal conductivity\)</span>, which typically has units of <span class="math inline">\(\WpmpK\)</span> and depends strongly on the substance through which heat is diffusing. Thermal conductivity is high for metals (around <span class="math inline">\(10^2\)</span> <span class="math inline">\(\WpmpK\)</span>), low for gases (around <span class="math inline">\(10^{-1}\)</span> <span class="math inline">\(\WpmpK\)</span>, or about 1000-fold less), and somewhere in the middle for other materials.</p>
+<p>So <a href="#eq-fouriers-law1" class="quarto-xref">Equation&nbsp;<span>4.12</span></a> depends on material properties and a state variable–temperature, or more specifically, the temperature gradient. This is a characteristic of constitutive equations.</p>
+<p>Heat energy flows via conduction from high temperature to low temperature, and this is ensured by the negative sign in front of thermal conductivity. That simple concept underlies a simple tool for inferring heat transfer and temperature change from temperature differences, gradients, or derivatives.</p>
+<p>A <em>temperature profile</em> is a graphical representation of temperature over space, and it can be useful for understanding Fourier’s law. For example, <a href="#fig-wall1" class="quarto-xref">Figure&nbsp;<span>4.5</span></a> shows the temperature profile of a wall with one fixed temperature at the left surface, <span class="math inline">\(T_o\)</span>, where <span class="math inline">\(o\)</span> is for outside, and another at the right surface, <span class="math inline">\(T_i\)</span>. It is common to show space horizontally–here the <span class="math inline">\(x\)</span> dimension–and temperature vertically.</p>
 <div id="fig-wall1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Wall temperature profile.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-wall1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -374,8 +401,30 @@ Figure&nbsp;4.3: A temperature profile through a slab wall.
 </figcaption>
 </figure>
 </div>
-<p><a href="#fig-wall1" class="quarto-xref">Figure&nbsp;<span>4.3</span></a> and similar simple sketches are best for one dimensional (1D) problems where the temperature varies only over one dimension and is uniform in all others. Here, that means that the profile for 1 mm from the bottom of the wall is the same as the one at 2 m–moving up or down has no effect on the profile. In fact, <a href="#fig-wall1" class="quarto-xref">Figure&nbsp;<span>4.3</span></a> does not really show any vertical dimension, or wall height. The vertical position of a point on the red <span class="math inline">\(T\)</span> line shows the temperature at a particular depth in the wall.</p>
-<p>The slope of the red line in <a href="#fig-wall1" class="quarto-xref">Figure&nbsp;<span>4.3</span></a> is the derivative of temperature with respect to the <span class="math inline">\(x\)</span> dimension. Here, because the red <span class="math inline">\(T\)</span> line is straight, the derivative is uniform with <span class="math inline">\(x\)</span>, which is characteristic steady-state for plane walls. These concepts are expanded below.</p>
+<p><a href="#fig-wall1" class="quarto-xref">Figure&nbsp;<span>4.5</span></a> and similar simple sketches are best for one dimensional (1D) problems where the temperature varies only over one dimension and is uniform in all others. Here, that means that the profile for 1 mm from the bottom of the wall is the same as the one at 2 m–moving up or down has no effect on the profile. In fact, <a href="#fig-wall1" class="quarto-xref">Figure&nbsp;<span>4.5</span></a> does not really show any vertical dimension, or wall height. The vertical position of a point on the red <span class="math inline">\(T\)</span> line shows the temperature at a particular depth in the wall.</p>
+<p>The slope of the red line in <a href="#fig-wall1" class="quarto-xref">Figure&nbsp;<span>4.5</span></a> is the derivative of temperature with respect to the <span class="math inline">\(x\)</span> dimension. Here, because the red <span class="math inline">\(T\)</span> line is straight, the derivative is uniform with <span class="math inline">\(x\)</span>, which is characteristic steady-state for plane walls. Why? Well, let’s apply <a href="#eq-fouriers-law1" class="quarto-xref">Equation&nbsp;<span>4.12</span></a>. Let’s saw the temperature difference is 10 <span class="math inline">\(\degC\)</span> over 0.2 m, so the average gradient is therefore 50 <span class="math inline">\(\degCpm\)</span>. And thermal conductivity is exactly 1 <span class="math inline">\(\WpmpK\)</span>. Applying <a href="#eq-fouriers-law1" class="quarto-xref">Equation&nbsp;<span>4.12</span></a>, the heat flux is 10 <span class="math inline">\(\Wpms\)</span> at all locations. So for any point in the wall between <span class="math inline">\(x=0\)</span> and <span class="math inline">\(x=L\)</span>, heat energy is travelling at a fixed rate to the right.</p>
+<p>Remember the relationship between heat flux and heat flow: <span class="math inline">\(\dot{Q} = A \cdot q\)</span>. For a <em>plane wall</em> then, one with uniform cross-sectional area and thickness, the heat flow going into any control volume is exactly equal to the heat flow leaving that volume (<a href="#fig-plane-wall-flow" class="quarto-xref">Figure&nbsp;<span>4.4</span></a>).</p>
+<div id="fig-plane-wall-flow" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Wall control volume.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-plane-wall-flow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="drawings/plane_wall_flow.png" class="img-fluid figure-img" alt="Wall control volume.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-plane-wall-flow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.4: Control volume heat flow in a plane wall. Heat is flowing by conduction from left to right here. With the same area <span class="math inline">\(A\)</span> on the left and right sides of the control volume, and the same constant heat flux <span class="math inline">\(q\)</span>, there is no heat accumulation and therefore no temperature change in the control volume.
+</figcaption>
+</figure>
+</div>
+<p>OK, so what does all this mean about cases where the temperature gradient is not linear, i.e., the temperature derivative varies over space? For example, see <span class="quarto-unresolved-ref">?fig-wall2</span>.</p>
+<div id="fig-wall1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Wall temperature profile.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-wall1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="drawings/wall_temp_prof2.png" class="img-fluid figure-img" alt="Wall temperature profile.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-wall1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.5: A different temperature profile through a slab wall.
+</figcaption>
+</figure>
+</div>
 <!-- Derivative form and difference form.
      Thermal conductivity k is a material property.
      Occurs in solids and fluids.

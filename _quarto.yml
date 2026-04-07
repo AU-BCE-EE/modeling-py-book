@@ -42,6 +42,7 @@ format:
           tex: {
             macros: {
               degC: "{^\\circ\\mathrm{C}}",
+              degCpm: "{^\\circ\\mathrm{C}~m^{-1}}",
               Wpms: "{\\mathrm{W~m^{-2}}}",
               WpmspK: "{\\mathrm{W~m^{-2}~K^{-1}}}",
               WpmpK: "{\\mathrm{W~m^{-1}~K^{-1}}}",

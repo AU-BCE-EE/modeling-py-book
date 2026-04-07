@@ -27,7 +27,7 @@ For a lot more information on heat transfer, see @Bergman2013.
 When a fluid flows into a location originally containing fluid with a different temperature, the temperature at that location or in that volume changes.
 The thermal energy has therefore changed as well.
 That is advection.
-It is a relatively easy process to measure and think about.
+It is a relatively easy process to understand and model.
 
 Let's take a tank, for example the water tank in @fig-tank1, with a fixed volume and fixed flow rate $\dot{V}$ in and out of the tank.
 
@@ -37,16 +37,26 @@ If the temperature of water flowing into the tank $T_{inflow}$ differs from the 
 This is advection.
 If $T_{inflow}$ is higher than $T_{tank}$, the tank temperature is increasing; if lower, $T_{tank}$ is decreasing.
 
-How about the quantitative constitutive equation?
-For this tank:
+The fundamental advection equation for heat transfer needs a *reference temperature*, which we'll call $T_{ref}$ here.
+The value used will not matter in our work, because it should always cancel in our applications because our domain will have constant volume.
+Advection becomes trickier when we don't have a constant volume (or mass) within our model domain or control volume.
 
 $$
-\text{energy transfer rate} = \dot{Q} = \dot{V} \cdot{\rho} \cdot c_p \cdot (T_{inflow} - T_{tank}),
-$${#eq-tank1}
+\dot{Q} = \dot{V} \cdot{\rho} \cdot c_p \cdot (T - T_{ref}),
+$${#eq-advection1}
 
 where $\dot{Q}$ is energy flow in W, $\rho=$ fluid density in $\kgpmc$, and $c_p=$ specific heat capacity ($\kJpkgpK$).
+That, @eq-advection1, is the fundamental constitutive equation for advection.
+For our tank example, it would be applied to flow in and flow out, both based on the same constant value $\dot{V}$.
+Then net energy flow would be calculated by difference, giving:
 
-As long as density and specific heat capacity are constant (we will always assume they are in this book), we could derive an equation for the rate of temperature change by recognizing that $dT = \frac{\dot{Q}}{\dot{V} \cdot{\rho} \cdot c_p}$.
+$$
+\dot{Q}_{in} - \dot{Q}_{out} = \dot{V} \cdot{\rho} \cdot c_p \cdot (T_{inflow} - T_{tank}).
+$${#eq-tank1}
+
+Do you see how $T_{ref}$ drops out?
+
+As long as density and specific heat capacity are constant (we will always assume they are in this book), we can always derive an equation for the rate of temperature change by recognizing that $dT = \frac{\dot{Q}}{\dot{V} \cdot{\rho} \cdot c_p}$.
 Start with substitution: 
 
 $$
@@ -79,19 +89,25 @@ How about the rate of temperature change?
 That is what we are really after.
 
 $$ 
-\frac{dT}{dt} = \frac{\dot{Q}}{V \cdot A \cdot {\rho} \cdot c_p}
+\frac{dT}{dt} = \frac{\dot{Q}}{V \cdot {\rho} \cdot c_p}
 $${#eq-advection3}
+
+Or, recognizing that $V = \Delta x \cdot A$,
+
+$$ 
+\frac{dT}{dt} = \frac{\dot{Q}}{\Delta x \cdot A \cdot {\rho} \cdot c_p}
+$${#eq-advection3.5}
 
 And we can then substitute the RHS of @eq-advection2 for $\dot{Q}$ in @eq-advection3.
 
 $$ 
-\frac{dT}{dt} = \frac{\dot{V} \cdot{\rho} \cdot c_p \cdot (T_{left} - T_{right})}{\Delta x \cdot A \cdot {\rho} \cdot c_p}
+\frac{dT}{dt} = \frac{\dot{V} \cdot{\rho} \cdot c_p \cdot (T_{x=0} - T_{x=\Delta x})}{\Delta x \cdot A \cdot {\rho} \cdot c_p}
 $${#eq-advection4}
 
 And simplify @eq-advection4, recognizing that $\frac{\dot{V}}{A} = v_x =$ superficial fluid velocity:
 
 $$ 
-\frac{dT}{dt} = v_x \cdot \frac{(T_{left} - T_{right})}{\Delta x}.
+\frac{dT}{dt} = v_x \cdot \frac{(T_{x=0} - T_{x=\Delta x})}{\Delta x}.
 $${#eq-advection5}
 
 And that quotient on the RHS of @eq-advection5 becomes the definition of a derivative as $\Delta x$ approaches 0, so the associated ODE is:
@@ -103,21 +119,60 @@ $${#eq-advection-ode1}
 @eq-advection-ode1, is actually pretty intuitive.
 It says that the rate of temperature change at a fixed location is equal to the temperature derivative over space and the rate at which fluid flows over that same space.
 
-@eq-advection-ode1, along with @eq-advection3 and @eq-advection5 will together suffice for the constitutive equations for advection in most of the systems we'll encounter in this book.
+@eq-advection-ode1, along with @eq-advection1, will together suffice for the constitutive equations for advection in most of the systems we'll encounter in this book.
 For others, derivation of an advection equation is pretty simple.
 
 In our pipe conceptual model, we've implicitly assumed that radial position has no bearing on transfer.
 In reality, 
+
+In heat transfer models (as well as mass transfer), it is common to work with flow rates normalized by the cross-sectional area of the space through which the flow is moving, i.e., heat *flux*.
+Our heat flow units are typically W and heat flow $\Wpms$.
+One reason to use flux is because it gives us more general models that are easy to apply at different scales without making any changes.
+For example, thinking about the second advection example above, the pipe (@fig-pipe1), does the diameter of the pipe play any role?
+
+Well, the heat flow at one location, say $x=0$ is:
+
+$$ 
+\dot{Q}_{x=0} = \dot{V} \cdot{\rho} \cdot c_p \cdot (T_{x=0} - T_{ref}).
+$${#eq-advection10}
+
+If we divide by area $A$, 
+
+$$ 
+q_{x=0} = v_x \cdot{\rho} \cdot c_p \cdot (T_{x=0} - T_{ref}),
+$${#eq-advection11}
+
+we get an equation that does not depend on pipe size, but only the superficial fluid velocity.
+So for a given velocity, the diameter is immaterial.
+(Of course this is true only if our assumption about uniform radial profile, i.e., a 1D system, is accurate.)
+
+...
+
+
+((Do we need to start with integration to go from flux to dT/dt already here? Kind of have some above on advection accidentially))
 
 ## Conduction and Fourier's law {#sec-fourier}
 
 *Conduction* is the transfer of heat through solids and fluids by random motion of molecules or atoms (electrons also play a role, at least in metals). 
 It can also be called *thermal diffusion*.
 
-Heat energy flows from high temperature to low temperature.
+The fundamental heat transfer law, the relevant constitutive equation, is called *Fourier's law*, @eq-fouriers-law1.
+
+$$
+q = -k \cdot \frac{dT}{dx}
+$${#eq-fouriers-law1}
+
+@eq-fouriers-law1 says that the heat flux in the $x$ direction is proporational to derivative of temperature with respect to $x$, or the temperature gradient.
+The two--heat flux and temperature gradient--are linked through a proporationality constant called $thermal conductivity$, which typically has units of $\WpmpK$ and depends strongly on the substance through which heat is diffusing.
+Thermal conductivity is high for metals (around $10^2$ $\WpmpK$), low for gases (around $10^{-1}$ $\WpmpK$, or about 1000-fold less), and somewhere in the middle for other materials.
+
+So @eq-fouriers-law1 depends on material properties and a state variable--temperature, or more specifically, the temperature gradient.
+This is a characteristic of constitutive equations.
+
+Heat energy flows via conduction from high temperature to low temperature, and this is ensured by the negative sign in front of thermal conductivity.
 That simple concept underlies a simple tool for inferring heat transfer and temperature change from temperature differences, gradients, or derivatives.
 
-A *temperature profile* is a graphical representation of temperature over space.
+A *temperature profile* is a graphical representation of temperature over space, and it can be useful for understanding Fourier's law.
 For example, @fig-wall1 shows the temperature profile of a wall with one fixed temperature at the left surface, $T_o$, where $o$ is for outside, and another at the right surface, $T_i$.
 It is common to show space horizontally--here the $x$ dimension--and temperature vertically.
 
@@ -130,10 +185,24 @@ The vertical position of a point on the red $T$ line shows the temperature at a 
 
 The slope of the red line in @fig-wall1 is the derivative of temperature with respect to the $x$ dimension.
 Here, because the red $T$ line is straight, the derivative is uniform with $x$, which is characteristic steady-state for plane walls.
-These concepts are expanded below.
+Why?
+Well, let's apply @eq-fouriers-law1.
+Let's saw the temperature difference is 10 $\degC$ over 0.2 m, so the average gradient is therefore 50 $\degCpm$.
+And thermal conductivity is exactly 1 $\WpmpK$.
+Applying @eq-fouriers-law1, the heat flux is 10 $\Wpms$ at all locations.
+So for any point in the wall between $x=0$ and $x=L$, heat energy is travelling at a fixed rate to the right.
 
+Remember the relationship between heat flux and heat flow: $\dot{Q} = A \cdot q$.
+For a *plane wall* then, one with uniform cross-sectional area and thickness, the heat flow going into any control volume is exactly equal to the heat flow leaving that volume (@fig-plane-wall-flow).
 
+![Control volume heat flow in a plane wall. Heat is flowing by conduction from left to right here. With the same area $A$ on the left and right sides of the control volume, and the same constant heat flux $q$, there is no heat accumulation and therefore no temperature change in the control volume.](drawings/plane_wall_flow.png){#fig-plane-wall-flow fig-alt="Wall control volume."}
 
+OK, so what does all this mean about cases where the temperature gradient is not linear, i.e., the temperature derivative varies over space?
+For example, see @fig-wall2.
+
+![A different temperature profile through a slab wall.](drawings/wall_temp_prof2.png){#fig-wall1 fig-alt="Wall temperature profile."}
+
+Difference form...
 
 <!-- Derivative form and difference form.
      Thermal conductivity k is a material property.
