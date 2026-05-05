@@ -15,7 +15,7 @@ book:
     - part: "Part II: Applications"
       chapters:
         - 04_heat_transfer.qmd
-#        - 05_mass_transfer.qmd
+        - 05_mass_transfer.qmd
 #        - 06_reactions_microbiology.qmd
 #        - 07_spatial_models.qmd
 #        - 08_stability.qmd

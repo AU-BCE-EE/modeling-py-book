@@ -113,7 +113,7 @@
     "href": "02_components_formulation.html#sec-constitutive",
     "title": "2  Model Formulation",
     "section": "2.4 Constitutive equations",
-    "text": "2.4 Constitutive equations\nConstitutive equations describe how matter or energy are transferred. We will need a constitutive equation for each term in the model conservation equation. Figuring out what equations to use here requires familiarity with the different options. We’ll take a look at just a couple here and present more in Chapter 4, ?sec-mass, and ?sec-reactions. These equations typically have a name like “someone’s law”. In general, constitutive equations include a difference or derivative and a proportionality constant on the right-hand side (RHS). The left-hand side (LHS) is usually some kind of flux, which is a flow rate per unit cross-sectional area.\nFor our coffee model, we only need one constitutive equation (take a look at Equation 2.2 to see why), and the appropriate one is called Newton’s law of cooling. It is:\n\\[\nq = h \\cdot (T_s - T_\\infty),\n\\tag{2.3}\\]\nwhere \\(q=\\) heat flux (\\(\\Wpms\\)), \\(h=\\) convection heat transfer coefficient (\\(\\WpmspK\\)), \\(T_s=\\) surface temperature of an object (K or \\(\\degC\\), either is fine because we are dealing with a temperature difference, not the absolute value), and \\(T_\\infty=\\) temperature of the surrounding fluid at some point where the object does not affect it. Applied to our cooling coffee system, \\(T_s=\\) the coffee temperature, uniform throughout, and \\(T_{\\infty}=\\) air temperature.\nConstitutive equations depend on the state of the system and material properties. Take a look at Equation 2.3. The “state of the system” component is clear in the presence of \\(T_s\\), which is the coffee temperature here. And the heat transfer coefficient \\(h\\) depends on the properties of air–it would be very different if the coffee were immersed in water!",
+    "text": "2.4 Constitutive equations\nConstitutive equations describe how matter or energy are transferred. We will need a constitutive equation for each term in the model conservation equation. Figuring out what equations to use here requires familiarity with the different options. We’ll take a look at just a couple here and present more in Chapter 4, Chapter 5, and ?sec-reactions. These equations typically have a name like “someone’s law”. In general, constitutive equations include a difference or derivative and a proportionality constant on the right-hand side (RHS). The left-hand side (LHS) is usually some kind of flux, which is a flow rate per unit cross-sectional area.\nFor our coffee model, we only need one constitutive equation (take a look at Equation 2.2 to see why), and the appropriate one is called Newton’s law of cooling. It is:\n\\[\nq = h \\cdot (T_s - T_\\infty),\n\\tag{2.3}\\]\nwhere \\(q=\\) heat flux (\\(\\Wpms\\)), \\(h=\\) convection heat transfer coefficient (\\(\\WpmspK\\)), \\(T_s=\\) surface temperature of an object (K or \\(\\degC\\), either is fine because we are dealing with a temperature difference, not the absolute value), and \\(T_\\infty=\\) temperature of the surrounding fluid at some point where the object does not affect it. Applied to our cooling coffee system, \\(T_s=\\) the coffee temperature, uniform throughout, and \\(T_{\\infty}=\\) air temperature.\nConstitutive equations depend on the state of the system and material properties. Take a look at Equation 2.3. The “state of the system” component is clear in the presence of \\(T_s\\), which is the coffee temperature here. And the heat transfer coefficient \\(h\\) depends on the properties of air–it would be very different if the coffee were immersed in water!",
     "crumbs": [
       "Part I: Foundations",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Model Formulation</span>"
@@ -282,6 +282,83 @@
     "crumbs": [
       "Part II: Applications",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Heat Transfer</span>"
+    ]
+  },
+  {
+    "objectID": "05_mass_transfer.html",
+    "href": "05_mass_transfer.html",
+    "title": "5  Mass Transfer",
+    "section": "",
+    "text": "5.1 Advection\nMass transfer occurs through similar processes as heat transfer. In fact the mathematics of mass transfer is often based on a formal analogy with heat transfer. Mass transfer is simpler in some ways–in particular there is only mass, unlike heat where we have temperature and energy to think about. But in other ways it is more complicated, especially for systems with multiple phases. Here we’ll cover advection, diffusion, and convection.\nAs with heat transfer, advection describes bulk flow. Here is a simple equation for mass flow of some solute or component present in a flowing fluid: \\[\n\\dot{m} = c \\cdot \\dot{V},\n\\tag{5.1}\\]\nwhere \\(\\dot{m} =\\) mass flow rate of some component (\\(\\kgps\\)), \\(c =\\) volumetric concentration of component (\\(\\kgpmc\\)), and \\(\\dot{V} =\\) volumetric fluid flow rate (\\(\\mcps\\)).",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Mass Transfer</span>"
+    ]
+  },
+  {
+    "objectID": "05_mass_transfer.html#sec-fick",
+    "href": "05_mass_transfer.html#sec-fick",
+    "title": "5  Mass Transfer",
+    "section": "5.2 Diffusion and Fick’s laws",
+    "text": "5.2 Diffusion and Fick’s laws",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Mass Transfer</span>"
+    ]
+  },
+  {
+    "objectID": "05_mass_transfer.html#convection",
+    "href": "05_mass_transfer.html#convection",
+    "title": "5  Mass Transfer",
+    "section": "5.3 Convection",
+    "text": "5.3 Convection",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Mass Transfer</span>"
+    ]
+  },
+  {
+    "objectID": "05_mass_transfer.html#mass-transfer-coefficient-approach",
+    "href": "05_mass_transfer.html#mass-transfer-coefficient-approach",
+    "title": "5  Mass Transfer",
+    "section": "5.4 Mass transfer coefficient approach",
+    "text": "5.4 Mass transfer coefficient approach",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Mass Transfer</span>"
+    ]
+  },
+  {
+    "objectID": "05_mass_transfer.html#sec-interphase",
+    "href": "05_mass_transfer.html#sec-interphase",
+    "title": "5  Mass Transfer",
+    "section": "5.5 Interphase mass transfer",
+    "text": "5.5 Interphase mass transfer",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Mass Transfer</span>"
+    ]
+  },
+  {
+    "objectID": "05_mass_transfer.html#linking-equations",
+    "href": "05_mass_transfer.html#linking-equations",
+    "title": "5  Mass Transfer",
+    "section": "5.6 Linking equations",
+    "text": "5.6 Linking equations",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Mass Transfer</span>"
+    ]
+  },
+  {
+    "objectID": "05_mass_transfer.html#example-dissolved-oxygen-transport-and-consumption",
+    "href": "05_mass_transfer.html#example-dissolved-oxygen-transport-and-consumption",
+    "title": "5  Mass Transfer",
+    "section": "5.7 Example: dissolved oxygen transport and consumption",
+    "text": "5.7 Example: dissolved oxygen transport and consumption",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Mass Transfer</span>"
     ]
   }
 ]

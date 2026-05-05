@@ -117,7 +117,7 @@ $$
 \frac{dT}{dt} = v_x \cdot \frac{dT}{dx}.
 $${#eq-advection-ode1}
 
-@eq-advection-ode1, is actually pretty intuitive.
+@eq-advection-ode1 is actually pretty intuitive.
 It says that the rate of temperature change at a fixed location is equal to the temperature derivative over space and the rate at which fluid flows over that same space.
 
 @eq-advection-ode1, along with @eq-advection1, will together suffice for the constitutive equations for advection in most of the systems we'll encounter in this book.

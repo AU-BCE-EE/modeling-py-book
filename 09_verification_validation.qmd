@@ -1,5 +1,7 @@
 # Model Verification and Validation {#sec-vv}
 
+The idea. . .
+
 ## Verification
 
 <!-- Units.

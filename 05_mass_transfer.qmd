@@ -1,10 +1,53 @@
 # Mass Transfer {#sec-mass}
+Mass transfer occurs through similar processes as heat transfer.
+In fact the mathematics of mass transfer is often based on a formal analogy with heat transfer. 
+Mass transfer is simpler in some ways--in particular there is only mass, unlike heat where we have temperature and energy to think about.
+But in other ways it is more complicated, especially for systems with multiple phases.
+Here we'll cover advection, diffusion, and convection.
 
 ## Advection
+As with heat transfer, advection describes bulk flow.
+Here is a simple equation for mass flow of some solute or component present in a flowing fluid:
+$$
+\dot{m} = c \cdot \dot{V},
+$${#eq-mass_advect_1}
+
+where $\dot{m} =$ mass flow rate of some component ($\kgps$), $c =$ volumetric concentration of component ($\kgpmc$), and $\dot{V} =$ volumetric fluid flow rate ($\mcbps$).
+Assuming we have flow in one direction in a pipe or some other system with a uniform cross-sectional area $A$, we can get flux by dividing by cross-sectional area,
+$$
+J = c \cdot v_x,
+$${#eq-mass-advect-1}
+
+where $\frac{\dot{V}}{A} = v_x =$ superficial fluid velocity.
+
+For a fixed point in space, 
+
+$$ 
+\frac{dc}{dt} = v_x \cdot \frac{dc}{dx}.
+$${#eq-mass-advect-ode1}
 
 <!-- Simple bulk flow. Include note on dispersion. -->
 
 ## Diffusion and Fick's laws {#sec-fick}
+
+Diffusion is the term for mass transfer through random molecular or atomic movement.
+Fick's law is:
+
+$$ 
+J = - D \cdot \frac{dc}{dx}.
+$${#eq-ficks1}
+
+The minus...
+
+The time derivative of concentration is the integral of @eq-ficks1, or:
+
+$$ 
+\frac{dc}{dt} = - D \cdot \frac{dc}{dx}.
+$${#eq-ficks2}
+
+
+Like constitutive equations in general, 
+
 
 <!-- Diffusivity D depends on both the diffusing species and the medium.
      Approximate ranges for gases, liquids, solids. -->

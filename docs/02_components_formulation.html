@@ -218,6 +218,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Heat Transfer</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05_mass_transfer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Mass Transfer</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -343,7 +349,7 @@ Figure&nbsp;2.2: Conceptual model of the Aarhus University WET model (https://pr
 </section>
 <section id="sec-constitutive" class="level2" data-number="2.4">
 <h2 data-number="2.4" class="anchored" data-anchor-id="sec-constitutive"><span class="header-section-number">2.4</span> Constitutive equations</h2>
-<p><em>Constitutive equations</em> describe how matter or energy are transferred. We will need a constitutive equation for each term in the model conservation equation. Figuring out what equations to use here requires familiarity with the different options. We’ll take a look at just a couple here and present more in <a href="04_heat_transfer.html" class="quarto-xref"><span>Chapter 4</span></a>, <span class="quarto-unresolved-ref">?sec-mass</span>, and <span class="quarto-unresolved-ref">?sec-reactions</span>. These equations typically have a name like “someone’s law”. In general, constitutive equations include a difference or derivative and a proportionality constant on the right-hand side (RHS). The left-hand side (LHS) is usually some kind of <em>flux</em>, which is a flow rate per unit cross-sectional area.</p>
+<p><em>Constitutive equations</em> describe how matter or energy are transferred. We will need a constitutive equation for each term in the model conservation equation. Figuring out what equations to use here requires familiarity with the different options. We’ll take a look at just a couple here and present more in <a href="04_heat_transfer.html" class="quarto-xref"><span>Chapter 4</span></a>, <a href="05_mass_transfer.html" class="quarto-xref"><span>Chapter 5</span></a>, and <span class="quarto-unresolved-ref">?sec-reactions</span>. These equations typically have a name like “someone’s law”. In general, constitutive equations include a difference or derivative and a proportionality constant on the right-hand side (RHS). The left-hand side (LHS) is usually some kind of <em>flux</em>, which is a flow rate per unit cross-sectional area.</p>
 <p>For our coffee model, we only need one constitutive equation (take a look at <a href="#eq-coffee-conservation" class="quarto-xref">Equation&nbsp;<span>2.2</span></a> to see why), and the appropriate one is called <em>Newton’s law of cooling</em>. It is:</p>
 <p><span id="eq-coffee-constitutive"><span class="math display">\[
 q = h \cdot (T_s - T_\infty),
