@@ -270,14 +270,32 @@ window.Quarto = {
 <p>Mass transfer occurs through similar processes as heat transfer. In fact the mathematics of mass transfer is often based on a formal analogy with heat transfer. Mass transfer is simpler in some ways–in particular there is only mass, unlike heat where we have temperature and energy to think about. But in other ways it is more complicated, especially for systems with multiple phases. Here we’ll cover advection, diffusion, and convection.</p>
 <section id="advection" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="advection"><span class="header-section-number">5.1</span> Advection</h2>
-<p>As with heat transfer, advection describes bulk flow. Here is a simple equation for mass flow of some solute or component present in a flowing fluid: <span id="eq-mass_advect_1"><span class="math display">\[
+<p>As with heat transfer, advection describes bulk flow. Here is a simple equation for mass flow of some solute or component present in a flowing fluid:</p>
+<p><span id="eq-mass_advect_1"><span class="math display">\[
 \dot{m} = c \cdot \dot{V},
 \tag{5.1}\]</span></span></p>
-<p>where <span class="math inline">\(\dot{m} =\)</span> mass flow rate of some component (<span class="math inline">\(\kgps\)</span>), <span class="math inline">\(c =\)</span> volumetric concentration of component (<span class="math inline">\(\kgpmc\)</span>), and <span class="math inline">\(\dot{V} =\)</span> volumetric fluid flow rate (<span class="math inline">\(\mcps\)</span>).</p>
+<p>where <span class="math inline">\(\dot{m} =\)</span> mass flow rate of some component (<span class="math inline">\(\kgps\)</span>), <span class="math inline">\(c =\)</span> volumetric concentration of component (<span class="math inline">\(\kgpmc\)</span>), and <span class="math inline">\(\dot{V} =\)</span> volumetric fluid flow rate (<span class="math inline">\(\mcbps\)</span>). Assuming we have flow in one direction in a pipe or some other system with a uniform cross-sectional area <span class="math inline">\(A\)</span>, we can get flux by dividing by cross-sectional area, <span id="eq-mass-advect-1"><span class="math display">\[
+J = c \cdot v_x,
+\tag{5.2}\]</span></span></p>
+<p>where <span class="math inline">\(\frac{\dot{V}}{A} = v_x =\)</span> superficial fluid velocity.</p>
+<p>For a fixed point in space,</p>
+<p><span id="eq-mass-advect-ode1"><span class="math display">\[
+\frac{dc}{dt} = v_x \cdot \frac{dc}{dx}.
+\tag{5.3}\]</span></span></p>
+<p>With mass, we don’t have anything like the temperature vs.&nbsp;energy distinction. Mass concentration gradients drive mass flow directly, altering concentrations over time.</p>
 <!-- Simple bulk flow. Include note on dispersion. -->
 </section>
 <section id="sec-fick" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="sec-fick"><span class="header-section-number">5.2</span> Diffusion and Fick’s laws</h2>
+<p>Diffusion is the term for mass transfer through random molecular or atomic movement. Fick’s law is:</p>
+<p><span id="eq-ficks1"><span class="math display">\[
+J = - D \cdot \frac{dc}{dx},
+\tag{5.4}\]</span></span></p>
+<p>where <span class="math inline">\(D\)</span> is the diffusivity or diffusion coefficient (<span class="math inline">\(\msqps\)</span>, but <span class="math inline">\(\mathrm{cm^{2}~s^{-1}}\)</span> is commonly used) and <span class="math inline">\(c\)</span> is concentration (<span class="math inline">\(\kgpmc\)</span>). The minus sign indicates that flow occurs down a concentration gradient, from high to low concentration. It is possible to do a lot with just <a href="#eq-ficks1" class="quarto-xref">Equation&nbsp;<span>5.4</span></a> using numerical modeling. Like constitutive equations in general, Fick’s law includes on the RHS a material property, <span class="math inline">\(D\)</span>, and a state variable, <span class="math inline">\(c\)</span>.</p>
+<p>Diffusivity is properly called a <em>binary</em> diffusion coefficient, because it depends on both materials. For example, values of <span class="math inline">\(D\)</span> for oxygen in air and water are of course different, but so are the values for air and ethanol both in air. Diffusivity values vary widely. For diffusion in gases, values are around 0.1 <span class="math inline">\(\mathrm{cm^{2}~s^{-1}}\)</span>, or <span class="math inline">\(10^{-5} \msqps\)</span>. In water, <span class="math inline">\(D\)</span> values are on the order of <span class="math inline">\(10^{-9} \msqps\)</span>.</p>
+<p>The time derivative of concentration is the integral of <a href="#eq-ficks1" class="quarto-xref">Equation&nbsp;<span>5.4</span></a>, or: <span id="eq-ficks2"><span class="math display">\[
+\frac{dc}{dt} = - D \cdot \frac{d^2c}{dx^2}.
+\tag{5.5}\]</span></span> This form can be used as a starting point for a numerical or analytical solution.</p>
 <!-- Diffusivity D depends on both the diffusing species and the medium.
      Approximate ranges for gases, liquids, solids. -->
 </section>

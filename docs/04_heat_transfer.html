@@ -408,7 +408,7 @@ Figure&nbsp;4.2: A fluid flowing through a constant-diameter round pipe at a con
 <p><span id="eq-advection-ode1"><span class="math display">\[
 \frac{dT}{dt} = v_x \cdot \frac{dT}{dx}.
 \tag{4.9}\]</span></span></p>
-<p><a href="#eq-advection-ode1" class="quarto-xref">Equation&nbsp;<span>4.9</span></a>, is actually pretty intuitive. It says that the rate of temperature change at a fixed location is equal to the temperature derivative over space and the rate at which fluid flows over that same space.</p>
+<p><a href="#eq-advection-ode1" class="quarto-xref">Equation&nbsp;<span>4.9</span></a> is actually pretty intuitive. It says that the rate of temperature change at a fixed location is equal to the temperature derivative over space and the rate at which fluid flows over that same space.</p>
 <p><a href="#eq-advection-ode1" class="quarto-xref">Equation&nbsp;<span>4.9</span></a>, along with <a href="#eq-advection1" class="quarto-xref">Equation&nbsp;<span>4.1</span></a>, will together suffice for the constitutive equations for advection in most of the systems we’ll encounter in this book. For others, derivation of an advection equation is pretty simple.</p>
 <p>In our pipe conceptual model, we’ve implicitly assumed that radial position has no bearing on transfer. In reality,</p>
 <p>In heat transfer models (as well as mass transfer), it is common to work with flow rates normalized by the cross-sectional area of the space through which the flow is moving, i.e., heat <em>flux</em>. Our heat flow units are typically W and heat flow <span class="math inline">\(\Wpms\)</span>. One reason to use flux is because it gives us more general models that are easy to apply at different scales without making any changes. For example, thinking about the second advection example above, the pipe (<a href="#fig-pipe1" class="quarto-xref">Figure&nbsp;<span>4.2</span></a>), does the diameter of the pipe play any role?</p>
@@ -583,7 +583,7 @@ Figure&nbsp;4.10: Extended coffee model.
 </figcaption>
 </figure>
 </div>
-<div id="2c7d407b" class="cell" data-execution_count="1">
+<div id="130ea5cc" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">File: cooling_mods_2m.py</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">Authors: Sasha D. Hafner and Frederik R. Dalby</span></span>
@@ -650,7 +650,7 @@ Figure&nbsp;4.10: Extended coffee model.
 <span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>    }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Then, to use the model, we first <em>import</em> the module we defined and then run the function, like this:</p>
-<div id="a9736a98" class="cell" data-execution_count="2">
+<div id="9b34a466" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">File: cool_pred_2m.py</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">Authors: Sasha D. Hafner and Frederik R. Dalby</span></span>

@@ -8,6 +8,7 @@ Here we'll cover advection, diffusion, and convection.
 ## Advection
 As with heat transfer, advection describes bulk flow.
 Here is a simple equation for mass flow of some solute or component present in a flowing fluid:
+
 $$
 \dot{m} = c \cdot \dot{V},
 $${#eq-mass_advect_1}
@@ -26,6 +27,9 @@ $$
 \frac{dc}{dt} = v_x \cdot \frac{dc}{dx}.
 $${#eq-mass-advect-ode1}
 
+With mass, we don't have anything like the temperature vs. energy distinction.
+Mass concentration gradients drive mass flow directly, altering concentrations over time.
+
 <!-- Simple bulk flow. Include note on dispersion. -->
 
 ## Diffusion and Fick's laws {#sec-fick}
@@ -34,19 +38,25 @@ Diffusion is the term for mass transfer through random molecular or atomic movem
 Fick's law is:
 
 $$ 
-J = - D \cdot \frac{dc}{dx}.
+J = - D \cdot \frac{dc}{dx},
 $${#eq-ficks1}
 
-The minus...
+where $D$ is the diffusivity or diffusion coefficient ($\msqps$, but $\mathrm{cm^{2}~s^{-1}}$ is commonly used) and $c$ is concentration ($\kgpmc$).
+The minus sign indicates that flow occurs down a concentration gradient, from high to low concentration.
+It is possible to do a lot with just @eq-ficks1 using numerical modeling.
+Like constitutive equations in general, Fick's law includes on the RHS a material property, $D$, and a state variable, $c$.
+
+Diffusivity is properly called a *binary* diffusion coefficient, because it depends on both materials.
+For example, values of $D$ for oxygen in air and water are of course different, but so are the values for air and ethanol both in air. 
+Diffusivity values vary widely.
+For diffusion in gases, values are around 0.1 $\mathrm{cm^{2}~s^{-1}}$, or $10^{-5} \msqps$.
+In water, $D$ values are on the order of $10^{-9} \msqps$.
 
 The time derivative of concentration is the integral of @eq-ficks1, or:
-
 $$ 
-\frac{dc}{dt} = - D \cdot \frac{dc}{dx}.
+\frac{dc}{dt} = - D \cdot \frac{d^2c}{dx^2}.
 $${#eq-ficks2}
-
-
-Like constitutive equations in general, 
+This form can be used as a starting point for a numerical or analytical solution.
 
 
 <!-- Diffusivity D depends on both the diffusing species and the medium.
