@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>5&nbsp; Mass Transfer – Modelling</title>
+<title>6&nbsp; Chemical reactions and microbiology – Modelling</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,27 +20,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -50,8 +30,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./06_reactions_microbiology.html" rel="next">
-<link href="./04_heat_transfer.html" rel="prev">
+<link href="./05_mass_transfer.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -121,35 +100,6 @@ MathJax = {
 };
 </script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -162,7 +112,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04_heat_transfer.html">Part II: Applications</a></li><li class="breadcrumb-item"><a href="./05_mass_transfer.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Mass Transfer</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04_heat_transfer.html">Part II: Applications</a></li><li class="breadcrumb-item"><a href="./06_reactions_microbiology.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chemical reactions and microbiology</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -241,13 +191,13 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./05_mass_transfer.html" class="sidebar-item-text sidebar-link active">
+  <a href="./05_mass_transfer.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Mass Transfer</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06_reactions_microbiology.html" class="sidebar-item-text sidebar-link">
+  <a href="./06_reactions_microbiology.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chemical reactions and microbiology</span></span></a>
   </div>
 </li>
@@ -263,21 +213,17 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#advection" id="toc-advection" class="nav-link active" data-scroll-target="#advection"><span class="header-section-number">5.1</span> Advection</a></li>
-  <li><a href="#sec-fick" id="toc-sec-fick" class="nav-link" data-scroll-target="#sec-fick"><span class="header-section-number">5.2</span> Diffusion and Fick’s laws</a></li>
-  <li><a href="#convection-and-mass-transfer-coefficients" id="toc-convection-and-mass-transfer-coefficients" class="nav-link" data-scroll-target="#convection-and-mass-transfer-coefficients"><span class="header-section-number">5.3</span> Convection and mass transfer coefficients</a></li>
-  <li><a href="#sec-interphase" id="toc-sec-interphase" class="nav-link" data-scroll-target="#sec-interphase"><span class="header-section-number">5.4</span> Interphase mass transfer</a></li>
-  <li><a href="#linking-equations" id="toc-linking-equations" class="nav-link" data-scroll-target="#linking-equations"><span class="header-section-number">5.5</span> Linking equations</a></li>
-  <li><a href="#problems" id="toc-problems" class="nav-link" data-scroll-target="#problems"><span class="header-section-number">5.6</span> Problems</a></li>
+  <li><a href="#chemical-reactions" id="toc-chemical-reactions" class="nav-link active" data-scroll-target="#chemical-reactions"><span class="header-section-number">6.1</span> Chemical reactions</a></li>
+  <li><a href="#microbiology" id="toc-microbiology" class="nav-link" data-scroll-target="#microbiology"><span class="header-section-number">6.2</span> Microbiology</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04_heat_transfer.html">Part II: Applications</a></li><li class="breadcrumb-item"><a href="./05_mass_transfer.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Mass Transfer</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04_heat_transfer.html">Part II: Applications</a></li><li class="breadcrumb-item"><a href="./06_reactions_microbiology.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chemical reactions and microbiology</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-mass" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Mass Transfer</span></span></h1>
+<h1 class="title"><span id="sec-reactions" class="quarto-section-identifier"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chemical reactions and microbiology</span></span></h1>
 </div>
 
 
@@ -294,148 +240,23 @@ window.Quarto = {
 </header>
 
 
-<p>Mass transfer occurs through similar processes as heat transfer. In fact the mathematics of mass transfer is often based on a formal analogy with heat transfer. Mass transfer is simpler in some ways–in particular there is only mass, unlike heat where we have temperature and energy to think about. But in other ways it is more complicated, especially for systems with multiple phases. Here we’ll cover advection, diffusion, and convection.</p>
-<section id="advection" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="advection"><span class="header-section-number">5.1</span> Advection</h2>
-<p>As with heat transfer, advection describes bulk flow. Here is a simple equation for mass flow of some solute or component present in a flowing fluid:</p>
-<p><span id="eq-mass_advect_1"><span class="math display">\[
-\dot{m} = c \cdot \dot{V},
-\tag{5.1}\]</span></span></p>
-<p>where <span class="math inline">\(\dot{m} =\)</span> mass flow rate of some component (<span class="math inline">\(\kgps\)</span>), <span class="math inline">\(c =\)</span> volumetric concentration of component (<span class="math inline">\(\kgpmc\)</span>), and <span class="math inline">\(\dot{V} =\)</span> volumetric fluid flow rate (<span class="math inline">\(\mcbps\)</span>). Assuming we have flow in one direction in a pipe or some other system with a uniform cross-sectional area <span class="math inline">\(A\)</span>, we can get flux by dividing by cross-sectional area, <span id="eq-mass-advect-1"><span class="math display">\[
-J = c \cdot v_x,
-\tag{5.2}\]</span></span></p>
-<p>where <span class="math inline">\(\frac{\dot{V}}{A} = v_x =\)</span> superficial fluid velocity.</p>
-<p>For a fixed point in space,</p>
-<p><span id="eq-mass-advect-ode1"><span class="math display">\[
-\frac{dc}{dt} = v_x \cdot \frac{dc}{dx}.
-\tag{5.3}\]</span></span></p>
-<p>With mass, we don’t have anything like the temperature vs.&nbsp;energy distinction. Mass concentration gradients drive mass flow directly, altering concentrations over time.</p>
-<!-- Simple bulk flow. Include note on dispersion. -->
+<p>Chemical reactions …</p>
+<!-- Brief introduction to reaction kinetics and microbial growth as
+     source/sink terms in mass and energy balances. -->
+<section id="chemical-reactions" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="chemical-reactions"><span class="header-section-number">6.1</span> Chemical reactions</h2>
+<!-- First- and second-order reactions as useful simplifications.
+     Law of mass action and chemical equilibrium.
+     Stoichiometry.
+     Examples: ammonia and carbon dioxide speciation. -->
 </section>
-<section id="sec-fick" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="sec-fick"><span class="header-section-number">5.2</span> Diffusion and Fick’s laws</h2>
-<p>Diffusion is the term for mass transfer through random molecular or atomic movement. Fick’s law is:</p>
-<p><span id="eq-ficks1"><span class="math display">\[
-J = - D \cdot \frac{dc}{dx},
-\tag{5.4}\]</span></span></p>
-<p>where <span class="math inline">\(D\)</span> is the diffusivity or diffusion coefficient (we will use <span class="math inline">\(\msqps\)</span>, but be aware that <span class="math inline">\(\mathrm{cm^{2}~s^{-1}}\)</span> is commonly used) and <span class="math inline">\(c\)</span> is concentration (<span class="math inline">\(\kgpmc\)</span>). The minus sign indicates that flow occurs down a concentration gradient, from high to low concentration. It is possible to do a lot with just <a href="#eq-ficks1" class="quarto-xref">Equation&nbsp;<span>5.4</span></a> using numerical modeling. Like constitutive equations in general, Fick’s law includes on the RHS a material property, <span class="math inline">\(D\)</span>, and a state variable, <span class="math inline">\(c\)</span>.</p>
-<p>Diffusivity is properly called a <em>binary</em> diffusion coefficient, because it depends on both materials. For example, values of <span class="math inline">\(D\)</span> for oxygen in air and water are of course different, but so are the values for air and ethanol both in air. Diffusivity values vary widely; <a href="#tbl-diff-vals" class="quarto-xref">Table&nbsp;<span>5.1</span></a> has <em>approximate</em> values for different media. These can be handy for setting parameter values.</p>
-<div id="tbl-diff-vals" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-diff-vals-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;5.1: Approximate diffusivity values from <span class="citation" data-cites="cussler_diffusion_1997">Cussler (<a href="#ref-cussler_diffusion_1997" role="doc-biblioref">1997</a>)</span>
-</figcaption>
-<div aria-describedby="tbl-diff-vals-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Medium</th>
-<th>Approximate <span class="math inline">\(D\)</span></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Gases</td>
-<td><span class="math inline">\(10^{-5}~\msqps\)</span></td>
-</tr>
-<tr class="even">
-<td>Liquids</td>
-<td><span class="math inline">\(10^{-9}~\msqps\)</span></td>
-</tr>
-<tr class="odd">
-<td>Polymers</td>
-<td><span class="math inline">\(10^{-12}~\msqps\)</span></td>
-</tr>
-<tr class="even">
-<td>Solids</td>
-<td><span class="math inline">\(10^{-34}~\msqps\)</span></td>
-</tr>
-</tbody>
-</table>
-</div>
-</figure>
-</div>
-<p>The time derivative of concentration is the integral of <a href="#eq-ficks1" class="quarto-xref">Equation&nbsp;<span>5.4</span></a>, or: <span id="eq-ficks2"><span class="math display">\[
-\frac{dc}{dt} = - D \cdot \frac{d^2c}{dx^2}.
-\tag{5.5}\]</span></span> This form can be used as a starting point for a numerical or analytical solution.</p>
-<p>Mathematically and conceptually, mass diffusion is analogous to thermal conduction. This should be clear from comparing the equations for Fick’s and Fourier’s laws here and in <a href="04_heat_transfer.html" class="quarto-xref"><span>Chapter 4</span></a>. So when the concentration gradient (derivative) is linear, i.e., <span class="math inline">\(\frac{dc}{dx}\)</span> is uniform, the system is at steady-state, with constant (but not uniform) concentrations over time. When this is the case or we can approximate reality with this simplification, a simpler expression can be used:</p>
-<p><span id="eq-ficks3"><span class="math display">\[
-J = -D \cdot \frac{\Delta c}{L},
-\tag{5.6}\]</span></span></p>
-<p>where <span class="math inline">\(\Delta c\)</span> is the concentration difference across a slab or plane wall and <span class="math inline">\(L\)</span> is its thickness. For example, take a look at <a href="#fig-CO2-wall1" class="quarto-xref">Figure&nbsp;<span>5.1</span></a>.</p>
-<div id="fig-CO2-wall1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="CO2 profile.">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-CO2-wall1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="drawings/CO2_wall1.png" class="img-fluid figure-img" alt="CO2 profile.">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-CO2-wall1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5.1: Steady-state diffusion of <span class="math inline">\(\text{CO}_2\)</span> through a still layer of air.
-</figcaption>
-</figure>
-</div>
-</section>
-<section id="convection-and-mass-transfer-coefficients" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="convection-and-mass-transfer-coefficients"><span class="header-section-number">5.3</span> Convection and mass transfer coefficients</h2>
-<p>Convection occurs for mass as with temperature, due to the same mechanisms. The general constitutive equation is:</p>
-<p><span id="eq-mass-trans1"><span class="math display">\[
-J = k_c \cdot \Delta c,
-\tag{5.7}\]</span></span></p>
-<p>where <span class="math inline">\(k_c=\)</span> the mass transfer convection coefficient, or the mass transfer coefficient, and <span class="math inline">\(\Delta c\)</span> = some appropriate concentration difference, e.g., from a surface into ambient air. For an example, see <a href="#fig-gasoline1" class="quarto-xref">Figure&nbsp;<span>5.2</span></a>, where <span class="math inline">\(\Delta c = c_{surface} - c_\infty\)</span>. As with heat convection, the exact shape of the concentration (temperature) profile is generally unknown and not needed. Intead, all resistance to mass transfer is lumped into a single convection coefficient <span class="math inline">\(k_c\)</span>.</p>
-<div id="fig-gasoline1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Gasoline volatilization.">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-gasoline1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="drawings/gasoline1.png" class="img-fluid figure-img" alt="Gasoline volatilization.">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gasoline1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5.2: Convection of volatile components in gasoline through convection.
-</figcaption>
-</figure>
-</div>
-<p>The numeric values for mass transfer coefficients depend on the properties of the flowing fluid (air in <a href="#fig-gasoline1" class="quarto-xref">Figure&nbsp;<span>5.2</span></a>) and to a lesser degree, the transported component (here the volatile organic molecules that make up gasoline). Various “correlations” exist for calculating approximate values, e.g., Table 8.3-2 in <span class="citation" data-cites="cussler_diffusion_1997">Cussler (<a href="#ref-cussler_diffusion_1997" role="doc-biblioref">1997</a>)</span>. In general, higher fluid speed, more turbulence, and smaller transported molecules all mean higher mass transfer and so higher values for <span class="math inline">\(k_c\)</span>.</p>
-<p>Do you see how <a href="#eq-ficks3" class="quarto-xref">Equation&nbsp;<span>5.6</span></a> and <a href="#eq-mass-trans1" class="quarto-xref">Equation&nbsp;<span>5.7</span></a> essentially have the same form? As with heat transfer, for a system at steady-state (or that can be assumed to be at steady-state) a <em>mass transfer coefficient approach</em> can be applied. When mass transfer is controlled by diffusion, <a href="#eq-mass-trans1" class="quarto-xref">Equation&nbsp;<span>5.7</span></a> can be applied with <span class="math inline">\(k_c = D / L\)</span>. So which approach should you use? If you know that mass transfer depends on more than just regular diffusion, it is more honest and so straightforward to use a mass transfer coefficient approach, because <span class="math inline">\(k_c\)</span> is an empirical constant that can include multiple processes. For true diffusion, and when the concentration profile is of interest (not just mass transfer), either approach could be used, but it is more typical to use explicit diffusion and some version of Fick’s law.</p>
-</section>
-<section id="sec-interphase" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="sec-interphase"><span class="header-section-number">5.4</span> Interphase mass transfer</h2>
-<p>As with heat transfer, it is also possible to model mass transfer through multiple layers of different materials or substances. Unfortunately, this is where we really run into complexity. When different phases, e.g., water and air, are stacked together, differences in the affinity of the transported substance for each phase makes for some challenges for both understanding and modelling.</p>
-<p>Take a look at the example in <a href="#fig-aeration1" class="quarto-xref">Figure&nbsp;<span>5.3</span></a>. The discontinuity at the interface between the two phases is a defining feature of interpase mass transfer (note that interface and interphase are two different words with two different meanings!). Thinking about <em>equilibrium</em> conditions, when a system without consumption or production is allowed to stabilize after some amount of time, can be very helpful. In <a href="#fig-aeration1" class="quarto-xref">Figure&nbsp;<span>5.3</span></a>, equilibrium is shown with dotted lines. The straight lines with <span class="math inline">\(\frac{dc}{dz}\)</span> show that there is no mass transfer–you should be able to infer this result from <a href="#eq-ficks1" class="quarto-xref">Equation&nbsp;<span>5.4</span></a>. The discontinuity at the interface reflects the different affinities of water and air for oxygen. It can also reflect the challenge of units, which is one reason units are omitted from the figure. Oxygen is relatively insoluble in water, so even thought air is around 20% oxygen by volume, the corresponding equilibrium concentration in water is around 10 <span class="math inline">\(\mgpl\)</span> (= 10 <span class="math inline">\(\gpmc\)</span>).</p>
-<div id="fig-aeration1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="O2 profiles.">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-aeration1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="drawings/aeration1.png" class="img-fluid figure-img" alt="O2 profiles.">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-aeration1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5.3: Oxygen (<span class="math inline">\(\text{O}_2\)</span>) concentration profiles in an air-water system. Dashed lines shown profiles at equilibrium, with no oxygen consumption.
-</figcaption>
-</figure>
-</div>
-<p>The concept of an equilibrium concentration gives us a way to model mass transfer through an interface. We can use <a href="#eq-mass-trans1" class="quarto-xref">Equation&nbsp;<span>5.7</span></a> with an appropriate expression for <span class="math inline">\(\Delta c\)</span>. That is,</p>
-<p><span id="eq-mass-interphase-trans1"><span class="math display">\[
-J = k_c \cdot (c^* - c),
-\tag{5.8}\]</span></span></p>
-<p>where <span class="math inline">\(c*=\)</span> the bulk equilibrium concentration of the transported substance in phase A in phase B units, and <span class="math inline">\(c=\)</span> the bulk phase A concentration. That seems complicated! For our water-air system, we could have <span class="math inline">\(c^*=\)</span> 10 <span class="math inline">\(\gpmc\)</span>. This is the equilibrium concentration of oxygen in the water, which is another way of saying it is the bulk concentration of oxygen in air converted into aqueous phase units. And <span class="math inline">\(c=\)</span> bulk concentration of oxygen in water, which could be around 5 <span class="math inline">\(\gpmc\)</span> based on the figure. Our <span class="math inline">\(k_c\)</span> value must be consistent with the units used for the <span class="math inline">\((c^* - c)\)</span> bit of the calculation. Typically, the symbol <span class="math inline">\(K_L\)</span> would be used for this system. The capital (big) <span class="math inline">\(K\)</span> indicates that this is an <em>overall</em> mass transfer coefficient, for transport through both phases, and the <span class="math inline">\(_L\)</span> bit shows that it is in liquid-phase (or more properly, aqueous phase) units.</p>
-<p>Interphase mass transfer can be approached from a more theoretical and more complicated perspective, and it is common to calculate mass transfer coefficients based on estimates of resistance in both phases as well as the partitioning behavior of the substance being transported. But you can do a lot with this simple explanation if you just make sure that units are consistent and for a single phase.</p>
-</section>
-<section id="linking-equations" class="level2" data-number="5.5">
-<h2 data-number="5.5" class="anchored" data-anchor-id="linking-equations"><span class="header-section-number">5.5</span> Linking equations</h2>
-<p>Linking equations are generally not needed in simple mass transfer models. It is a difference in mass concentration that drives mass transfer.</p>
-</section>
-<section id="problems" class="level2" data-number="5.6">
-<h2 data-number="5.6" class="anchored" data-anchor-id="problems"><span class="header-section-number">5.6</span> Problems</h2>
-<ol type="1">
-<li>Fish transport dissolved oxygen from water into their bloodstream through gills. Early work on the topic suggests that most of the resistance for this transport comes from a water film outside the gills. An increase in water flow over gills might reduce effective film thickness from 50 down to 20 μm.</li>
-</ol>
-<p>First, what is the smaller corresponding mass transfer coefficient value for these conditions? Second, how fast can oxygen move into the blood in for these two scenarios?</p>
-<p>If you struggle to find an appropriate value for <span class="math inline">\(D\)</span> you can use <span class="math inline">\(2 \cdot 10^{-9} \msqps\)</span>. Bulk oxygen concentration depends on temperature and consumption rate, but you may assume it is 10 <span class="math inline">\(\text{mg}~ \text{L}^{-1}\)</span>, which might be the case for cool, clean water. In the blood, free oxygen rapidly reacts with hemoglobin, so you can assume the dissolved oxygen concentration is zero.</p>
-<ol start="2" type="1">
-<li>Volatilization or evaporation. . . interphase?</li>
-</ol>
+<section id="microbiology" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="microbiology"><span class="header-section-number">6.2</span> Microbiology</h2>
+<!-- Microbial rate of growth and biomass yield.
+     Monod kinetics.
+     Example: CSTR. -->
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-cussler_diffusion_1997" class="csl-entry" role="listitem">
-Cussler, E. L. 1997. <em>Diffusion</em>. Cambridge University Press.
-</div>
-</div>
 </section>
 
 </main> <!-- /main -->
@@ -841,14 +662,11 @@ Cussler, E. L. 1997. <em>Diffusion</em>. Cambridge University Press.
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./04_heat_transfer.html" class="pagination-link" aria-label="Heat Transfer">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Heat Transfer</span></span>
+      <a href="./05_mass_transfer.html" class="pagination-link" aria-label="Mass Transfer">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Mass Transfer</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./06_reactions_microbiology.html" class="pagination-link" aria-label="Chemical reactions and microbiology">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chemical reactions and microbiology</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

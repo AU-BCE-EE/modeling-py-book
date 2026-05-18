@@ -41,16 +41,24 @@ $$
 J = - D \cdot \frac{dc}{dx},
 $${#eq-ficks1}
 
-where $D$ is the diffusivity or diffusion coefficient ($\msqps$, but $\mathrm{cm^{2}~s^{-1}}$ is commonly used) and $c$ is concentration ($\kgpmc$).
+where $D$ is the diffusivity or diffusion coefficient (we will use $\msqps$, but be aware that $\mathrm{cm^{2}~s^{-1}}$ is commonly used) and $c$ is concentration ($\kgpmc$).
 The minus sign indicates that flow occurs down a concentration gradient, from high to low concentration.
 It is possible to do a lot with just @eq-ficks1 using numerical modeling.
 Like constitutive equations in general, Fick's law includes on the RHS a material property, $D$, and a state variable, $c$.
 
 Diffusivity is properly called a *binary* diffusion coefficient, because it depends on both materials.
 For example, values of $D$ for oxygen in air and water are of course different, but so are the values for air and ethanol both in air. 
-Diffusivity values vary widely.
-For diffusion in gases, values are around 0.1 $\mathrm{cm^{2}~s^{-1}}$, or $10^{-5} \msqps$.
-In water, $D$ values are on the order of $10^{-9} \msqps$.
+Diffusivity values vary widely; @tbl-diff-vals has *approximate* values for different media.
+These can be handy for setting parameter values.
+
+| Medium   | Approximate $D$     |                                                        
+|------    |------               |
+| Gases    | $10^{-5}~\msqps$    |
+| Liquids  | $10^{-9}~\msqps$    |
+| Polymers | $10^{-12}~\msqps$    |
+| Solids   | $10^{-34}~\msqps$    |
+                                                                              
+: Approximate diffusivity values from @cussler_diffusion_1997 {#tbl-diff-vals}
 
 The time derivative of concentration is the integral of @eq-ficks1, or:
 $$ 
@@ -58,21 +66,101 @@ $$
 $${#eq-ficks2}
 This form can be used as a starting point for a numerical or analytical solution.
 
+Mathematically and conceptually, mass diffusion is analogous to thermal conduction.
+This should be clear from comparing the equations for Fick's and Fourier's laws here and in @sec-heat.
+So when the concentration gradient (derivative) is linear, i.e., $\frac{dc}{dx}$ is uniform, the system is at steady-state, with constant (but not uniform) concentrations over time.
+When this is the case or we can approximate reality with this simplification, a simpler expression can be used:
 
-<!-- Diffusivity D depends on both the diffusing species and the medium.
-     Approximate ranges for gases, liquids, solids. -->
+$$
+J = -D \cdot \frac{\Delta c}{L},
+$${#eq-ficks3}
 
-## Convection
+where $\Delta c$ is the concentration difference across a slab or plane wall and $L$ is its thickness.
+For example, take a look at @fig-CO2-wall1.
 
-## Mass transfer coefficient approach
+![Steady-state diffusion of $\text{CO}_2$ through a still layer of air.](drawings/CO2_wall1.png){#fig-CO2-wall1 fig-alt="CO2 profile."}
+
+## Convection and mass transfer coefficients
+
+Convection occurs for mass as with temperature, due to the same mechanisms.
+The general constitutive equation is:
+
+$$
+J = k_c \cdot \Delta c,
+$${#eq-mass-trans1}
+
+where $k_c=$ the mass transfer convection coefficient, or the mass transfer coefficient, and $\Delta c$ = some appropriate concentration difference, e.g., from a surface into ambient air.
+For an example, see @fig-gasoline1, where $\Delta c = c_{surface} - c_\infty$.
+As with heat convection, the exact shape of the concentration (temperature) profile is generally unknown and not needed.
+Intead, all resistance to mass transfer is lumped into a single convection coefficient $k_c$.
+
+![Convection of volatile components in gasoline through convection.](drawings/gasoline1.png){#fig-gasoline1 fig-alt="Gasoline volatilization."}
+
+The numeric values for mass transfer coefficients depend on the properties of the flowing fluid (air in @fig-gasoline1) and to a lesser degree, the transported component (here the volatile organic molecules that make up gasoline).
+Various "correlations" exist for calculating approximate values, e.g., Table 8.3-2 in @cussler_diffusion_1997.
+In general, higher fluid speed, more turbulence, and smaller transported molecules all mean higher mass transfer and so higher values for $k_c$.
+
+Do you see how @eq-ficks3 and @eq-mass-trans1 essentially have the same form?
+As with heat transfer, for a system at steady-state (or that can be assumed to be at steady-state) a *mass transfer coefficient approach* can be applied.
+When mass transfer is controlled by diffusion, @eq-mass-trans1 can be applied with $k_c = D / L$.
+So which approach should you use? 
+If you know that mass transfer depends on more than just regular diffusion, it is more honest and so straightforward to use a mass transfer coefficient approach, because $k_c$ is an empirical constant that can include multiple processes.
+For true diffusion, and when the concentration profile is of interest (not just mass transfer), either approach could be used, but it is more typical to use explicit diffusion and some version of Fick's law.
 
 ## Interphase mass transfer {#sec-interphase}
 
-<!-- Transfer through an interface between two phases.
-     This section likely needs more depth than the others given the topic's importance. -->
+As with heat transfer, it is also possible to model mass transfer through multiple layers of different materials or substances. 
+Unfortunately, this is where we really run into complexity. 
+When different phases, e.g., water and air, are stacked together, differences in the affinity of the transported substance for each phase makes for some challenges for both understanding and modelling.
+
+Take a look at the example in @fig-aeration1.
+The discontinuity at the interface between the two phases is a defining feature of interpase mass transfer (note that interface and interphase are two different words with two different meanings!).
+Thinking about *equilibrium* conditions, when a system without consumption or production is allowed to stabilize after some amount of time, can be very helpful.
+In @fig-aeration1, equilibrium is shown with dotted lines.
+The straight lines with $\frac{dc}{dz}$ show that there is no mass transfer--you should be able to infer this result from @eq-ficks1.
+The discontinuity at the interface reflects the different affinities of water and air for oxygen.
+It can also reflect the challenge of units, which is one reason units are omitted from the figure.
+Oxygen is relatively insoluble in water, so even thought air is around 20% oxygen by volume, the corresponding equilibrium concentration in water is around 10 $\mgpl$ (= 10 $\gpmc$).
+
+![Oxygen ($\text{O}_2$) concentration profiles in an air-water system. Dashed lines shown profiles at equilibrium, with no oxygen consumption.](drawings/aeration1.png){#fig-aeration1 fig-alt="O2 profiles."}
+
+The concept of an equilibrium concentration gives us a way to model mass transfer through an interface.
+We can use @eq-mass-trans1 with an appropriate expression for $\Delta c$.
+That is,
+
+$$
+J = k_c \cdot (c^* - c),
+$${#eq-mass-interphase-trans1}
+
+where $c*=$ the bulk equilibrium concentration of the transported substance in phase A in phase B units, and $c=$ the bulk phase A concentration.
+That seems complicated!
+For our water-air system, we could have $c^*=$ 10 $\gpmc$.
+This is the equilibrium concentration of oxygen in the water, which is another way of saying it is the bulk concentration of oxygen in air converted into aqueous phase units.
+And $c=$ bulk concentration of oxygen in water, which could be around 5 $\gpmc$ based on the figure.
+Our $k_c$ value must be consistent with the units used for the $(c^* - c)$ bit of the calculation.
+Typically, the symbol $K_L$ would be used for this system.
+The capital (big) $K$ indicates that this is an *overall* mass transfer coefficient, for transport through both phases, and the $_L$ bit shows that it is in liquid-phase (or more properly, aqueous phase) units.
+
+Interphase mass transfer can be approached from a more theoretical and more complicated perspective, and it is common to calculate mass transfer coefficients based on estimates of resistance in both phases as well as the partitioning behavior of the substance being transported.
+But you can do a lot with this simple explanation if you just make sure that units are consistent and for a single phase.
 
 ## Linking equations
 
-<!-- Generally not needed; mass is mass. -->
+Linking equations are generally not needed in simple mass transfer models.
+It is a difference in mass concentration that drives mass transfer.
 
-## Example: dissolved oxygen transport and consumption
+## Problems
+
+1. Fish transport dissolved oxygen from water into their bloodstream through gills.
+Early work on the topic suggests that most of the resistance for this transport comes from a water film outside the gills. 
+An increase in water flow over gills might reduce effective film thickness from 50 down to 20 μm.
+
+First, what is the smaller corresponding mass transfer coefficient value for these conditions?
+Second, how fast can oxygen move into the blood in for these two scenarios?
+
+If you struggle to find an appropriate value for $D$ you can use $2 \cdot 10^{-9} \msqps$.
+Bulk oxygen concentration depends on temperature and consumption rate, but you may assume it is 10 $\text{mg}~ \text{L}^{-1}$, which might be the case for cool, clean water.
+In the blood, free oxygen rapidly reacts with hemoglobin, so you can assume the dissolved oxygen concentration is zero.
+
+2. Volatilization or evaporation. . . interphase?
+

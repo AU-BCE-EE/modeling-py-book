@@ -16,7 +16,7 @@ book:
       chapters:
         - 04_heat_transfer.qmd
         - 05_mass_transfer.qmd
-#        - 06_reactions_microbiology.qmd
+        - 06_reactions_microbiology.qmd
 #        - 07_spatial_models.qmd
 #        - 08_stability.qmd
 #        - 09_verification_validation.qmd
@@ -53,6 +53,7 @@ format:
               kgpspms: "{\\mathrm{kg~s^{-1}~m^{-2}}}",
               gps: "{\\mathrm{g~s^{-1}}}",
               gpmc: "{\\mathrm{g~m^{-3}}}",
+              mgpl: "{\\mathrm{mg~L^{-1}}}",
               gpmol: "{\\mathrm{g~mol^{-1}}}",
               msq: "{\\mathrm{m^{2}}}",
               mps: "{\\mathrm{m~s^{-1}}}",
