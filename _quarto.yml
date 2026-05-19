@@ -17,7 +17,7 @@ book:
         - 04_heat_transfer.qmd
         - 05_mass_transfer.qmd
         - 06_reactions_microbiology.qmd
-#        - 07_spatial_models.qmd
+        - 07_spatial_models.qmd
 #        - 08_stability.qmd
 #        - 09_verification_validation.qmd
 #        - 10_parameter_estimation.qmd
