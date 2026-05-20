@@ -163,9 +163,6 @@ Some measurements might look like those shown in @fig-biomethmod1.
 
 ![Hypothetical measurements of biomethanation rate.](drawings/biometh_mod1.png){#fig-biomethmod1 fig-alt="Hypothetical biomethanation measurements"}
 
-
-
-
 ## Model simplification
 *Simplification* is key part of model development.
 You might have the feeling that the more processes and dimensions you can cram into a model, the more accurate and in general the better it is.
@@ -189,13 +186,15 @@ In this book we'll look at a variety of models that encompass a range of complex
 But in fact all of these models are relatively simple.
 
 
-## Key terms {#sec-terms}
-
-<!-- PDE, ODE, steady-state, lumping, conservation equations, constitutive equations,
-     linking equations, governing equations, state variables, independent variables,
-     model parameters, model inputs, model outputs -->
-
 ## Problems
 
-1. Several models from the literature are described below. 
-   
+1. Some different models are described below.
+   Apply the labels conceptual, mathematial, computer, analytical, numerical, lumped parameter, distributed parameter, 1D, steady-state, dynamic, mechanistic, and empirical appropriately. Is the answer always clear?
+
+   A. The NLES5 model predicts nitrate leaching based on the equation shown in the figure below (@fig-NLES5), where $L$ is the predicted leaching rate and the other terms are input variables or model parameters. Is it mechanistic or empirical? 
+
+   ![The NLES5 model, from @NLES52022.](web-images/NLES5.jpg){#fig-NLES5 fig-alt="NLES5 model."}
+
+   B. ADM1 is a chemical and biological model that simulates conversion of organic waste to biogas. It tracks development of microbial communities over time. Is it mechanistic or empirical? Dynamic or steady-state? 
+
+   C.  

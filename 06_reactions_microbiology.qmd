@@ -1,11 +1,16 @@
 # Chemical reactions and microbiology {#sec-reactions}
 
-Chemical reactions ...
+Chemical reactions affect the quantity of stuff...
 
 <!-- Brief introduction to reaction kinetics and microbial growth as
      source/sink terms in mass and energy balances. -->
 
 ## Chemical reactions
+
+We'll look at two very basic kinds of chemical reactions: very rapid acid-base reactions and first-order conversion reactions.
+
+Acid-base reactions are important in natural and engineered systems for influencing pH, which affects many processes.
+In both types of systems, a set of chemical species and reactions that are together called the *inorganic carbon system* are an important system.
 
 
 

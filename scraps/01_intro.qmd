@@ -52,3 +52,11 @@ Our model does not explicitly include heat transfer within the coffee, or separa
 A conceptual model and a sketch is a good place to start most model formulation exercises.
 
 Formulation of a *mathematical model* is typically the objective of the following steps.
+
+## Key terms {#sec-terms}
+
+<!-- PDE, ODE, steady-state, lumping, conservation equations, constitutive equations,
+     linking equations, governing equations, state variables, independent variables,
+     model parameters, model inputs, model outputs -->
+
+

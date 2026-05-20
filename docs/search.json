@@ -43,22 +43,11 @@
     ]
   },
   {
-    "objectID": "01_intro.html#sec-terms",
-    "href": "01_intro.html#sec-terms",
-    "title": "1  An introduction to models",
-    "section": "1.3 Key terms",
-    "text": "1.3 Key terms",
-    "crumbs": [
-      "Part I: Foundations",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>An introduction to models</span>"
-    ]
-  },
-  {
     "objectID": "01_intro.html#problems",
     "href": "01_intro.html#problems",
     "title": "1  An introduction to models",
-    "section": "1.4 Problems",
-    "text": "1.4 Problems\n\nSeveral models from the literature are described below.\n\n\n\n\n\nRafrafi, Yan, Léa Laguillaumie, and Claire Dumas. 2021. “Biological Methanation of H2 and CO2 with Mixed Cultures: Current Advances, Hurdles and Challenges.” Waste and Biomass Valorization 12 (October): 5259–82. https://doi.org/10.1007/s12649-020-01283-z.",
+    "section": "1.3 Problems",
+    "text": "1.3 Problems\n\nSome different models are described below. Apply the labels conceptual, mathematial, computer, analytical, numerical, lumped parameter, distributed parameter, 1D, steady-state, dynamic, mechanistic, and empirical appropriately. Is the answer always clear?\nA. The NLES5 model predicts nitrate leaching based on the equation shown in the figure below (Figure 1.4), where \\(L\\) is the predicted leaching rate and the other terms are input variables or model parameters. Is it mechanistic or empirical?\n\n\n\n\n\n\nFigure 1.4: The NLES5 model, from Børgesen et al. (2022).\n\n\n\nB. ADM1 is a chemical and biological model that simulates conversion of organic waste to biogas. It tracks development of microbial communities over time. Is it mechanistic or empirical? Dynamic or steady-state?\n\n\n\n\n\n\n\n\nBørgesen, Christen D., Johannes WM Pullens, Jin Zhao, Gitte Blicher-Mathiesen, Peter Sørensen, and Jørgen E. Olesen. 2022. “NLES5 an Empirical Model for Estimating Nitrate Leaching from the Root Zone of Agricultural Land.” European Journal of Agronomy 134 (March): 126465. https://doi.org/10.1016/j.eja.2022.126465.\n\n\nRafrafi, Yan, Léa Laguillaumie, and Claire Dumas. 2021. “Biological Methanation of H2 and CO2 with Mixed Cultures: Current Advances, Hurdles and Challenges.” Waste and Biomass Valorization 12 (October): 5259–82. https://doi.org/10.1007/s12649-020-01283-z.",
     "crumbs": [
       "Part I: Foundations",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>An introduction to models</span>"
@@ -136,6 +125,17 @@
     "title": "2  Model Formulation",
     "section": "2.6 Model formulation",
     "text": "2.6 Model formulation\nNow we have the components we need to formulate a mathematical model. How do we put them together to get a GE?\nEnergy conservation in W:\n\\[\n\\text{accumulation} = - \\text{out}.\n\\tag{2.5}\\]\nThe constitutive equation needs to be multiplied by area \\(A\\) to get total heat flow in W:\n\\[\n\\dot Q = A \\cdot h \\cdot (T_s - T_\\infty).\n\\tag{2.6}\\]\nAnd let’s write the linking equation using derivatives:\n\\[\n\\frac{dQ}{dt} = c_p \\cdot m \\cdot \\frac{dT}{dt}.\n\\tag{2.7}\\]\nThese three equations and an initial condition plus some inputs are all we need.\nUltimately we want a GE that gives an expression for a derivative for our state variable.\nStudy the equations a bit–how are they related? A good place to start is to review what the terms in the conservation equation actually mean. Here, the LHS in Equation 2.5 is the accumulation of energy. Interestingly, that is what we also have in the LHS of Equation 2.7. What is the RHS of the conservation equation Equation 2.5? It can help to refer back to the sketch, Figure 2.1. With that, you may realize that the RHS of the conservation equation is our convective heat loss, which is given by the constitutive equation, Equation 2.6.\nThis all means we can substitute the RHS of Equation 2.7 for the LHS of Equation 2.5. And we can substitute the RHS of Equation 2.6 for the RHS of Equation 2.5. This gives:\n\\[\nc_p \\cdot m \\cdot \\frac{dT}{dt} = - A \\cdot h \\cdot (T_s - T_\\infty)\n\\]\nAlmost there! We now have an expression that includes the derivative of our state variable \\(T\\) (see the \\(\\frac{dT}{dt}\\) term?) so we have a DE. We just need to rearrange, by solving for that \\(\\frac{dT}{dt}\\) term.\n\\[\n\\frac{dT}{dt} = - \\frac{A \\cdot h}{c_p \\cdot m} \\cdot (T_s - T_\\infty)\n\\tag{2.8}\\]\nAnd there, Equation 2.8, is a GE for our model! It shows that the rate of temperature change depends on the size of the coffee + mug system (\\(m\\) and \\(A\\)), a heat transfer coefficient specific to the conditions of the surrounding air (\\(h\\)), the air temperature of course (\\(T_\\infty\\)), and the temperature of the coffee itself (\\(T\\)).\nWe can’t simply plug numbers into the GE and get a solution, because it is an ODE, and only tells how the coffee temperature changes over time, not the actual value. We’ll look at actually getting results in Chapter 3. But here we can see what inputs will be needed.\nYou might notice that this GE is different from the one presented in Chapter 1, Equation 1.1. In that simpler GE, several terms were combined together into a single constant:\n\\[\nc = - \\frac{A \\cdot h}{c_p \\cdot m}\n\\]\nIn fact, both approaches could give identical predictions. The difference implies something about what we know though, and that will be explored later.",
+    "crumbs": [
+      "Part I: Foundations",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Model Formulation</span>"
+    ]
+  },
+  {
+    "objectID": "02_components_formulation.html#problems",
+    "href": "02_components_formulation.html#problems",
+    "title": "2  Model Formulation",
+    "section": "2.7 Problems",
+    "text": "2.7 Problems\n\nA denitrifying wood chip bioreactor is just a trench in the ground filled with wood chips. Nitrate (\\(\\text{NO}_3^-\\)) in water draining from agricultural fields is removed by bacterial denitrification, with wood organic matter as the electron donor and carbon source. The nitrate is converted to relatively inert dinitrogen gas (\\(\\text{N}_2\\)) (or at least that is the intent). You can find more information on the technology here. Develop a conceptual model for this system. See the list of conceptual model components in Section 2.2 to think about what to include.\nRefrigeration of animal slurry is a commercial technology used at full-scale to reduce emission of methane and other air pollutants from animal barns. Using the cooling coffee model for inspiration, follow the model formulation steps to try to develop a governing equation for a slurry cooling system.",
     "crumbs": [
       "Part I: Foundations",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Model Formulation</span>"
@@ -329,11 +329,11 @@
     ]
   },
   {
-    "objectID": "05_mass_transfer.html#linking-equations",
-    "href": "05_mass_transfer.html#linking-equations",
+    "objectID": "05_mass_transfer.html#other-stuff",
+    "href": "05_mass_transfer.html#other-stuff",
     "title": "5  Mass Transfer",
-    "section": "5.5 Linking equations",
-    "text": "5.5 Linking equations\nLinking equations are generally not needed in simple mass transfer models. It is a difference in mass concentration that drives mass transfer.",
+    "section": "5.5 Other stuff",
+    "text": "5.5 Other stuff\nLinking equations are generally not needed in simple mass transfer models. It is a difference in mass concentration that drives mass transfer.\nWe won’t get into modelling concentration profiles until the spatial sections later in this book.",
     "crumbs": [
       "Part II: Applications",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Mass Transfer</span>"
@@ -344,7 +344,7 @@
     "href": "05_mass_transfer.html#problems",
     "title": "5  Mass Transfer",
     "section": "5.6 Problems",
-    "text": "5.6 Problems\n\nFish transport dissolved oxygen from water into their bloodstream through gills. Early work on the topic suggests that most of the resistance for this transport comes from a film of water outside the gills. An increase in water flow over gills might reduce effective film thickness from 50 down to 20 μm.\nFirst, what is the smaller corresponding mass transfer coefficient value for these conditions? Second, how fast can oxygen move into the blood in for these two scenarios?\nIf you struggle to find an appropriate value for \\(D\\) you can use \\(2 \\cdot 10^{-9} \\msqps\\). Bulk oxygen concentration depends on temperature and consumption rate, but you may assume it is 10 \\(\\text{mg}~ \\text{L}^{-1}\\), which might be the case for cool, clean water. In the blood, free oxygen rapidly reacts with hemoglobin, so you can assume the dissolved oxygen concentration is zero.\nVolatilization or evaporation. . . interphase?\n\n\n\n\n\nCussler, E. L. 1997. Diffusion. Cambridge University Press.",
+    "text": "5.6 Problems\n\nFish transport dissolved oxygen from water into their bloodstream through gills. Early work on the topic suggests that most of the resistance for this transport comes from a film of water outside the gills. An increase in water flow over gills might reduce effective film thickness from 50 down to 20 μm.\nWhat constitutive equations can be used to express dissolved oxygen transport in this system? What is the smaller corresponding mass transfer coefficient value for these conditions? How fast can oxygen move into the blood in for these two scenarios?\nIf you struggle to find an appropriate value for \\(D\\) you can use \\(2 \\cdot 10^{-9} \\msqps\\). Bulk oxygen concentration depends on temperature and consumption rate, but you may assume it is 10 \\(\\text{mg}~ \\text{L}^{-1}\\), which might be the case for cool, clean water. In the blood, free oxygen rapidly reacts with hemoglobin, so you can assume the dissolved oxygen concentration is zero.\nDevelop a steady-state or dynamic model for benzene volatilization from an open industrial wastewater lagoon in Python. You can assume a negligible bulk air concentration. The bulk concentration in the lagoon is 10 \\(\\mgpl\\), which corresponds to an vapor-phase equilibrium concentration of about 2 \\(\\gpmc\\) (that is based on Henry’s law–ask us for more information if you are curious!). Most of the resistance to mass transfer comes from the water. You can assume the overall mass transfer coefficient in air phase units, \\(K_G\\), is 0.001 \\(\\mps\\). If the lagoon is 1 m deep, predict the relative daily loss with your model.\n\n\n\n\n\nCussler, E. L. 1997. Diffusion. Cambridge University Press.",
     "crumbs": [
       "Part II: Applications",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Mass Transfer</span>"
@@ -370,6 +370,94 @@
     "crumbs": [
       "Part II: Applications",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Chemical reactions and microbiology</span>"
+    ]
+  },
+  {
+    "objectID": "07_spatial_models.html",
+    "href": "07_spatial_models.html",
+    "title": "7  Spatial Models",
+    "section": "",
+    "text": "7.1 Governing equations and coordinate systems",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Spatial Models</span>"
+    ]
+  },
+  {
+    "objectID": "07_spatial_models.html#method-of-lines-and-discretization",
+    "href": "07_spatial_models.html#method-of-lines-and-discretization",
+    "title": "7  Spatial Models",
+    "section": "7.2 Method of lines and discretization",
+    "text": "7.2 Method of lines and discretization",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Spatial Models</span>"
+    ]
+  },
+  {
+    "objectID": "07_spatial_models.html#nodes-vs.-cells",
+    "href": "07_spatial_models.html#nodes-vs.-cells",
+    "title": "7  Spatial Models",
+    "section": "7.3 Nodes vs. cells",
+    "text": "7.3 Nodes vs. cells\nThere are two main ways to develop discretized spatial models. The cell-based finite volume method (FVM) uses finite layers or cells of fixed volume, with flux or flow calculated for each boundary between cells at all evaluated times. It is easier to grasp intuitively and easier to go from the fundamental constitutive equations and conservation laws to model equations and ultimately Python code. Boundary conditions can be implemented very intuitively. Conservation (energy and mass) is ensured with the approach, and it is easy to check cumulative flow into or out of a domain for model verification to ensure it has been implemented correctly. One of us (Sasha) likes FVM because it allows models to be developed completely from fundamental principles and a little thinking.\nThe finite difference method (FDM) uses nodes that represent points in space, and is implemented by discretizing a governing equation, i.e., the PDE for the state variable. The model code can be more compact and the math simpler. Boundary conditions utilize a construct called “ghost points”, which take some care to understand and implement. One of us (Frederik) likes FDM because it is the more sophisticated approach and provides a good basis for moving ahead to more dimensions and more challenging modeling problems.\nIn this book we will introduce both, but focus on FDM.",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Spatial Models</span>"
+    ]
+  },
+  {
+    "objectID": "07_spatial_models.html#flux-based-vs.-state-variable-implementation",
+    "href": "07_spatial_models.html#flux-based-vs.-state-variable-implementation",
+    "title": "7  Spatial Models",
+    "section": "7.4 Flux-based vs. state-variable implementation",
+    "text": "7.4 Flux-based vs. state-variable implementation",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Spatial Models</span>"
+    ]
+  },
+  {
+    "objectID": "07_spatial_models.html#sec-bcs",
+    "href": "07_spatial_models.html#sec-bcs",
+    "title": "7  Spatial Models",
+    "section": "7.5 Boundary conditions",
+    "text": "7.5 Boundary conditions",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Spatial Models</span>"
+    ]
+  },
+  {
+    "objectID": "07_spatial_models.html#initial-conditions",
+    "href": "07_spatial_models.html#initial-conditions",
+    "title": "7  Spatial Models",
+    "section": "7.6 Initial conditions",
+    "text": "7.6 Initial conditions",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Spatial Models</span>"
+    ]
+  },
+  {
+    "objectID": "07_spatial_models.html#implementation",
+    "href": "07_spatial_models.html#implementation",
+    "title": "7  Spatial Models",
+    "section": "7.7 Implementation",
+    "text": "7.7 Implementation",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Spatial Models</span>"
+    ]
+  },
+  {
+    "objectID": "07_spatial_models.html#grid-size-and-convergence",
+    "href": "07_spatial_models.html#grid-size-and-convergence",
+    "title": "7  Spatial Models",
+    "section": "7.8 Grid size and convergence",
+    "text": "7.8 Grid size and convergence",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Spatial Models</span>"
     ]
   }
 ]

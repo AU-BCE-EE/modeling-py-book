@@ -1,4 +1,4 @@
-# Solving and Implementing Models {#sec-solving}
+# Solving and implementing models {#sec-solving}
 
 A GE, like @eq-coffee-ge2, is a mathematical model.
 In order to get predictions, we need to solve the model.
@@ -785,5 +785,9 @@ preds = cm.cool(
 print(preds)
 ```
 
+## Problems
 
+1. Implement a complete slurry cooling model in Python.
+   Try either a numeric or analytical approach.
+   
 

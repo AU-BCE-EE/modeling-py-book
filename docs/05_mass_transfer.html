@@ -251,6 +251,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chemical reactions and microbiology</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07_spatial_models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Spatial Models</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -267,7 +273,7 @@ window.Quarto = {
   <li><a href="#sec-fick" id="toc-sec-fick" class="nav-link" data-scroll-target="#sec-fick"><span class="header-section-number">5.2</span> Diffusion and Fick’s laws</a></li>
   <li><a href="#convection-and-mass-transfer-coefficients" id="toc-convection-and-mass-transfer-coefficients" class="nav-link" data-scroll-target="#convection-and-mass-transfer-coefficients"><span class="header-section-number">5.3</span> Convection and mass transfer coefficients</a></li>
   <li><a href="#sec-interphase" id="toc-sec-interphase" class="nav-link" data-scroll-target="#sec-interphase"><span class="header-section-number">5.4</span> Interphase mass transfer</a></li>
-  <li><a href="#linking-equations" id="toc-linking-equations" class="nav-link" data-scroll-target="#linking-equations"><span class="header-section-number">5.5</span> Linking equations</a></li>
+  <li><a href="#other-stuff" id="toc-other-stuff" class="nav-link" data-scroll-target="#other-stuff"><span class="header-section-number">5.5</span> Other stuff</a></li>
   <li><a href="#problems" id="toc-problems" class="nav-link" data-scroll-target="#problems"><span class="header-section-number">5.6</span> Problems</a></li>
   </ul>
 </nav>
@@ -415,17 +421,18 @@ J = k_c \cdot (c^* - c),
 <p>where <span class="math inline">\(c^*=\)</span> the bulk equilibrium concentration of the transported substance in phase A in phase B units, and <span class="math inline">\(c=\)</span> the bulk phase A concentration. That seems complicated! For our water-air system, we could have <span class="math inline">\(c^*=\)</span> 10 <span class="math inline">\(\gpmc\)</span>. This is the equilibrium concentration of oxygen in the water, which is another way of saying it is the bulk concentration of oxygen in air converted into aqueous phase units. And <span class="math inline">\(c=\)</span> bulk concentration of oxygen in water, which could be around 5 <span class="math inline">\(\gpmc\)</span> based on the figure. Our <span class="math inline">\(k_c\)</span> value must be consistent with the units used for the <span class="math inline">\((c^* - c)\)</span> bit of the calculation. Typically, the symbol <span class="math inline">\(K_L\)</span> would be used for this system. The capital (big) <span class="math inline">\(K\)</span> indicates that this is an <em>overall</em> mass transfer coefficient, for transport through both phases, and the <span class="math inline">\(_L\)</span> bit shows that it is in liquid-phase (or more properly, aqueous phase) units.</p>
 <p>Interphase mass transfer can be approached from a more theoretical and more complicated perspective, and it is common to calculate mass transfer coefficients based on estimates of resistance in both phases as well as the partitioning behavior of the substance being transported. But you can do a lot with this simple explanation if you just make sure that units are consistent and for a single phase.</p>
 </section>
-<section id="linking-equations" class="level2" data-number="5.5">
-<h2 data-number="5.5" class="anchored" data-anchor-id="linking-equations"><span class="header-section-number">5.5</span> Linking equations</h2>
+<section id="other-stuff" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="other-stuff"><span class="header-section-number">5.5</span> Other stuff</h2>
 <p>Linking equations are generally not needed in simple mass transfer models. It is a difference in mass concentration that drives mass transfer.</p>
+<p>We won’t get into modelling concentration profiles until the spatial sections later in this book.</p>
 </section>
 <section id="problems" class="level2" data-number="5.6">
 <h2 data-number="5.6" class="anchored" data-anchor-id="problems"><span class="header-section-number">5.6</span> Problems</h2>
 <ol type="1">
 <li><p>Fish transport dissolved oxygen from water into their bloodstream through gills. Early work on the topic suggests that most of the resistance for this transport comes from a film of water outside the gills. An increase in water flow over gills might reduce effective film thickness from 50 down to 20 μm.</p>
-<p>First, what is the smaller corresponding mass transfer coefficient value for these conditions? Second, how fast can oxygen move into the blood in for these two scenarios?</p>
+<p>What constitutive equations can be used to express dissolved oxygen transport in this system? What is the smaller corresponding mass transfer coefficient value for these conditions? How fast can oxygen move into the blood in for these two scenarios?</p>
 <p>If you struggle to find an appropriate value for <span class="math inline">\(D\)</span> you can use <span class="math inline">\(2 \cdot 10^{-9} \msqps\)</span>. Bulk oxygen concentration depends on temperature and consumption rate, but you may assume it is 10 <span class="math inline">\(\text{mg}~ \text{L}^{-1}\)</span>, which might be the case for cool, clean water. In the blood, free oxygen rapidly reacts with hemoglobin, so you can assume the dissolved oxygen concentration is zero.</p></li>
-<li><p>Volatilization or evaporation. . . interphase?</p></li>
+<li><p>Develop a steady-state or dynamic model for benzene volatilization from an open industrial wastewater lagoon in Python. You can assume a negligible bulk air concentration. The bulk concentration in the lagoon is 10 <span class="math inline">\(\mgpl\)</span>, which corresponds to an vapor-phase equilibrium concentration of about 2 <span class="math inline">\(\gpmc\)</span> (that is based on Henry’s law–ask us for more information if you are curious!). Most of the resistance to mass transfer comes from the water. You can assume the overall mass transfer coefficient in air phase units, <span class="math inline">\(K_G\)</span>, is 0.001 <span class="math inline">\(\mps\)</span>. If the lagoon is 1 m deep, predict the relative daily loss with your model.</p></li>
 </ol>
 
 

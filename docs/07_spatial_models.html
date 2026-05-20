@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>6&nbsp; Chemical reactions and microbiology – Modelling</title>
+<title>7&nbsp; Spatial Models – Modelling</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./07_spatial_models.html" rel="next">
-<link href="./05_mass_transfer.html" rel="prev">
+<link href="./06_reactions_microbiology.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -113,7 +112,7 @@ MathJax = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04_heat_transfer.html">Part II: Applications</a></li><li class="breadcrumb-item"><a href="./06_reactions_microbiology.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chemical reactions and microbiology</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04_heat_transfer.html">Part II: Applications</a></li><li class="breadcrumb-item"><a href="./07_spatial_models.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Spatial Models</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -198,13 +197,13 @@ MathJax = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06_reactions_microbiology.html" class="sidebar-item-text sidebar-link active">
+  <a href="./06_reactions_microbiology.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chemical reactions and microbiology</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./07_spatial_models.html" class="sidebar-item-text sidebar-link">
+  <a href="./07_spatial_models.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Spatial Models</span></span></a>
   </div>
 </li>
@@ -220,17 +219,23 @@ MathJax = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#chemical-reactions" id="toc-chemical-reactions" class="nav-link active" data-scroll-target="#chemical-reactions"><span class="header-section-number">6.1</span> Chemical reactions</a></li>
-  <li><a href="#microbiology" id="toc-microbiology" class="nav-link" data-scroll-target="#microbiology"><span class="header-section-number">6.2</span> Microbiology</a></li>
+  <li><a href="#governing-equations-and-coordinate-systems" id="toc-governing-equations-and-coordinate-systems" class="nav-link active" data-scroll-target="#governing-equations-and-coordinate-systems"><span class="header-section-number">7.1</span> Governing equations and coordinate systems</a></li>
+  <li><a href="#method-of-lines-and-discretization" id="toc-method-of-lines-and-discretization" class="nav-link" data-scroll-target="#method-of-lines-and-discretization"><span class="header-section-number">7.2</span> Method of lines and discretization</a></li>
+  <li><a href="#nodes-vs.-cells" id="toc-nodes-vs.-cells" class="nav-link" data-scroll-target="#nodes-vs.-cells"><span class="header-section-number">7.3</span> Nodes vs.&nbsp;cells</a></li>
+  <li><a href="#flux-based-vs.-state-variable-implementation" id="toc-flux-based-vs.-state-variable-implementation" class="nav-link" data-scroll-target="#flux-based-vs.-state-variable-implementation"><span class="header-section-number">7.4</span> Flux-based vs.&nbsp;state-variable implementation</a></li>
+  <li><a href="#sec-bcs" id="toc-sec-bcs" class="nav-link" data-scroll-target="#sec-bcs"><span class="header-section-number">7.5</span> Boundary conditions</a></li>
+  <li><a href="#initial-conditions" id="toc-initial-conditions" class="nav-link" data-scroll-target="#initial-conditions"><span class="header-section-number">7.6</span> Initial conditions</a></li>
+  <li><a href="#implementation" id="toc-implementation" class="nav-link" data-scroll-target="#implementation"><span class="header-section-number">7.7</span> Implementation</a></li>
+  <li><a href="#grid-size-and-convergence" id="toc-grid-size-and-convergence" class="nav-link" data-scroll-target="#grid-size-and-convergence"><span class="header-section-number">7.8</span> Grid size and convergence</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04_heat_transfer.html">Part II: Applications</a></li><li class="breadcrumb-item"><a href="./06_reactions_microbiology.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chemical reactions and microbiology</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04_heat_transfer.html">Part II: Applications</a></li><li class="breadcrumb-item"><a href="./07_spatial_models.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Spatial Models</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-reactions" class="quarto-section-identifier"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chemical reactions and microbiology</span></span></h1>
+<h1 class="title"><span id="sec-spatial" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Spatial Models</span></span></h1>
 </div>
 
 
@@ -247,21 +252,54 @@ MathJax = {
 </header>
 
 
-<p>Chemical reactions …</p>
-<!-- Brief introduction to reaction kinetics and microbial growth as
-     source/sink terms in mass and energy balances. -->
-<section id="chemical-reactions" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="chemical-reactions"><span class="header-section-number">6.1</span> Chemical reactions</h2>
-<!-- First- and second-order reactions as useful simplifications.
-     Law of mass action and chemical equilibrium.
-     Stoichiometry.
-     Examples: ammonia and carbon dioxide speciation. -->
+<section id="governing-equations-and-coordinate-systems" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="governing-equations-and-coordinate-systems"><span class="header-section-number">7.1</span> Governing equations and coordinate systems</h2>
+<!-- Advection, diffusion, source terms.
+     Volumetric source terms vs. boundary source terms. -->
 </section>
-<section id="microbiology" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="microbiology"><span class="header-section-number">6.2</span> Microbiology</h2>
-<!-- Microbial rate of growth and biomass yield.
-     Monod kinetics.
-     Example: CSTR. -->
+<section id="method-of-lines-and-discretization" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="method-of-lines-and-discretization"><span class="header-section-number">7.2</span> Method of lines and discretization</h2>
+<!-- Discretize space, keep time derivative continuous.
+     Different schemes for spatial discretization. -->
+</section>
+<section id="nodes-vs.-cells" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="nodes-vs.-cells"><span class="header-section-number">7.3</span> Nodes vs.&nbsp;cells</h2>
+<p>There are two main ways to develop discretized spatial models. The <em>cell-based finite volume method</em> (FVM) uses finite layers or cells of fixed volume, with flux or flow calculated for each boundary between cells at all evaluated times. It is easier to grasp intuitively and easier to go from the fundamental constitutive equations and conservation laws to model equations and ultimately Python code. Boundary conditions can be implemented very intuitively. Conservation (energy and mass) is ensured with the approach, and it is easy to check cumulative flow into or out of a domain for model verification to ensure it has been implemented correctly. One of us (Sasha) likes FVM because it allows models to be developed completely from fundamental principles and a little thinking.</p>
+<p>The <em>finite difference method</em> (FDM) uses nodes that represent points in space, and is implemented by discretizing a governing equation, i.e., the PDE for the state variable. The model code can be more compact and the math simpler. Boundary conditions utilize a construct called “ghost points”, which take some care to understand and implement. One of us (Frederik) likes FDM because it is the more sophisticated approach and provides a good basis for moving ahead to more dimensions and more challenging modeling problems.</p>
+<p>In this book we will introduce both, but focus on FDM.</p>
+<!-- Conceptual illustration.
+     Implications at boundaries.
+     Node-based: more efficient but harder to understand.
+     Cell-based: easier to understand and verify.
+     Book favors one approach (TBD). -->
+</section>
+<section id="flux-based-vs.-state-variable-implementation" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="flux-based-vs.-state-variable-implementation"><span class="header-section-number">7.4</span> Flux-based vs.&nbsp;state-variable implementation</h2>
+<!-- Analogous to the lumped-parameter choice in earlier chapters.
+     Flux-based: explicitly programs constitutive equations -- more code, easier to follow.
+     State-variable: implements a single GE -- compact but requires Python trickery. -->
+</section>
+<section id="sec-bcs" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="sec-bcs"><span class="header-section-number">7.5</span> Boundary conditions</h2>
+<!-- Types: Dirichlet, Neumann, Robin.
+     Number of BCs needed.
+     Implementation: ghost points (within GE) or explicit (more code). -->
+</section>
+<section id="initial-conditions" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="initial-conditions"><span class="header-section-number">7.6</span> Initial conditions</h2>
+<!-- One per ODE.
+     Uniform profiles are common but not required. -->
+</section>
+<section id="implementation" class="level2" data-number="7.7">
+<h2 data-number="7.7" class="anchored" data-anchor-id="implementation"><span class="header-section-number">7.7</span> Implementation</h2>
+<!-- Start with a small number of nodes/cells.
+     Show different implementation and BC approaches.
+     Loops and slicing. -->
+</section>
+<section id="grid-size-and-convergence" class="level2" data-number="7.8">
+<h2 data-number="7.8" class="anchored" data-anchor-id="grid-size-and-convergence"><span class="header-section-number">7.8</span> Grid size and convergence</h2>
+<!-- Grid spacing and time step have opposite effects on stability.
+     Grid spacing evaluation / convergence check. -->
 
 
 </section>
@@ -669,14 +707,11 @@ MathJax = {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./05_mass_transfer.html" class="pagination-link" aria-label="Mass Transfer">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Mass Transfer</span></span>
+      <a href="./06_reactions_microbiology.html" class="pagination-link" aria-label="Chemical reactions and microbiology">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chemical reactions and microbiology</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./07_spatial_models.html" class="pagination-link" aria-label="Spatial Models">
-        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Spatial Models</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

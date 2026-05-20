@@ -286,6 +286,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chemical reactions and microbiology</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07_spatial_models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Spatial Models</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -307,8 +313,7 @@ window.Quarto = {
   <li><a href="#mechanistic-versus-empirical" id="toc-mechanistic-versus-empirical" class="nav-link" data-scroll-target="#mechanistic-versus-empirical"><span class="header-section-number">1.1.5</span> Mechanistic versus empirical</a></li>
   </ul></li>
   <li><a href="#model-simplification" id="toc-model-simplification" class="nav-link" data-scroll-target="#model-simplification"><span class="header-section-number">1.2</span> Model simplification</a></li>
-  <li><a href="#sec-terms" id="toc-sec-terms" class="nav-link" data-scroll-target="#sec-terms"><span class="header-section-number">1.3</span> Key terms</a></li>
-  <li><a href="#problems" id="toc-problems" class="nav-link" data-scroll-target="#problems"><span class="header-section-number">1.4</span> Problems</a></li>
+  <li><a href="#problems" id="toc-problems" class="nav-link" data-scroll-target="#problems"><span class="header-section-number">1.3</span> Problems</a></li>
   </ul>
 </nav>
     </div>
@@ -376,7 +381,7 @@ Figure&nbsp;1.2: Conceptual model of coffee cooling.
 T(t) = (T_0 - T_{air}) \cdot e^{(-c \cdot t)} + T_{air}.
 \tag{1.2}\]</span></span></p>
 <p>We saw a <em>computer model</em> above. It is a piece of computer software that runs the model. Creating a computer model means <em>implementing</em> a mathematical model. We could also say that development of a software model means <em>programming</em> a mathematical model. Here is an implementation of the coffee model, i.e., a computer model for cooling coffee.</p>
-<div id="3ff8f12a" class="cell" data-execution_count="1">
+<div id="7191a179" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import modules</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -459,20 +464,32 @@ Figure&nbsp;1.3: Hypothetical measurements of biomethanation rate.
 <p>It is useful to remember that model complexity can and often does increase over time and as the result of contributions of multiple individuals. Good modeling advice is to start simple and add more complexity if necessary only after testing a model and identifying shortcomings.</p>
 <p>How simple should a model be? That depends–on the objectives of a project or the task requirements, on available resources, on the level of understanding of the real system, and on the opinion of developers or others who have a say. In this book we’ll look at a variety of models that encompass a range of complexity. But in fact all of these models are relatively simple.</p>
 </section>
-<section id="sec-terms" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="sec-terms"><span class="header-section-number">1.3</span> Key terms</h2>
-<!-- PDE, ODE, steady-state, lumping, conservation equations, constitutive equations,
-     linking equations, governing equations, state variables, independent variables,
-     model parameters, model inputs, model outputs -->
-</section>
-<section id="problems" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="problems"><span class="header-section-number">1.4</span> Problems</h2>
+<section id="problems" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="problems"><span class="header-section-number">1.3</span> Problems</h2>
 <ol type="1">
-<li>Several models from the literature are described below.</li>
+<li><p>Some different models are described below. Apply the labels conceptual, mathematial, computer, analytical, numerical, lumped parameter, distributed parameter, 1D, steady-state, dynamic, mechanistic, and empirical appropriately. Is the answer always clear?</p>
+<p>A. The NLES5 model predicts nitrate leaching based on the equation shown in the figure below (<a href="#fig-NLES5" class="quarto-xref">Figure&nbsp;<span>1.4</span></a>), where <span class="math inline">\(L\)</span> is the predicted leaching rate and the other terms are input variables or model parameters. Is it mechanistic or empirical?</p>
+<div id="fig-NLES5" class="quarto-float quarto-figure quarto-figure-center anchored" alt="NLES5 model.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-NLES5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="web-images/NLES5.jpg" class="img-fluid figure-img" alt="NLES5 model.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-NLES5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.4: The NLES5 model, from <span class="citation" data-cites="NLES52022">Børgesen et al. (<a href="#ref-NLES52022" role="doc-biblioref">2022</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p>B. ADM1 is a chemical and biological model that simulates conversion of organic waste to biogas. It tracks development of microbial communities over time. Is it mechanistic or empirical? Dynamic or steady-state?</p>
+<ol start="3" type="A">
+<li></li>
+</ol></li>
 </ol>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-NLES52022" class="csl-entry" role="listitem">
+Børgesen, Christen D., Johannes WM Pullens, Jin Zhao, Gitte Blicher-Mathiesen, Peter Sørensen, and Jørgen E. Olesen. 2022. <span>“NLES5 an Empirical Model for Estimating Nitrate Leaching from the Root Zone of Agricultural Land.”</span> <em>European Journal of Agronomy</em> 134 (March): 126465. <a href="https://doi.org/10.1016/j.eja.2022.126465">https://doi.org/10.1016/j.eja.2022.126465</a>.
+</div>
 <div id="ref-rafrafi2021" class="csl-entry" role="listitem">
 Rafrafi, Yan, Léa Laguillaumie, and Claire Dumas. 2021. <span>“Biological Methanation of H2 and CO2 with Mixed Cultures: Current Advances, Hurdles and Challenges.”</span> <em>Waste and Biomass Valorization</em> 12 (October): 5259–82. <a href="https://doi.org/10.1007/s12649-020-01283-z">https://doi.org/10.1007/s12649-020-01283-z</a>.
 </div>
