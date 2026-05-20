@@ -39,7 +39,9 @@ format:
       text: |
         <script>
         MathJax = {
+          loader: {load: ['[tex]/mhchem']},
           tex: {
+            packages: {'[+]': ['mhchem']},
             macros: {
               degC: "{^\\circ\\mathrm{C}}",
               degCpm: "{^\\circ\\mathrm{C}~m^{-1}}",

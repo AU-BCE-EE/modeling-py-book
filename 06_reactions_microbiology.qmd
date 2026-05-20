@@ -5,12 +5,24 @@ Chemical reactions affect the quantity of stuff...
 <!-- Brief introduction to reaction kinetics and microbial growth as
      source/sink terms in mass and energy balances. -->
 
-## Chemical reactions
+## Equilibrium chemical speciation
 
 We'll look at two very basic kinds of chemical reactions: very rapid acid-base reactions and first-order conversion reactions.
 
 Acid-base reactions are important in natural and engineered systems for influencing pH, which affects many processes.
 In both types of systems, a set of chemical species and reactions that are together called the *inorganic carbon system* are an important system.
+The oceans, municipal wastewater, and even your blood all contain inorganic carbon.
+Several *chemical species* play a role:
+
+* $\ce{CO2(g)}$ is a gas,
+* $\ce{CO2(aq)}$ is a what you get when $\ce{CO2}$ dissolves in water--it is an uncharged solute surrounded by water molecules,
+* $\ce{H2CO3}$ is called carbonic acid, and is formed when $\ce{CO2(aq)}$ reacts with water in a hydration reaction,
+* $\ce{HCO3-}$ is bicarbonate, and is the most important buffer component in some systems, and
+* $\ce{CO3-2}$ is carbonate.
+
+## First- and second-order chemical reactions
+
+stoichiometry and rate
 
 
 
@@ -20,6 +32,8 @@ In both types of systems, a set of chemical species and reactions that are toget
      Examples: ammonia and carbon dioxide speciation. -->
 
 ## Microbiology
+
+From a modeling perspective, microbial systems are just a set of chemical reactions.
 
 <!-- Microbial rate of growth and biomass yield.
      Monod kinetics.
