@@ -5,6 +5,37 @@ Chemical reactions affect the quantity of stuff...
 <!-- Brief introduction to reaction kinetics and microbial growth as
      source/sink terms in mass and energy balances. -->
 
+## Stoichiometry
+
+Chemical *stoichiometry* just means the coefficients that accompany the reactants and products in a balanced chemical reaction.
+For example, the simple organic compound urea (a waste product in mammal urine) is hydrolyzed like this:
+
+$$
+\ce{CO(NH2)2 + H2O => 2NH3 + CO2}
+$${#eq-urea1}
+
+So the stoichiometry shows that hydrolysis of one mole of urea consumes one mole of water and produces two moles of ammonia and one of carbon dioxide.
+Why do we care?
+Well, the stoichiometric coefficients can then be used directly in a model as linking equations.
+We then just need a single constitutive equation for the overall reaction rate (we will get to that in the next section) and simple linking equations for each chemical species.
+For example, if our reaction rate is $r$, with units of $\molpmcps$, then the derivative for $\ce{CO(NH2)2}$ would be
+
+$$
+\frac{dc_{urea}}{dt} = -1 \cdot r,
+$$
+
+and for ammonia,
+
+$$
+\frac{dc_{\ce{NH3}}}{dt} = 2 \cdot r.
+$$
+
+Amazingly simple, isn't it?
+
+There are some complications that come from other units.
+In many cases, it is not moles but mass, or even mass of a particular element that is of interest; then the coefficients need to be adjusted.
+
+
 ## Equilibrium reactions
 
 Rapid reversible chemical reactions are often at *equilibrium*, meaning the concentrations of chemical species do not change over time.
@@ -64,3 +95,9 @@ From a modeling perspective, microbial systems are just a set of chemical reacti
 <!-- Microbial rate of growth and biomass yield.
      Monod kinetics.
      Example: CSTR. -->
+
+## Problems
+
+1. Formulate (pencil and paper) and implement (in Python) a simple urea hydrolysis model.
+   You can assume the reaction is first-order.
+   Plot 
