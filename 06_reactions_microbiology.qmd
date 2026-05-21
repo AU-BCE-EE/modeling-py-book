@@ -5,20 +5,46 @@ Chemical reactions affect the quantity of stuff...
 <!-- Brief introduction to reaction kinetics and microbial growth as
      source/sink terms in mass and energy balances. -->
 
-## Equilibrium chemical speciation
+## Equilibrium reactions
 
-We'll look at two very basic kinds of chemical reactions: very rapid acid-base reactions and first-order conversion reactions.
+Rapid reversible chemical reactions are often at *equilibrium*, meaning the concentrations of chemical species do not change over time.
+Here we will look at one type of equibrium reaction: acid-base or proton exchange.
+For more on these types of problems, see @Snoeyink1980.
 
 Acid-base reactions are important in natural and engineered systems for influencing pH, which affects many processes.
-In both types of systems, a set of chemical species and reactions that are together called the *inorganic carbon system* are an important system.
+In both types of systems, a set of chemical species and reactions that are together called the *carbonate system* are an important system.
 The oceans, municipal wastewater, and even your blood all contain inorganic carbon.
 Several *chemical species* play a role:
 
 * $\ce{CO2(g)}$ is a gas,
 * $\ce{CO2(aq)}$ is a what you get when $\ce{CO2}$ dissolves in water--it is an uncharged solute surrounded by water molecules,
 * $\ce{H2CO3}$ is called carbonic acid, and is formed when $\ce{CO2(aq)}$ reacts with water in a hydration reaction,
+* $\ce{H2CO3*}$ is not actually a chemical species, but the sum of $\ce{CO2(aq)}$ and $\ce{H2CO3}$, used because it is difficult to measure the two separately,
 * $\ce{HCO3-}$ is bicarbonate, and is the most important buffer component in some systems, and
-* $\ce{CO3-2}$ is carbonate.
+* $\ce{CO32-}$ is carbonate.
+
+Chemical speciation models are used to determine the concentration of specific chemical species.
+Why might this matter?
+Well, chemical species affect biological and chemical processes.
+
+The fundamental concept here is that the *mass action expression* or *reaction quotient* takes on a specific numeric value at equilibrium.
+So given the concentration of other species in a system and the temperature, the concentration
+
+For example, let's look at a reaction between only two of the carbonate system species:
+
+$$
+\ce{H2CO3^* <=> HCO3- + H+}.
+$${#eq-carb1}
+
+The mass action expression or reaction quotient for any reaction is the (mathematical) product of (reaction) product concentrations divided by the product of reactant concentrations.
+Each concentration should be raised to the power of the stoichiometric coefficient (all 1 in this reaction).
+So for @eq-carb1, we have:
+
+$$
+\frac{c_{\ce{HCO3-}} \cdot c_{\ce{H+}}}{c_{\ce{H2CO3^*}}}
+$$
+
+A typical problem that could be solved with chemical speciation modeling 
 
 ## First- and second-order chemical reactions
 

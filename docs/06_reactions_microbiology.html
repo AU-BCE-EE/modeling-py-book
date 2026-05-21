@@ -20,7 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -251,8 +271,9 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#chemical-reactions" id="toc-chemical-reactions" class="nav-link active" data-scroll-target="#chemical-reactions"><span class="header-section-number">6.1</span> Chemical reactions</a></li>
-  <li><a href="#microbiology" id="toc-microbiology" class="nav-link" data-scroll-target="#microbiology"><span class="header-section-number">6.2</span> Microbiology</a></li>
+  <li><a href="#equilibrium-reactions" id="toc-equilibrium-reactions" class="nav-link active" data-scroll-target="#equilibrium-reactions"><span class="header-section-number">6.1</span> Equilibrium reactions</a></li>
+  <li><a href="#first--and-second-order-chemical-reactions" id="toc-first--and-second-order-chemical-reactions" class="nav-link" data-scroll-target="#first--and-second-order-chemical-reactions"><span class="header-section-number">6.2</span> First- and second-order chemical reactions</a></li>
+  <li><a href="#microbiology" id="toc-microbiology" class="nav-link" data-scroll-target="#microbiology"><span class="header-section-number">6.3</span> Microbiology</a></li>
   </ul>
 </nav>
     </div>
@@ -281,26 +302,51 @@ window.Quarto = {
 <p>Chemical reactions affect the quantity of stuff…</p>
 <!-- Brief introduction to reaction kinetics and microbial growth as
      source/sink terms in mass and energy balances. -->
-<section id="chemical-reactions" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="chemical-reactions"><span class="header-section-number">6.1</span> Chemical reactions</h2>
-<p>We’ll look at two very basic kinds of chemical reactions: very rapid acid-base reactions and first-order conversion reactions.</p>
-<p>Acid-base reactions are important in natural and engineered systems for influencing pH, which affects many processes. In both types of systems, a set of chemical species and reactions that are together called the <em>inorganic carbon system</em> are an important system. The oceans, municipal wastewater, and even your blood all contain inorganic carbon. Several <em>chemical species</em> play a role:</p>
+<section id="equilibrium-reactions" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="equilibrium-reactions"><span class="header-section-number">6.1</span> Equilibrium reactions</h2>
+<p>Rapid reversible chemical reactions are often at <em>equilibrium</em>, meaning the concentrations of chemical species do not change over time. Here we will look at one type of equibrium reaction: acid-base or proton exchange. For more on these types of problems, see <span class="citation" data-cites="Snoeyink1980">Snoeyink (<a href="#ref-Snoeyink1980" role="doc-biblioref">1980</a>)</span>.</p>
+<p>Acid-base reactions are important in natural and engineered systems for influencing pH, which affects many processes. In both types of systems, a set of chemical species and reactions that are together called the <em>carbonate system</em> are an important system. The oceans, municipal wastewater, and even your blood all contain inorganic carbon. Several <em>chemical species</em> play a role:</p>
 <ul>
-<li><span class="math inline">\(\ce{CO2(g)}\)</span> is a gas</li>
-<li></li>
+<li><span class="math inline">\(\ce{CO2(g)}\)</span> is a gas,</li>
+<li><span class="math inline">\(\ce{CO2(aq)}\)</span> is a what you get when <span class="math inline">\(\ce{CO2}\)</span> dissolves in water–it is an uncharged solute surrounded by water molecules,</li>
+<li><span class="math inline">\(\ce{H2CO3}\)</span> is called carbonic acid, and is formed when <span class="math inline">\(\ce{CO2(aq)}\)</span> reacts with water in a hydration reaction,</li>
+<li><span class="math inline">\(\ce{H2CO3*}\)</span> is not actually a chemical species, but the sum of <span class="math inline">\(\ce{CO2(aq)}\)</span> and <span class="math inline">\(\ce{H2CO3}\)</span>, used because it is difficult to measure the two separately,</li>
+<li><span class="math inline">\(\ce{HCO3-}\)</span> is bicarbonate, and is the most important buffer component in some systems, and</li>
+<li><span class="math inline">\(\ce{CO32-}\)</span> is carbonate.</li>
 </ul>
+<p>Chemical speciation models are used to determine the concentration of specific chemical species. Why might this matter? Well, chemical species affect biological and chemical processes.</p>
+<p>The fundamental concept here is that the <em>mass action expression</em> or <em>reaction quotient</em> takes on a specific numeric value at equilibrium. So given the concentration of other species in a system and the temperature, the concentration</p>
+<p>For example, let’s look at a reaction between only two of the carbonate system species:</p>
+<p><span id="eq-carb1"><span class="math display">\[
+\ce{H2CO3^* &lt;=&gt; HCO3- + H+}.
+\tag{6.1}\]</span></span></p>
+<p>The mass action expression or reaction quotient for any reaction is the (mathematical) product of (reaction) product concentrations divided by the product of reactant concentrations. Each concentration should be raised to the power of the stoichiometric coefficient (all 1 in this reaction). So for <a href="#eq-carb1" class="quarto-xref">Equation&nbsp;<span>6.1</span></a>, we have:</p>
+<p><span class="math display">\[
+\frac{c_{\ce{HCO3-}} \cdot c_{\ce{H+}}}{c_{\ce{H2CO3^*}}}
+\]</span></p>
+<p>A typical problem that could be solved with chemical speciation modeling</p>
+</section>
+<section id="first--and-second-order-chemical-reactions" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="first--and-second-order-chemical-reactions"><span class="header-section-number">6.2</span> First- and second-order chemical reactions</h2>
+<p>stoichiometry and rate</p>
 <!-- First- and second-order reactions as useful simplifications.
      Law of mass action and chemical equilibrium.
      Stoichiometry.
      Examples: ammonia and carbon dioxide speciation. -->
 </section>
-<section id="microbiology" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="microbiology"><span class="header-section-number">6.2</span> Microbiology</h2>
+<section id="microbiology" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="microbiology"><span class="header-section-number">6.3</span> Microbiology</h2>
+<p>From a modeling perspective, microbial systems are just a set of chemical reactions.</p>
 <!-- Microbial rate of growth and biomass yield.
      Monod kinetics.
      Example: CSTR. -->
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-Snoeyink1980" class="csl-entry" role="listitem">
+Snoeyink, Vernon L. 1980. <em>Water Chemistry</em>. Wiley.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->

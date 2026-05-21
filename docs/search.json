@@ -366,18 +366,29 @@
     "href": "06_reactions_microbiology.html",
     "title": "6  Chemical reactions and microbiology",
     "section": "",
-    "text": "6.1 Chemical reactions\nChemical reactions affect the quantity of stuff…\nWe’ll look at two very basic kinds of chemical reactions: very rapid acid-base reactions and first-order conversion reactions.\nAcid-base reactions are important in natural and engineered systems for influencing pH, which affects many processes. In both types of systems, a set of chemical species and reactions that are together called the inorganic carbon system are an important system. The oceans, municipal wastewater, and even your blood all contain inorganic carbon. Several chemical species play a role:",
+    "text": "6.1 Equilibrium reactions\nChemical reactions affect the quantity of stuff…\nRapid reversible chemical reactions are often at equilibrium, meaning the concentrations of chemical species do not change over time. Here we will look at one type of equibrium reaction: acid-base or proton exchange. For more on these types of problems, see Snoeyink (1980).\nAcid-base reactions are important in natural and engineered systems for influencing pH, which affects many processes. In both types of systems, a set of chemical species and reactions that are together called the carbonate system are an important system. The oceans, municipal wastewater, and even your blood all contain inorganic carbon. Several chemical species play a role:\nChemical speciation models are used to determine the concentration of specific chemical species. Why might this matter? Well, chemical species affect biological and chemical processes.\nThe fundamental concept here is that the mass action expression or reaction quotient takes on a specific numeric value at equilibrium. So given the concentration of other species in a system and the temperature, the concentration\nFor example, let’s look at a reaction between only two of the carbonate system species:\n\\[\n\\ce{H2CO3^* &lt;=&gt; HCO3- + H+}.\n\\tag{6.1}\\]\nThe mass action expression or reaction quotient for any reaction is the (mathematical) product of (reaction) product concentrations divided by the product of reactant concentrations. Each concentration should be raised to the power of the stoichiometric coefficient (all 1 in this reaction). So for Equation 6.1, we have:\n\\[\n\\frac{c_{\\ce{HCO3-}} \\cdot c_{\\ce{H+}}}{c_{\\ce{H2CO3^*}}}\n\\]\nA typical problem that could be solved with chemical speciation modeling",
     "crumbs": [
       "Part II: Applications",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Chemical reactions and microbiology</span>"
     ]
   },
   {
-    "objectID": "06_reactions_microbiology.html#chemical-reactions",
-    "href": "06_reactions_microbiology.html#chemical-reactions",
+    "objectID": "06_reactions_microbiology.html#equilibrium-reactions",
+    "href": "06_reactions_microbiology.html#equilibrium-reactions",
     "title": "6  Chemical reactions and microbiology",
     "section": "",
-    "text": "\\(\\ce{CO2(g)}\\) is a gas",
+    "text": "\\(\\ce{CO2(g)}\\) is a gas,\n\\(\\ce{CO2(aq)}\\) is a what you get when \\(\\ce{CO2}\\) dissolves in water–it is an uncharged solute surrounded by water molecules,\n\\(\\ce{H2CO3}\\) is called carbonic acid, and is formed when \\(\\ce{CO2(aq)}\\) reacts with water in a hydration reaction,\n\\(\\ce{H2CO3*}\\) is not actually a chemical species, but the sum of \\(\\ce{CO2(aq)}\\) and \\(\\ce{H2CO3}\\), used because it is difficult to measure the two separately,\n\\(\\ce{HCO3-}\\) is bicarbonate, and is the most important buffer component in some systems, and\n\\(\\ce{CO32-}\\) is carbonate.",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Chemical reactions and microbiology</span>"
+    ]
+  },
+  {
+    "objectID": "06_reactions_microbiology.html#first--and-second-order-chemical-reactions",
+    "href": "06_reactions_microbiology.html#first--and-second-order-chemical-reactions",
+    "title": "6  Chemical reactions and microbiology",
+    "section": "6.2 First- and second-order chemical reactions",
+    "text": "6.2 First- and second-order chemical reactions\nstoichiometry and rate",
     "crumbs": [
       "Part II: Applications",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Chemical reactions and microbiology</span>"
@@ -387,8 +398,8 @@
     "objectID": "06_reactions_microbiology.html#microbiology",
     "href": "06_reactions_microbiology.html#microbiology",
     "title": "6  Chemical reactions and microbiology",
-    "section": "6.2 Microbiology",
-    "text": "6.2 Microbiology",
+    "section": "6.3 Microbiology",
+    "text": "6.3 Microbiology\nFrom a modeling perspective, microbial systems are just a set of chemical reactions.\n\n\n\n\n\nSnoeyink, Vernon L. 1980. Water Chemistry. Wiley.",
     "crumbs": [
       "Part II: Applications",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Chemical reactions and microbiology</span>"
