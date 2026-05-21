@@ -135,23 +135,81 @@ $$
 $${#eq-carb-rq1}
 
 where $c=$ molar or molal concentration, i.e., moles of species per L of water or moles per kg of water.
-At equilibrium, the numeric value of that reaction quotient, @eq-carb-rq1, is know: at 15$\degC$ it is $10^{-6.42} = 3.80 \cdot 10^{-7}  $ =`3.8e-7` (@Snoeyink1980: p. 157).
+At equilibrium, the numeric value of that reaction quotient, @eq-carb-rq1, is know: at 15$\degC$ it is $3.80 \cdot 10^{-7}$ (@Snoeyink1980: p. 157).
 (Actually, except for dilute solutions, a correction is needed for interactions between ions, but the use of concentrations can still give decent approximate values. See @Snoeyink1980 for more information on chemical activity and ionic strength.)
+But typically, because the value of constants vary by orders of magnitude, it is the negative logarithm (base 10) and we'll see $pK_a$.
+So here, $pK_a = 6.42$.
 The numeric value is called the *equilibrium constant*
 
-So, if we know the concentration of $\ce{H2CO3^*}$ and $\ce{H^+}$ we can calculate the concentration of bicarbonate $\ce{HCO3-}$.
+So, if we know the concentration of $\ce{H2CO3^*}$ and $\ce{H^+}$ we can calculate the concentration of bicarbonate $\ce{HCO3-}$ using the equilibrium constant.
 The hydrogen ion (or "proton", because that it what it is!) concentration is commonly take from pH, i.e.,
 
 $$
 p\text{H} = - log_{10}(c_{H^+}).
-$${eq-pH-def}
-Even better, if we use other information 
+$${#eq-pH-def}
 
-A typical problem that could be solved with chemical speciation modeling is determination of the 
+Even better, if we could use other, independent, information, we can solve for all species concentrations, including $\ce{H+}$, which means we could calculate pH. 
+We can use element balance (commonly H balance) or charge balance for that other information.
+The programming might be a bit much for this course, so we will include an example in an appendix . . .
 
-## First- and second-order chemical reactions
+Here is a simple example for ammonia.
+This is another thing all environmental engineers should know!
 
-stoichiometry and rate
+The relevant proton exchange (acid-base) reaction is:
+
+$$
+\ce{NH4+ <=> NH3 + H+},
+$${#eq-amm-dis}
+
+with an equilbrium constant $k_a$, where the $a$ is for *a*cid dissociation constant.
+The numeric value is around $pk_a = 9.56$ at 15 $\degC$ (@clegg_chemical-model_1995). 
+
+Let's write the mass action expression and set it to the acid dissociation constant:
+
+$$
+k_a = \frac{c_{\ce{NH3(aq)}} \cdot c_{\ce{H+}}} {c_{\ce{NH4+}}}.
+$${#eq-amm-mae1}
+
+What else can we use?
+Well, we cannot measure the ammonium ($\ce{NH4+}$) concentration directly.
+But it is trivial to measure the sum of $\ce{NH4+}$ and $\ce{NH3}$ as N mass, which is often called TAN (for total ammoniacal nitrogen) concentration in agriculture and related fields.
+And then from mass conservation, we know that:
+
+$$
+c_{\text{TAN}} = c_{\ce{NH4+}} + c_{\ce{NH3}(aq)}.
+$${#eq-amm-mass-bal}
+
+Lastly, we can estimate $\ce{H+}$ from measured pH, or anyway use it as an input here.
+That's all we need.
+To get an explicit closed-form solution, we can rearrange @eq-amm-mass-bal to solve for $\ce{NH4+}$, and insert the result into @eq-amm-mae1, and finally rearrange to solve for $\ce{NH3(aq)}$!
+
+First, rearrange @eq-amm-mass-bal to solve for $\ce{NH4+}$:
+
+$$
+c_{\ce{NH4+}} = c_{\text{TAN}} - c_{\ce{NH3}(aq)}.
+$${#eq-amm-der1}
+
+And insert this into @eq-amm-mae1:
+
+$$
+k_a = \frac{c_{\ce{NH3(aq)}} \cdot c_{\ce{H+}}} {c_{\text{TAN}} - c_{\ce{NH3}(aq)}}.
+$$
+
+And rearrange:
+
+$$
+\frac{k_a} {c_{\ce{H+}}} \cdot (c_{\text{TAN}} - c_{\ce{NH3}(aq)}) = c_{\ce{NH3(aq)}} .
+$$
+
+A bit more . . . 
+
+$$
+ \frac{k_a} {c_{\ce{H+}}} \cdot c_{\ce{NH3}(aq)}) - c_{\ce{NH3(aq)}} = \frac{k_a} {c_{\ce{H+}}} \cdot c_{\text{TAN}}.
+$$
+
+$$
+ \frac{k_a} {c_{\ce{H+}}} \cdot c_{\ce{NH3}(aq)}) - c_{\ce{NH3(aq)}} = \frac{k_a} {c_{\ce{H+}}} \cdot c_{\text{TAN}}.
+$$
 
 
 
@@ -173,3 +231,6 @@ From a modeling perspective, microbial systems are just a set of chemical reacti
 1. Formulate (pencil and paper) and implement (in Python) a simple urea hydrolysis model.
    You can assume the reaction is first-order.
    Plot predicted 
+
+2. Create a Python function that calcuates free ammonia $\ce{NH3(aq)}$ from TAN, pH, and temperature.
+   You can this expression for Ka . . . 
