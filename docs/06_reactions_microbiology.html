@@ -108,6 +108,7 @@ MathJax = {
       kgpspms: "{\\mathrm{kg~s^{-1}~m^{-2}}}",
       gps: "{\\mathrm{g~s^{-1}}}",
       gpmc: "{\\mathrm{g~m^{-3}}}",
+      gpmcps: "{\\mathrm{g~m^{-3}~s^{-1}}}",
       mgpl: "{\\mathrm{mg~L^{-1}}}",
       gpmol: "{\\mathrm{g~mol^{-1}}}",
       msq: "{\\mathrm{m^{2}}}",
@@ -271,9 +272,12 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#equilibrium-reactions" id="toc-equilibrium-reactions" class="nav-link active" data-scroll-target="#equilibrium-reactions"><span class="header-section-number">6.1</span> Equilibrium reactions</a></li>
-  <li><a href="#first--and-second-order-chemical-reactions" id="toc-first--and-second-order-chemical-reactions" class="nav-link" data-scroll-target="#first--and-second-order-chemical-reactions"><span class="header-section-number">6.2</span> First- and second-order chemical reactions</a></li>
-  <li><a href="#microbiology" id="toc-microbiology" class="nav-link" data-scroll-target="#microbiology"><span class="header-section-number">6.3</span> Microbiology</a></li>
+  <li><a href="#stoichiometry" id="toc-stoichiometry" class="nav-link active" data-scroll-target="#stoichiometry"><span class="header-section-number">6.1</span> Stoichiometry</a></li>
+  <li><a href="#reaction-rates" id="toc-reaction-rates" class="nav-link" data-scroll-target="#reaction-rates"><span class="header-section-number">6.2</span> Reaction rates</a></li>
+  <li><a href="#equilibrium-reactions" id="toc-equilibrium-reactions" class="nav-link" data-scroll-target="#equilibrium-reactions"><span class="header-section-number">6.3</span> Equilibrium reactions</a></li>
+  <li><a href="#first--and-second-order-chemical-reactions" id="toc-first--and-second-order-chemical-reactions" class="nav-link" data-scroll-target="#first--and-second-order-chemical-reactions"><span class="header-section-number">6.4</span> First- and second-order chemical reactions</a></li>
+  <li><a href="#microbiology" id="toc-microbiology" class="nav-link" data-scroll-target="#microbiology"><span class="header-section-number">6.5</span> Microbiology</a></li>
+  <li><a href="#problems" id="toc-problems" class="nav-link" data-scroll-target="#problems"><span class="header-section-number">6.6</span> Problems</a></li>
   </ul>
 </nav>
     </div>
@@ -302,10 +306,53 @@ window.Quarto = {
 <p>Chemical reactions affect the quantity of stuff…</p>
 <!-- Brief introduction to reaction kinetics and microbial growth as
      source/sink terms in mass and energy balances. -->
-<section id="equilibrium-reactions" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="equilibrium-reactions"><span class="header-section-number">6.1</span> Equilibrium reactions</h2>
+<section id="stoichiometry" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="stoichiometry"><span class="header-section-number">6.1</span> Stoichiometry</h2>
+<p>Chemical <em>stoichiometry</em> just means the coefficients that accompany the reactants and products in a balanced chemical reaction. For example, the simple organic compound urea (a waste product in mammal urine) is hydrolyzed like this:</p>
+<p><span id="eq-urea1"><span class="math display">\[
+\ce{CO(NH2)2 + H2O -&gt; 2NH3 + CO2}
+\tag{6.1}\]</span></span></p>
+<p>So the stoichiometry shows that hydrolysis of one mole of urea consumes one mole of water and produces two moles of ammonia and one of carbon dioxide. Why do we care? Well, the stoichiometric coefficients can then be used directly in a model to get state variable derivatives from the reaction rate, which itself is calculated using the appropriate constitutive equation. So in the framework presented in <a href="02_components_formulation.html" class="quarto-xref"><span>Chapter 2</span></a>, the stoichiometric coefficients go into creating linking equations (<a href="02_components_formulation.html#sec-linking" class="quarto-xref"><span>Section 2.5</span></a>). We then just need a single constitutive equation for the overall reaction rate (we will get to that in the next section) and simple linking equations for each chemical species. For example, if our reaction rate is <span class="math inline">\(r\)</span>, with units of <span class="math inline">\(\molpmcps\)</span>, then the derivative for <span class="math inline">\(\ce{CO(NH2)2}\)</span> would be</p>
+<p><span class="math display">\[
+\frac{dc_{urea}}{dt} = -1 \cdot r,
+\]</span></p>
+<p>and for ammonia,</p>
+<p><span class="math display">\[
+\frac{dc_{\ce{NH3}}}{dt} = 2 \cdot r.
+\]</span></p>
+<p>The coefficients come directly from <a href="#eq-urea1" class="quarto-xref">Equation&nbsp;<span>6.1</span></a>. Amazingly simple, isn’t it? When implemented in Python (and written, for that matter) a coefficient array can be combined with a state variable array for compact and efficient code when there is more than one state variable, as implied in the above example. We will see some of that later.</p>
+<p>There are some complications that come from other units. In many cases, it is not moles but mass, or even mass of a particular element that is of interest; then the coefficients need to be adjusted.</p>
+</section>
+<section id="reaction-rates" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="reaction-rates"><span class="header-section-number">6.2</span> Reaction rates</h2>
+<p>The constitutive equation for a chemical reaction must quantify its <em>rate</em>, or how fast it proceeds, e.g., <span class="math inline">\(\molps\)</span>, <span class="math inline">\(\molpmcps\)</span>, or on a mass basis, e.g., <span class="math inline">\(\gpmcps\)</span>. The term <em>kinetics</em> is used to describe reaction rates. Here we will look at two simple cases: first-order reactions and second-order reactions.</p>
+<p>A reaction that follows first-order kinetics has a rate that is proportional to the quantity of reactant present. So:</p>
+<p><span id="eq-fom1"><span class="math display">\[
+r_m = \frac{dM}{dt} = - k \cdot M,
+\tag{6.2}\]</span></span></p>
+<p>for mass or</p>
+<p><span id="eq-fom2"><span class="math display">\[
+r_c = \frac{dc}{dt} = - k \cdot c,
+\tag{6.3}\]</span></span></p>
+<p>for concentration. The <span class="math inline">\(k\)</span> is the first-order reaction rate constant with dimensions <span class="math inline">\(\text{T}^{-1}\)</span>. It is not necessarily constant, and depends at least on temperature for most chemical reactions. But its value does not change as the reaction proceeds, at least not for a true first-order reaction. A classic example of a first-order reaction is radioactive decay. Many other chemical reactions are not truly first-order, but come close for modelling purposes.</p>
+<p>The rate of a simple first-order reaction can be described analytically with the exponential model (see <a href="03_solving.html#sec-expmodel" class="quarto-xref"><span>Section 3.3</span></a>). We’ll show that here. Compare <a href="#eq-fom2" class="quarto-xref">Equation&nbsp;<span>6.3</span></a> to <a href="03_solving.html#eq-exp-ode" class="quarto-xref">Equation&nbsp;<span>3.1</span></a>. What specific variables or parameters go in for the <span class="math inline">\(x\)</span> and <span class="math inline">\(\lambda\)</span> in <a href="03_solving.html#eq-exp-ode" class="quarto-xref">Equation&nbsp;<span>3.1</span></a>? Well, <span class="math inline">\(x = c\)</span> and <span class="math inline">\(\lambda = -k\)</span>. Note the minus sign! Now take a look at <a href="03_solving.html#eq-exp-solution" class="quarto-xref">Equation&nbsp;<span>3.2</span></a> and plug these in. That gives:</p>
+<p><span id="eq-fom-solution1"><span class="math display">\[
+c = c_0 \cdot e^{-k \cdot t}.
+\tag{6.4}\]</span></span></p>
+<p>Simple!</p>
+<p>With this simple analytical model we can predict the concentration of our reactant (perhaps urea) at any time. We could also predict the rate by combining <a href="#eq-fom-solution1" class="quarto-xref">Equation&nbsp;<span>6.4</span></a> and <a href="03_solving.html#eq-exp-ode" class="quarto-xref">Equation&nbsp;<span>3.1</span></a>.</p>
+<p>If a reaction includes two reactants it might be possible to approximate the observed rate with a <em>second-order</em> model, i.e.,</p>
+<p><span id="eq-som1"><span class="math display">\[
+r_c = \frac{dc}{dt} = - k \cdot c_1 \cdot c_2,
+\tag{6.5}\]</span></span></p>
+<p>where <span class="math inline">\(c_1\)</span> is the concentration of the first reactant and <span class="math inline">\(c_2\)</span> the second one. While there are analytical solutions for some second-order reaction scenarios, we won’t cover them (you can read more <a href="https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Supplemental_Modules_(Physical_and_Theoretical_Chemistry)/Kinetics/02%3A_Reaction_Rates/2.08%3A_Second-Order_Reactions">here</a>). But <a href="#eq-som1" class="quarto-xref">Equation&nbsp;<span>6.5</span></a> can be dropped into a numerical model easily!</p>
+<p>You can find some guidance on determining reaction rate constant values in <span class="quarto-unresolved-ref">?sec-parameter-values</span>.</p>
+<p>Here is a Python example. . .</p>
+</section>
+<section id="equilibrium-reactions" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="equilibrium-reactions"><span class="header-section-number">6.3</span> Equilibrium reactions</h2>
 <p>Rapid reversible chemical reactions are often at <em>equilibrium</em>, meaning the concentrations of chemical species do not change over time. Here we will look at one type of equibrium reaction: acid-base or proton exchange. For more on these types of problems, see <span class="citation" data-cites="Snoeyink1980">Snoeyink (<a href="#ref-Snoeyink1980" role="doc-biblioref">1980</a>)</span>.</p>
-<p>Acid-base reactions are important in natural and engineered systems for influencing pH, which affects many processes. In both types of systems, a set of chemical species and reactions that are together called the <em>carbonate system</em> are an important system. The oceans, municipal wastewater, and even your blood all contain inorganic carbon. Several <em>chemical species</em> play a role:</p>
+<p>Acid-base reactions are important in natural and engineered systems for influencing pH, which affects many processes. In both types of systems, a set of chemical species and reactions that are together called the <em>carbonate system</em> are an important system. The carbonate system plays an important role in processes in the oceans, municipal wastewater, and even your blood! Several <em>chemical species</em> play a role:</p>
 <ul>
 <li><span class="math inline">\(\ce{CO2(g)}\)</span> is a gas,</li>
 <li><span class="math inline">\(\ce{CO2(aq)}\)</span> is a what you get when <span class="math inline">\(\ce{CO2}\)</span> dissolves in water–it is an uncharged solute surrounded by water molecules,</li>
@@ -315,31 +362,41 @@ window.Quarto = {
 <li><span class="math inline">\(\ce{CO32-}\)</span> is carbonate.</li>
 </ul>
 <p>Chemical speciation models are used to determine the concentration of specific chemical species. Why might this matter? Well, chemical species affect biological and chemical processes.</p>
-<p>The fundamental concept here is that the <em>mass action expression</em> or <em>reaction quotient</em> takes on a specific numeric value at equilibrium. So given the concentration of other species in a system and the temperature, the concentration</p>
-<p>For example, let’s look at a reaction between only two of the carbonate system species:</p>
+<p>The fundamental concept here is that the <em>mass action expression</em> or <em>reaction quotient</em> takes on a specific numeric value at equilibrium. For example, let’s look at a reaction between only two of the carbonate system species:</p>
 <p><span id="eq-carb1"><span class="math display">\[
 \ce{H2CO3^* &lt;=&gt; HCO3- + H+}.
-\tag{6.1}\]</span></span></p>
-<p>The mass action expression or reaction quotient for any reaction is the (mathematical) product of (reaction) product concentrations divided by the product of reactant concentrations. Each concentration should be raised to the power of the stoichiometric coefficient (all 1 in this reaction). So for <a href="#eq-carb1" class="quarto-xref">Equation&nbsp;<span>6.1</span></a>, we have:</p>
+\tag{6.6}\]</span></span></p>
+<p>The mass action expression or reaction quotient for any reaction is the (mathematical) product of (reaction) product concentrations divided by the product of reactant concentrations. Each concentration should be raised to the power of the stoichiometric coefficient (all 1 in this reaction). So for <a href="#eq-carb1" class="quarto-xref">Equation&nbsp;<span>6.6</span></a>, we have:</p>
+<p><span id="eq-carb-rq1"><span class="math display">\[
+\frac{c_{\ce{HCO3-}} \cdot c_{\ce{H+}}}{c_{\ce{H2CO3^*}}},
+\tag{6.7}\]</span></span></p>
+<p>where <span class="math inline">\(c=\)</span> molar or molal concentration, i.e., moles of species per L of water or moles per kg of water. At equilibrium, the numeric value of that reaction quotient, <a href="#eq-carb-rq1" class="quarto-xref">Equation&nbsp;<span>6.7</span></a>, is know: at 15<span class="math inline">\(\degC\)</span> it is $10^{-6.42} = 3.80 ^{-7} $ =<code>3.8e-7</code> (<span class="citation" data-cites="Snoeyink1980">Snoeyink (<a href="#ref-Snoeyink1980" role="doc-biblioref">1980</a>)</span>: p.&nbsp;157). (Actually, except for dilute solutions, a correction is needed for interactions between ions, but the use of concentrations can still give decent approximate values. See <span class="citation" data-cites="Snoeyink1980">Snoeyink (<a href="#ref-Snoeyink1980" role="doc-biblioref">1980</a>)</span> for more information on chemical activity and ionic strength.) The numeric value is called the <em>equilibrium constant</em></p>
+<p>So, if we know the concentration of <span class="math inline">\(\ce{H2CO3^*}\)</span> and <span class="math inline">\(\ce{H^+}\)</span> we can calculate the concentration of bicarbonate <span class="math inline">\(\ce{HCO3-}\)</span>. The hydrogen ion (or “proton”, because that it what it is!) concentration is commonly take from pH, i.e.,</p>
 <p><span class="math display">\[
-\frac{c_{\ce{HCO3-}} \cdot c_{\ce{H+}}}{c_{\ce{H2CO3^*}}}
-\]</span></p>
-<p>A typical problem that could be solved with chemical speciation modeling</p>
+p\text{H} = - log_{10}(c_{H^+}).
+\]</span>{eq-pH-def} Even better, if we use other information</p>
+<p>A typical problem that could be solved with chemical speciation modeling is determination of the</p>
 </section>
-<section id="first--and-second-order-chemical-reactions" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="first--and-second-order-chemical-reactions"><span class="header-section-number">6.2</span> First- and second-order chemical reactions</h2>
+<section id="first--and-second-order-chemical-reactions" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="first--and-second-order-chemical-reactions"><span class="header-section-number">6.4</span> First- and second-order chemical reactions</h2>
 <p>stoichiometry and rate</p>
 <!-- First- and second-order reactions as useful simplifications.
      Law of mass action and chemical equilibrium.
      Stoichiometry.
      Examples: ammonia and carbon dioxide speciation. -->
 </section>
-<section id="microbiology" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="microbiology"><span class="header-section-number">6.3</span> Microbiology</h2>
+<section id="microbiology" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="microbiology"><span class="header-section-number">6.5</span> Microbiology</h2>
 <p>From a modeling perspective, microbial systems are just a set of chemical reactions.</p>
 <!-- Microbial rate of growth and biomass yield.
      Monod kinetics.
      Example: CSTR. -->
+</section>
+<section id="problems" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="problems"><span class="header-section-number">6.6</span> Problems</h2>
+<ol type="1">
+<li>Formulate (pencil and paper) and implement (in Python) a simple urea hydrolysis model. You can assume the reaction is first-order. Plot predicted</li>
+</ol>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">

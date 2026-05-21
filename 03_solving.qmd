@@ -397,7 +397,7 @@ def cool_rk_debug(T_init, T_air, mass, area, h, time_range, dt, cp=4.2):
 
 ```
 
-## Closed-form (analytical) solutions
+## Closed-form (analytical) solutions {#sec-expmodel}
 
 Closed-form solutions are different.
 (Refer back to @sec-analytical-v-numerical if you don't remember what a closed-form solution is.)
@@ -406,28 +406,32 @@ As soon a model becomes a bit complicated analytical solutions become impossible
 Even in these cases though, it can be possible to derive an analtyical solution to a limiting case, often steady-state.
 
 There are many different ODEs that can be solved analytically.
-Here we will work with one that appears in many different applications, including our cooling coffee model.
+Here we will work with one that appears in many different applications, including our cooling coffee model: the exponential model.
 
 It is
 
 $$
-\frac{dx}{dt} = k \cdot x.
+\frac{dx}{dt} = \lambda \cdot x.
 $${#eq-exp-ode}
 
 It is a linear, first-order ODE. 
-Where does it show up? 
+Here, $x$ is some state variable and $\lambda$ is the rate constant, with dimensions $\text{T}^{-1}$.
+Where does the exponential model show up? 
 All over! 
 For example:
 
-1. In first-order chemical reactions, where $x$ might be a the concentration or mass of a reactant and $k$ is entered as the negative of the first-order rate constant. 
-Note that "first-order" here is different from a first-order ODE.
+1. In first-order chemical reactions, where $x$ might be a the concentration or mass of a reactant and $\lambda$ is entered as the negative of the first-order rate constant. 
+   Note that "first-order" here is different from a first-order ODE. 
+   It might be called a first-order model or exponential decay model here.
 
-2. For unlimited growth of bacteria or any other organism, where $x$ is microbial biomass or other measure of population size and $k$ is the intrinsic rate of growth.
+2. For unlimited growth of bacteria or any other organism, where $x$ is microbial biomass or other measure of population size and $\lambda$ is the intrinsic rate of growth. 
+   It might be called an exponential growth model here, but it is the same model with a change in sign!
 
-3. In heat transfer by a lumped capacitance method, where $x$ is temperature, $k$ has a negative sign and includes a convection heat transfer coefficient, specific heat capacity, probably exposed surface area and object mass as well, and possibly other sources of surface or near-surface resistance. 
-We'll use it like this in our cooling coffee model.
+3. In heat transfer by a lumped capacitance method, where $x$ is temperature, $\lambda$ has a negative sign and includes a convection heat transfer coefficient, specific heat capacity, probably exposed surface area and object mass as well, and possibly other sources of surface or near-surface resistance. 
+   We'll use it like this in our cooling coffee model.
+   There, the term exponential decay model could be applied.
 
-So you really do need to be able to solve this type of ODE. 
+So you really do need to be able to solve this type of ODE! 
 Below we'll go through the steps in solving it, but ultimately you will probably find it easiest to just memorize the solution. 
 Remember you can always check a solution as shown below.
 
@@ -436,46 +440,46 @@ Remember you can always check a solution as shown below.
 Start with the ODE
 
 $$
-\frac{dx}{dt} = k \cdot x.
+\frac{dx}{dt} = \lambda \cdot x.
 $$ 
 
 Separate variables
 
 $$
-\frac{1}{x} \cdot dx = k \cdot dt,
+\frac{1}{x} \cdot dx = \lambda \cdot dt,
 $$
 
 and integrate both sides
 
 $$
-\int \frac{1}{x} \cdot dx = \int k \cdot dt.
+\int \frac{1}{x} \cdot dx = \int \lambda \cdot dt.
 $$
 
 The solution to the LHS integral could be found in a table, but you should know the solution to the RHS!
 
 $$
-\ln{\left|x\right|} + c_1 = k \cdot t + c_2.
+\ln{\left|x\right|} + c_1 = \lambda \cdot t + c_2.
 $$
 
 The $c$ values are just constants of integration.
 We can combine them together:
 
 $$
-\ln{\left|x\right|} = k \cdot t + c.
+\ln{\left|x\right|} = \lambda \cdot t + c.
 $$
 
 Now exponentiate both sides (take the antilog), for:
 
 
 $$
-\left|x\right| = e^{k \cdot t + c}.
+\left|x\right| = e^{\lambda \cdot t + c}.
 $$
 
 And remember your exponent rules.
 
 
 $$
-\left|x\right| = e^{k \cdot t} \cdot e^{c}.
+\left|x\right| = e^{\lambda \cdot t} \cdot e^{c}.
 $$
 
 The last term on the RHS is a constant, and we can roll the $\pm$ from the LHS into it as well.
@@ -483,7 +487,7 @@ We'll call the new constant $x_0$ for a reason that you'll see below.
 So, an analytical solution to @eq-exp-ode is:
 
 $$
-x = x_0 \cdot e^{k \cdot t}.
+x = x_0 \cdot e^{\lambda \cdot t}.
 $${#eq-exp-solution}
 
 ### Application to cooling coffee model
@@ -534,6 +538,7 @@ Here $\theta$ is a *normalized temperature* and in other cases we'll divide our 
 This approach makes our model more *general*.
 
 Moving on, do you see how  @eq-theta-ode now looks like @eq-exp-ode?
+We just have to recognize that $\lambda = -k_{cool}$ and $x = \theta$.
 So, applying the solution @eq-exp-solution we get:
 
 $$

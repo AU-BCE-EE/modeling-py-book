@@ -11,12 +11,13 @@ Chemical *stoichiometry* just means the coefficients that accompany the reactant
 For example, the simple organic compound urea (a waste product in mammal urine) is hydrolyzed like this:
 
 $$
-\ce{CO(NH2)2 + H2O => 2NH3 + CO2}
+\ce{CO(NH2)2 + H2O -> 2NH3 + CO2}
 $${#eq-urea1}
 
 So the stoichiometry shows that hydrolysis of one mole of urea consumes one mole of water and produces two moles of ammonia and one of carbon dioxide.
 Why do we care?
-Well, the stoichiometric coefficients can then be used directly in a model as linking equations.
+Well, the stoichiometric coefficients can then be used directly in a model to get state variable derivatives from the reaction rate, which itself is calculated using the appropriate constitutive equation.
+So in the framework presented in @sec-formulation, the stoichiometric coefficients go into creating linking equations (@sec-linking).
 We then just need a single constitutive equation for the overall reaction rate (we will get to that in the next section) and simple linking equations for each chemical species.
 For example, if our reaction rate is $r$, with units of $\molpmcps$, then the derivative for $\ce{CO(NH2)2}$ would be
 
@@ -30,11 +31,71 @@ $$
 \frac{dc_{\ce{NH3}}}{dt} = 2 \cdot r.
 $$
 
+The coefficients come directly from @eq-urea1.
 Amazingly simple, isn't it?
+When implemented in Python (and written, for that matter) a coefficient array can be combined with a state variable array for compact and efficient code when there is more than one state variable, as implied in the above example.
+We will see some of that later.
 
 There are some complications that come from other units.
 In many cases, it is not moles but mass, or even mass of a particular element that is of interest; then the coefficients need to be adjusted.
 
+## Reaction rates
+
+The constitutive equation for a chemical reaction must quantify its *rate*, or how fast it proceeds, e.g., $\molps$, $\molpmcps$, or on a mass basis, e.g., $\gpmcps$.
+The term *kinetics* is used to describe reaction rates.
+Here we will look at two simple cases: first-order reactions and second-order reactions.
+
+A reaction that follows first-order kinetics has a rate that is proportional to the quantity of reactant present.
+So:
+
+$$
+r_m = \frac{dM}{dt} = - k \cdot M,
+$${#eq-fom1}
+
+for mass or
+
+$$
+r_c = \frac{dc}{dt} = - k \cdot c,
+$${#eq-fom2}
+
+for concentration.
+The $k$ is the first-order reaction rate constant with dimensions $\text{T}^{-1}$.
+It is not necessarily constant, and depends at least on temperature for most chemical reactions.
+But its value does not change as the reaction proceeds, at least not for a true first-order reaction.
+A classic example of a first-order reaction is radioactive decay.
+Many other chemical reactions are not truly first-order, but come close for modelling purposes.
+
+The rate of a simple first-order reaction can be described analytically with the exponential model (see @sec-expmodel). 
+We'll show that here.
+Compare @eq-fom2 to @eq-exp-ode.
+What specific variables or parameters go in for the $x$ and $\lambda$ in @eq-exp-ode?
+Well, $x = c$ and $\lambda = -k$.
+Note the minus sign!
+Now take a look at @eq-exp-solution and plug these in.
+That gives:
+
+$$
+c = c_0 \cdot e^{-k \cdot t}.
+$${#eq-fom-solution1}
+
+Simple!
+
+With this simple analytical model we can predict the concentration of our reactant (perhaps urea) at any time.
+We could also predict the rate by combining @eq-fom-solution1 and @eq-exp-ode.
+
+If a reaction includes two reactants it might be possible to approximate the observed rate with a *second-order* model, i.e., 
+
+$$
+r_c = \frac{dc}{dt} = - k \cdot c_1 \cdot c_2, 
+$${#eq-som1}
+
+where $c_1$ is the concentration of the first reactant and $c_2$ the second one.
+While there are analytical solutions for some second-order reaction scenarios, we won't cover them (you can read more [here](https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Supplemental_Modules_(Physical_and_Theoretical_Chemistry)/Kinetics/02%3A_Reaction_Rates/2.08%3A_Second-Order_Reactions)).
+But @eq-som1 can be dropped into a numerical model easily!
+
+You can find some guidance on determining reaction rate constant values in @sec-parameter-values.
+
+Here is a Python example. . . 
 
 ## Equilibrium reactions
 
@@ -44,7 +105,7 @@ For more on these types of problems, see @Snoeyink1980.
 
 Acid-base reactions are important in natural and engineered systems for influencing pH, which affects many processes.
 In both types of systems, a set of chemical species and reactions that are together called the *carbonate system* are an important system.
-The oceans, municipal wastewater, and even your blood all contain inorganic carbon.
+The carbonate system plays an important role in processes in the oceans, municipal wastewater, and even your blood!
 Several *chemical species* play a role:
 
 * $\ce{CO2(g)}$ is a gas,
@@ -59,8 +120,6 @@ Why might this matter?
 Well, chemical species affect biological and chemical processes.
 
 The fundamental concept here is that the *mass action expression* or *reaction quotient* takes on a specific numeric value at equilibrium.
-So given the concentration of other species in a system and the temperature, the concentration
-
 For example, let's look at a reaction between only two of the carbonate system species:
 
 $$
@@ -72,10 +131,23 @@ Each concentration should be raised to the power of the stoichiometric coefficie
 So for @eq-carb1, we have:
 
 $$
-\frac{c_{\ce{HCO3-}} \cdot c_{\ce{H+}}}{c_{\ce{H2CO3^*}}}
-$$
+\frac{c_{\ce{HCO3-}} \cdot c_{\ce{H+}}}{c_{\ce{H2CO3^*}}},
+$${#eq-carb-rq1}
 
-A typical problem that could be solved with chemical speciation modeling 
+where $c=$ molar or molal concentration, i.e., moles of species per L of water or moles per kg of water.
+At equilibrium, the numeric value of that reaction quotient, @eq-carb-rq1, is know: at 15$\degC$ it is $10^{-6.42} = 3.80 \cdot 10^{-7}  $ =`3.8e-7` (@Snoeyink1980: p. 157).
+(Actually, except for dilute solutions, a correction is needed for interactions between ions, but the use of concentrations can still give decent approximate values. See @Snoeyink1980 for more information on chemical activity and ionic strength.)
+The numeric value is called the *equilibrium constant*
+
+So, if we know the concentration of $\ce{H2CO3^*}$ and $\ce{H^+}$ we can calculate the concentration of bicarbonate $\ce{HCO3-}$.
+The hydrogen ion (or "proton", because that it what it is!) concentration is commonly take from pH, i.e.,
+
+$$
+p\text{H} = - log_{10}(c_{H^+}).
+$${eq-pH-def}
+Even better, if we use other information 
+
+A typical problem that could be solved with chemical speciation modeling is determination of the 
 
 ## First- and second-order chemical reactions
 
@@ -100,4 +172,4 @@ From a modeling perspective, microbial systems are just a set of chemical reacti
 
 1. Formulate (pencil and paper) and implement (in Python) a simple urea hydrolysis model.
    You can assume the reaction is first-order.
-   Plot 
+   Plot predicted 
