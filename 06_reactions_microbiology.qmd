@@ -32,8 +32,8 @@ $$
 $$
 
 The coefficients come directly from @eq-urea1.
-Amazingly simple, isn't it?
-When implemented in Python (and written, for that matter) a coefficient array can be combined with a state variable array for compact and efficient code when there is more than one state variable, as implied in the above example.
+Simple, isn't it?
+When implemented in Python (or written down on paper as a mathematical model, for that matter) a coefficient array can be combined with a state variable array for compact and efficient code when there is more than one state variable, as implied in the above example.
 We will see some of that later.
 
 There are some complications that come from other units.
