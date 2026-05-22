@@ -1,13 +1,11 @@
 # Chemical reactions and microbiology {#sec-reactions}
 
-Chemical reactions affect the quantity of stuff...
-
-<!-- Brief introduction to reaction kinetics and microbial growth as
-     source/sink terms in mass and energy balances. -->
+Chemical reactions, including those carried out by microorganisms, are important in innumerable processes in both engineered and natural systems.
+This chapter will scratch the surface, barely, of the topics.
 
 ## Stoichiometry
 
-Chemical *stoichiometry* just means the coefficients that accompany the reactants and products in a balanced chemical reaction.
+Chemical *stoichiometry* is about the coefficients that accompany the reactants and products in a balanced chemical reaction.
 For example, the simple organic compound urea (a waste product in mammal urine) is hydrolyzed like this:
 
 $$
@@ -16,37 +14,50 @@ $${#eq-urea1}
 
 So the stoichiometry shows that hydrolysis of one mole of urea consumes one mole of water and produces two moles of ammonia and one of carbon dioxide.
 Why do we care?
-Well, the stoichiometric coefficients can then be used directly in a model to get state variable derivatives from the reaction rate, which itself is calculated using the appropriate constitutive equation.
-So in the framework presented in @sec-formulation, the stoichiometric coefficients go into creating linking equations (@sec-linking).
-We then just need a single constitutive equation for the overall reaction rate (we will get to that in the next section) and simple linking equations for each chemical species.
+Well, these stoichiometric coefficients can then be used directly in a model to get state variable derivatives from the reaction rate, which itself is calculated using the appropriate constitutive equation.
+In the framework presented in @sec-formulation, the stoichiometric coefficients go into creating linking equations (see @sec-linking for a review, if needed).
+We then just need a single constitutive equation for the *overall reaction rate* (we will get to that in @sec-rxn-rate below) and simple linking equations for each chemical species.
 For example, if our reaction rate is $r$, with units of $\molpmcps$, then the derivative for $\ce{CO(NH2)2}$ would be
 
 $$
 \frac{dc_{urea}}{dt} = -1 \cdot r,
 $$
 
-and for ammonia,
+for ammonia,
 
 $$
-\frac{dc_{\ce{NH3}}}{dt} = 2 \cdot r.
+\frac{dc_{\ce{NH3}}}{dt} = 2 \cdot r,
 $$
 
-The coefficients come directly from @eq-urea1.
-Simple, isn't it?
+and carbon dioxide,
+
+$$
+\frac{dc_{\ce{CO2}}}{dt} = 2 \cdot r,
+$$
+
+all with units of $\molpmcps$.
+The coefficients in these ODEs come directly from @eq-urea1.
+Simple!
 When implemented in Python (or written down on paper as a mathematical model, for that matter) a coefficient array can be combined with a state variable array for compact and efficient code when there is more than one state variable, as implied in the above example.
 We will see some of that later.
 
-There are some complications that come from other units.
-In many cases, it is not moles but mass, or even mass of a particular element that is of interest; then the coefficients need to be adjusted.
+There are some complications that come from using other units.
+In many cases, it is not moles but species mass, or even mass of a particular element that is of interest; then the coefficients need to be adjusted, and this can be done in at least these two ways:
 
-## Reaction rates
+1. hidden unit conversion: here the user only sees the input and output units, which should be identical, but internally the ODEs uses moles, and conversion is carried out in the model on inputs and output,
+2. consistent units: here the core of the computer model uses the input and output units; one set of units everywhere.
+
+Mistakes can be made with either approach!
+An advantage of 1 is that the coefficients have integer and usually obvious values, so it is easy to check values.
+
+## Reaction rates {£sec-rxn-rates}
 
 The constitutive equation for a chemical reaction must quantify its *rate*, or how fast it proceeds, e.g., $\molps$, $\molpmcps$, or on a mass basis, e.g., $\gpmcps$.
 The term *kinetics* is used to describe reaction rates.
-Here we will look at two simple cases: first-order reactions and second-order reactions.
+Here we will look at only two simple, and to some degree, idealized, cases: first-order reactions and second-order reactions.
 
 A reaction that follows first-order kinetics has a rate that is proportional to the quantity of reactant present.
-So:
+So that means:
 
 $$
 r_m = \frac{dM}{dt} = - k \cdot M,
@@ -59,14 +70,18 @@ r_c = \frac{dc}{dt} = - k \cdot c,
 $${#eq-fom2}
 
 for concentration.
+The inclusion of the derivatives in @eq-fom1 and @eq-fom2 only makes sense if the reaction is the *only* process affecting the quantity of reactant, i.e., a batch system with no addition of non-reaction removal of reactant.
 The $k$ is the first-order reaction rate constant with dimensions $\text{T}^{-1}$.
 It is not necessarily constant, and depends at least on temperature for most chemical reactions.
 But its value does not change as the reaction proceeds, at least not for a true first-order reaction.
 A classic example of a first-order reaction is radioactive decay.
-Many other chemical reactions are not truly first-order, but come close for modelling purposes.
+Many other chemical reactions are not truly first-order, but come close enough for modelling purposes.
+Or, more honestly, an accurate description of the relevant kinetics is not available or too complicated, and a first-order model is assumed to be close enough! 
+Even where the concentration of a reactant seems to follow first-order kinetics over time, the true rate often depends on other factors, e.g., the constant concentration of another reactant or competitor, or the solution pH, for example, 
+These effects can be important when applying the model--the rate "constant" from one system may not apply directly to another.
 
-The rate of a simple first-order reaction can be described analytically with the exponential model (see @sec-expmodel). 
-We'll show that here.
+Thinking about math and implementation, the rate of a simple first-order reaction can be described analytically with the exponential model (see @sec-expmodel). 
+You could have (should have, really!) realized this just from the form of @eq-fom1 or @eq-fom2!
 Compare @eq-fom2 to @eq-exp-ode.
 What specific variables or parameters go in for the $x$ and $\lambda$ in @eq-exp-ode?
 Well, $x = c$ and $\lambda = -k$.
@@ -80,7 +95,7 @@ $${#eq-fom-solution1}
 
 Simple!
 
-With this simple analytical model we can predict the concentration of our reactant (perhaps urea) at any time.
+With this simple analytical model we can predict the concentration of our reactant (e.g., urea) at any time.
 We could also predict the rate by combining @eq-fom-solution1 and @eq-exp-ode.
 
 If a reaction includes two reactants it might be possible to approximate the observed rate with a *second-order* model, i.e., 
