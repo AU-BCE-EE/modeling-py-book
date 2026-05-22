@@ -181,7 +181,8 @@ $${#eq-amm-mass-bal}
 
 Lastly, we can estimate $\ce{H+}$ from measured pH, or anyway use it as an input here.
 That's all we need.
-To get an explicit closed-form solution, we can rearrange @eq-amm-mass-bal to solve for $\ce{NH4+}$, and insert the result into @eq-amm-mae1, and finally rearrange to solve for $\ce{NH3(aq)}$!
+To get an explicit closed-form solution, we can rearrange @eq-amm-mass-bal to solve for $\ce{NH4+}$, and insert the result into @eq-amm-mae1, and finally rearrange to solve for $\ce{NH3(aq)}$.
+We'll show these steps below, in part because the ability to do these kinds of simple mathematical derivations seems to be declining among students!
 
 First, rearrange @eq-amm-mass-bal to solve for $\ce{NH4+}$:
 
@@ -201,15 +202,84 @@ $$
 \frac{k_a} {c_{\ce{H+}}} \cdot (c_{\text{TAN}} - c_{\ce{NH3}(aq)}) = c_{\ce{NH3(aq)}} .
 $$
 
-A bit more . . . 
+A bit more, including multiplication of both sides by -1,
 
 $$
- \frac{k_a} {c_{\ce{H+}}} \cdot c_{\ce{NH3}(aq)}) - c_{\ce{NH3(aq)}} = \frac{k_a} {c_{\ce{H+}}} \cdot c_{\text{TAN}}.
+ \frac{k_a} {c_{\ce{H+}}} \cdot c_{\ce{NH3}(aq)} + c_{\ce{NH3(aq)}} = \frac{k_a} {c_{\ce{H+}}} \cdot c_{\text{TAN}},
 $$
 
+then
+
 $$
- \frac{k_a} {c_{\ce{H+}}} \cdot c_{\ce{NH3}(aq)}) - c_{\ce{NH3(aq)}} = \frac{k_a} {c_{\ce{H+}}} \cdot c_{\text{TAN}}.
+ \left( \frac{k_a} {c_{\ce{H+}}} + 1 \right) \cdot c_{\ce{NH3}(aq)} = \frac{k_a} {c_{\ce{H+}}} \cdot c_{\text{TAN}},
 $$
+
+and
+
+$$
+ c_{\ce{NH3}(aq)} = \frac{\frac{k_a} {c_{\ce{H+}}} \cdot c_{\text{TAN}}} {(\frac{k_a} {c_{\ce{H+}}} + 1) \cdot},
+$$
+
+which, finally, can be simplified to
+
+$$
+ c_{\ce{NH3}(aq)} = \frac{c_{\text{TAN}}} {1 + \frac {c_{\ce{H+}}} {k_a}}.
+$${#eq-free-nh3-calc}
+
+Let's implement @eq-free-nh3-calc in Python for a simple free ammonia calculator.
+
+
+```{python}
+"""
+Description:
+    A free ammonia calculator function. Does not include corrections
+    for non-ideal behavior; technically only accurate for very
+    dilute solutions. 
+"""
+
+import numpy as np
+
+def free_NH3(TAN, pH, pKa = 9.56):
+    """
+    Calculate free ammonia concentration (NH3 (aq)) from pH and TAN concentration.
+
+    Parameters
+    ----------
+    TAN : float
+        Total ammoniacal nitrogen (TAN) concentration (any concentration units)
+    pH : float
+        Solution pH
+    pKa : float
+        Acid dissociation constant for NH4+
+
+    Returns
+    -------
+    float with free ammonia concentration in same units as TAN input
+    """
+
+    # Calculate H+ concentration from pH
+    c_H = 10**(-pH)
+
+    # And Ka
+    Ka = 10**(-pKa)
+
+    # Apply equation from text
+    c_NH3 = TAN / (1 + c_H / Ka)
+
+    # Return solution
+    return c_NH3 
+
+```
+
+We can test it.
+
+```{python}
+print(free_NH3(1, 9.56))
+print(free_NH3(1, 7))
+print(free_NH3(1, 10))
+```
+
+We see $\ce{NH4(aq)}$ is exactly half of TAN when $p\text{K}_a$ = pH, very small at pH 7, and high at pH 10, all of which are expected.
 
 
 
@@ -221,6 +291,14 @@ $$
 ## Microbiology
 
 From a modeling perspective, microbial systems are just a set of chemical reactions.
+Here are some components for one approach to creating microbial models:
+
+* active microbial biomass, essential chemical substrates, and important products as state variables,
+* stoichiometry: a balanced chemical reaction that includes all state variables, and
+* kinetics: an equation for the rate of the overall reaction.
+
+Unlike simple chemical reactions such as urea hydrolysis, it isn't always possible to just look up the reaction.
+But there are a few different approaches that can be used, including @rittmann_environmental_2020.
 
 <!-- Microbial rate of growth and biomass yield.
      Monod kinetics.
