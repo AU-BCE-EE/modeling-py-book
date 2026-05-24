@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 /* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
@@ -273,7 +308,7 @@ window.Quarto = {
    
   <ul>
   <li><a href="#stoichiometry" id="toc-stoichiometry" class="nav-link active" data-scroll-target="#stoichiometry"><span class="header-section-number">6.1</span> Stoichiometry</a></li>
-  <li><a href="#reaction-rates" id="toc-reaction-rates" class="nav-link" data-scroll-target="#reaction-rates"><span class="header-section-number">6.2</span> Reaction rates</a></li>
+  <li><a href="#reaction-rates-sec-rxn-rates" id="toc-reaction-rates-sec-rxn-rates" class="nav-link" data-scroll-target="#reaction-rates-sec-rxn-rates"><span class="header-section-number">6.2</span> Reaction rates {£sec-rxn-rates}</a></li>
   <li><a href="#equilibrium-reactions" id="toc-equilibrium-reactions" class="nav-link" data-scroll-target="#equilibrium-reactions"><span class="header-section-number">6.3</span> Equilibrium reactions</a></li>
   <li><a href="#microbiology" id="toc-microbiology" class="nav-link" data-scroll-target="#microbiology"><span class="header-section-number">6.4</span> Microbiology</a></li>
   <li><a href="#problems" id="toc-problems" class="nav-link" data-scroll-target="#problems"><span class="header-section-number">6.5</span> Problems</a></li>
@@ -302,30 +337,37 @@ window.Quarto = {
 </header>
 
 
-<p>Chemical reactions affect the quantity of stuff…</p>
-<!-- Brief introduction to reaction kinetics and microbial growth as
-     source/sink terms in mass and energy balances. -->
+<p>Chemical reactions, including those carried out by microorganisms, are important in innumerable processes in both engineered and natural systems. This chapter will scratch the surface, barely, of the topics.</p>
 <section id="stoichiometry" class="level2" data-number="6.1">
 <h2 data-number="6.1" class="anchored" data-anchor-id="stoichiometry"><span class="header-section-number">6.1</span> Stoichiometry</h2>
-<p>Chemical <em>stoichiometry</em> just means the coefficients that accompany the reactants and products in a balanced chemical reaction. For example, the simple organic compound urea (a waste product in mammal urine) is hydrolyzed like this:</p>
+<p>Chemical <em>stoichiometry</em> is about the coefficients that accompany the reactants and products in a balanced chemical reaction. For example, the simple organic compound urea (a waste product in mammal urine) is hydrolyzed like this:</p>
 <p><span id="eq-urea1"><span class="math display">\[
 \ce{CO(NH2)2 + H2O -&gt; 2NH3 + CO2}
 \tag{6.1}\]</span></span></p>
-<p>So the stoichiometry shows that hydrolysis of one mole of urea consumes one mole of water and produces two moles of ammonia and one of carbon dioxide. Why do we care? Well, the stoichiometric coefficients can then be used directly in a model to get state variable derivatives from the reaction rate, which itself is calculated using the appropriate constitutive equation. So in the framework presented in <a href="02_components_formulation.html" class="quarto-xref"><span>Chapter 2</span></a>, the stoichiometric coefficients go into creating linking equations (<a href="02_components_formulation.html#sec-linking" class="quarto-xref"><span>Section 2.5</span></a>). We then just need a single constitutive equation for the overall reaction rate (we will get to that in the next section) and simple linking equations for each chemical species. For example, if our reaction rate is <span class="math inline">\(r\)</span>, with units of <span class="math inline">\(\molpmcps\)</span>, then the derivative for <span class="math inline">\(\ce{CO(NH2)2}\)</span> would be</p>
+<p>So the stoichiometry shows that hydrolysis of one mole of urea consumes one mole of water and produces two moles of ammonia and one of carbon dioxide. Why do we care? Well, these stoichiometric coefficients can then be used directly in a model to get state variable derivatives from the reaction rate, which itself is calculated using the appropriate constitutive equation. In the framework presented in <a href="02_components_formulation.html" class="quarto-xref"><span>Chapter 2</span></a>, the stoichiometric coefficients go into creating linking equations (see <a href="02_components_formulation.html#sec-linking" class="quarto-xref"><span>Section 2.5</span></a> for a review, if needed). We then just need a single constitutive equation for the <em>overall reaction rate</em> (we will get to that in <span class="quarto-unresolved-ref">?sec-rxn-rate</span> below) and simple linking equations for each chemical species. For example, if our reaction rate is <span class="math inline">\(r\)</span>, with units of <span class="math inline">\(\molpmcps\)</span>, then the derivative for <span class="math inline">\(\ce{CO(NH2)2}\)</span> would be</p>
 <p><span class="math display">\[
 \frac{dc_{urea}}{dt} = -1 \cdot r,
 \]</span></p>
-<p>and for ammonia,</p>
+<p>for ammonia,</p>
 <p><span class="math display">\[
-\frac{dc_{\ce{NH3}}}{dt} = 2 \cdot r.
+\frac{dc_{\ce{NH3}}}{dt} = 2 \cdot r,
 \]</span></p>
-<p>The coefficients come directly from <a href="#eq-urea1" class="quarto-xref">Equation&nbsp;<span>6.1</span></a>. Amazingly simple, isn’t it? When implemented in Python (and written, for that matter) a coefficient array can be combined with a state variable array for compact and efficient code when there is more than one state variable, as implied in the above example. We will see some of that later.</p>
-<p>There are some complications that come from other units. In many cases, it is not moles but mass, or even mass of a particular element that is of interest; then the coefficients need to be adjusted.</p>
+<p>and carbon dioxide,</p>
+<p><span class="math display">\[
+\frac{dc_{\ce{CO2}}}{dt} = 2 \cdot r,
+\]</span></p>
+<p>all with units of <span class="math inline">\(\molpmcps\)</span>. The coefficients in these ODEs come directly from <a href="#eq-urea1" class="quarto-xref">Equation&nbsp;<span>6.1</span></a>. Simple! When implemented in Python (or written down on paper as a mathematical model, for that matter) a coefficient array can be combined with a state variable array for compact and efficient code when there is more than one state variable, as implied in the above example. We will see some of that later.</p>
+<p>There are some complications that come from using other units. In many cases, it is not moles but species mass, or even mass of a particular element that is of interest; then the coefficients need to be adjusted, and this can be done in at least these two ways:</p>
+<ol type="1">
+<li>hidden unit conversion: here the user only sees the input and output units, which should be identical, but internally the ODEs uses moles, and conversion is carried out in the model on inputs and output,</li>
+<li>consistent units: here the core of the computer model uses the input and output units; one set of units everywhere.</li>
+</ol>
+<p>Mistakes can be made with either approach! An advantage of 1 is that the coefficients have integer and usually obvious values, so it is easy to check values.</p>
 </section>
-<section id="reaction-rates" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="reaction-rates"><span class="header-section-number">6.2</span> Reaction rates</h2>
-<p>The constitutive equation for a chemical reaction must quantify its <em>rate</em>, or how fast it proceeds, e.g., <span class="math inline">\(\molps\)</span>, <span class="math inline">\(\molpmcps\)</span>, or on a mass basis, e.g., <span class="math inline">\(\gpmcps\)</span>. The term <em>kinetics</em> is used to describe reaction rates. Here we will look at two simple cases: first-order reactions and second-order reactions.</p>
-<p>A reaction that follows first-order kinetics has a rate that is proportional to the quantity of reactant present. So:</p>
+<section id="reaction-rates-sec-rxn-rates" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="reaction-rates-sec-rxn-rates"><span class="header-section-number">6.2</span> Reaction rates {£sec-rxn-rates}</h2>
+<p>The constitutive equation for a chemical reaction must quantify its <em>rate</em>, or how fast it proceeds, e.g., <span class="math inline">\(\molps\)</span>, <span class="math inline">\(\molpmcps\)</span>, or on a mass basis, e.g., <span class="math inline">\(\gpmcps\)</span>. The term <em>kinetics</em> is used to describe reaction rates. Here we will look at only two simple, and to some degree, idealized, cases: first-order reactions and second-order reactions.</p>
+<p>A reaction that follows first-order kinetics has a rate that is proportional to the quantity of reactant present. So that means:</p>
 <p><span id="eq-fom1"><span class="math display">\[
 r_m = \frac{dM}{dt} = - k \cdot M,
 \tag{6.2}\]</span></span></p>
@@ -333,13 +375,13 @@ r_m = \frac{dM}{dt} = - k \cdot M,
 <p><span id="eq-fom2"><span class="math display">\[
 r_c = \frac{dc}{dt} = - k \cdot c,
 \tag{6.3}\]</span></span></p>
-<p>for concentration. The <span class="math inline">\(k\)</span> is the first-order reaction rate constant with dimensions <span class="math inline">\(\text{T}^{-1}\)</span>. It is not necessarily constant, and depends at least on temperature for most chemical reactions. But its value does not change as the reaction proceeds, at least not for a true first-order reaction. A classic example of a first-order reaction is radioactive decay. Many other chemical reactions are not truly first-order, but come close for modelling purposes.</p>
-<p>The rate of a simple first-order reaction can be described analytically with the exponential model (see <a href="03_solving.html#sec-expmodel" class="quarto-xref"><span>Section 3.3</span></a>). We’ll show that here. Compare <a href="#eq-fom2" class="quarto-xref">Equation&nbsp;<span>6.3</span></a> to <a href="03_solving.html#eq-exp-ode" class="quarto-xref">Equation&nbsp;<span>3.1</span></a>. What specific variables or parameters go in for the <span class="math inline">\(x\)</span> and <span class="math inline">\(\lambda\)</span> in <a href="03_solving.html#eq-exp-ode" class="quarto-xref">Equation&nbsp;<span>3.1</span></a>? Well, <span class="math inline">\(x = c\)</span> and <span class="math inline">\(\lambda = -k\)</span>. Note the minus sign! Now take a look at <a href="03_solving.html#eq-exp-solution" class="quarto-xref">Equation&nbsp;<span>3.2</span></a> and plug these in. That gives:</p>
+<p>for concentration. The inclusion of the derivatives in <a href="#eq-fom1" class="quarto-xref">Equation&nbsp;<span>6.2</span></a> and <a href="#eq-fom2" class="quarto-xref">Equation&nbsp;<span>6.3</span></a> only makes sense if the reaction is the <em>only</em> process affecting the quantity of reactant, i.e., a batch system with no addition of non-reaction removal of reactant. The <span class="math inline">\(k\)</span> is the first-order reaction rate constant with dimensions <span class="math inline">\(\text{T}^{-1}\)</span>. It is not necessarily constant, and depends at least on temperature for most chemical reactions. But its value does not change as the reaction proceeds, at least not for a true first-order reaction. A classic example of a first-order reaction is radioactive decay. Many other chemical reactions are not truly first-order, but come close enough for modelling purposes. Or, more honestly, an accurate description of the relevant kinetics is not available or too complicated, and a first-order model is assumed to be close enough! Even where the concentration of a reactant seems to follow first-order kinetics over time, the true rate often depends on other factors, e.g., the constant concentration of another reactant or competitor, or the solution pH, for example, These effects can be important when applying the model–the rate “constant” from one system may not apply directly to another.</p>
+<p>Thinking about math and implementation, the rate of a simple first-order reaction can be described analytically with the exponential model (see <a href="03_solving.html#sec-expmodel" class="quarto-xref"><span>Section 3.3</span></a>). You could have (should have, really!) realized this just from the form of <a href="#eq-fom1" class="quarto-xref">Equation&nbsp;<span>6.2</span></a> or <a href="#eq-fom2" class="quarto-xref">Equation&nbsp;<span>6.3</span></a>! Compare <a href="#eq-fom2" class="quarto-xref">Equation&nbsp;<span>6.3</span></a> to <a href="03_solving.html#eq-exp-ode" class="quarto-xref">Equation&nbsp;<span>3.1</span></a>. What specific variables or parameters go in for the <span class="math inline">\(x\)</span> and <span class="math inline">\(\lambda\)</span> in <a href="03_solving.html#eq-exp-ode" class="quarto-xref">Equation&nbsp;<span>3.1</span></a>? Well, <span class="math inline">\(x = c\)</span> and <span class="math inline">\(\lambda = -k\)</span>. Note the minus sign! Now take a look at <a href="03_solving.html#eq-exp-solution" class="quarto-xref">Equation&nbsp;<span>3.2</span></a> and plug these in. That gives:</p>
 <p><span id="eq-fom-solution1"><span class="math display">\[
 c = c_0 \cdot e^{-k \cdot t}.
 \tag{6.4}\]</span></span></p>
 <p>Simple!</p>
-<p>With this simple analytical model we can predict the concentration of our reactant (perhaps urea) at any time. We could also predict the rate by combining <a href="#eq-fom-solution1" class="quarto-xref">Equation&nbsp;<span>6.4</span></a> and <a href="03_solving.html#eq-exp-ode" class="quarto-xref">Equation&nbsp;<span>3.1</span></a>.</p>
+<p>With this simple analytical model we can predict the concentration of our reactant (e.g., urea) at any time. We could also predict the rate by combining <a href="#eq-fom-solution1" class="quarto-xref">Equation&nbsp;<span>6.4</span></a> and <a href="03_solving.html#eq-exp-ode" class="quarto-xref">Equation&nbsp;<span>3.1</span></a>.</p>
 <p>If a reaction includes two reactants it might be possible to approximate the observed rate with a <em>second-order</em> model, i.e.,</p>
 <p><span id="eq-som1"><span class="math display">\[
 r_c = \frac{dc}{dt} = - k \cdot c_1 \cdot c_2,
@@ -389,19 +431,88 @@ k_a = \frac{c_{\ce{NH3(aq)}} \cdot c_{\ce{H+}}} {c_{\ce{NH4+}}}.
 <p><span id="eq-amm-mass-bal"><span class="math display">\[
 c_{\text{TAN}} = c_{\ce{NH4+}} + c_{\ce{NH3}(aq)}.
 \tag{6.11}\]</span></span></p>
-<p>Lastly, we can estimate <span class="math inline">\(\ce{H+}\)</span> from measured pH, or anyway use it as an input here. That’s all we need. To get an explicit closed-form solution, we can rearrange <a href="#eq-amm-mass-bal" class="quarto-xref">Equation&nbsp;<span>6.14</span></a> to solve for <span class="math inline">\(\ce{NH4+}\)</span>, and insert the result into <a href="#eq-amm-mae1" class="quarto-xref">Equation&nbsp;<span>6.10</span></a>, and finally rearrange to solve for <span class="math inline">\(\ce{NH3(aq)}\)</span>!</p>
-<p>First, rearrange <a href="#eq-amm-mass-bal" class="quarto-xref">Equation&nbsp;<span>6.14</span></a> to solve for <span class="math inline">\(\ce{NH4+}\)</span>:</p>
+<p>Lastly, we can estimate <span class="math inline">\(\ce{H+}\)</span> from measured pH, or anyway use it as an input here. That’s all we need. To get an explicit closed-form solution, we can rearrange <a href="#eq-amm-mass-bal" class="quarto-xref">Equation&nbsp;<span>6.11</span></a> to solve for <span class="math inline">\(\ce{NH4+}\)</span>, and insert the result into <a href="#eq-amm-mae1" class="quarto-xref">Equation&nbsp;<span>6.10</span></a>, and finally rearrange to solve for <span class="math inline">\(\ce{NH3(aq)}\)</span>. We’ll show these steps below, in part because the ability to do these kinds of simple mathematical derivations seems to be declining among students!</p>
+<p>First, rearrange <a href="#eq-amm-mass-bal" class="quarto-xref">Equation&nbsp;<span>6.11</span></a> to solve for <span class="math inline">\(\ce{NH4+}\)</span>:</p>
 <p><span id="eq-amm-der1"><span class="math display">\[
 c_{\ce{NH4+}} = c_{\text{TAN}} - c_{\ce{NH3}(aq)}.
 \tag{6.12}\]</span></span></p>
 <p>And insert this into <a href="#eq-amm-mae1" class="quarto-xref">Equation&nbsp;<span>6.10</span></a>:</p>
-<p><span id="eq-amm-mass-bal"><span class="math display">\[
+<p><span class="math display">\[
 k_a = \frac{c_{\ce{NH3(aq)}} \cdot c_{\ce{H+}}} {c_{\text{TAN}} - c_{\ce{NH3}(aq)}}.
-\tag{6.13}\]</span></span></p>
+\]</span></p>
 <p>And rearrange:</p>
-<p><span id="eq-amm-mass-bal"><span class="math display">\[
+<p><span class="math display">\[
 \frac{k_a} {c_{\ce{H+}}} \cdot (c_{\text{TAN}} - c_{\ce{NH3}(aq)}) = c_{\ce{NH3(aq)}} .
-\tag{6.14}\]</span></span></p>
+\]</span></p>
+<p>A bit more, including multiplication of both sides by -1,</p>
+<p><span class="math display">\[
+\frac{k_a} {c_{\ce{H+}}} \cdot c_{\ce{NH3}(aq)} + c_{\ce{NH3(aq)}} = \frac{k_a} {c_{\ce{H+}}} \cdot c_{\text{TAN}},
+\]</span></p>
+<p>then</p>
+<p><span class="math display">\[
+\left( \frac{k_a} {c_{\ce{H+}}} + 1 \right) \cdot c_{\ce{NH3}(aq)} = \frac{k_a} {c_{\ce{H+}}} \cdot c_{\text{TAN}},
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+c_{\ce{NH3}(aq)} = \frac{\frac{k_a} {c_{\ce{H+}}} \cdot c_{\text{TAN}}} {(\frac{k_a} {c_{\ce{H+}}} + 1) \cdot},
+\]</span></p>
+<p>which, finally, can be simplified to</p>
+<p><span id="eq-free-nh3-calc"><span class="math display">\[
+c_{\ce{NH3}(aq)} = \frac{c_{\text{TAN}}} {1 + \frac {c_{\ce{H+}}} {k_a}}.
+\tag{6.13}\]</span></span></p>
+<p>Let’s implement <a href="#eq-free-nh3-calc" class="quarto-xref">Equation&nbsp;<span>6.13</span></a> in Python for a simple free ammonia calculator.</p>
+<div id="1b20cdbd" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">Description:</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">    A free ammonia calculator function. Does not include corrections</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">    for non-ideal behavior; technically only accurate for very</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">    dilute solutions. </span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> free_NH3(TAN, pH, pKa <span class="op">=</span> <span class="fl">9.56</span>):</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">    Calculate free ammonia concentration (NH3 (aq)) from pH and TAN concentration.</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">    TAN : float</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">        Total ammoniacal nitrogen (TAN) concentration (any concentration units)</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">    pH : float</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">        Solution pH</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">    pKa : float</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co">        Acid dissociation constant for NH4+</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co">    -------</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co">    float with free ammonia concentration in same units as TAN input</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate H+ concentration from pH</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    c_H <span class="op">=</span> <span class="dv">10</span><span class="op">**</span>(<span class="op">-</span>pH)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># And Ka</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    Ka <span class="op">=</span> <span class="dv">10</span><span class="op">**</span>(<span class="op">-</span>pKa)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Apply equation from text</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    c_NH3 <span class="op">=</span> TAN <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> c_H <span class="op">/</span> Ka)</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Return solution</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> c_NH3 </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>We can test it.</p>
+<div id="62fc52b9" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(free_NH3(<span class="dv">1</span>, <span class="fl">9.56</span>))</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(free_NH3(<span class="dv">1</span>, <span class="dv">7</span>))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(free_NH3(<span class="dv">1</span>, <span class="dv">10</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.5
+0.0027466637631632404
+0.7336337024138072</code></pre>
+</div>
+</div>
+<p>We see <span class="math inline">\(\ce{NH4(aq)}\)</span> is exactly half of TAN when <span class="math inline">\(p\text{K}_a\)</span> = pH, very small at pH 7, and high at pH 10, all of which are expected.</p>
 <!-- First- and second-order reactions as useful simplifications.
      Law of mass action and chemical equilibrium.
      Stoichiometry.
@@ -409,7 +520,13 @@ k_a = \frac{c_{\ce{NH3(aq)}} \cdot c_{\ce{H+}}} {c_{\text{TAN}} - c_{\ce{NH3}(aq
 </section>
 <section id="microbiology" class="level2" data-number="6.4">
 <h2 data-number="6.4" class="anchored" data-anchor-id="microbiology"><span class="header-section-number">6.4</span> Microbiology</h2>
-<p>From a modeling perspective, microbial systems are just a set of chemical reactions.</p>
+<p>From a modeling perspective, microbial systems are just a set of chemical reactions. Here are some components for one approach to creating microbial models:</p>
+<ul>
+<li>active microbial biomass, essential chemical substrates, and important products as state variables,</li>
+<li>stoichiometry: a balanced chemical reaction that includes all state variables, and</li>
+<li>kinetics: an equation for the rate of the overall reaction.</li>
+</ul>
+<p>Unlike simple chemical reactions such as urea hydrolysis, it isn’t always possible to just look up the reaction. But there are a few different approaches that can be used, including <span class="citation" data-cites="rittmann_environmental_2020">(<a href="#ref-rittmann_environmental_2020" role="doc-biblioref"><strong>rittmann_environmental_2020?</strong></a>)</span>.</p>
 <!-- Microbial rate of growth and biomass yield.
      Monod kinetics.
      Example: CSTR. -->
