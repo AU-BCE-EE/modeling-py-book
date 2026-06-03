@@ -47,7 +47,18 @@
     "href": "01_intro.html#problems",
     "title": "1  An introduction to models",
     "section": "1.3 Problems",
-    "text": "1.3 Problems\n\nSome different models are described below. Apply the labels conceptual, mathematial, computer, analytical, numerical, lumped parameter, distributed parameter, 1D, steady-state, dynamic, mechanistic, and empirical appropriately. Is the answer always clear?\nA. The NLES5 model predicts nitrate leaching based on the equation shown in the figure below (Figure 1.4), where \\(L\\) is the predicted leaching rate and the other terms are input variables or model parameters. Is it mechanistic or empirical?\n\n\n\n\n\n\nFigure 1.4: The NLES5 model, from Børgesen et al. (2022).\n\n\n\nB. ADM1 is a chemical and biological model that simulates conversion of organic waste to biogas. It tracks development of microbial communities over time. Is it mechanistic or empirical? Dynamic or steady-state?\n\n\n\n\n\n\n\n\nBørgesen, Christen D., Johannes WM Pullens, Jin Zhao, Gitte Blicher-Mathiesen, Peter Sørensen, and Jørgen E. Olesen. 2022. “NLES5 an Empirical Model for Estimating Nitrate Leaching from the Root Zone of Agricultural Land.” European Journal of Agronomy 134 (March): 126465. https://doi.org/10.1016/j.eja.2022.126465.\n\n\nRafrafi, Yan, Léa Laguillaumie, and Claire Dumas. 2021. “Biological Methanation of H2 and CO2 with Mixed Cultures: Current Advances, Hurdles and Challenges.” Waste and Biomass Valorization 12 (October): 5259–82. https://doi.org/10.1007/s12649-020-01283-z.",
+    "text": "1.3 Problems\nSome different models are described below. Apply the labels conceptual, mathematial, computer, analytical, numerical, lumped parameter, distributed parameter, 1D, steady-state, dynamic, mechanistic, and empirical appropriately. Is the answer always clear?\n\nThe NLES5 model predicts nitrate leaching based on the equation shown in the figure below (Figure 1.4), where \\(L\\) is the predicted leaching rate and the other terms are input variables or model parameters. Is it mechanistic or empirical?\n\n\n\n\n\n\n\nFigure 1.4: The NLES5 model, from Børgesen et al. (2022).\n\n\n\n\nADM1 is a chemical and biological model that simulates conversion of organic waste to biogas. It tracks development of microbial communities over time. Is it mechanistic or empirical? Dynamic or steady-state?\n\n\n\n\n\n\n\nFigure 1.5: The ADM1 model, from Batstone et al. (2002).\n\n\n\n\nThe Gaussian plume model is a simple general approach for modeling dilution of atmospheric pollutants from a fixed source, e.g., a smokestack. It can be expressed as an equation for the concentration of pollutant,\n\\[\nc(x, y, z) = e \\cdot f(h, \\sigma_y, \\sigma_z) ,\n\\]\nwhere \\(e\\) is pollutant emission rate, \\(x\\), \\(y\\), and \\(z\\) define a position relative to the source smokestack with a height of \\(h\\), and the \\(\\sigma\\) terms are parameters determined from large-scale measurements that quantify horizontal and vertical dispersion. How would you characterize this model? Does it neatly fit into one box?",
+    "crumbs": [
+      "Part I: Foundations",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>An introduction to models</span>"
+    ]
+  },
+  {
+    "objectID": "01_intro.html#references",
+    "href": "01_intro.html#references",
+    "title": "1  An introduction to models",
+    "section": "References",
+    "text": "References\n\n\n\n\nBatstone, D J, J Keller, I Angelidaki, S V Kalyuzhnyi, S G Pavlostathis, A Rozzi, W T M Sanders, H Siegrist, and V A Vavilin. 2002. “The IWA Anaerobic Digestion Model No 1 (ADM1).” Water Science and Technology: A Journal of the International Association on Water Pollution Research 45 (10): 65–73.\n\n\nBørgesen, Christen D., Johannes WM Pullens, Jin Zhao, Gitte Blicher-Mathiesen, Peter Sørensen, and Jørgen E. Olesen. 2022. “NLES5 an Empirical Model for Estimating Nitrate Leaching from the Root Zone of Agricultural Land.” European Journal of Agronomy 134 (March): 126465. https://doi.org/10.1016/j.eja.2022.126465.\n\n\nRafrafi, Yan, Léa Laguillaumie, and Claire Dumas. 2021. “Biological Methanation of H2 and CO2 with Mixed Cultures: Current Advances, Hurdles and Challenges.” Waste and Biomass Valorization 12 (October): 5259–82. https://doi.org/10.1007/s12649-020-01283-z.",
     "crumbs": [
       "Part I: Foundations",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>An introduction to models</span>"
@@ -131,11 +142,11 @@
     ]
   },
   {
-    "objectID": "02_components_formulation.html#problems",
-    "href": "02_components_formulation.html#problems",
+    "objectID": "02_components_formulation.html#sec-problems2",
+    "href": "02_components_formulation.html#sec-problems2",
     "title": "2  Model Formulation",
     "section": "2.7 Problems",
-    "text": "2.7 Problems\n\nA denitrifying wood chip bioreactor is just a trench in the ground filled with wood chips. Nitrate (\\(\\text{NO}_3^-\\)) in water draining from agricultural fields is removed by bacterial denitrification, with wood organic matter as the electron donor and carbon source. The nitrate is converted to relatively inert dinitrogen gas (\\(\\text{N}_2\\)) (or at least that is the intent). You can find more information on the technology here. Develop a conceptual model for this system. See the list of conceptual model components in Section 2.2 to think about what to include.\nRefrigeration of animal slurry is a commercial technology used at full-scale to reduce emission of methane and other air pollutants from animal barns. Using the cooling coffee model for inspiration, follow the model formulation steps to try to develop a governing equation for a slurry cooling system.",
+    "text": "2.7 Problems\n\nFormulate a simple model for evaporation of gasoline from a spill on an impervious surface. Start with a conceptual model, and draw a sketch. Try to get to a governing equation. What parameters would you need to apply the model? We will learn more about this type of problem in Chapter 5, but these details are not needed for this problem.\nRefrigeration of animal slurry is a commercial technology used at full-scale to reduce emission of methane and other air pollutants from animal barns. Using the cooling coffee model for inspiration, follow the model formulation steps to try to develop a governing equation for a slurry cooling system.\nA denitrifying wood chip bioreactor is just a trench in the ground filled with wood chips. Nitrate (\\(\\text{NO}_3^-\\)) in water draining from agricultural fields is removed by bacterial denitrification, with wood organic matter as the electron donor and carbon source. The nitrate is converted to relatively inert dinitrogen gas (\\(\\text{N}_2\\)) (or at least that is the intent). You can find more information on the technology here. Develop a conceptual model for this system. See the list of conceptual model components in Section 2.2 to think about what to include. We will learn more about reaction stoichiometry and microbiology in Chapter 6.",
     "crumbs": [
       "Part I: Foundations",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Model Formulation</span>"
@@ -190,7 +201,7 @@
     "href": "03_solving.html#problems",
     "title": "3  Solving and implementing models",
     "section": "3.5 Problems",
-    "text": "3.5 Problems\n\nImplement a complete slurry cooling model in Python. Try either a numeric or analytical approach.\n\n\n\n\n\nOdum, Howard T, and Elisabeth C Odum. 2000. Modeling for All Scales: An Introduction to System Simulation. Elsevier.",
+    "text": "3.5 Problems\n\nImplement a complete slurry cooling model in Python. The model could be steady-state or dynamic. And you are free to use an analytical or numeric approach. Using reasonable parameter estimates, generate and plot some predictions.\n\n\n\n\n\n\nOdum, Howard T, and Elisabeth C Odum. 2000. Modeling for All Scales: An Introduction to System Simulation. Elsevier.",
     "crumbs": [
       "Part I: Foundations",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Solving and implementing models</span>"
@@ -410,7 +421,7 @@
     "href": "06_reactions_microbiology.html#microbiology",
     "title": "6  Chemical reactions and microbiology",
     "section": "6.4 Microbiology",
-    "text": "6.4 Microbiology\nFrom a modeling perspective, microbial systems are just a set of chemical reactions. Here are some components for one approach to creating microbial models:\n\nactive microbial biomass, essential chemical substrates, and important products as state variables,\nstoichiometry: a balanced chemical reaction that includes all state variables, and\nkinetics: an equation for the rate of the overall reaction.\n\nUnlike simple chemical reactions such as urea hydrolysis, it isn’t always possible to just look up the reaction. But there are a few different approaches that can be used, including (rittmann_environmental_2020?).",
+    "text": "6.4 Microbiology\nFrom a modeling perspective, microbial systems are just a set of chemical reactions. Here are some components for one approach to creating microbial models:\n\nactive microbial biomass, essential chemical substrates, and important products as state variables,\nstoichiometry: a balanced chemical reaction that includes all state variables, and\nkinetics: an equation for the rate of the overall reaction.\n\nUnlike simple chemical reactions such as urea hydrolysis, it isn’t always possible to just look up the reaction. But there are a few different approaches that can be used, including Rittmann and McCarty (2020).",
     "crumbs": [
       "Part II: Applications",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Chemical reactions and microbiology</span>"
@@ -421,7 +432,7 @@
     "href": "06_reactions_microbiology.html#problems",
     "title": "6  Chemical reactions and microbiology",
     "section": "6.5 Problems",
-    "text": "6.5 Problems\n\nFormulate (pencil and paper) and implement (in Python) a simple urea hydrolysis model. You can assume the reaction is first-order. Plot predicted\nCreate a Python function that calcuates free ammonia \\(\\ce{NH3(aq)}\\) from TAN, pH, and temperature. You can this expression for Ka . . .\n\n\n\n\n\nClegg, S. L., and M. Whitfield. 1995. “A Chemical-Model of Seawater Including Dissolved Ammonia and the Stoichiometric Dissociation-Constant of Ammonia in Estuarine Water and Seawater from -2C to 40C.” Geochimica Et Cosmochimica Acta 59 (12): 2403–21.\n\n\nSnoeyink, Vernon L. 1980. Water Chemistry. Wiley.",
+    "text": "6.5 Problems\n\nFormulate (pencil and paper) and implement (in Python) a simple urea hydrolysis model. You can assume the reaction is first-order. Plot predicted\nCreate a Python function that calcuates free ammonia \\(\\ce{NH3(aq)}\\) from TAN, pH, and temperature. You can this expression for Ka . . .\n\n\n\n\n\nClegg, S. L., and M. Whitfield. 1995. “A Chemical-Model of Seawater Including Dissolved Ammonia and the Stoichiometric Dissociation-Constant of Ammonia in Estuarine Water and Seawater from -2C to 40C.” Geochimica Et Cosmochimica Acta 59 (12): 2403–21.\n\n\nRittmann, Bruce E., and Perry L. McCarty. 2020. Environmental Biotechnology: Principles and Applications, Second Edition. 2nd edition. New York, N.Y: McGraw Hill.\n\n\nSnoeyink, Vernon L. 1980. Water Chemistry. Wiley.",
     "crumbs": [
       "Part II: Applications",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Chemical reactions and microbiology</span>"

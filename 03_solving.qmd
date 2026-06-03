@@ -793,6 +793,14 @@ print(preds)
 ## Problems
 
 1. Implement a complete slurry cooling model in Python.
-   Try either a numeric or analytical approach.
-   
+   The model could be steady-state or dynamic.
+   And you are free to use an analytical or numeric approach.
+   Using reasonable parameter estimates, generate and plot some predictions.
 
+2. Assume you have a big water cubic tank, say 10 $\text{m}^3$, that is draining from a horizontal pipe out of the bottom under the force of gravity.
+   You measure an initial flow rate of 100 $\text{L}~\text{min}^{-1}$ when the tank is full.
+   If you assume that flow rate is proportional to the tank pressure, which is not an unreasonable assumption (but not always true), then it is also proportional to the quantity of water remaining in the tank.
+   Develop model, analytical or numerical, to calculate the volume of water remaining in the tank at any time.
+   Implement it in Python after coming up with a solution.
+
+## References {.unnumbered}

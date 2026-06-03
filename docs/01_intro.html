@@ -317,6 +317,7 @@ window.Quarto = {
   </ul></li>
   <li><a href="#model-simplification" id="toc-model-simplification" class="nav-link" data-scroll-target="#model-simplification"><span class="header-section-number">1.2</span> Model simplification</a></li>
   <li><a href="#problems" id="toc-problems" class="nav-link" data-scroll-target="#problems"><span class="header-section-number">1.3</span> Problems</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
     </div>
@@ -384,7 +385,7 @@ Figure&nbsp;1.2: Conceptual model of coffee cooling.
 T(t) = (T_0 - T_{air}) \cdot e^{(-c \cdot t)} + T_{air}.
 \tag{1.2}\]</span></span></p>
 <p>We saw a <em>computer model</em> above. It is a piece of computer software that runs the model. Creating a computer model means <em>implementing</em> a mathematical model. We could also say that development of a software model means <em>programming</em> a mathematical model. Here is an implementation of the coffee model, i.e., a computer model for cooling coffee.</p>
-<div id="7191a179" class="cell" data-execution_count="1">
+<div id="8350f96e" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import modules</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -469,27 +470,49 @@ Figure&nbsp;1.3: Hypothetical measurements of biomethanation rate.
 </section>
 <section id="problems" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="problems"><span class="header-section-number">1.3</span> Problems</h2>
+<p>Some different models are described below. Apply the labels conceptual, mathematial, computer, analytical, numerical, lumped parameter, distributed parameter, 1D, steady-state, dynamic, mechanistic, and empirical appropriately. Is the answer always clear?</p>
 <ol type="1">
-<li><p>Some different models are described below. Apply the labels conceptual, mathematial, computer, analytical, numerical, lumped parameter, distributed parameter, 1D, steady-state, dynamic, mechanistic, and empirical appropriately. Is the answer always clear?</p>
-<p>A. The NLES5 model predicts nitrate leaching based on the equation shown in the figure below (<a href="#fig-NLES5" class="quarto-xref">Figure&nbsp;<span>1.4</span></a>), where <span class="math inline">\(L\)</span> is the predicted leaching rate and the other terms are input variables or model parameters. Is it mechanistic or empirical?</p>
+<li>The NLES5 model predicts nitrate leaching based on the equation shown in the figure below (<a href="#fig-NLES5" class="quarto-xref">Figure&nbsp;<span>1.4</span></a>), where <span class="math inline">\(L\)</span> is the predicted leaching rate and the other terms are input variables or model parameters. Is it mechanistic or empirical?</li>
+</ol>
 <div id="fig-NLES5" class="quarto-float quarto-figure quarto-figure-center anchored" alt="NLES5 model.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-NLES5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="web-images/NLES5.jpg" class="img-fluid figure-img" alt="NLES5 model.">
+<img src="web-images/NLES5.png" class="img-fluid figure-img" alt="NLES5 model.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-NLES5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1.4: The NLES5 model, from <span class="citation" data-cites="NLES52022">Børgesen et al. (<a href="#ref-NLES52022" role="doc-biblioref">2022</a>)</span>.
 </figcaption>
 </figure>
 </div>
-<p>B. ADM1 is a chemical and biological model that simulates conversion of organic waste to biogas. It tracks development of microbial communities over time. Is it mechanistic or empirical? Dynamic or steady-state?</p>
-<ol start="3" type="A">
-<li></li>
-</ol></li>
+<ol start="2" type="1">
+<li>ADM1 is a chemical and biological model that simulates conversion of organic waste to biogas. It tracks development of microbial communities over time. Is it mechanistic or empirical? Dynamic or steady-state?</li>
 </ol>
+<div id="fig-ADM1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="ADM1 model.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ADM1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="web-images/ADM1-1.png" class="img-fluid figure-img" alt="ADM1 model.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ADM1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.5: The ADM1 model, from <span class="citation" data-cites="batstone_iwa_2002">Batstone et al. (<a href="#ref-batstone_iwa_2002" role="doc-biblioref">2002</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<ol start="3" type="1">
+<li><p>The Gaussian plume model is a simple general approach for modeling dilution of atmospheric pollutants from a fixed source, e.g., a smokestack. It can be expressed as an equation for the concentration of pollutant,</p>
+<p><span class="math display">\[
+c(x, y, z) = e \cdot f(h, \sigma_y, \sigma_z) ,
+\]</span></p>
+<p>where <span class="math inline">\(e\)</span> is pollutant emission rate, <span class="math inline">\(x\)</span>, <span class="math inline">\(y\)</span>, and <span class="math inline">\(z\)</span> define a position relative to the source smokestack with a height of <span class="math inline">\(h\)</span>, and the <span class="math inline">\(\sigma\)</span> terms are parameters determined from large-scale measurements that quantify horizontal and vertical dispersion. How would you characterize this model? Does it neatly fit into one box?</p></li>
+</ol>
+</section>
+<section id="references" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="references">References</h2>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-batstone_iwa_2002" class="csl-entry" role="listitem">
+Batstone, D J, J Keller, I Angelidaki, S V Kalyuzhnyi, S G Pavlostathis, A Rozzi, W T M Sanders, H Siegrist, and V A Vavilin. 2002. <span>“The IWA Anaerobic Digestion Model No 1 (ADM1).”</span> <em>Water Science and Technology: A Journal of the International Association on Water Pollution Research</em> 45 (10): 65–73.
+</div>
 <div id="ref-NLES52022" class="csl-entry" role="listitem">
 Børgesen, Christen D., Johannes WM Pullens, Jin Zhao, Gitte Blicher-Mathiesen, Peter Sørensen, and Jørgen E. Olesen. 2022. <span>“NLES5 an Empirical Model for Estimating Nitrate Leaching from the Root Zone of Agricultural Land.”</span> <em>European Journal of Agronomy</em> 134 (March): 126465. <a href="https://doi.org/10.1016/j.eja.2022.126465">https://doi.org/10.1016/j.eja.2022.126465</a>.
 </div>

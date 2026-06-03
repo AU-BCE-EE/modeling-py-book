@@ -188,13 +188,26 @@ But in fact all of these models are relatively simple.
 
 ## Problems
 
-1. Some different models are described below.
-   Apply the labels conceptual, mathematial, computer, analytical, numerical, lumped parameter, distributed parameter, 1D, steady-state, dynamic, mechanistic, and empirical appropriately. Is the answer always clear?
+Some different models are described below.
+Apply the labels conceptual, mathematial, computer, analytical, numerical, lumped parameter, distributed parameter, 1D, steady-state, dynamic, mechanistic, and empirical appropriately. Is the answer always clear?
 
-   A. The NLES5 model predicts nitrate leaching based on the equation shown in the figure below (@fig-NLES5), where $L$ is the predicted leaching rate and the other terms are input variables or model parameters. Is it mechanistic or empirical? 
+1. The NLES5 model predicts nitrate leaching based on the equation shown in the figure below (@fig-NLES5), where $L$ is the predicted leaching rate and the other terms are input variables or model parameters. Is it mechanistic or empirical? 
 
-   ![The NLES5 model, from @NLES52022.](web-images/NLES5.jpg){#fig-NLES5 fig-alt="NLES5 model."}
+![The NLES5 model, from @NLES52022.](web-images/NLES5.png){#fig-NLES5 fig-alt="NLES5 model."}
 
-   B. ADM1 is a chemical and biological model that simulates conversion of organic waste to biogas. It tracks development of microbial communities over time. Is it mechanistic or empirical? Dynamic or steady-state? 
+2. ADM1 is a chemical and biological model that simulates conversion of organic waste to biogas. It tracks development of microbial communities over time. Is it mechanistic or empirical? Dynamic or steady-state? 
 
-   C.  
+![The ADM1 model, from @batstone_iwa_2002.](web-images/ADM1-1.png){#fig-ADM1 fig-alt="ADM1 model."}
+
+3. The Gaussian plume model is a simple general approach for modeling dilution of atmospheric pollutants from a fixed source, e.g., a smokestack. It can be expressed as an equation for the concentration of pollutant,
+
+   $$
+   c(x, y, z) = e \cdot f(h, \sigma_y, \sigma_z) ,
+   $$
+
+   where $e$ is pollutant emission rate, $x$, $y$, and $z$ define a position relative to the source smokestack with a height of $h$, and the $\sigma$ terms are parameters determined from large-scale measurements that quantify horizontal and vertical dispersion.
+   How would you characterize this model?
+   Does it neatly fit into one box?
+
+## References {.unnumbered}
+
