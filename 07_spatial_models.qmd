@@ -6,23 +6,33 @@ So far we have dealt with 0D models (lumped-parameter models) that do not explic
 
 Imagine we have a pipe with fluid flowing through it, and we want to model the temperature of the fluid. The incoming fluid is cold and the pipe is warmed by some heat source, which heats up the fluid inside the pipe. With a 0D model we would assume that the fluid is well mixed inside the pipe and therefore the temperature of the fluid would be the same everywhere, but in reality the fluid will have a lower temperature at the left side compared to the right side (Fig Xa). We will model this temperature distributed along the pipe (x dimension) by splitting the pipe into multiple control volumes (Fig Xb) and rather than a single conservation equation (0D), we will write a conversation equation for each control volume. 
 
-The energy flowing from in and out of a control volume shall now be represented by two different modes of energy transport that was already touched upon in Chapter X.X, that is advection and diffusion (or conduction for heat/energy diffusion). Advection is the transport of energy by the bulk movement of the fluid, which is what we called "in" and "out" in the 0D conservation equation. Heat diffusion is the transport of energy by random molecular motion. The balance of energy in each control volume will be determined by the flux of energy into and out of the control volume, as well as any heat generated within the control volume. Lets write that down. The conservation equation for a control volume can be written as:
+The energy flowing from in and out of a control volume shall now be represented by two different modes of energy transport that was already touched upon in Chapter X.X, that is advection and diffusion (or conduction for heat/energy diffusion). Advection is the transport of energy by the bulk movement of the fluid. Heat diffusion is the transport of energy by random molecular motion. In our 0D problem we did not distinguish between these processes and lumped them together as in The balance of energy in each control volume will be determined by the flux of energy into and out of the control volume, as well as any heat generated within the control volume. Lets write that down. The conservation equation for a control volume can be written as:
 
 $$
-\text{accumulation} = advection_{in} + diffusion_{in} - advection_{out} - diffusion_{out}  + generated - consumed. 
+\text{accumulation} = adv_{in} + diff_{in} - adv_{out} - diff_{out}  + generated - consumed. 
 $$
-Earlier in chapter 4, we already showed that advection was the product of the velocity and temperature difference per unit length (gradient) for the in and out (or left and right) of the control volume: 
+Earlier in chapter 4, we already showed that advection was the product of the superficial velocity and temperature difference over the length of the control volume (gradient), which lead to: 
 $$ 
-\frac{dT}{dt} = v_x \cdot \frac{(T_{in} - T_{out})}{\Delta x}.
+\frac{dT}{dt} = v_x \cdot \frac{(T_{in} - T_{out})}{\Delta x}
 $$
-Heat diffusion in and out of the control volume can be represented by Fourier's law, which says that the flux (J) is equal to the product of the thermal conductivity (k) and the temperature gradient in space $\frac{dT}{dx}$. But we are still dealing with the difference between fluxes in and out of the control volume, so like for advection we have to represent the difference over a length $\Delta x$, so it becomes the flux gradient. 
-
+But we still need diffusion also. Heat diffusion in and out of the control volume can be represented by Fourier's law, $q = -k \cdot \frac{dT}{dx}$, where q is the heat flux, k is the thermal conductivity and $\frac{dT}{dx}$ is the temperature gradient. But we are still dealing with the difference between fluxes over the length ($\Delta x$) of the control volume so rather than a temperature gradient we actually need the flux gradient. Starting from equations derived in Chapter 4:
 $$ 
-\frac{dT}{dt} = \frac{J_{in}-J_{out}}{\Delta x} = \frac{k \cdot \frac{dT}{dx}_{in} - k \cdot \frac{dT}{dx}_{out}}{\Delta x}
+\frac{dT}{dt} = \frac{\dot{Q}}{V \cdot {\rho} \cdot c_p} = \frac{\dot{Q}}{\Delta x \cdot A \cdot {\rho} \cdot c_p}
 $$
+We now rewrite the energy flow $\dot{Q}$ as the difference between the flux in and out of the control volume and substitute Fourier's law for the fluxes, which gives us: 
+$$ 
+\frac{dT}{dt} = \frac{q_{in}-q_{out}}{\Delta x \cdot A \cdot {\rho} \cdot c_p} = \frac{k \cdot \frac{dT}{dx}_{in} - k \cdot \frac{dT}{dx}_{out}}{\Delta x \cdot A \cdot {\rho} \cdot c_p}
+$$
+Putting advection and diffusion together, we can write the conservation equation for a control volume as:
 
-The balance will include the flux of heat into and out of the control volume, as well as any heat generated within the control volume. This will lead us to a PDE that describes how the temperature changes with time and space.
-
+$$
+\frac{dT}{dt} = v_x \cdot \frac{(T_{in} - T_{out})}{\Delta x} + \frac{k \cdot \frac{dT}{dx}_{in} - k \cdot \frac{dT}{dx}_{out}}{\Delta x \cdot A \cdot {\rho} \cdot c_p}
+$$
+Good! we now only miss the heat generated within the control volume, which we will just call S, for source (that source could represent many things, which we will get into later). The final conservation equation for a control volume is then:
+$$
+\frac{dT}{dt} = v_x \cdot \frac{(T_{in} - T_{out})}{\Delta x} + \frac{k \cdot \frac{dT}{dx}_{in} - k \cdot \frac{dT}{dx}_{out}}{\Delta x \cdot A \cdot {\rho} \cdot c_p} + S
+$$
+Note that S is in units of temperature per time. In reality we are likely given S as some energy input $Q$ in units of (energy per time) and thus we need to divide it by $\Delta x \cdot A \cdot {\rho} \cdot c_p$ to make the units match!
 
 
 <!-- Advection, diffusion, source terms.
