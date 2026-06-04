@@ -2,6 +2,23 @@
 
 ## Governing equations and coordinate systems
 
+So far we have dealt with 0D models (lumped-parameter models) that do not explicitly represent spatial variation. We will start from the same fundamental principles of conservation and constitutive equations, but now we will explicitly represent spatial variation in the state variable(s) and fluxes. This will lead us to partial differential equations (PDEs) that govern the system. A PDE means that the state variable is differentiated with respect to more than one independent variable; that could be time and a spacial dimension (e.g. up-down). 
+
+Imagine we have a pipe with fluid flowing through it, and we want to model the temperature of the fluid. The incoming fluid is cold and the pipe is warmed by some heat source, which heats up the fluid inside the pipe. With a 0D model we would assume that the fluid is well mixed inside the pipe and therefore the temperature of the fluid would be the same everywhere, but in reality the fluid will have a lower temperature at the left side compared to the right side (Fig Xa). We will model this temperature distributed along the x dimension by splitting the pipe into multiple control volumes (Fig Xb) and rather than a single energy conservation equation (0D), we will write a conversation equation for each control volume. 
+
+The energy flowing from one control volume to the next shall now be represented by two different modes of energy transport that was already touched upon in Chapter X.X, that is advection and diffusion (or conduction for heat diffusion). Advection is the transport of energy by the bulk movement of the fluid, which is what we called "in" and "out" in the 0D conservation equation. Diffusion is the transport of energy by random molecular motion. The balance of energy in each control volume will be determined by the flux of energy into and out of the control volume, as well as any heat generated within the control volume. Lets write that down. The conservation equation for a control volume can be written as:
+
+$$
+\text{accumulation} = advection_{in} + diffusion_{in} - advection_{out} - diffusion_{out}  + generated - consumed. 
+$$
+
+
+
+
+The balance will include the flux of heat into and out of the control volume, as well as any heat generated within the control volume. This will lead us to a PDE that describes how the temperature changes with time and space.
+
+
+
 <!-- Advection, diffusion, source terms.
      Volumetric source terms vs. boundary source terms. -->
 

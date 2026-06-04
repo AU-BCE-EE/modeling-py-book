@@ -189,7 +189,7 @@ But in fact all of these models are relatively simple.
 ## Problems
 
 Some different models are described below.
-Apply the labels conceptual, mathematial, computer, analytical, numerical, lumped parameter, distributed parameter, 1D, steady-state, dynamic, mechanistic, and empirical appropriately. Is the answer always clear?
+Apply the labels conceptual, mathematical, computer, analytical, numerical, lumped parameter, distributed parameter, 1D, steady-state, dynamic, mechanistic, and empirical appropriately. Is the answer always clear?
 
 1. The NLES5 model predicts nitrate leaching based on the equation shown in the figure below (@fig-NLES5), where $L$ is the predicted leaching rate and the other terms are input variables or model parameters. Is it mechanistic or empirical? 
 
