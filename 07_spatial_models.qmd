@@ -28,7 +28,7 @@ Putting advection and diffusion together, we can write the conservation equation
 $$
 \frac{dT}{dt} = v_x \cdot \frac{(T_{in} - T_{out})}{\Delta x} + \frac{k \cdot \frac{dT}{dx}_{in} - k \cdot \frac{dT}{dx}_{out}}{\Delta x \cdot A \cdot {\rho} \cdot c_p}
 $$
-Good! we now only miss the heat generated within the control volume, which we will just call S, for source (that source could represent many things, which we will get into later). The final conservation equation for a control volume is then:
+Good! we now only miss the heat generated within the control volume, which we will just call S for source (that source could represent many things, which we will get into later). The final conservation equation for a control volume is then:
 $$
 \frac{dT}{dt} = v_x \cdot \frac{(T_{in} - T_{out})}{\Delta x} + \frac{k \cdot \frac{dT}{dx}_{in} - k \cdot \frac{dT}{dx}_{out}}{\Delta x \cdot A \cdot {\rho} \cdot c_p} + S
 $$
