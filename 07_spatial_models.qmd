@@ -4,16 +4,22 @@
 
 So far we have dealt with 0D models (lumped-parameter models) that do not explicitly represent spatial variation. We will start from the same fundamental principles of conservation and constitutive equations, but now we will explicitly represent spatial variation in the state variable(s) and fluxes. This will lead us to partial differential equations (PDEs) that govern the system. A PDE means that the state variable is differentiated with respect to more than one independent variable; that could be time and a spacial dimension (e.g. up-down). 
 
-Imagine we have a pipe with fluid flowing through it, and we want to model the temperature of the fluid. The incoming fluid is cold and the pipe is warmed by some heat source, which heats up the fluid inside the pipe. With a 0D model we would assume that the fluid is well mixed inside the pipe and therefore the temperature of the fluid would be the same everywhere, but in reality the fluid will have a lower temperature at the left side compared to the right side (Fig Xa). We will model this temperature distributed along the x dimension by splitting the pipe into multiple control volumes (Fig Xb) and rather than a single energy conservation equation (0D), we will write a conversation equation for each control volume. 
+Imagine we have a pipe with fluid flowing through it, and we want to model the temperature of the fluid. The incoming fluid is cold and the pipe is warmed by some heat source, which heats up the fluid inside the pipe. With a 0D model we would assume that the fluid is well mixed inside the pipe and therefore the temperature of the fluid would be the same everywhere, but in reality the fluid will have a lower temperature at the left side compared to the right side (Fig Xa). We will model this temperature distributed along the pipe (x dimension) by splitting the pipe into multiple control volumes (Fig Xb) and rather than a single conservation equation (0D), we will write a conversation equation for each control volume. 
 
-The energy flowing from one control volume to the next shall now be represented by two different modes of energy transport that was already touched upon in Chapter X.X, that is advection and diffusion (or conduction for heat diffusion). Advection is the transport of energy by the bulk movement of the fluid, which is what we called "in" and "out" in the 0D conservation equation. Diffusion is the transport of energy by random molecular motion. The balance of energy in each control volume will be determined by the flux of energy into and out of the control volume, as well as any heat generated within the control volume. Lets write that down. The conservation equation for a control volume can be written as:
+The energy flowing from in and out of a control volume shall now be represented by two different modes of energy transport that was already touched upon in Chapter X.X, that is advection and diffusion (or conduction for heat/energy diffusion). Advection is the transport of energy by the bulk movement of the fluid, which is what we called "in" and "out" in the 0D conservation equation. Heat diffusion is the transport of energy by random molecular motion. The balance of energy in each control volume will be determined by the flux of energy into and out of the control volume, as well as any heat generated within the control volume. Lets write that down. The conservation equation for a control volume can be written as:
 
 $$
 \text{accumulation} = advection_{in} + diffusion_{in} - advection_{out} - diffusion_{out}  + generated - consumed. 
 $$
+Earlier in chapter 4, we already showed that advection was the product of the velocity and temperature difference per unit length (gradient) for the in and out (or left and right) of the control volume: 
+$$ 
+\frac{dT}{dt} = v_x \cdot \frac{(T_{in} - T_{out})}{\Delta x}.
+$$
+Heat diffusion in and out of the control volume can be represented by Fourier's law, which says that the flux (J) is equal to the product of the thermal conductivity (k) and the temperature gradient in space $\frac{dT}{dx}$. But we are still dealing with the difference between fluxes in and out of the control volume, so like for advection we have to represent the difference over a length $\Delta x$, so it becomes the flux gradient. 
 
-
-
+$$ 
+\frac{dT}{dt} = \frac{J_{in}-J_{out}}{\Delta x} = \frac{k \cdot \frac{dT}{dx}_{in} - k \cdot \frac{dT}{dx}_{out}}{\Delta x}
+$$
 
 The balance will include the flux of heat into and out of the control volume, as well as any heat generated within the control volume. This will lead us to a PDE that describes how the temperature changes with time and space.
 
