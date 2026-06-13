@@ -340,7 +340,25 @@ $$
 \dot{Q} = \frac{dT}{dt} \cdot c_p \cdot M,
 $${#eq-cp-def}
 
-where $M =$ the material mass. 
+where $M =$ the material mass and $c_p =$ specific heat capacity. 
+
+## Phase changes
+
+If a substance remains in a single phase, any change in thermal energy causes a change in temperature following @eq-cp-def.
+But when a change, between solid, liquid, and gas, occurs, energy is consumed or released in the phase change, and does not show up in temperature.
+In systems with phase changes, it is necessary to track one or more specific phases as a state variable.
+We can think of the equations that relate energy transfer and phase change as linking equations.
+There are only two important parameters, which are physical constants: the heat of fusion $h_f$ and heat of vaporization $k_v$, both  typically $\kJpkg$.
+These constants directly link the mass-based rate of phase change to energy flow.
+
+$$
+\dot{m_m} = \frac{\dot{Q}} {h_f} 
+$${eq-hf-link}
+
+$$
+\dot{m_v} = \frac{\dot{Q}} {h_v} 
+$${eq-hf-link}
+
 
 <!-- Specific heat capacity links energy and temperature. -->
 
@@ -466,14 +484,16 @@ plt.ylabel(r'Predicted coffee temperature $(^\circ\mathregular{C})$')
 plt.show()
 ```
 
-## Problems
+## Problems {.unnumbered}
 
-1. You have a fermenter that 
+1. You have a fermenter that is heated to around 45 $\degC$ using a water jacket. 
+   The water flowing into the water jacket has a constant temperature of 50 $\degC$.
+   Develop and implement a steady-state model to predict fermemter temperature based on heating water flow and relevant parameters and system characteristics.
 
 2. How long will it take for an ice cube to melt once it is exposed to room temperature air?
-Follow the model formulation steps we covered in class to develop a model to simulate the processes.
-You can use an analytical or numerical approach.
-Predict the time required for melting for a couple ice cube sizes.
+   Follow the model formulation steps we covered in class to develop a model to simulate the processes.
+   You can use an analytical or numerical approach.
+   Predict the time required for melting for a couple ice cube sizes.
 
 ## References {.unnumbered}
 

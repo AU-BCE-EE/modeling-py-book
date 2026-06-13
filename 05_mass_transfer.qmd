@@ -151,7 +151,7 @@ It is a difference in mass concentration that drives mass transfer.
 
 We won't get into modelling concentration profiles until the spatial sections later in this book.
 
-## Problems
+## Problems{.unnumbered}
 
 1. Fish transport dissolved oxygen from water into their bloodstream through gills.
    Early work on the topic suggests that most of the resistance for this transport comes from a film of water outside the gills. 
@@ -167,7 +167,7 @@ We won't get into modelling concentration profiles until the spatial sections la
 
 2. Develop a steady-state or dynamic model for benzene volatilization from an open industrial wastewater lagoon in Python.
    You can assume a negligible bulk air concentration.
-   The bulk concentration in the lagoon is 10 $\mgpl$, which corresponds to an vapor-phase equilibrium concentration of about 2 $\gpmc$ (that is based on Henry's law--ask us for more information if you are curious!).
+   The bulk concentration in the lagoon is 10 $\mgpl$, which corresponds to an vapor-phase equilibrium concentration of about 2 $\gpmc$ (that is based on Henry's law).
    Most of the resistance to mass transfer comes from the water.
    You can assume the overall mass transfer coefficient in air phase units, $K_G$, is 0.001 $\mps$.
    If the lagoon is 1 m deep, predict the relative daily loss with your model.

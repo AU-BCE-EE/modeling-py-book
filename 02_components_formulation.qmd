@@ -242,7 +242,7 @@ The difference implies something about what we know though, and that will be exp
      Scope here: 0D (lumped-parameter) models only.
      Approach for 1D+ models (start from full GE, then simplify) introduced in @sec-spatial. -->
 
-## Problems {#sec-problems2}
+## Problems {.unnumbered}
 
 1. Formulate a simple model for evaporation of gasoline from a spill on an impervious surface.
    Start with a conceptual model, and draw a sketch.

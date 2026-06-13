@@ -790,7 +790,7 @@ preds = cm.cool(
 print(preds)
 ```
 
-## Problems
+## Problems {.unnumbered}
 
 1. Implement a complete slurry cooling model in Python.
    The model could be steady-state or dynamic.

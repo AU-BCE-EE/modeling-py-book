@@ -207,7 +207,6 @@ Apply the labels conceptual, mathematical, computer, analytical, numerical, lump
 
    where $e$ is pollutant emission rate, $x$, $y$, and $z$ define a position relative to the source smokestack with a height of $h$, and the $\sigma$ terms are parameters determined from large-scale measurements that quantify horizontal and vertical dispersion.
    How would you characterize this model?
-   Does it neatly fit into one box?
 
 ## References {.unnumbered}
 
