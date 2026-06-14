@@ -188,6 +188,7 @@ But in fact all of these models are relatively simple.
 
 ## Problems
 
+### I. Model classification
 Some different models are described below.
 Apply the labels conceptual, mathematical, computer, analytical, numerical, lumped parameter, distributed parameter, 1D, steady-state, dynamic, mechanistic, and empirical appropriately. Is the answer always clear?
 
@@ -207,6 +208,22 @@ Apply the labels conceptual, mathematical, computer, analytical, numerical, lump
 
    where $e$ is pollutant emission rate, $x$, $y$, and $z$ define a position relative to the source smokestack with a height of $h$, and the $\sigma$ terms are parameters determined from large-scale measurements that quantify horizontal and vertical dispersion.
    How would you characterize this model?
+
+### Other problems
+
+1. A hypothetical geospatial water quality model used to predict nutrient concentrations dissolved oxygen in the river and estuary near a major urban location in Europe incorporates many assumptions, including uniform temperature and solute concentrations over the vertical dimension. 
+   The software tool is used to manage wastewater loading and help determine related governmental policy. 
+   A critic points out that measurements made by a university researcher show that vertical gradients in fact exist in the water profile, and therefore the model is invalid and should not be trusted.
+   The agency applying the model counters that the developers have shown that the model is accurate.
+   Who is right?
+   Discuss.
+   Be sure to consider the concept of model simplification.
+
+2. A fellow student claims that analytical modelling is outdated and completely illogical in the present age of cheap computing power.
+   Do you agree?
+   Explain.
+
+3. 
 
 ## References {.unnumbered}
 
