@@ -6,34 +6,73 @@ So far we have dealt with 0D models (lumped-parameter models) that do not explic
 
 Imagine we have a pipe with fluid flowing through it, and we want to model the temperature of the fluid. The incoming fluid is cold and the pipe is warmed by some heat source, which heats up the fluid inside the pipe. With a 0D model we would assume that the fluid is well mixed inside the pipe and therefore the temperature of the fluid would be the same everywhere, but in reality the fluid will have a lower temperature at the left side compared to the right side (Fig Xa). We will model this temperature distributed along the pipe (x dimension) by splitting the pipe into multiple control volumes (Fig Xb) and rather than a single conservation equation (0D), we will write a conversation equation for each control volume. 
 
-The energy flowing from in and out of a control volume shall now be represented by two different modes of energy transport that was already touched upon in Chapter X.X, that is advection and diffusion (or conduction for heat/energy diffusion). Advection is the transport of energy by the bulk movement of the fluid. Heat diffusion is the transport of energy by random molecular motion. In our 0D problem we did not distinguish between these processes and lumped them together as in The balance of energy in each control volume will be determined by the flux of energy into and out of the control volume, as well as any heat generated within the control volume. Lets write that down. The conservation equation for a control volume can be written as:
+The energy flowing in and out of a control volume shall now be represented by two different modes of energy transport that was already touched upon in Chapter X.X, that is advection and diffusion (or conduction for heat/energy diffusion). Advection is the transport of energy by the bulk movement of the fluid. Heat diffusion is the transport of energy by random molecular motion. In the case of a 0D problem we did not distinguish between these processes because diffusion was absent (perfect mixing) implicitely assuming "in" and "out" was through advection. Now it is different and a conservation equation must be made for each control volume by considering flux of energy into and out of the control volume, as well as any heat generated within the control volume. Lets write that down. The conservation equation for a control volume can be written as:
 
 $$
 \text{accumulation} = adv_{in} + diff_{in} - adv_{out} - diff_{out}  + generated - consumed. 
 $$
-Earlier in chapter 4, we already showed that advection was the product of the superficial velocity and temperature difference over the length of the control volume (gradient), which lead to: 
+Earlier in chapter 4, we already showed that advection was the product of the superficial velocity and temperature difference over the length of the control volume (gradient). We now flip the sign of the temperature difference to be consistent with the direction of flow, which gives us:
 $$ 
-\frac{dT}{dt} = v_x \cdot \frac{(T_{in} - T_{out})}{\Delta x}
+\frac{dT}{dt} = v_x \cdot \frac{(T_{in} - T_{out})}{\Delta x} = -v_x \cdot \frac{(T_{out} - T_{in})}{\Delta x}
 $$
-But we still need diffusion also. Heat diffusion in and out of the control volume can be represented by Fourier's law, $q = -k \cdot \frac{dT}{dx}$, where q is the heat flux, k is the thermal conductivity and $\frac{dT}{dx}$ is the temperature gradient. But we are still dealing with the difference between fluxes over the length ($\Delta x$) of the control volume so rather than a temperature gradient we actually need the flux gradient. Starting from equations derived in Chapter 4:
+But we still need to add diffusion. Heat diffusion in and out of the control volume can be represented by Fourier's law, $q = -k \cdot \frac{dT}{dx}$, where q is the heat flux, k is the thermal conductivity and $\frac{dT}{dx}$ is the temperature gradient. But we are still dealing with the difference between fluxes over the length ($\Delta x$) of the control volume so rather than a temperature gradient we actually need the flux gradient. Starting from equations derived in Chapter 4:
 $$ 
 \frac{dT}{dt} = \frac{\dot{Q}}{V \cdot {\rho} \cdot c_p} = \frac{\dot{Q}}{\Delta x \cdot A \cdot {\rho} \cdot c_p}
 $$
 We now rewrite the energy flow $\dot{Q}$ as the difference between the flux in and out of the control volume and substitute Fourier's law for the fluxes, which gives us: 
 $$ 
-\frac{dT}{dt} = \frac{q_{in}-q_{out}}{\Delta x \cdot A \cdot {\rho} \cdot c_p} = \frac{k \cdot \frac{dT}{dx}_{in} - k \cdot \frac{dT}{dx}_{out}}{\Delta x \cdot A \cdot {\rho} \cdot c_p}
+\frac{dT}{dt} = \frac{q_{in}-q_{out}}{\Delta x \cdot A \cdot {\rho} \cdot c_p} = \frac{-k \cdot \frac{dT}{dx}_{in} -(- k \cdot \frac{dT}{dx}_{out})}{\Delta x \cdot A \cdot {\rho} \cdot c_p} = \frac{k}{A \cdot \rho \cdot c_p} \cdot \frac{\frac{dT}{dx}_{out} - \frac{dT}{dx}_{in}}{\Delta x}
 $$
-Putting advection and diffusion together, we can write the conservation equation for a control volume as:
+Putting advection and diffusion together:
 
 $$
-\frac{dT}{dt} = v_x \cdot \frac{(T_{in} - T_{out})}{\Delta x} + \frac{k \cdot \frac{dT}{dx}_{in} - k \cdot \frac{dT}{dx}_{out}}{\Delta x \cdot A \cdot {\rho} \cdot c_p}
+\frac{dT}{dt} = -v_x \cdot \frac{(T_{in} - T_{out})}{\Delta x} + \frac{k}{A \cdot \rho \cdot c_p} \cdot \frac{\frac{dT}{dx}_{out} - \frac{dT}{dx}_{in}}{\Delta x}
 $$
-Good! we now only miss the heat generated within the control volume, which we will just call S for source (that source could represent many things, which we will get into later). The final conservation equation for a control volume is then:
+Good! we now only miss the heat generated within the control volume, which we will just call S for source (that source could represent many things, which we will get into later). The governing equation for a control volume is then:
 $$
-\frac{dT}{dt} = v_x \cdot \frac{(T_{in} - T_{out})}{\Delta x} + \frac{k \cdot \frac{dT}{dx}_{in} - k \cdot \frac{dT}{dx}_{out}}{\Delta x \cdot A \cdot {\rho} \cdot c_p} + S
+\frac{dT}{dt} = -v_x \cdot \frac{(T_{in} - T_{out})}{\Delta x} + \frac{k}{A \cdot \rho \cdot c_p} \cdot \frac{\frac{dT}{dx}_{out} - \frac{dT}{dx}_{in}}{\Delta x} + S
 $$
-Note that S is in units of temperature per time. In reality we are likely given S as some energy input $Q$ in units of (energy per time) and thus we need to divide it by $\Delta x \cdot A \cdot {\rho} \cdot c_p$ to make the units match!
+Note that S is in units of temperature per time. In reality we are likely given S as some energy input $Q$ in units of (energy per time) and thus we need to divide it by $\Delta x \cdot A \cdot {\rho} \cdot c_p$ to make the units match.
 
+Now we take the limit $\Delta x \rightarrow 0$ and our governing equation becomes a partial differential equation (PDE)
+
+$$
+\frac{dT}{dt} = -v_x \cdot \frac{\partial T}{\partial x} + \frac{k}{A \cdot \rho \cdot c_p} \cdot \frac{\partial^2T}{\partial x^2} + S
+$$
+The equivalent governing PDE for a 1D mass problem is 
+
+$$
+\frac{dC}{dt} = -v_x \cdot \frac{\partial C}{\partial x} + D \cdot \frac{\partial^2C}{\partial x^2} + R
+$$
+Where $R$ denotes mass added or removed due to a reaction and $D$ is the diffusion coefficient. Note that both the mass and energy governing equations have the same form and they are both spatial models with only 1 dimension. In reality we have advection and diffusion in all three dimensions (x,y,z) and for completeness we can write the 3D governing PDE for mass and energy as:
+
+$$ 
+\frac{dC}{dt} = -v_x \cdot \frac{\partial C}{\partial x} - v_y \cdot \frac{\partial C}{\partial y} - v_z \cdot \frac{\partial C}{\partial z} + D \cdot \left( \frac{\partial^2C}{\partial x^2} + \frac{\partial^2C}{\partial y^2} + \frac{\partial^2C}{\partial z^2} \right) + R 
+$$
+and for energy
+$$
+\frac{dT}{dt} = -v_x \cdot \frac{\partial T}{\partial x} - v_y \cdot \frac{\partial T}{\partial y} - v_z \cdot \frac{\partial T}{\partial z} + \frac{k}{A \cdot \rho \cdot c_p} \cdot \left( \frac{\partial^2T}{\partial x^2} + \frac{\partial^2T}{\partial y^2} + \frac{\partial^2T}{\partial z^2} \right) + S
+$$
+$v_x$, $v_y$ and $v_z$ are the velocity components in the x, y and z direction, respectively. 
+
+We are now introducing a new term called, "coordinate system". The above equations are written in Cartesian (also called rectangular) coordinates, which is the most common coordinate system used in spatial models. However, there are other coordinate systems that can be used depending on the geometry of the problem. For example, if we are modeling a cylindrical pipe, it might be more convenient to use cylindrical coordinates (r, $\theta$, z) instead of Cartesian coordinates (x, y, z). Or if we have a sphere, spherical coordinates are a better choice. The choice of coordinate system can simplify the equations and make them easier to solve. Below are governing equations for cylindrical and spherical coordinates are provided here: 
+
+Cylindrical coordinates for mass: 
+$$
+\frac{dC}{dt} = -v_r \cdot \frac{\partial C}{\partial r} - v_\theta \cdot \frac{\partial C}{\partial \theta} - v_z \cdot \frac{\partial C}{\partial z} + D \cdot \left( \frac{1}{r} \cdot \frac{\partial}{\partial r} \left( r \cdot \frac{\partial C}{\partial r} \right) + \frac{1}{r^2} \cdot \frac{\partial^2C}{\partial \theta^2} + \frac{\partial^2C}{\partial z^2} \right) + R
+$$
+and for energy 
+$$
+\frac{dT}{dt} = -v_r \cdot \frac{\partial T}{\partial r} - v_\theta \cdot \frac{\partial T}{\partial \theta} - v_z \cdot \frac{\partial T}{\partial z}  + \frac{k}{A \cdot \rho \cdot c_p} \cdot \left( \frac{1}{r} \cdot \frac{\partial}{\partial r} \left( r \cdot \frac{\partial T}{\partial r} \right) + \frac{1}{r^2} \cdot \frac{\partial^2T}{\partial \theta^2} + \frac{\partial^2T}{\partial z^2} \right) + S
+$$
+Spherical coordinates for mass: 
+$$
+\frac{dC}{dt} = -v_r \cdot \frac{\partial C}{\partial r} - v_\theta \cdot \frac{\partial C}{\partial \theta} - v_\phi \cdot \frac{\partial C}{\partial \phi} + D \cdot \left( \frac{1}{r^2} \cdot \frac{\partial}{\partial r} \left( r^2 \cdot \frac{\partial C}{\partial r} \right) + \frac{1}{r^2 \cdot \sin \theta} \cdot \frac{\partial}{\partial \theta} \left( \sin \theta \cdot \frac{\partial C}{\partial \theta} \right) + \frac{1}{r^2 \cdot \sin^2 \theta} \cdot \frac{\partial^2C}{\partial \phi^2} \right) + R
+$$
+and for energy 
+$$
+\frac{dT}{dt} = -v_r \cdot \frac{\partial T}{\partial r} - v_\theta \cdot \frac{\partial T}{\partial \theta} - v_\phi \cdot \frac{\partial T}{\partial \phi} + \frac{k}{A \cdot \rho \cdot c_p} \cdot \left( \frac{1}{r^2} \cdot \frac{\partial}{\partial r} \left( r^2 \cdot \frac{\partial T}{\partial r} \right) + \frac{1}{r^2 \cdot \sin \theta} \cdot \frac{\partial}{\partial \theta} \left( \sin \theta \cdot \frac{\partial T}{\partial \theta} \right) + \frac{1}{r^2 \cdot \sin^2 \theta} \cdot \frac{\partial^2T}{\partial \phi^2} \right) + S
+$$
 
 <!-- Advection, diffusion, source terms.
      Volumetric source terms vs. boundary source terms. -->
