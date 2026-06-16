@@ -60,6 +60,8 @@ Otherwise, how would you know what to expect?
 
 ## Pool model code verification
 
+Let's use the swimming pool model as a demo for verification.
+
 ```{python}
 #| eval: false
 
