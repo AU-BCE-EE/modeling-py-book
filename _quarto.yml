@@ -18,8 +18,8 @@ book:
         - 05_mass_transfer.qmd
         - 06_reactions_microbiology.qmd
         - 07_spatial_models.qmd
-#        - 08_stability.qmd
-#        - 09_verification_validation.qmd
+        - 08_stability.qmd
+        - 09_verification_validation.qmd
 #        - 10_parameter_estimation.qmd
 #        - 11_time_variable_inputs.qmd
 #  appendices:
@@ -61,6 +61,7 @@ format:
               msq: "{\\mathrm{m^{2}}}",
               mps: "{\\mathrm{m~s^{-1}}}",
               msqps: "{\\mathrm{m^{2}~s^{-1}}}",
+              kJpkg: "{\\mathrm{kJ~kg^{-1}}}",
               kJpkgpK: "{\\mathrm{kJ~kg^{-1}~K^{-1}}}",
               molps: "{\\mathrm{mol~s^{-1}}}",
               molpmcps: "{\\mathrm{mol~m^{-3}~s^{-1}}}",

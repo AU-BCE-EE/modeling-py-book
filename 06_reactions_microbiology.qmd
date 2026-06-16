@@ -50,7 +50,7 @@ In many cases, it is not moles but species mass, or even mass of a particular el
 Mistakes can be made with either approach!
 An advantage of 1 is that the coefficients have integer and usually obvious values, so it is easy to check values.
 
-## Reaction rates {£sec-rxn-rates}
+## Reaction rates {#sec-rxn-rates}
 
 The constitutive equation for a chemical reaction must quantify its *rate*, or how fast it proceeds, e.g., $\molps$, $\molpmcps$, or on a mass basis, e.g., $\gpmcps$.
 The term *kinetics* is used to describe reaction rates.
@@ -115,12 +115,12 @@ Here is a Python example. . .
 ## Equilibrium reactions
 
 Rapid reversible chemical reactions are often at *equilibrium*, meaning the concentrations of chemical species do not change over time.
-Here we will look at one type of equibrium reaction: acid-base or proton exchange.
+Here we will look at one important type of equibrium reaction: acid-base or proton exchange.
 For more on these types of problems, see @Snoeyink1980.
 
 Acid-base reactions are important in natural and engineered systems for influencing pH, which affects many processes.
 In both types of systems, a set of chemical species and reactions that are together called the *carbonate system* are an important system.
-The carbonate system plays an important role in processes in the oceans, municipal wastewater, and even your blood!
+The carbonate system plays an important role in processes in the oceans, municipal wastewater, and your blood!
 Several *chemical species* play a role:
 
 * $\ce{CO2(g)}$ is a gas,
@@ -131,10 +131,7 @@ Several *chemical species* play a role:
 * $\ce{CO32-}$ is carbonate.
 
 Chemical speciation models are used to determine the concentration of specific chemical species.
-Why might this matter?
-Well, chemical species affect biological and chemical processes.
-
-The fundamental concept here is that the *mass action expression* or *reaction quotient* takes on a specific numeric value at equilibrium.
+A fundamental concept here is that the *mass action expression* or *reaction quotient* takes on a specific numeric value at equilibrium.
 For example, let's look at a reaction between only two of the carbonate system species:
 
 $$
@@ -142,7 +139,7 @@ $$
 $${#eq-carb1}
 
 The mass action expression or reaction quotient for any reaction is the (mathematical) product of (reaction) product concentrations divided by the product of reactant concentrations.
-Each concentration should be raised to the power of the stoichiometric coefficient (all 1 in this reaction).
+Each concentration should be raised to the power of the stoichiometric coefficient, which are all 1 in this reaction.
 So for @eq-carb1, we have:
 
 $$
@@ -151,13 +148,14 @@ $${#eq-carb-rq1}
 
 where $c=$ molar or molal concentration, i.e., moles of species per L of water or moles per kg of water.
 At equilibrium, the numeric value of that reaction quotient, @eq-carb-rq1, is know: at 15$\degC$ it is $3.80 \cdot 10^{-7}$ (@Snoeyink1980: p. 157).
-(Actually, except for dilute solutions, a correction is needed for interactions between ions, but the use of concentrations can still give decent approximate values. See @Snoeyink1980 for more information on chemical activity and ionic strength.)
-But typically, because the value of constants vary by orders of magnitude, it is the negative logarithm (base 10) and we'll see $pK_a$.
+Actually, except for very dilute solutions, for accurate results a correction is needed for interactions between ions, but the use of concentrations can still give decent approximate values. 
+See @Snoeyink1980 for more information on chemical activity and ionic strength.
+But typically, because the value of constants vary by orders of magnitude, these constants are expressed as the negative logarithm (base 10) and we'll see $pK_a$.
 So here, $pK_a = 6.42$.
 The numeric value is called the *equilibrium constant*
 
 So, if we know the concentration of $\ce{H2CO3^*}$ and $\ce{H^+}$ we can calculate the concentration of bicarbonate $\ce{HCO3-}$ using the equilibrium constant.
-The hydrogen ion (or "proton", because that it what it is!) concentration is commonly take from pH, i.e.,
+The hydrogen ion (or "proton", because that it what it is) concentration is commonly take from pH, i.e.,
 
 $$
 p\text{H} = - log_{10}(c_{H^+}).
@@ -166,6 +164,8 @@ $${#eq-pH-def}
 Even better, if we could use other, independent, information, we can solve for all species concentrations, including $\ce{H+}$, which means we could calculate pH. 
 We can use element balance (commonly H balance) or charge balance for that other information.
 The programming might be a bit much for this course, so we will include an example in an appendix . . .
+
+## Ammonia equilibrium
 
 Here is a simple example for ammonia.
 This is another thing all environmental engineers should know!
@@ -176,7 +176,7 @@ $$
 \ce{NH4+ <=> NH3 + H+},
 $${#eq-amm-dis}
 
-with an equilbrium constant $k_a$, where the $a$ is for *a*cid dissociation constant.
+with an equilbrium constant $k_a$, where the $a$ is for acid dissociation constant.
 The numeric value is around $pk_a = 9.56$ at 15 $\degC$ (@clegg_chemical-model_1995). 
 
 Let's write the mass action expression and set it to the acid dissociation constant:
@@ -298,22 +298,270 @@ We see $\ce{NH4(aq)}$ is exactly half of TAN when $p\text{K}_a$ = pH, very small
 
 
 
-<!-- First- and second-order reactions as useful simplifications.
-     Law of mass action and chemical equilibrium.
-     Stoichiometry.
-     Examples: ammonia and carbon dioxide speciation. -->
+
+## Matrix operations
+
+Matrices are convenient for oranizing stoichiometric coefficients and then even using in compact code for speciation calculations.
+Here we will use the carbonate system as as demo.
+
+We'll start with a stoichiometry matrix.
+First we need to think about how to set it up, because at this point there are multiple routes that could be taken.
+We need to select what are sometimes called "master species" or we might call "funamental species".
+These species will be the reactants for all reactions.
+We'll use $\ce{H2CO3^*}$ and $\ce{H+}$.
+These reactants will define the columns in our stoichiometry matrix, and products will define rows.
+This too is arbitrary, but seems most convenient.
+If we only consider the species $\ce{H2CO3^*}$, $\ce{HCO3-}$, $\ce{CO32-}$, and of course $\ce{H+}$ and $\ce{OH-}$, our coefficient matrix is:
+
+```{python}
+#| eval: false
+       | H2CO3*|  H+
+       --------|----
+HCO3-  |  -1   |  1
+CO3-2  |  -1   |  2
+  OH-  |   0   |  1
+```
+
+Although $\ce{CO32-}$ forms from $\ce{H2CO3^*}$, here our reactant is carbonic acid $\ce{H2CO3^*}$, so in this model $\ce{CO32-}$ production is expressed as two reactions combined:
+
+$$
+\ce{H2CO3^* <=> CO32- + 2H+}.
+$${#eq-carb2}
+
+So what is the use of this matrix?
+We'll demonstrate after first creating the matrix in Python.
+
+```{python}
+import numpy as np
+
+# Stoichometry matrix
+#        | H2CO3*|  H+
+#        --------|----
+# HCO3-  |  -1   |  1
+# CO3-2  |  -1   |  2
+#   OH-  |   0   |  1
+sc = np.array([[-1, 1],
+               [-1, 2],
+               [ 0, 1]])
+
+print(sc)
+```
+
+Note that we do not get row or column names with a matrix.
+So good comments (as above) are helpful.
+
+To use the matrix, we need equilibrium constants for each reaction--so three here, one for each row.
+
+```{python}
+keq = 10**np.array([-6.3, -16.6, -14.0])
+```
+
+The first thing we can do with the matrix is to calculate reactant species concentrations once we have master species concentrations.
+Look at @eq-carb2.
+The relevant mass action expression is
+
+$$
+k_2 = \frac{c_{\ce{CO32-}} \cdot c_{\ce{H+}}^2}{c_{\ce{H2CO3^*}}}.
+$${#eq-carb-ma2}
+
+Rearranging gives an equation for the reactant species concentration,
+
+$$
+c_{\ce{CO32-}} = k_2 \cdot \frac{c_{\ce{H2CO3^*}}} {c_{\ce{H+}}^2}.
+$${#eq-carb-ma2}
+
+We can actually carry out this calculation using the `sc` stoichiometry matrix.
+
+```{python}
+cH2CO3s = 0.001
+cHp = 1e-6
+keq[1] * cH2CO3s**(-sc[1, 0]) / cHp**(sc[1, 1])
+```
+
+Do you see what we've done?
+Do you understand why we included the `**(-sc[1, 0])` bit?
+That makes it more general, and adaptable to the complete calculations for all reactants, which we can do using matrix operations like this:
+
+```{python}
+conc = keq * cH2CO3s**(-sc[:, 0]) / (cHp**sc[:, 1])
+conc
+```
+
+This approach could work with more reactants and species with different stoichiometric coefficients.
+Of course, we don't typically know master species concentrations.
+When we make measurements on a water sample, create a solution in the laboratory, or simulate mass transfer and reaction of chemicals, it is the *total* concentrations that we know.
+So it takes a bit more conceptual and programming trickery to come up with a general approach for solving chemical speciation problems.
+In the example `carb_spec()` function below, we use two: (1) a proton balance and (2) an iterative root finder.
+Take a look.
+
+```{python}
+"""
+File: carb_mods.py
+Authors: Sasha D. Hafner and Frederik R. Dalby
+Course: Modelling 2026
+
+Description:
+    A module with carbonate speciation functions.
+"""
+
+
+import numpy as np
+from scipy.optimize import root_scalar
+
+def carb_spec_tot(tot):
+    
+    """
+    Calculate pH and speciation given solute totals.
+
+    Parameters
+    ----------
+    tot: ndarray or float
+        total concentration of dissolved inorganic carbon (mol/kg)
+
+    Returns
+    -------
+    dictionary
+        concentrations of individual species (mol/kg)
+    """
+      
+    # Set values for some constants
+    # Stoichometry matrix
+    #        | H2CO3*|  H+
+    #        --------|----
+    # HCO3-  |  -1   |  1
+    # CO3-2  |  -1   |  2
+    #   OH-  |   0   |  1
+    sc = np.array([[-1, 1],
+                   [-1, 2],
+                   [ 0, 1]])
+    
+    # Equilibrium constant vector
+    keq = 10**np.array([-6.3, -16.6, -14.0])
+
+    # Define master species error function
+    def residC(cH2CO3):
+        """
+        Residual of total inorganic carbon concentration
+        for a given H2CO3* concentration
+        """        
+
+        # Define proton error function
+        def residH(cH):
+            """
+            Residual of charge balance or proton condition for given 
+            proton concentration cH.
+            """        
+            
+            # Calculate concentrations of pH-dependent species
+            conc = keq * cH2CO3**(-sc[:, 0]) / (cH**sc[:, 1])
+            
+            # Get charge balance
+            return cH - np.sum(sc[:, 1] * conc)
+        
+        # Get H+ concentration
+        cH = root_scalar(residH, bracket=[1E-14, 1], method='brentq').root
+
+        # Species concentrations
+        conc = keq * cH2CO3 * -sc[:, 0] / (cH**sc[:, 1])
+
+        # Calculate error in total IC balance
+        # Note that intermediate results cH and conc are returned here in addition to actual residual
+        return tot - (cH2CO3 + np.sum(conc * -sc[:, 0])), cH, conc
+
+    # Solve for H2CO3* concentration (mol/kg) 
+    # Because residC() returns more than just residual, lambda function and indexing of result is needed
+    cH2CO3 = root_scalar(lambda x: residC(x)[0], bracket=[1E-10, tot], method='brentq').root
+
+    # Get associated cH and concentrations of all species
+    resid, cH, conc = residC(cH2CO3)
+    all_conc = np.concatenate(([cH2CO3, cH], conc))
+
+    nms = ['H2CO3*', 'H+', 'HCO3-', 'CO3-2', 'OH-']
+    res = dict(zip(nms, all_conc))
+
+    # And return species concentrations (mol/kg)
+    return res
+
+```
+
+```{python}
+import carb_mods as cm
+
+tot = 1.5E-5
+concs = cm.carb_spec_tot(tot)
+concs
+```
+
+We can get predicted pH:
+
+```{python}
+-np.log10(concs['H+'])
+```
 
 ## Microbiology
 
 From a modeling perspective, microbial systems are just a set of chemical reactions.
-Here are some components for one approach to creating microbial models:
+There are multiple ways microbial activity can be modelled, and selection of an aproach should depend on the objectives the model needs to meet.
+An important consideration is whether active microbial biomass should be explictly included or not.
+For dynamics in microbial activity related to changes in the microbial population, it must be included.
+So here are some components for one approach to creating microbial models:
 
-* active microbial biomass, essential chemical substrates, and important products as state variables,
-* stoichiometry: a balanced chemical reaction that includes all state variables, and
-* kinetics: an equation for the rate of the overall reaction.
+1. state variables: active microbial biomass, essential chemical substrates, and important products,
+2. linking equations: a balanced chemical reaction that includes all state variables (stoichiometry), and
+3. constitutive equation: an equation for the rate of the overall reaction (kinetics).
+
+### Stoichiometry
 
 Unlike simple chemical reactions such as urea hydrolysis, it isn't always possible to just look up the reaction.
-But there are a few different approaches that can be used, including @rittmann_environmental_2020.
+But there are a few different approaches that can be used, including the microbial stoiciometry approach presented by @rittmann_environmental_2020.
+@rittmann_environmental_2020 is a worthwhile read for anyone working with microbial systems.
+Here we will give an introduction to the most essential parts.
+
+Microbes (and all known life) is powered by electron transfer.
+Chemotrophs harness energy from electrons transferred from reduced compounds to oxidized compounds.
+For organic compounds, reduced versions contain more C and H and oxidized more O.
+So these are sorted from most reduced to most oxidized: $\ce{CH4}$ (methane), $\ce{C57H104O6}$ (a lipid), $\ce{C6H12O6}$ (glucose), $\ce{CO2}$ (carbon dioxide, which provides no energy to chemotrophs).
+All of these compounds except $\ce{CO2}$ could serve as electron donors for some chemotroph (technically chemoorganotroph, which is a group of chemotrophs that use reduced *organic* compounds for energy).
+Of course the microorganism has to have the enzymatic machinery in place to use a particular substrate.
+But as a group, microorganisms are extremely capable.
+
+Chemotrophs need an electron acceptor too. 
+These are oxidized chemicals with a strong affinity for electrons.
+Common electron acceptors include $\ce{O2}$, $\ce{NO3-}$, and $\ce{SO42-}$.
+
+Finally, fermenters do not use exactly the same approach; they do not use external electron acceptors.
+Instead they essentially split a single organic compound, and transfer electrons from one product to the other.
+We will work with a simple fermentation: glucose to ethanol and $\ce{CO2}$ by yeast.
+
+Microorganisms and all life also need material to build up biomass, including numerous elements.
+In modeling work and elsewhere, it is common to focus on C, H, O, and N, although others may be added depending on their importance (e.g., if S is limiting or removal in biomass is important, it can be included).
+For chemoorganotrophs, the electron donor typically also serves as the source of C, H, and O.
+N can come from the donor or inorganic compounds in the environment, like $\ce{NH4+}$.
+H comes from the electron donor and $\ce{H2O}$, which is always available where life is active.
+It is common to call the electron donor and C source the substrate.
+
+A balanced reaction for our fermentation system is:
+
+$$
+\ce{C6H12O6 + 0.24NH4+ + 0.24HCO3- -> 
+1.6CH3CH2OH + 1.84CO2 + 0.24C5H7O2N + 0.96H2O}.
+$${#eq-eth-ferm}
+
+The $\ce{C5H7O2N}$ "species" is yeast biomass, and is really an empirical chemical formula for microbial biomass.
+This reaction is balanced in terms of elements and reduction-oxidation (redox). 
+
+### Kinetics
+
+We have looked at a first-order approach above, and while this can be a component of microbial models, it is more accurate and useful to link reaction rate to both the quantity of microbial biomass and substrate (electron donor).
+A second-order approach is one option.
+One common alternative is the Monod equation:
+
+$$
+r = c_{x_a} \cdot \frac{\hat{q_{max}} \cdot c_s} {c_s + k_s},
+$${#eq-monod1}
+
+where $c_{x_a} =$ active microbial biomass concentration ($\gpmc$), $\hat{q_{max}} =$ maximum substrate utilization rate, and $c_s =$ substrate concentration.
+
 
 <!-- Microbial rate of growth and biomass yield.
      Monod kinetics.
@@ -326,4 +574,17 @@ But there are a few different approaches that can be used, including @rittmann_e
    Plot predicted 
 
 2. Create a Python function that calcuates free ammonia $\ce{NH3(aq)}$ from TAN, pH, and temperature.
-   You can this expression for Ka . . . 
+   You can use this expression for the temperature dependency of Ka . . . 
+
+3. Derive equations for calculating carbonate species concentrations from $\ce{CO2}$ partial pressure and solution pH. 
+   Try to implement it in Python as a function.
+   Bonus: Can you include calculation of pH instead of using it as an input?
+
+4. Formulate and implement a model for a microbial community consuming milk processing wastewater that includes two groups: aerobic bacteria that use dissolved oxygen to oxidize the wastewater organice matter and fermentative bacteria that produce lactic acid. 
+   The reactor runs in batch mode, and you do not need to include aeration; there are no inputs or outputs to the reactor.
+   You can use the following empirical formula for the substrate: .
+   The Microbial Stoichiometry Calculator can be used to sort out stoichiometry: https:/....
+   For kinetics, use whichever approach you prefer: first-order, second-order, or Monod.
+   Use your Python model to predict the effect of initial dissolved oxygen concentration on microbial populations and final lactic acid concentration.
+
+5. A reactor . . . catalytic. . . nonlinear. . .  analytical or numerical?
