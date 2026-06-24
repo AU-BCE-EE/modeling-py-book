@@ -25,6 +25,7 @@ IPython may show extra blank lines and duplicated `In []` numbers in the output 
 ## Cross-references not resolving
 
 - **Blank lines:** Quarto requires a blank line before and after a figure, table, or equation block for it to be parsed as a block element. Missing blank lines are easy to miss if there are trailing spaces on the preceding line.
+- **Stray characters beyond closing `}` in a figure block** Even a `.` after the closing curly brace will mess things up.
 - **Missing image file:** A cross-reference to a figure whose image file doesn't exist will not resolve. Check that the file path is correct and the file has been exported.
 - **Build errors in other chapters:** A rendering error in any chapter can prevent cross-references from resolving book-wide. Check the `quarto render` output for errors.
 
