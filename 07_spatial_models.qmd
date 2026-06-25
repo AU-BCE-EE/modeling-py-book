@@ -797,7 +797,7 @@ $$
 \frac{\partial (x = a, t)}{\partial x} = 0
 $$
 
-When the Neumann BC is 0, it represents typically one of three cases.
+When the Neumann BC is 0, it represents typically one of two cases.
 
 1\) When the boundary is closed (mass can not get through the boundary)
 or insulated (heat can not flow through the boundary). This is a very
@@ -808,11 +808,6 @@ boundary in the previous example case with the pound.
 boundary e.g. in the middle of a sphere or cylinder that is symmetric
 around $x = 0$. This is actually what is done for BC2 in @fig-bcs where
 $r_0$ is in the middle of the cylindrical pipe in @fig-pipedisc.
-
-3\) When we have a completely open boundary, but nothing is specified
-about the dynamics of the state variable at the other side of the
-boundary. Typically there would be no description of convection or
-negligible convection.
 
 **Example case**
 
@@ -879,10 +874,11 @@ $$
 
 This equation enforces the Neumann boundary condition at the top
 boundary, L. Earlier in @lst-pipe_model, we avoided the whole ghost point
-problematic by using backward difference instead. But that backward
-difference code silently also imposed a Neumann BC of zero flux. In that
-example it was the case 3) where nothing was specificed about the
-dynamics of the state variable at the other side of the boundary.
+problematic by using backward difference instead and we did not state anything about a BC. 
+But implicitely, by using the backward difference we silently just extrapolated the physics to outside the model domain. What does that mean? It means that there is no change in the second derivative and the BC was actually $\frac{\partial^3 T}{\partial z^3} = 0$. The math to derive that is out of the scope for this book and we will not use such a BC again going forward. 
+
+Lets implement Neumann BC derived above in our code:
+
 
 ```{python}
 # importing libraries
