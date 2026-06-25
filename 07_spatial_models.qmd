@@ -1,62 +1,125 @@
+---
+editor: 
+  markdown: 
+    wrap: 72
+---
+
 # Spatial Models {#sec-spatial}
 
 ## From 0D (lumped model) to a spatial model
 
-So far we have dealt with 0D models (lumped-parameter models) that do not explicitly represent spatial variation. We will start from the same fundamental principles of conservation and constitutive equations, but now we will explicitly represent spatial variation in the state variable(s) and fluxes. This will lead us to partial differential equations (PDEs) that govern the system. A PDE means that the state variable is differentiated with respect to more than one independent variable; that could be time and a spatial dimension (e.g. up-down). When we are dealing with a PDE, the derivatives are "partial", and therefore we will change notation from the classic $\frac{dC}{dt}$ to $\frac{\partial C}{\partial t}$. From the $\partial$, it is indicated that derivatives with respect to more than one independent variable appears in the equation.
+So far we have dealt with 0D models (lumped-parameter models) that do
+not explicitly represent spatial variation. We will start from the same
+fundamental principles of conservation and constitutive equations, but
+now we will explicitly represent spatial variation in the state
+variable(s) and fluxes. This will lead us to partial differential
+equations (PDEs) that govern the system. A PDE means that the state
+variable is differentiated with respect to more than one independent
+variable; that could be time and a spatial dimension (e.g. up-down).
+When we are dealing with a PDE, the derivatives are "partial", and
+therefore we will change notation from the classic $\frac{dC}{dt}$ to
+$\frac{\partial C}{\partial t}$. From the $\partial$, it is indicated
+that derivatives with respect to more than one independent variable
+appears in the equation.
 
-Lets start with an example where we have a pipe with water flowing through it. Now we want to model the temperature of the water. The incoming water is cold and the pipe is warmed by some heat source. With a 0D model we would assume that the water is well mixed inside the entire pipe and therefore that the temperature of the water would be the same everywhere in @fig-pipedisc A. In reality the fluid will have a lower temperature at the left side compared to the right side. 
+Lets start with an example where we have a pipe with water flowing
+through it. Now we want to model the temperature of the water. The
+incoming water is cold and the pipe is warmed by some heat source. With
+a 0D model we would assume that the water is well mixed inside the
+entire pipe and therefore that the temperature of the water would be the
+same everywhere in @fig-pipedisc A. In reality the fluid will have a
+lower temperature at the left side compared to the right side.
 
-![Water flowing through a constant-diameter round pipe at a constant flow rate with heat applied from outside.](drawings/pipe_discretize1.png){#fig-pipedisc fig-alt="Sketch showing water flowing through a constant-diameter round pipe at a constant flow rate with heat applied from outside."}
+![Water flowing through a constant-diameter round pipe at a constant
+flow rate with heat applied from
+outside.](drawings/pipe_discretize1.png){#fig-pipedisc
+fig-alt="Sketch showing water flowing through a constant-diameter round pipe at a constant flow rate with heat applied from outside."}
 
-We will model this temperature distributed along the pipe (x dimension) by splitting the pipe into multiple control volumes @fig-pipedisc B and rather than a single conservation equation (0D), we will write a conversation equation for each control volume. 
+We will model this temperature distributed along the pipe (x dimension)
+by splitting the pipe into multiple control volumes @fig-pipedisc B and
+rather than a single conservation equation (0D), we will write a
+conversation equation for each control volume.
 
-The energy flowing in and out of a control volumes shall now be represented by two different modes of energy transport that was already touched upon in Chapter 4, that is advection and diffusion (or conduction for heat/energy diffusion). Advection is the transport of energy by the bulk movement of the fluid. Heat diffusion is the transport of energy by random molecular motion. In the case of a 0D problem we did not distinguish between these processes because diffusion was absent (perfect mixing) implicitely assuming "in" and "out" was through advection. Now it is different and a conservation equation must be made for each control volume by considering flow of energy into and out of the control volume, as well as any heat generated within the control volume. The conservation equation for a control volume can be written as:
+The energy flowing in and out of a control volumes shall now be
+represented by two different modes of energy transport that was already
+touched upon in Chapter 4, that is advection and diffusion (or
+conduction for heat/energy diffusion). Advection is the transport of
+energy by the bulk movement of the fluid. Heat diffusion is the
+transport of energy by random molecular motion. In the case of a 0D
+problem we did not distinguish between these processes because diffusion
+was absent (perfect mixing) implicitely assuming "in" and "out" was
+through advection. Now it is different and a conservation equation must
+be made for each control volume by considering flow of energy into and
+out of the control volume, as well as any heat generated within the
+control volume. The conservation equation for a control volume can be
+written as:
 
 $$
 \text{accumulation} = adv_{in} + diff_{in} - adv_{out} - diff_{out}  + generated - consumed. 
-$$
-Earlier in Chapter 4, we already showed that advection was the product of the superficial velocity and temperature difference over the length of the control volume (gradient). We now flip the sign of the temperature difference to be consistent with the direction of flow, which gives us:
-$$ 
+$$ Earlier in Chapter 4, we already showed that advection was the
+product of the superficial velocity and temperature difference over the
+length of the control volume (gradient). We now flip the sign of the
+temperature difference to be consistent with the direction of flow,
+which gives us: $$ 
 \frac{\partial T}{\partial t} = v_x \cdot \frac{(T_{in} - T_{out})}{\Delta x} = -v_x \cdot \frac{(T_{out} - T_{in})}{\Delta x}
-$$
-But we still need to add diffusion. Heat diffusion in and out of the control volume can be represented by Fourier's law, $q = -k \cdot \frac{dT}{dx}$, where q is the heat flux, k is the thermal conductivity and $\frac{dT}{dx}$ is the temperature gradient. We multiply by the cross-sectional area $A$, to get total energy flow rather than flux. But we are still dealing with the difference between flux over the length ($\Delta x$) of the control volume so rather than a temperature gradient we actually need the flux gradient. Starting from @eq-advection3.5 derived in Chapter 4:
-$$ 
+$$ But we still need to add diffusion. Heat diffusion in and out of the
+control volume can be represented by Fourier's law,
+$q = -k \cdot \frac{dT}{dx}$, where q is the heat flux, k is the thermal
+conductivity and $\frac{dT}{dx}$ is the temperature gradient. We
+multiply by the cross-sectional area $A$, to get total energy flow
+rather than flux. But we are still dealing with the difference between
+flux over the length ($\Delta x$) of the control volume so rather than a
+temperature gradient we actually need the flux gradient. Starting from
+@eq-advection3.5 derived in Chapter 4: $$ 
 \frac{\partial T}{\partial t} = \frac{\dot{Q}}{V \cdot {\rho} \cdot c_p} = \frac{\dot{Q}}{\Delta x \cdot A \cdot {\rho} \cdot c_p}
-$$
-We now rewrite the energy flow $\dot{Q}$ as the difference between the flux in and out of the control volume and substitute Fourier's law for the fluxes. Then we multiply with $A$ to go from fluxes to energy flows:
+$$ We now rewrite the energy flow $\dot{Q}$ as the difference between
+the flux in and out of the control volume and substitute Fourier's law
+for the fluxes. Then we multiply with $A$ to go from fluxes to energy
+flows:
 
 $$ 
 \frac{\partial T}{\partial t} = \frac{q_{in} \cdot A-q_{out} \cdot A}{\Delta x \cdot A \cdot {\rho} \cdot c_p} = \frac{-k \cdot \frac{dT}{dx}_{in} -(- k \cdot \frac{dT}{dx}_{out})}{\Delta x \cdot {\rho} \cdot c_p} = \frac{k}{\rho \cdot c_p} \cdot \frac{\frac{dT}{dx}_{out} - \frac{dT}{dx}_{in}}{\Delta x}
-$$
-Putting advection and diffusion together
+$$ Putting advection and diffusion together
 
 $$
 \frac{\partial T}{\partial t} = -v_x \cdot \frac{(T_{in} - T_{out})}{\Delta x} + \frac{k}{\rho \cdot c_p} \cdot \frac{\frac{dT}{dx}_{out} - \frac{dT}{dx}_{in}}{\Delta x}
-$$
-Good! we now only miss the heat generated within the control volume, which we will just call S for source (that source could represent many things, which we will get into later). The governing equation for a control volume is then
+$$ Good! we now only miss the heat generated within the control volume,
+which we will just call S for source (that source could represent many
+things, which we will get into later). The governing equation for a
+control volume is then
 
 $$
 \frac{\partial T}{\partial t} = -v_x \cdot \frac{(T_{in} - T_{out})}{\Delta x} + \frac{k}{\rho \cdot c_p} \cdot \frac{\frac{dT}{dx}_{out} - \frac{dT}{dx}_{in}}{\Delta x} + S
-$$
-Note that S is in units of temperature per time. In practice we are likely given S as some energy input $Q$ in units of (energy per time) and thus we need to divide it by $\Delta x \cdot {\rho} \cdot c_p$ to make units match.
+$$ Note that S is in units of temperature per time. In practice we are
+likely given S as some energy input $Q$ in units of (energy per time)
+and thus we need to divide it by $\Delta x \cdot {\rho} \cdot c_p$ to
+make units match.
 
-Now we take the limit $\Delta x \rightarrow 0$ and our equation becomes a partial differential equation (PDE).
+Now we take the limit $\Delta x \rightarrow 0$ and our equation becomes
+a partial differential equation (PDE).
 
 $$
 \frac{\partial T}{\partial t} = -v_x \cdot \frac{\partial T}{\partial x} + \frac{k}{\rho \cdot c_p} \cdot \frac{\partial^2T}{\partial x^2} + S
-$${#eq-1D_heat}
+$$ {#eq-1D_heat}
 
-The equivalent governing PDE for a 1D mass problem is 
+The equivalent governing PDE for a 1D mass problem is
 
 $$
 \frac{\partial C}{\partial t} = -v_x \cdot \frac{\partial C}{\partial x} + D \cdot \frac{\partial^2C}{\partial x^2} + R
-$${#eq-1D_mass}
+$$ {#eq-1D_mass}
 
-Where $R$ denotes mass added or removed (for example by reaction) and $D$ is the diffusion coefficient. Note that the mass and energy governing equations have the same general form. Sometimes $\frac{k}{\rho \cdot C_p}$ is noted as $\alpha$ - the thermal diffusivity. 
+Where $R$ denotes mass added or removed (for example by reaction) and
+$D$ is the diffusion coefficient. Note that the mass and energy
+governing equations have the same general form. Sometimes
+$\frac{k}{\rho \cdot C_p}$ is noted as $\alpha$ - the thermal
+diffusivity.
 
 ## Coordinate systems
 
-In @eq-1D_heat and @eq-1D_mass the Governing PDEs are derived with a single spatial dimension (x). In reality we have advection and diffusion in all three dimensions (x,y,z). For completeness we can write the 3D governing PDE for mass
+In @eq-1D_heat and @eq-1D_mass the Governing PDEs are derived with a
+single spatial dimension (x). In reality we have advection and diffusion
+in all three dimensions (x,y,z). For completeness we can write the 3D
+governing PDE for mass
 
 $$ 
 \begin{align}
@@ -64,7 +127,7 @@ $$
 &+ D \cdot \left( \frac{\partial^2C}{\partial x^2} + \frac{\partial^2C}{\partial y^2} + \frac{\partial^2C}{\partial z^2} \right)\\
 &+ R 
 \end{align}
-$${#eq-3D_mass}
+$$ {#eq-3D_mass}
 
 and for energy
 
@@ -74,15 +137,28 @@ $$
 &+ \frac{k}{\rho \cdot c_p} \cdot \left( \frac{\partial^2T}{\partial x^2} + \frac{\partial^2T}{\partial y^2} + \frac{\partial^2T}{\partial z^2} \right)\\
 &+ S
 \end{align}
-$${#eq-3D_heat}
+$$ {#eq-3D_heat}
 
-where $v_x$, $v_y$ and $v_z$ are the velocity components in the x, y and z direction, respectively. 
+where $v_x$, $v_y$ and $v_z$ are the velocity components in the x, y and
+z direction, respectively.
 
-We are now introducing a new term called, "coordinate system". The above equations are written in rectangular (also called cartesian) coordinates (@fig-rect), which is the most common coordinate system used in spatial models.
+We are now introducing a new term called, "coordinate system". The above
+equations are written in rectangular (also called cartesian) coordinates
+(@fig-rect), which is the most common coordinate system used in spatial
+models.
 
-![rectangular coordinate system, with three dimensions, x, y, z](drawings/rectangular_coords.png){#fig-rect fig-alt="Sketch showing the three dimensions in rectangular coordinates"} 
+![rectangular coordinate system, with three dimensions, x, y,
+z](drawings/rectangular_coords.png){#fig-rect
+fig-alt="Sketch showing the three dimensions in rectangular coordinates"}
 
-However, there are other coordinate systems that can be used depending on the geometry of the problem. For example, if we are modeling a cylindrical pipe, it might be more convenient to use cylindrical coordinates (r, $\theta$, z) instead of rectangular coordinates (x, y, z). Or if we have a sphere, spherical coordinates are a better choice. The choice of coordinate system can simplify the equations and make them easier to solve. Below are governing equations for cylindrical and spherical coordinates shown.
+However, there are other coordinate systems that can be used depending
+on the geometry of the problem. For example, if we are modeling a
+cylindrical pipe, it might be more convenient to use cylindrical
+coordinates (r, $\theta$, z) instead of rectangular coordinates (x, y,
+z). Or if we have a sphere, spherical coordinates are a better choice.
+The choice of coordinate system can simplify the equations and make them
+easier to solve. Below are governing equations for cylindrical and
+spherical coordinates shown.
 
 The governing equation for cylindrical coordinates for mass is
 
@@ -92,8 +168,7 @@ $$
 & + D \cdot \left( \frac{1}{r} \cdot \frac{\partial}{\partial r} \left( r \cdot \frac{\partial C}{\partial r} \right) + \frac{1}{r^2} \cdot \frac{\partial^2C}{\partial \theta^2} + \frac{\partial^2C}{\partial z^2} \right)\\
 &+ R
 \end{align}
-$$
-and for energy 
+$$ and for energy
 
 $$
 \begin{align}
@@ -101,11 +176,14 @@ $$
 & + \frac{k}{\rho \cdot c_p} \cdot \left( \frac{1}{r} \cdot \frac{\partial}{\partial r} \left( r \cdot \frac{\partial T}{\partial r} \right) + \frac{1}{r^2} \cdot \frac{\partial^2T}{\partial \theta^2} + \frac{\partial^2T}{\partial z^2} \right)\\
 & + S
 \end{align}
-$${#eq-3D_cylindrical_heat}
+$$ {#eq-3D_cylindrical_heat}
 
-with reference to cylindrical coordinates shown on top of a rectangular system in @fig-cyl.
+with reference to cylindrical coordinates shown on top of a rectangular
+system in @fig-cyl.
 
-![Cylindrical coordinate system, with three dimensions, r, theta, phi](drawings/cylindrical_coords.png){#fig-cyl fig-alt="Sketch showing the three dimensions in cylindrical coordinates"} 
+![Cylindrical coordinate system, with three dimensions, r, theta,
+phi](drawings/cylindrical_coords.png){#fig-cyl
+fig-alt="Sketch showing the three dimensions in cylindrical coordinates"}
 
 The governing equation for mass in spherical coordinates is
 
@@ -115,8 +193,7 @@ $$
 &+ D \cdot \left( \frac{1}{r^2} \cdot \frac{\partial}{\partial r} \left( r^2 \cdot \frac{\partial C}{\partial r} \right) + \frac{1}{r^2 \cdot \sin \theta} \cdot \frac{\partial}{\partial \theta} \left( \sin \theta \cdot \frac{\partial C}{\partial \theta} \right) + \frac{1}{r^2 \cdot \sin^2 \theta} \cdot \frac{\partial^2C}{\partial \phi^2} \right)\\
 &+ R
 \end{align}
-$$
-and for energy
+$$ and for energy
 
 $$
 \begin{align}
@@ -124,27 +201,61 @@ $$
 &+ \frac{k}{\rho \cdot c_p} \cdot \left( \frac{1}{r^2} \cdot \frac{\partial}{\partial r} \left( r^2 \cdot \frac{\partial T}{\partial r} \right) + \frac{1}{r^2 \cdot \sin \theta} \cdot \frac{\partial}{\partial \theta} \left( \sin \theta \cdot \frac{\partial T}{\partial \theta} \right) + \frac{1}{r^2 \cdot \sin^2 \theta} \cdot \frac{\partial^2T}{\partial \phi^2} \right) \\
 &+ S
 \end{align}
-$$
-with reference to the spherical coordinate system in @fig-sphere.
+$$ with reference to the spherical coordinate system in @fig-sphere.
 
-![Spherical coordinate system, with three dimensions, r, theta, phi](drawings/spherical_coords.png){#fig-sphere fig-alt="Sketch showing the three dimensions in spherical coordinates"}
+![Spherical coordinate system, with three dimensions, r, theta,
+phi](drawings/spherical_coords.png){#fig-sphere
+fig-alt="Sketch showing the three dimensions in spherical coordinates"}
 
-
-While these equations looks quite terrifying at first, we shall now see how we can reduce complexity. This will primarily be done by eliminating dimensions that are not important for the problem and by including only modes of transfer that is relevant to our problem. 
+While these equations looks quite terrifying at first, we shall now see
+how we can reduce complexity. This will primarily be done by eliminating
+dimensions that are not important for the problem and by including only
+modes of transfer that is relevant to our problem.
 
 ##example case##
 
-Lets continue with the example of water being pumped through a pipe in @fig-pipedisc and assign it a cross sectional area, $A$, of $0.02~m^2$ a superficial velocity, $v$, of $0.5~m~s^{-1}$, a total pipe length of $2~m$ and with heat being applied at a rate of $1000~W$ distributed on the whole pipe. 
+Lets continue with the example of water being pumped through a pipe in
+@fig-pipedisc and assign it a cross sectional area, $A$, of $0.02~m^2$ a
+superficial velocity, $v$, of $0.5~m~s^{-1}$, a total pipe length of
+$2~m$ and with heat being applied at a rate of $1000~W$ distributed on
+the whole pipe.
 
-Since a pipe is a cylinder we will choose cylindrical coordinates and start from @eq-3D_cylindrical_heat. There is flow along the length of the pipe and we are mainly interested in the development along this axis ($z$ in cylindrical coordinates, but $x$ in @fig-pipedisc). We assume that the flow is turbulent and well mixed in the radial ($r$) and angular ($\theta$) dimension. What does that imply? Well if it is well mixed, the derivate with respect to those dimensions are 0. We can therefore eliminate the terms in @eq-3D_cylindrical_heat that includes derivatives with respect to $r$ and $\theta$, because they are equal to 0. This gets us to 
+Since a pipe is a cylinder we will choose cylindrical coordinates and
+start from @eq-3D_cylindrical_heat. There is flow along the length of
+the pipe and we are mainly interested in the development along this axis
+($z$ in cylindrical coordinates, but $x$ in @fig-pipedisc). We assume
+that the flow is turbulent and well mixed in the radial ($r$) and
+angular ($\theta$) dimension. What does that imply? Well if it is well
+mixed, the derivate with respect to those dimensions are 0. We can
+therefore eliminate the terms in @eq-3D_cylindrical_heat that includes
+derivatives with respect to $r$ and $\theta$, because they are equal to
+0. This gets us to
 
 $$
 \frac{\partial T}{\partial t} = - v_z \cdot \frac{\partial T}{\partial z} + \frac{k}{\rho \cdot c_p}\cdot \left(\frac{\partial^2T}{\partial z^2} \right) + S
-$${#eq-1D_cylindrical_heat}
+$$ {#eq-1D_cylindrical_heat}
 
-Interesting, because that looks exactly like @eq-1D_heat, which was the governing equation for 1D and rectangular coordinates (except we call the dimension $z$ rather than $x$). So we learned that the governing equations for 1D problems are similar for rectangular and cylindrical coordinates! 
+Interesting, because that looks exactly like @eq-1D_heat, which was the
+governing equation for 1D and rectangular coordinates (except we call
+the dimension $z$ rather than $x$). So we learned that the governing
+equations for 1D problems are similar for rectangular and cylindrical
+coordinates!
 
-We have bulk flow along the z direction (because we are given a velocity, $v$, in the problem). This corresponds to the advection term ($-v\cdot\frac{dT}{dz}$). What about diffusion? We know that diffusion always occurs, it is a law of nature that heat and mass spreads until there is no gradient. The question should rather be, is diffusion significant compared to the advection term here? We will get back to how we can estimate that, but for now we do not know, and therefore we keep the diffusion term ($\frac{k}{\rho \cdot C_p}\cdot \frac{\partial^2T}{\partial z^2}$). We also have heat being added to the system, which is the S term, but the unit is currently in $W$. We will use the linking equation from Chapter 4 to get the unit in $K s^{-1}$. We know that $C_p$ of water is $4180 \frac{J}{kg \cdot K}$ and the density $\rho$ is $1000~kg~m^{-3}$. The control volume, $V$, is equal to $A \cdot \partial z$. So from @eq-advection3 we get the S term in correct units. 
+We have bulk flow along the z direction (because we are given a
+velocity, $v$, in the problem). This corresponds to the advection term
+($-v\cdot\frac{dT}{dz}$). What about diffusion? We know that diffusion
+always occurs, it is a law of nature that heat and mass spreads until
+there is no gradient. The question should rather be, is diffusion
+significant compared to the advection term here? We will get back to how
+we can estimate that, but for now we do not know, and therefore we keep
+the diffusion term
+($\frac{k}{\rho \cdot C_p}\cdot \frac{\partial^2T}{\partial z^2}$). We
+also have heat being added to the system, which is the S term, but the
+unit is currently in $W$. We will use the linking equation from Chapter
+4 to get the unit in $K s^{-1}$. We know that $C_p$ of water is
+$4180 \frac{J}{kg \cdot K}$ and the density $\rho$ is $1000~kg~m^{-3}$.
+The control volume, $V = A \cdot \partial z$. So from @eq-advection3 we
+get the S term in correct units.
 
 $$
 \begin{align}
@@ -153,23 +264,33 @@ $$
 &= \frac{1000 s^{-1}}{(0.02~m^2 \cdot m)\cdot 1000~m^{-3} \cdot 4180~K^{-1}}\\
 &= \frac{1000~s^{-1}}{0.02\cdot 1000 \cdot 4180~K^{-1}}=0.012\cdot\frac{K}{s}
 \end{align}
-$$
-We know the thermal conductivity of water is $0.6~W\cdot m^{-1} \cdot K^{-1}$. Then we plug it into our governing equation and check that units are consistent at the same time.
+$$ We know the thermal conductivity of water is
+$0.6~W\cdot m^{-1} \cdot K^{-1}$. Then we plug it into our governing
+equation and check that units are consistent at the same time.
 
 $$
 \frac{\partial T}{\partial t}\frac{K}{s} = - 0.5\frac{m}{s} \cdot \frac{\partial T}{\partial z} \frac{K}{m} + \frac{0.6~J~s^{-1}~m^{-1}~K^{-1}}{1000~kg~m^{-3}\cdot 4180~J~kg^{-1}~K^{-1}}\cdot \left(\frac{\partial^2T}{\partial z^2}\frac{K}{m^2} \right) + 0.012\frac{K}{s}
 $$
 
-by cancelling out units we see that each term has indeed units of $K~s^{-1}$
+by cancelling out units we see that each term has indeed units of
+$K~s^{-1}$
 
 $$
 \frac{\partial T}{\partial t}\frac{K}{s} = \left(-0.5\cdot \frac{\partial T}{\partial z}\right)\frac{K}{s}
  + \left(1.435^{-7}\cdot \frac{\partial^2T}{\partial z^2}\right)\frac{K}{s} + 0.012\frac{K}{s}
-$${#eq-1D_governing}
+$$ {#eq-1D_governing}
 
-We have now reduced our problem to 1 dimension, and kept advection, diffusion, and the source term. Finally we have estimated the thermal diffusivity, $\alpha = 1.435\cdot 10^{-7}~ m^2~s^{-1}$, the source term $S = 0.012~K~s^{-1}$, and checked that units match for our governing equation. 
+We have now reduced our problem to 1 dimension, and kept advection,
+diffusion, and the source term. Finally we have estimated the thermal
+diffusivity, $\alpha = 1.435\cdot 10^{-7}~ m^2~s^{-1}$, the source term
+$S = 0.012~K~s^{-1}$, and checked that units match for our governing
+equation.
 
-From these steps you should now be able to construct the simplied governing equation of a problem. Convince yourself by now assuming the problem has only two modes of heat transfer 1) conduction in the radial dimension and 2) advection in the z dimension. You should reach the following equation
+From these steps you should now be able to construct the simplied
+governing equation of a problem. Convince yourself by now assuming the
+problem has only two modes of heat transfer 1) conduction in the radial
+dimension and 2) advection in the z dimension. You should reach the
+following equation
 
 $$
 \begin{align}
@@ -177,37 +298,78 @@ $$
 \end{align}
 $$
 
-The part $\frac{1}{r} \cdot \frac{\partial}{\partial r}\left(r \cdot \frac{\partial T}{\partial r}\right)$ can be tricky to interpret, but with the product rule of differentiation we can show that: 
+The part
+$\frac{1}{r} \cdot \frac{\partial}{\partial r}\left(r \cdot \frac{\partial T}{\partial r}\right)$
+can be tricky to interpret, but with the product rule of differentiation
+we can show that:
 
 $$
 \frac{1}{r} \cdot \frac{\partial}{\partial r}\left(r \cdot \frac{\partial T}{\partial r}\right) = \frac{1}{r} \cdot \left(r \cdot \frac{\partial^2 T}{\partial r^2} + \frac{\partial T}{\partial r}\right) = \frac{\partial^2 T}{\partial r^2} + \frac{1}{r} \cdot \frac{\partial T}{\partial r}
 $$
 
-The later form might be easier to encode when we get to that. A similar problem will occurs for the spherical coordinate system, in which case the product rule can also be applied.
+The later form might be easier to encode when we get to that. A similar
+problem will occurs for the spherical coordinate system, in which case
+the product rule can also be applied.
 
 ## Method of lines and discretization {#sec-MOL}
 
-After arriving at our governing equation @eq-1D_governing we still have a PDE with the partial derivatives on the right hand side of @eq-1D_governing. To get rid of these we will need to do discretization and we will use the method of lines for that. 
+After arriving at our governing equation @eq-1D_governing we still have
+a PDE with the partial derivatives on the right hand side of
+@eq-1D_governing. To get rid of these we will need to do discretization
+and we will use the method of lines for that.
 
-With method of lines we choose to discretize the spatial derivatives and leave the time derivative as is. By discretizing we mean to approximate the derivative with a finite-difference (or similar spatial) approximation method at a fixed set of grid points that we will call "nodes". In @fig-MOL a grid with 5 nodes are shown, the distance between nodes are $\Delta x$ and we can call the space between nodes for domains. Three nodes are interior, and the two nodes at x = 0 and x = L are the boundary nodes. This converts the original PDE into a system of 5 ODEs coupled in space and evolving in time — one ODE per spatial node. The boundary nodes are at the edge of our model domain (the space over which we apply the model) and these nodes needs special attention, which we will dive into in section @sec-bc. 
+With method of lines we choose to discretize the spatial derivatives and
+leave the time derivative as is. By discretizing we mean to approximate
+the derivative with a finite-difference (or similar spatial)
+approximation method at a fixed set of grid points that we will call
+"nodes". In @fig-MOL a grid with 5 nodes are shown, the distance between
+nodes are $\Delta x$ and we can call the space between nodes for
+domains. Three nodes are interior, and the two nodes at x = 0 and x = L
+are the boundary nodes. This converts the original PDE into a system of
+5 ODEs coupled in space and evolving in time — one ODE per spatial node.
+The boundary nodes are at the edge of our model domain (the space over
+which we apply the model) and these nodes needs special attention, which
+we will dive into in section @sec-bc.
 
-There exists many alternatives to method of lines for solving PDEs numerically and some of them involve discretizing the time derivative as well. We will not do that with method of lines, but instead let standard ODE solvers (e.g. `solve_ivp()`) solve the time derivative. Now, how do these nodes relate to the control volume we discussed earlier? Here we shall imagine that a node, which is a point without any extension, represents the state of a control volume, where the control volume extends $0.5~\Delta x$ on either size of the node. Flow of mass/energy in and out of a node comes from the neighboring nodes rather than the edges of the control volumes. 
+There exists many alternatives to method of lines for solving PDEs
+numerically and some of them involve discretizing the time derivative as
+well. We will not do that with method of lines, but instead let standard
+ODE solvers (e.g. `solve_ivp()`) solve the time derivative. Now, how do
+these nodes relate to the control volume we discussed earlier? Here we
+shall imagine that a node, which is a point without any extension,
+represents the state of a control volume, where the control volume
+extends $0.5~\Delta x$ on either size of the node. Flow of mass/energy
+in and out of a node comes from the neighboring nodes rather than the
+edges of the control volumes.
 
-![grid with a single ODE at each node according to method of lines](drawings/MOL.png){#fig-MOL fig-alt="Sketch of grid with nodes for MOL."}
+![grid with a single ODE at each node according to method of
+lines](drawings/MOL.png){#fig-MOL
+fig-alt="Sketch of grid with nodes for MOL."}
 
-For the water flowing in a pipe problem the spatial derivatives are: $\frac{\partial T}{\partial z}$ and $\frac{\partial^2T}{\partial z^2}$. The time derivative $\frac{\partial T}{\partial t}$ is left as is. 
+For the water flowing in a pipe problem the spatial derivatives are:
+$\frac{\partial T}{\partial z}$ and $\frac{\partial^2T}{\partial z^2}$.
+The time derivative $\frac{\partial T}{\partial t}$ is left as is.
 
-Remember from you numerical analysis course that finite difference could be either forward, backward or central difference, where the latter had a higher order of accuracy. Therefore we will use the finite central difference formula for the first and second derivatives. For general notation of these formulas we can write
+Remember from you numerical analysis course that finite difference could
+be either forward, backward or central difference, where the latter had
+a higher order of accuracy. Therefore we will use the finite central
+difference formula for the first and second derivatives. For general
+notation of these formulas we can write
 
 $$
 f'(x) = \frac{f(x + \Delta x) - f(x - \Delta x)}{2 \cdot \Delta x}
-$${#eq-central_diff}
+$$ {#eq-central_diff}
 
 $$
 f''(x) = \frac{f(x + \Delta x) - 2 \cdot f(x) + f(x - \Delta x)}{\Delta x^2}
-$${#eq-central_diff2}
+$$ {#eq-central_diff2}
 
-Sometimes $h$ is used to denote the step size ($\Delta x$), but this can be confusing if we are also discussing concepts related to the time step (where h is also frequently used). Now we can substitute @eq-central_diff and @eq-central_diff2 into @eq-1D_cylindrical_heat. We must remember to switch to the correct state variable and space derivative (T and z for our problem). This gives us: 
+Sometimes $h$ is used to denote the step size ($\Delta x$), but this can
+be confusing if we are also discussing concepts related to the time step
+(where h is also frequently used). Now we can substitute
+@eq-central_diff and @eq-central_diff2 into @eq-1D_cylindrical_heat. We
+must remember to switch to the correct state variable and space
+derivative (T and z for our problem). This gives us:
 
 $$
 \begin{align}
@@ -217,9 +379,21 @@ $$
 \end{align}
 $$
 
-Note that S, having no spatial derivative, passes through the discretization unchanged and is simply evaluated at each node.
+Note that S, having no spatial derivative, passes through the
+discretization unchanged and is simply evaluated at each node.
 
-If we apply our problem to only 5 nodes like in @fig-MOL we should end up with 5 ODEs right? But we run into a problem at the boundary nodes, because our discretization involves nodes that are outside our grid! Therefore the boundary nodes should be handled differently and exactly how depends on the boundary conditions of our problem. We will discuss boundary conditions in depth in @sec-bc, but for now lets assume that the temperature is always 10 $\degC$ at the left boundary (index 0). Because this is meant as a demonstration to how the ODEs are linked we will for simplicity remove advection and source terms. Remember the pipe is 2 m long, and 5 nodes means we must have one less domain, so $\Delta z = 2~m/(5~nodes - 1) = 0.5~m$. We write ODEs for the interior nodes first:  
+If we apply our problem to only 5 nodes like in @fig-MOL we should end
+up with 5 ODEs right? But we run into a problem at the boundary nodes,
+because our discretization involves nodes that are outside our grid!
+Therefore the boundary nodes should be handled differently and exactly
+how depends on the boundary conditions of our problem. We will discuss
+boundary conditions in depth in @sec-bc, but for now lets assume that
+the temperature is always 10 $\degC$ at the left boundary (index 0).
+Because this is meant as a demonstration to how the ODEs are linked we
+will for simplicity remove advection and source terms. Remember the pipe
+is 2 m long, and 5 nodes means we must have one less domain, so
+$\Delta z = 2~m/(5~nodes - 1) = 0.5~m$. We write ODEs for the interior
+nodes first:
 
 $$
 \begin{align}
@@ -227,14 +401,23 @@ $$
 &\frac{dT(1.0)}{dt} = \alpha \cdot\frac{T(1.0 + 0.5) - 2 \cdot T(1.0) + T(1.0 - 0.5)}{0.5^2}\\
 &\frac{dT(1.5)}{dt} = \alpha \cdot\frac{\textcolor{red}{T(1.5 + 0.5)} - 2 \cdot T(1.5) + T(1.5 - 0.5)}{0.5^2}\\
 \end{align}
-$$
-The terms written in red refers to the state variable at the boundaries. We assumed that $T = 10  \degC$ at any time at the left boundary. This implies that the $\frac{dT(0.0)}{dt} = 0$, because the temperature never changes here (it is always $10 \degC$). For the right end we did not specify anything, because the temperature here will be determined by how the ODE system evolves in time and space. But we need to change the central difference to a backward difference formula instead, since we otherwise have to use a node that is $\Delta z$ outside our model domain! The general formula for backward difference of the second derivative is:
+$$ The terms written in red refers to the state variable at the
+boundaries. We assumed that $T = 10  \degC$ at any time at the left
+boundary. This implies that the $\frac{dT(0.0)}{dt} = 0$, because the
+temperature never changes here (it is always $10 \degC$). For the right
+end we did not specify anything, because the temperature here will be
+determined by how the ODE system evolves in time and space. But we need
+to change the central difference to a backward difference formula
+instead, since we otherwise have to use a node that is $\Delta z$
+outside our model domain! The general formula for backward difference of
+the second derivative is:
 
 $$
 f''(x) = \frac{f(x) - 2 \cdot f(x-\Delta x) + f(x -2\cdot \Delta x)}{\Delta x^2}
 $$
 
-Now we can put the information together write ODEs for the boundary nodes as well as information about the boundary conditions:
+Now we can put the information together write ODEs for the boundary
+nodes as well as information about the boundary conditions:
 
 $$
 \begin{align}
@@ -244,15 +427,20 @@ $$
 &\frac{dT(1.5)}{dt} = \alpha \cdot\frac{T(1.5 + 0.5) - 2 \cdot T(1.5) + T(1.5 - 0.5)}{0.5^2}\\
 &\frac{dT(2.0)}{dt} = \alpha \cdot\frac{T(2.0) - 2 \cdot T(2.0 - 0.5) + T(2.0 -2\cdot 0.5)}{0.5^2}
 \end{align}
-$${#eq-fiveODE}
+$$ {#eq-fiveODE}
 
-This gives us the 5 coupled ODEs and with information about boundary conditions included in red.
-Since we simplified the example by removing advection, we would need to apply finite difference formulas for the first derivative as well to solve the real problem. In @sec-appx-fdm a complete overview of the finite difference formulas (backward, forward, central) are given for the first and second derivatives. 
+This gives us the 5 coupled ODEs and with information about boundary
+conditions included in red. Since we simplified the example by removing
+advection, we would need to apply finite difference formulas for the
+first derivative as well to solve the real problem. In @sec-appx-fdm a
+complete overview of the finite difference formulas (backward, forward,
+central) are given for the first and second derivatives.
 
-**Implementation in Python**{#ex-pipe_model}
+**Implementation in Python**
 
-Lets now go to python to encode and solve the ODE system in @eq-fiveODE. We want to see something happening
-so lets assume that the water is $0 \degC$ everywhere to stat with, except at the left side ($10 \degC$).
+Lets now go to python to encode and solve the ODE system in @eq-fiveODE.
+We want to see something happening so lets assume that the water is
+$0 \degC$ everywhere to stat with, except at the left side ($10 \degC$).
 We will run the simulation for 10 minutes.
 
 ```{python}
@@ -330,11 +518,29 @@ plt.ylabel('Temperature, deg C')
 plt.show()
 ```
 
-So the plot tells us that the temperature in the end of the pipe almost does not change (see y-axis 1e-11). This is not so strange because we only have heat transferred by conduction (from left) in the code, and we have not included the heat source (S) either. This hints to us that heat transfer by conduction is probably not so important in our case, but lets first try and implement advection and the source term as well. We will reduce simulation time to 20 seconds, which should be long enough to reach a steady state with a velocity of 0.5 m/s in a pipe that is only 2 m long. 
+So the plot tells us that the temperature in the end of the pipe almost
+does not change (see y-axis 1e-11). This is not so strange because we
+only have heat transferred by conduction (from left) in the code, and we
+have not included the heat source (S) either. This hints to us that heat
+transfer by conduction is probably not so important in our case, but
+lets first try and implement advection and the source term as well. We
+will reduce simulation time to 20 seconds, which should be long enough
+to reach a steady state with a velocity of 0.5 m/s in a pipe that is
+only 2 m long.
 
-However! For the advection term we would now be tempted to use central difference discretization in the interior nodes, simply because we know it has a higher order of accuracy than backward and forward difference. But here is a special case. For advection, which is a unidirectional phenomenon we must NEVER use information from downwind nodes to approximate the derivative (which is what central difference does). This will cause the solution to oscillate or be unstable, a topic that will be dealt more with in a later chapter. So we must in this case use backward difference to avoid that. 
+However! For the advection term we would now be tempted to use central
+difference discretization in the interior nodes, simply because we know
+it has a higher order of accuracy than backward and forward difference.
+But here is a special case. For advection, which is a unidirectional
+phenomenon we must NEVER use information from downwind nodes to
+approximate the derivative (which is what central difference does). This
+will cause the solution to oscillate or be unstable, a topic that will
+be dealt more with in a later chapter. So we must in this case use
+backward difference to avoid that.
 
 ```{python}
+#| lst-label: lst-pipe_model
+#| lst-cap: "Water temperature in pipe by advection, conduction and source terms"
 # we need the following libraries
 import numpy as np
 import matplotlib.pyplot as plt
@@ -389,13 +595,26 @@ plt.show()
 print(f"The temperature at the outlet ends at {round(end_point_temp[-1], 3)} deg C")
 ```
 
-The temperature at the end of the pipe stabilize around $10 \degC$ after ~11 seconds. Se see that the heat source only increases the temperature by $~0.05 \degC$. So a much stronger heat source would be needed to get to the $20 \degC$ in @fig-pipedisc. This implies that the source terms is not nearly strong enough to heat the water, which is continuously being replaced with incoming $10 \degC$ water. Try to increase the Source term yourself to reach an outlet temperature of $20 \degC$.  
+The temperature at the end of the pipe stabilize around $10 \degC$ after
+\~11 seconds. Se see that the heat source only increases the temperature
+by $~0.05 \degC$. So a much stronger heat source would be needed to get
+to the $20 \degC$ in @fig-pipedisc. This implies that the source terms
+is not nearly strong enough to heat the water, which is continuously
+being replaced with incoming $10 \degC$ water. Try to increase the
+Source term yourself to reach an outlet temperature of $20 \degC$.
 
 ## Boundary and initial conditions {#sec-bc}
 
-We touched upon boundary conditions (BC) in @sec-MOL, but without much explanation. For any problem with a derivative in time we must have an initial condition (IC), and if we have derivatives in space we also need BC. How many do we need? 
+We touched upon boundary conditions (BC) in @sec-MOL, but without much
+explanation. For any problem with a derivative in time we must have an
+initial condition (IC), and if we have derivatives in space we also need
+BC. How many do we need?
 
-You simply take you simplified governing equation and look for the highest order time derivative - that order would be the number of ICs needed. For the BCs you look for the highest order derivative of each spatial dimension, sum it up - that is the number of BCs needed to solve the problem. 
+You simply take you simplified governing equation and look for the
+highest order time derivative - that order would be the number of ICs
+needed. For the BCs you look for the highest order derivative of each
+spatial dimension, sum it up - that is the number of BCs needed to solve
+the problem.
 
 **Example case**
 
@@ -407,34 +626,108 @@ $$
 \end{align}
 $$
 
-The highest order time derivative is 1. The highest order of spatial derivative with respect to z is 1 and the highest order of spatial derivative with respect to r is 2. Therefore we need
-1 IC and 3 BCs to solve the problem. A 2D space representation of the problem is shown in @fig-bcs
+The highest order time derivative is 1. The highest order of spatial
+derivative with respect to z is 1 and the highest order of spatial
+derivative with respect to r is 2. Therefore we need 1 IC and 3 BCs to
+solve the problem. A 2D space representation of the problem is shown in
+@fig-bcs
 
-![2D grid representing model domain and boundary conditions](drawings/bcs.png){#fig-bcs fig-alt="Sketch of 2D grid with nodes and three boundary conditions."}
+![2D grid representing model domain and boundary
+conditions](drawings/bcs.png){#fig-bcs
+fig-alt="Sketch of 2D grid with nodes and three boundary conditions."}
 
-In @fig-bcs we have 2 BCs on the r dimension (one in each end) and one BC for the z dimension (only at $z = z_0$). We cannot specify a BC at z = L, because that could (most certainly) create a conflict with the laws of physics, which is described by the ODE system. We see that BC1 in @fig-bcs fixes the temperature to $10 \degC$ all along r axis and at all times. Each node is described with an ODE. This means that even though we say there is one boundary condition at $z = z_0$, when we implement it in our model code, we need to apply it to each ODE (it just appears to be formulated the same way!). The number of ODEs would depend on the step size along r, $\Delta r$. For BC2 and BC3, the boundary conditions also apply to all the nodes with r = r0 and r = R, respectively. BC2 ad BC3 are different types of boundary conditions than BC1. Rather than specifying the value of the state variable (T), they specify something about the derivative (gradient) of the state variable ($\frac{dT}{dr}$). In BC2 the gradient is assigned a fixed value (0) and in BC3 the gradient is a function of the state variable at the boundary ($T_R$) and two constants, $k$ and $T_{bulk}$. We will get into details about these three types of BCs shortly as they are critical to formulate and solve a spatial model problem. 
+In @fig-bcs we have 2 BCs on the r dimension (one in each end) and one
+BC for the z dimension (only at $z = z_0$). We cannot specify a BC at z
+= L, because that could (most certainly) create a conflict with the laws
+of physics, which is described by the ODE system. We see that BC1 in
+@fig-bcs fixes the temperature to $10 \degC$ all along r axis and at all
+times. Each node is described with an ODE. This means that even though
+we say there is one boundary condition at $z = z_0$, when we implement
+it in our model code, we need to apply it to each ODE (it just appears
+to be formulated the same way!). The number of ODEs would depend on the
+step size along r, $\Delta r$. For BC2 and BC3, the boundary conditions
+also apply to all the nodes with r = r0 and r = R, respectively. BC2 ad
+BC3 are different types of boundary conditions than BC1. Rather than
+specifying the value of the state variable (T), they specify something
+about the derivative (gradient) of the state variable ($\frac{dT}{dr}$).
+In BC2 the gradient is assigned a fixed value (0) and in BC3 the
+gradient is a function of the state variable at the boundary ($T_R$) and
+two constants, $k$ and $T_{bulk}$. We will get into details about these
+three types of BCs shortly as they are critical to formulate and solve a
+spatial model problem.
 
-First notice that in two of the corners, $(r_0, z_0)$ and $(R, z_0)$, we have a potential conflict between BC1 and BC2 and BC1 and BC3, respectively. Here the modeller must make a choice, which BC should be satisfied or whether both needs to be satisfied at once. In addition we have all the ICs. All ODEs (all nodes in @fig-bcs, interior and boundaries) must have an IC. Again we see a potential conflict between BCs and ICs at the boundaries and the modeller must make a choice, which condition must be satisfied. This depends on your problem, but almost always the BCs overrule the ICs at the boundaries. In our pipe problem, we did exactly that - the initial temperature was set to 0 everywhere, except at the left side, where the BC had to be satisfied with a temperature of 10. We implemented this be incorporating the BC directly in our IC definition like this: `T0 = np.full(len(z_grid), 0)` and then `T0[0] = 10`.
+First notice that in two of the corners, $(r_0, z_0)$ and $(R, z_0)$, we
+have a potential conflict between BC1 and BC2 and BC1 and BC3,
+respectively. Here the modeller must make a choice, which BC should be
+satisfied or whether both needs to be satisfied at once. In addition we
+have all the ICs. All ODEs (all nodes in @fig-bcs, interior and
+boundaries) must have an IC. Again we see a potential conflict between
+BCs and ICs at the boundaries and the modeller must make a choice, which
+condition must be satisfied. This depends on your problem, but almost
+always the BCs overrule the ICs at the boundaries. In our pipe problem,
+we did exactly that - the initial temperature was set to 0 everywhere,
+except at the left side, where the BC had to be satisfied with a
+temperature of 10. We implemented this be incorporating the BC directly
+in our IC definition like this: `T0 = np.full(len(z_grid), 0)` and then
+`T0[0] = 10`.
 
-Generally speaking there is no restrictions as to what type of BCs you can put at the boundaries For example two BCs of the same type are also allowed in the same dimension. The type of BCs needed will depends on the physical problem and what information you are given about. If the information is inconsistent or interpreted incorrectly, you can get conflicts between the BCs or conflicts with your physics. So lets learn how and when to use them. 
+Generally speaking there is no restrictions as to what type of BCs you
+can put at the boundaries For example two BCs of the same type are also
+allowed in the same dimension. The type of BCs needed will depends on
+the physical problem and what information you are given about. If the
+information is inconsistent or interpreted incorrectly, you can get
+conflicts between the BCs or conflicts with your physics. So lets learn
+how and when to use them.
 
 ### Dirichlet boundary condition
 
-The Dirictlet BC is also referred to as a BC of the first type. It describes the state variable value at the boundary. We already used it in the @fig-pipedisc example, where we fixed the temperature at the left boundary to $10 \degC$. The Dirichlet BC can be mathematically formulated as:
+The Dirictlet BC is also referred to as a BC of the first type. It
+describes the state variable value at the boundary. We already used it
+in the @fig-pipedisc example, where we fixed the temperature at the left
+boundary to $10 \degC$. The Dirichlet BC can be mathematically
+formulated as:
 
 $$
 c(x = a, t) = \alpha(t)
 $$
 
-where $a$ is at the boundary, that is $a = 0$ or $a = L$ in Figure x. The right hand side, $\alpha(t)$ implies that the value of the state variable at the boundary can depend on time, $t$, but does not have to.
+where $a$ is at the boundary, that is $a = 0$ or $a = L$ in Figure x.
+The right hand side, $\alpha(t)$ implies that the value of the state
+variable at the boundary can depend on time, $t$, but does not have to.
 
 **Example case**
 
-A model that predicts how oxygen concentration changes with time and with depth of a small pond. At the top boundary (surface of the water) the concentration of oxygen is in equilibrium with the atmospheric oxygen concentration. At this boundary the value (oxygen concentration) does not change if the air is constantly exchanged, which is the case if the wind blows just mildly. This situation would be well described with a Dirichlet BC. If we had put a closed chamber on top of the water, such that air could not be exchanged, then we could not do this because the concentration of oxygen in the air would decline over time as it diffuses into the water (assuming it was not saturated with oxygen already).
+A model that predicts how oxygen concentration changes with time and
+with depth of a small pond. At the top boundary (surface of the water)
+the concentration of oxygen is in equilibrium with the atmospheric
+oxygen concentration. At this boundary the value (oxygen concentration)
+does not change if the air is constantly exchanged, which is the case if
+the wind blows just mildly. This situation would be well described with
+a Dirichlet BC. If we had put a closed chamber on top of the water, such
+that air could not be exchanged, then we could not do this because the
+concentration of oxygen in the air would decline over time as it
+diffuses into the water (assuming it was not saturated with oxygen
+already).
 
 **Implementation in Python**
 
-The Dirichlet BC can be enforced in many ways. Below is an example where it is enforced by setting the initial condition equal to the BC. Inside the `rates()` function we initially set the derivatives at all nodes to 0 through this command `dcdt = np.zeros_like(c)`. In the `for loop` we only loop through interior nodes, because the start index is 1 (`range(1, len(c)-1)`) and we stop before the last index. Hence `dcdt[0]` will stay as 0 (meaning change in c over change in time is zero) and effectively ensure that the state variable value at index 0 (the boundary node) never changes from its initial value. The initial value at index 0 is set to 10 in this command after the `rates()` function: `c0[0] = 10`. Because our for loop does not include the last index, it means that we also have a Dirichlet BC there, which is 0 from this command: `c0 = np.zeros(len(x_grid))`. This may not be what we want for the model, unless something is instantly consuming oxygen at the bottom of the pond. Therefore we might have to handle the bottom boundary with a different type of BC, but for simplicity we will keep the Dirichlet BCs at both ends of the domain.
+The Dirichlet BC can be enforced in many ways. Below is an example where
+it is enforced by setting the initial condition equal to the BC. Inside
+the `rates()` function we initially set the derivatives at all nodes to
+0 through this command `dcdt = np.zeros_like(c)`. In the `for loop` we
+only loop through interior nodes, because the start index is 1
+(`range(1, len(c)-1)`) and we stop before the last index. Hence
+`dcdt[0]` will stay as 0 (meaning change in c over change in time is
+zero) and effectively ensure that the state variable value at index 0
+(the boundary node) never changes from its initial value. The initial
+value at index 0 is set to 10 in this command after the `rates()`
+function: `c0[0] = 10`. Because our for loop does not include the last
+index, it means that we also have a Dirichlet BC there, which is 0 from
+this command: `c0 = np.zeros(len(x_grid))`. This may not be what we want
+for the model, unless something is instantly consuming oxygen at the
+bottom of the pond. Therefore we might have to handle the bottom
+boundary with a different type of BC, but for simplicity we will keep
+the Dirichlet BCs at both ends of the domain.
 
 ```{python}
 
@@ -475,15 +768,30 @@ plt.xlabel('Time, seconds')
   
 ```
 
-If another person was to read and understand this code, we could write the Dirichlet BCs more explicitly by adding `dcdt[0] = 0` and `dcdt[-1] = 0` inside the `rates()`function just below the `dcdt = np.zeros_like(c)` line. This would not change behavior of the code, but make interpretation easier for outsiders. In more complex model code, we may unintentionally change the `dcdt` at the boundaries and in that case being explicit about the boundary conditions would help preventing that.
+If another person was to read and understand this code, we could write
+the Dirichlet BCs more explicitly by adding `dcdt[0] = 0` and
+`dcdt[-1] = 0` inside the `rates()`function just below the
+`dcdt = np.zeros_like(c)` line. This would not change behavior of the
+code, but make interpretation easier for outsiders. In more complex
+model code, we may unintentionally change the `dcdt` at the boundaries
+and in that case being explicit about the boundary conditions would help
+preventing that.
 
 ### Neumann boundary condition
 
-The Neumann BC is also referred to as a boundary condition of the second type. It describes the derivative of the state variable with respect to the spatial variable. Thus it is closely related to the flux, with the exception that it does not specify D (the diffusion coefficient for mass transfer) or k (the conductivity for heat transfer), but only the gradient. The Neumann BC can in general by formulated as:
+The Neumann BC is also referred to as a boundary condition of the second
+type. It describes the derivative of the state variable with respect to
+the spatial variable. Thus it is closely related to the flux, with the
+exception that it does not specify D (the diffusion coefficient for mass
+transfer) or k (the conductivity for heat transfer), but only the
+gradient. The Neumann BC can in general by formulated as:
 
 $\frac{\partial (x = a, t)}{\partial x} = \gamma(t)$,
 
-where $a$ is at the boundary of dimension $x$, that is $a = 0$ or $a = L$, where $L$ is the end boundary. The right hand side, $\alpha(t)$ again implies that the value can depend on time, $t$, but does not have to. A very useful and common Neumann BC would be:
+where $a$ is at the boundary of dimension $x$, that is $a = 0$ or
+$a = L$, where $L$ is the end boundary. The right hand side, $\alpha(t)$
+again implies that the value can depend on time, $t$, but does not have
+to. A very useful and common Neumann BC would be:
 
 $$
 \frac{\partial (x = a, t)}{\partial x} = 0
@@ -491,21 +799,39 @@ $$
 
 When the Neumann BC is 0, it represents typically one of three cases.
 
-1\) When the boundary is closed (mass can not get through the boundary) or insulated (heat can not flow through the boundary). This is a very common situation and would for example be a good choice for the bottom boundary in the previous example case with the pound. 
+1\) When the boundary is closed (mass can not get through the boundary)
+or insulated (heat can not flow through the boundary). This is a very
+common situation and would for example be a good choice for the bottom
+boundary in the previous example case with the pound.
 
-2\) When we are dealing with a symmetric problem where $x = 0$ is a boundary e.g. in the middle of a sphere or cylinder that is symmetric around $x = 0$. This is actually what is done for BC2 in @fig-bcs where $r_0$ is in the middle of the cylindrical pipe in @fig-pipedisc.  
+2\) When we are dealing with a symmetric problem where $x = 0$ is a
+boundary e.g. in the middle of a sphere or cylinder that is symmetric
+around $x = 0$. This is actually what is done for BC2 in @fig-bcs where
+$r_0$ is in the middle of the cylindrical pipe in @fig-pipedisc.
 
-3\) When we have a completely open boundary, but nothing is specified about the dynamics of the state variable at the other side of the boundary. Typically there would be no description of convection or negligible convection.
+3\) When we have a completely open boundary, but nothing is specified
+about the dynamics of the state variable at the other side of the
+boundary. Typically there would be no description of convection or
+negligible convection.
 
 **Example case**
 
-Imagine we have a living room with a heated floor and the heat seeks upwards to the ceiling. To prevent heat loss through from the living room through the ceiling it is therefore build with a thick layer of polyurethane (which has a very low heat conductivity, that we will assume is 0 for the sake of this example). In this case we could assume there is no heat flux through the ceiling (at index L) and set the gradient to 0. The ceiling would be the top boundary and the BC could be formulated as below
+Imagine we have a living room with a heated floor and the heat seeks
+upwards to the ceiling. To prevent heat loss through from the living
+room through the ceiling it is therefore build with a thick layer of
+polyurethane (which has a very low heat conductivity, that we will
+assume is 0 for the sake of this example). In this case we could assume
+there is no heat flux through the ceiling (at index L) and set the
+gradient to 0. The ceiling would be the top boundary and the BC could be
+formulated as below
 
 $$
 \frac{\partial T(x=L, t)}{\partial x} = 0
 $$
 
-At the boundary at the floor we could have a Dirichlet BC, because the floor temperature is maintained at a constant temperature of e.g. $22 \degC$
+At the boundary at the floor we could have a Dirichlet BC, because the
+floor temperature is maintained at a constant temperature of e.g.
+$22 \degC$
 
 $$
 T(x = 0, t) = 22
@@ -513,13 +839,19 @@ $$
 
 **Implementation in Python**
 
-In order to implement the Neumann BC we can use a trick that involves a concept called a ghost point. Lets start with $\frac{\partial T(x=L, t)}{\partial x} = 0$ and replace the left hand side with the discretized form using finite central difference of the first derivative.
+In order to implement the Neumann BC we can use a trick that involves a
+concept called a ghost point. Lets start with
+$\frac{\partial T(x=L, t)}{\partial x} = 0$ and replace the left hand
+side with the discretized form using finite central difference of the
+first derivative.
 
 $$
 \frac{\partial T(x=L, t)}{\partial x} = \frac{T(x_{L+1}) - T(x_{L-1})}{2 \cdot \Delta x} = 0
 $$
 
-Here we encounter a problem, which is $T(x_{L+1})$, because this is a point outside our model domain, since L is at the top boundary. We refer to this point as a ghost point. However, because the the LHS must be 0,
+Here we encounter a problem, which is $T(x_{L+1})$, because this is a
+point outside our model domain, since L is at the top boundary. We refer
+to this point as a ghost point. However, because the the LHS must be 0,
 
 $$
 T(x_{L+1}) = T(x_{L-1})
@@ -531,20 +863,26 @@ $$
 \rho C_p \frac{\partial T}{\partial t} = k \frac{\partial^2T}{\partial x^2} - v\frac{\partial T}{\partial x} + S
 $$
 
-We can eliminate the advection term (no bulk heat flow) and the S term and discretize the remaining conduction term.
+We can eliminate the advection term (no bulk heat flow) and the S term
+and discretize the remaining conduction term.
 
 $$
 \frac{\partial T}{\partial t} = \frac{k}{\rho \cdot C_p}\cdot \frac{T(x_{L+1}) - 2T(x_L) + T(x_{L-1})}{\Delta x^2}
 $$
 
-Here we see the ghost point again, but now we can substitute it with $T(x_{L-1})$, which gets us to
+Here we see the ghost point again, but now we can substitute it with
+$T(x_{L-1})$, which gets us to
 
 $$
 \frac{\partial T}{\partial t} = \frac{k}{\rho \cdot C_p}\cdot  \frac{2\cdot T(x_{L-1}) - 2\cdot T(x_L)}{\Delta x^2}
 $$
 
-This equation enforces the Neumann boundary condition at the top boundary, L. Earlier in @ex-pipe_model, we avoided the whole ghost point problematic by using backward difference instead. But that backward difference code silently also imposed a Neumann BC of zero flux. In that example it was the \3 case, where nothing was specificed about the dynamics of the state variable at the other side of the boundary.
-
+This equation enforces the Neumann boundary condition at the top
+boundary, L. Earlier in @lst-pipe_model, we avoided the whole ghost point
+problematic by using backward difference instead. But that backward
+difference code silently also imposed a Neumann BC of zero flux. In that
+example it was the case 3) where nothing was specificed about the
+dynamics of the state variable at the other side of the boundary.
 
 ```{python}
 # importing libraries
@@ -589,53 +927,11 @@ plt.ylabel('Temp, deg C')
 plt.xlabel('Time, seconds')
 ```
 
-## Nodes vs. cells
 
-There are two main ways to develop discretized spatial models.
-The *cell-based finite volume method* (FVM) uses finite layers or cells of fixed volume, with flux or flow calculated for each boundary between cells at all evaluated times.
-It is easier to grasp intuitively and easier to go from the fundamental constitutive equations and conservation laws to model equations and ultimately Python code.
-Boundary conditions can be implemented very intuitively.
-Conservation (energy and mass) is ensured with the approach, and it is easy to check cumulative flow into or out of a domain for model verification to ensure it has been implemented correctly.
-One of us (Sasha) likes FVM because it allows models to be developed completely from fundamental principles and a little thinking.
-
-The *finite difference method* (FDM) uses nodes that represent points in space, and is implemented by discretizing a governing equation, i.e., the PDE for the state variable.
-The model code can be more compact and the math simpler.
-Boundary conditions utilize a construct called "ghost points", which take some care to understand and implement.
-One of us (Frederik) likes FDM because it is the more sophisticated approach and provides a good basis for moving ahead to more dimensions and more challenging modeling problems. 
-
-In this book we will introduce both, but focus on FDM.
-
-
-<!-- Conceptual illustration.
-     Implications at boundaries.
-     Node-based: more efficient but harder to understand.
-     Cell-based: easier to understand and verify.
-     Book favors one approach (TBD). -->
-
-## Flux-based vs. state-variable implementation
-
-<!-- Analogous to the lumped-parameter choice in earlier chapters.
-     Flux-based: explicitly programs constitutive equations -- more code, easier to follow.
-     State-variable: implements a single GE -- compact but requires Python trickery. -->
-
-## Boundary conditions {#sec-bcs}
-
-<!-- Types: Dirichlet, Neumann, Robin.
-     Number of BCs needed.
-     Implementation: ghost points (within GE) or explicit (more code). -->
-
-## Initial conditions
-
-<!-- One per ODE.
-     Uniform profiles are common but not required. -->
-
-## Implementation
-
-<!-- Start with a small number of nodes/cells.
-     Show different implementation and BC approaches.
-     Loops and slicing. -->
 
 ## Grid size and convergence
 
+```{=html}
 <!-- Grid spacing and time step have opposite effects on stability.
      Grid spacing evaluation / convergence check. -->
+```

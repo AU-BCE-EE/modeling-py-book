@@ -32,7 +32,8 @@ book:
     - appx_parameter_values.qmd
 
 bibliography: references.bib
-
+crossref:
+  lst-title: "Code block"
 format:
   html:
     theme: cosmo
