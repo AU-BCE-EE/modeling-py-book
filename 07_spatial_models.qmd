@@ -543,7 +543,7 @@ $$
 \frac{\partial T}{\partial t} = \frac{k}{\rho \cdot C_p}\cdot  \frac{2\cdot T(x_{L-1}) - 2\cdot T(x_L)}{\Delta x^2}
 $$
 
-This equation enforces the Neumann boundary condition at the top boundary, L. Earlier in @ex-pipe_model, we avoided the whole ghost point by using backward difference instead. But 
+This equation enforces the Neumann boundary condition at the top boundary, L. Earlier in @ex-pipe_model, we avoided the whole ghost point problematic by using backward difference instead. But that backward difference code silently also imposed a Neumann BC of zero flux. In that example it was the \3 case, where nothing was specificed about the dynamics of the state variable at the other side of the boundary.
 
 
 ```{python}
