@@ -3,10 +3,10 @@
 There is a famous quote from George Box, a statistician or something. . .
 It is often paraphrased as *all models are wrong, but some are useful*.
 Indeed, both parts are true.
-Although "wrongness", i.e., model error, cannot be eliminated, it can and should be evaluated and controlled.
+Although model error, cannot be eliminated, it can and should be evaluated and controlled.
 Verification and validation address the problem of model error, and are essential steps in the "modelling process" and should be carried out before any confidence is placed in model predictions.
 
-Verification can be thought of as ensuring that the mathematical model has been programmed or implemented correctly.
+Verification is essentially ensuring that the mathematical model--developed through a model formulation process (@sec-formulation}--has been programmed or implemented correctly.
 For us, that means checking that our Python code is correct.
 That alone does not ensure the model produces accurate predictions; of course any mathematical model of a real process or system has error too.
 It is common to find implementation errors through model verification.
@@ -14,57 +14,55 @@ Finding these errors after a model has been applied, and after its predictions h
 They should be found and corrected before.
 A clear and explicit model formulation and careful programming can reduce implementation errors, but verification is always needed.
 
-Validation is done by comparing model output to measurements or some data from the system under study.
-Because validation is done after verification, any error here can be interepreted as (most likely) coming from either:
-
-* model structure, or
-* parameter values.
+In contrast, validation is done by comparing model output to measurements from the system under study.
+Because validation is done after verification, code errors should already be eliminated, so any error seen in in validation can be interepreted as (most likely) coming from either model structure or parameter values.
 
 The model developer needs to determine whether changes are needed and then which of these two is likely to improve the model.
 
-For more on "V&V", see Thackner ...
+@fig-vv1 shows where verification and validation fit in the model development process.
+The connections between the software model (your Python code) and, first, the mathematical model (what you developed through model formulation), and some measurement data, called the "reality of interest" in the figure.
 
 ![Where verification and validation fit into the modeling process. From Thackner ....](web-images/Thackner_VV1.png){#fig-vv1 fig-alt="V&V concept."}
 
 One important point that model developers and users should both understand is that successful V&V does not prove that a model is correct. 
 In fact, only model failure shows anything with any certainty: that a model is wrong.
 But V&V can provide evidence that the model is accurate enough for application.
+Both verification and validation are described in more detail in the sections below.
 
 ## Verification
 
-As part of verification, you should carefully check model code for:
+Verification is about making sure your model has been implemented correctly.
+So how exactly do you do that?
+You should carefully check model code for:
 
-* consistent units,
 * accurate constitutive equations, 
 * accurate linking equations, and
-* accurate mass or energy conservation.
-
-Additionally, careful model calls themselves can be used for verification.
-Check ultimate or limiting cases.
-If a simpler analytical model is available, its predictions can be compared to those from the more complex model under appropriate conditions.
-
-Exactly what can be done and how to do it varies among models.
-Some verification can be done with careful calls to a model function and analysis of the results.
-The idea is to see if the model does what the mathematical equations used for its formulation say it should do.
-
-With this approach you can find problems without information on the causes.
-Then experience, model call "experiments", and a check of the code can help identify the causes.
-Some will require digging into the model code itself from the start, and perhaps exporting intermediate results for checking. 
-
-Even better, you can explicitly add cumulative transport as a state variable, and compare it to the change in total energy or mass in the model domain for a conservation check.
+* accurate mass or energy conservation, and
+* consistent units.
 
 When checking code, you should look for equations completeness and correctness by comparison to your model equations, written with pencil and paper or typed out somewhere.
 Of course, this presumes that the original model formulation and description are accurate.
 Unit consistency can be checked by entering units above terms in equations right in the model code, like this, where line 2 has the original model code and 1 a comment with units:
 
-```{}
+```{python}
+#| eval: false
 #                  m^2 *  W/m^2 -> W
         Q_solar = a_top * q_sol             # Solar energy (W)
 ```
 
-Warning: Terminology is not used consistently among disciplines! Interpretation differs and you may also see "evaluation".
+Additionally, careful model calls themselves can be used for verification.
+Check ultimate or limiting cases, where you have a clear expectation of what the model should show.
+If a simpler analytical model is available, its predictions can be compared to those from the more complex model under appropriate conditions.
+With this approach you can find problems without information on the causes.
+Then experience, model call "experiments", and a check of the code can help identify the causes.
+Some will require digging into the model code itself from the start, stepping through the code as it is evaluated using `breakpoint()`, or exporting intermediate results for checking. 
+
 Model verification requires a good understanding of the underlying conceptual and mathematical models! 
 Otherwise, how would you know what to expect?
+
+Conservation can be checked by tracking cumulative transport.
+Cumulative transport can be added as a state variable by simply integrating the ODE for mass or energy flow at the domain boundaries
+The integrated cumulative totals can be compared it to the change in total energy or mass in the model domain for a conservation check.
 
 ## Pool model code verification
 
@@ -183,7 +181,7 @@ def dynmod(a_top,
 ```
 
 And now some verification:
-Let's start with a conceptual check of
+Let's start with a check of
 
 1. conservation, and
 2. constitutive equations.
@@ -212,10 +210,11 @@ So we can add it:
         Q_net = Q_solar + Q_top + Q_sub + Q_renew
 ```
 
-Now for a conceptual check of the constitutive equations.
+Now for a check of the constitutive equations.
 
 The code:
 ```{python}
+#| eval: false
         # Calculate heat flow (W) through individual pathways
         # All are positive for heat flow in (this is arbitrary)
         Q_solar = a_top * q_sol                                     # Solar energy
@@ -226,6 +225,7 @@ The code:
 
 The check, where we have copied a single line a few times to think about it in some different ways
 ```{python}
+#| eval: false
         #         Area  * flux -> OK
         Q_solar = a_top * q_sol                                     # Solar energy
 
@@ -241,15 +241,15 @@ The check, where we have copied a single line a few times to think about it in s
 
 For the units check, let's focus on that same line of code from above.
 ```{python}
-# 2. Air/top
-#    u_top : float
+#| eval: false
+
 #        Overall heat transfer coefficient from the upper water surface (W/m2-K)
 #               m^2   * W/m2-K  * ----------K---------- -> W OK 
         Q_top = a_top * u_top   * (temp_air - temp_pool)              # Convection from top
 ```
 
 But we have to check that the inputs `a_top` etc. have the correct units. 
-These should be defined in comments.
+These should be defined in the docstring.
 We see:
 
 ```{python}
@@ -266,6 +266,7 @@ We see:
 Those three look fine, once we remember that a temperature difference is the same in $\degC$ and K.
 
 Now the linking equation, starting with a conceptual check.
+
 ```{python}
   # temp change = energy in / (energy required for 1 K change in 1 kg * mass/vol * vol) -> seems OK
         dtemp_dt = Q_net / (cp * dens * vol)
@@ -273,8 +274,7 @@ Now the linking equation, starting with a conceptual check.
 
 And unit check.
 ```{python}
-        # Express as temperature change
-        #          J/s   / J/K-kg * kg/m3 * m3 -> K OK
+        #          J/s   / J/K-kg * kg/m3 * m3 -> K/s OK
         dtemp_dt = Q_net / (cp    * dens * vol)
 ```
 
@@ -286,6 +286,8 @@ Compare to:
     dens : float
         Density of water (kg/m3)
 ```
+
+All OK?
 
 ## Validation
 
