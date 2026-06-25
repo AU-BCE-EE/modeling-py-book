@@ -219,7 +219,7 @@ $$
 
 Note that S, having no spatial derivative, passes through the discretization unchanged and is simply evaluated at each node.
 
-If we apply our problem to only 5 nodes like in @fig-MOL we should end up with 5 ODEs right? But we run into a problem at the boundary nodes, because our discretization involves nodes that are outside our grid! Therefore the boundary nodes should be handled differently and exactly how depends on the boundary conditions of our problem. We will discuss boundary conditions in depth in the next section @sec-bc, but for now lets assume that the temperature is always 10 $\degC$ at the left boundary (index 0). Because this is meant as a demonstration to how the ODEs are linked we will for simplicity remove advection and source terms. Remember the pipe is 2 m long, and 5 nodes means we must have one less domain, so $\Delta z = 2~m/(5~nodes - 1) = 0.5~m$. We write ODEs for the interior nodes first:  
+If we apply our problem to only 5 nodes like in @fig-MOL we should end up with 5 ODEs right? But we run into a problem at the boundary nodes, because our discretization involves nodes that are outside our grid! Therefore the boundary nodes should be handled differently and exactly how depends on the boundary conditions of our problem. We will discuss boundary conditions in depth in @sec-bc, but for now lets assume that the temperature is always 10 $\degC$ at the left boundary (index 0). Because this is meant as a demonstration to how the ODEs are linked we will for simplicity remove advection and source terms. Remember the pipe is 2 m long, and 5 nodes means we must have one less domain, so $\Delta z = 2~m/(5~nodes - 1) = 0.5~m$. We write ODEs for the interior nodes first:  
 
 $$
 \begin{align}
@@ -234,7 +234,7 @@ $$
 f''(x) = \frac{f(x) - 2 \cdot f(x-\Delta x) + f(x -2\cdot \Delta x)}{\Delta x^2}
 $$
 
-OK. Now we can put the information together write ODEs for the boundary nodes as well as information about the boundary conditions:
+Now we can put the information together write ODEs for the boundary nodes as well as information about the boundary conditions:
 
 $$
 \begin{align}
