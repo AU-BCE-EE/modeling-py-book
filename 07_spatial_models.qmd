@@ -536,7 +536,7 @@ phenomenon we must NEVER use information from downwind nodes to
 approximate the derivative (which is what central difference does). This
 will cause the solution to oscillate or be unstable, a topic that will
 be dealt more with in a later chapter. So we must in this case use
-backward difference to avoid that.
+backward difference for the advection to avoid that. 
 
 ```{python}
 #| lst-label: lst-pipe_model
@@ -570,7 +570,7 @@ def rates(t, T, alpha, v, S, dz):
     dTdt[i] = alpha * (T[i+1] - 2*T[i] + T[i-1])/(dz**2) - v*(T[i] - T[i-1])/dz + S
     
   # for the right boundary we use the backward difference formula 
-  # for both conduction and advection terms
+  # for both conduction* and advection terms.
   dTdt[-1] = alpha * (T[-1] - 2 * T[-2] + T[-3])/(dz**2) - v*(T[-1] - T[-2])/dz + S
   
   return dTdt
@@ -596,12 +596,14 @@ print(f"The temperature at the outlet ends at {round(end_point_temp[-1], 3)} deg
 ```
 
 The temperature at the end of the pipe stabilize around $10 \degC$ after
-\~11 seconds. Se see that the heat source only increases the temperature
+\~11 seconds. We see that the heat source only increases the temperature
 by $~0.05 \degC$. So a much stronger heat source would be needed to get
 to the $20 \degC$ in @fig-pipedisc. This implies that the source terms
 is not nearly strong enough to heat the water, which is continuously
 being replaced with incoming $10 \degC$ water. Try to increase the
 Source term yourself to reach an outlet temperature of $20 \degC$.
+
+Extra note: we used backward difference for the conduction term at the right boundary. This is OK for this specific case, but is normally not done. However, here we had to do it because we have not introduced the concept of types of boundary conditions and how to encode them. 
 
 ## Boundary and initial conditions {#sec-bc}
 
@@ -808,6 +810,8 @@ boundary in the previous example case with the pound.
 boundary e.g. in the middle of a sphere or cylinder that is symmetric
 around $x = 0$. This is actually what is done for BC2 in @fig-bcs where
 $r_0$ is in the middle of the cylindrical pipe in @fig-pipedisc.
+
+3\) If you have a problem with both advection and diffusion/conduction. Heat or mass is leaving you system at the outlet boundary by advection, but not by diffusion/conduction. Then we could impose such a BC on the conduction or diffusion terms. This is really the type of BC we should have implemented at the right end in @lst-pipe_model.
 
 **Example case**
 
