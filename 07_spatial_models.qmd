@@ -127,7 +127,7 @@ $$
 $$
 with reference to the spherical coordinate system in @fig-sphere.
 
-![Cylindrical coordinate system, with three dimensions, r, theta, phi](drawings/spherical_coords.png){#fig-sphere fig-alt="Sketch showing the three dimensions in spherical coordinates"}
+![Spherical coordinate system, with three dimensions, r, theta, phi](drawings/spherical_coords.png){#fig-sphere fig-alt="Sketch showing the three dimensions in spherical coordinates"}
 
 
 While these equations looks quite terrifying at first, we shall now see how we can reduce complexity. This will primarily be done by eliminating dimensions that are not important for the problem and by including only modes of transfer that is relevant to our problem. 
@@ -247,7 +247,7 @@ $$
 $${#eq-fiveODE}
 
 This gives us the 5 coupled ODEs and with information about boundary conditions included in red.
-Since we simplified the example by removing advection, we would need to apply finite difference formulas for the first derivative as well to solve the real problem. In @Appendix_FDM a complete overview of the finite difference formulas (backward, forward, central) are given for the first and second derivatives. 
+Since we simplified the example by removing advection, we would need to apply finite difference formulas for the first derivative as well to solve the real problem. In @sec-appx-fdm a complete overview of the finite difference formulas (backward, forward, central) are given for the first and second derivatives. 
 
 **Implementation in Python**
 
