@@ -686,8 +686,7 @@ how and when to use them.
 The Dirictlet BC is also referred to as a BC of the first type. It
 describes the state variable value at the boundary. We already used it
 in the @fig-pipedisc example, where we fixed the temperature at the left
-boundary to $10 \degC$. The Dirichlet BC can be mathematically
-formulated as:
+boundary to $10 \degC$. For a 1D problem where $c$ is the state variable, $x$ is the spatial varible and $t$ is time, the Dirichlet BC can be mathematically formulated as:
 
 $$
 c(x = a, t) = \alpha(t)
@@ -797,7 +796,7 @@ type. It describes the derivative of the state variable with respect to
 the spatial variable. Thus it is closely related to the flux, with the
 exception that it does not specify D (the diffusion coefficient for mass
 transfer) or k (the conductivity for heat transfer), but only the
-gradient. The Neumann BC can in general by formulated as:
+gradient. For a 1D problem where $c$ is the state variable, $x$ is the spatial varible and $t$ is time, the Neumann BC can in general by formulated as:
 
 $\frac{\partial (x = a, t)}{\partial x} = \gamma(t)$,
 
@@ -877,7 +876,7 @@ We can eliminate the advection term (no bulk heat flow) and the S term
 and discretize the remaining conduction term.
 
 $$
-\frac{\partial T}{\partial t} = \frac{k}{\rho \cdot C_p}\cdot \frac{T(x_{L+1}) - 2T(x_L) + T(x_{L-1})}{\Delta x^2}
+\frac{\partial T}{\partial t} = \frac{k}{\rho \cdot C_p}\cdot \frac{T(x_{L+1}) - 2\cdot T(x_L) + T(x_{L-1})}{\Delta x^2}
 $$
 
 Here we see the ghost point again, but now we can substitute it with
@@ -948,6 +947,53 @@ plt.show()
 The higher up in the room, the longer it takes for the temperature to increase. It might seem a long time to heat up a living room, but the reason is that heat in our model only travels by conduction. In reality heat would seek upward and the air would mix by dispersion and convection as well.
 
 ### Robin boundary condition
+
+Robin boundary condition
+The Robin BC is also referred to as a boundary condition of the third type. Like the Neumann BC, it specifies something about the gradient at the boundary, but instead of fixing the gradient to a known value, it relates the gradient to the value of the state variable itself at the boundary — typically as a balance between flux leaving/entering the domain and exchange with the surroundings. For a 1D problem where $c$ is the state variable, $x$ is the spatial variable and $t$ is time, the Robin BC can in general be formulated as:
+
+$$
+\frac{\partial c(x = a, t)}{\partial x}= f(x = a, t) - \alpha(x = a, t)\cdot c(x = a, t)
+$$
+where $f(x = a, t)$ and $\alpha(x = a, t)$ are often just constants, but for generality, they are written here as being functions of $x$ and $t$. When dealing with heat transfer the Robin BC could for example represent Newtons law of cooling and for mass transfer it could represent the mass transfer coefficient approach. 
+
+$$
+\begin{align}
+& f(x=a, t) = 0 ~\\ 
+& \alpha(x = a, t) = \frac{1}{D}\\
+& c(x=a, t) = k_c \cdot(c(x=a, t) - c_{bulk})\\
+\end{align}
+$$
+Where $c_{x=a}$ is the concentration at the boundary node, $c_{bulk}$ is the concentration in the bulk outside the model domain, $k_c$ is the mass transfer coefficient and $D$ is the diffusion coefficient. Then the Robin BC becomes
+
+$$
+-D\frac{\partial c(x = a, t)}{\partial x}=k_c \cdot(c(x=a, t) - c_{bulk})
+$$
+Which just means that at the boundary the change in concentration depends on the gradient between the boundary and the bulk. That is the mass transfer coefficient approach we already introduced in chapter 5. Similarly for heat we would end up with:
+
+$$
+-k\frac{\partial T(x = a, t)}{\partial t}=h \cdot(T(x=a, t) - T_{bulk})
+$$
+With $k$ being the thermal conductivity and $h$ begin the heat transfer coefficient. We will be using these two Robin BCs frequently so 
+
+**example case**
+Lets go with an example with mass transfer now. We could have a well which contains contaminated water in the bottom, releasing toxic hydrogen sulfide. The hydrogen sulfide diffuses upwards to the edge of well. At the edge the hydrogen sulfide is carried away from the wind blowing at the top by convection. This is where we will have the Robin BC. At the bottom we will use a Dirichlet BC for simplicity.
+
+Like for the Neumann BC we will with discretization with central difference have to handle a ghost point. This can be done in a similar manner by first discretizing the gradient so we get: 
+
+$$
+-D\cdot \frac{\partial c(x = L, t)}{\partial t}= -D\cdot \frac{c(x_{L+1}) - c(x_{L-1})}{2 \cdot \Delta x} = k_c \cdot(c(x_L) - c_{bulk})
+$$
+We now isolate the ghost point ($c(x_{L+1})$)
+
+$$
+c(x_{L+1}) = -\frac{2 \cdot \Delta x\cdot k_c}{D} \cdot \left( c(x_L) - c_{bulk} \right ) + c(x_{L-1})
+$$
+In our example the hydrogen sulfide is only transported by diffusion in the model domain. We will therefore substitute the ghost point in the discretized form of the diffusion term
+
+$$
+D \cdot \frac{c(x_{L+1}) - 2\cdot c(x_L) + c(c_{L-1})}{\Delta x^2} = D \cdot \frac{\left(-\frac{2 \cdot \Delta x\cdot k_c}{D} \cdot \left( c(x_L) - c_{bulk} \right) + c(x_{L-1})\right ) - 2\cdot c(x_L) + c(c_{L-1})}{\Delta x^2}
+$$
+
 
 
 
