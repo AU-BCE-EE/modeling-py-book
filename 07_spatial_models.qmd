@@ -824,12 +824,6 @@ This BC is also the case BC2 in @fig-bcs where $r_0$ is in the middle of the cyl
 
 ![Pipe from from two perspectives, showing the concentration profile symmetry along the radial dimension](drawings/symmetry.png){#fig-symmetry fig-alt="Pipe from from two perspectives, showing the concentration profile symmetry along the radial dimension"}
 
-}
-
-fig-alt="Sketch showing water flowing through a constant-diameter round pipe at a constant flow rate with heat applied from outside."}
-
-
-
 3\) If you have a problem with both advection and diffusion/conduction. Heat or mass is leaving you system at the outlet boundary by advection, but not by diffusion/conduction. Then we could impose such a BC on the conduction or diffusion terms. This is really the type of BC we should have implemented at the right end in @lst-pipe_model.
 
 **Example case**
@@ -1084,7 +1078,165 @@ In other words, choosing a grid size is a balancing act between accuracy and cos
 **example case**
 We return to the pond example code in @lst-dirichlet_pond. We want to compare the model with different $\Delta x$. To compare runs meaningfully, we need a single number to track — not the entire concentration profile, but one quantity that we can follow as the grid changes. We will use the oxygen concentration at a fixed depth (5 cm) at the end of the simulation, t = 7 days. If our discretization is working correctly, this value should converge towards some fixed number as $\Delta x$ gets smaller, rather than jumping around unpredictably.
 
-```{=html}
-<!-- Grid spacing and time step have opposite effects on stability.
-     Grid spacing evaluation / convergence check. -->
+```{python}
+import numpy as np
+from scipy.integrate import solve_ivp
+import matplotlib.pyplot as plt
+
+L = 0.1  # depth of pond, m
+D = 2.0 * 10**-9  # diffusion coefficient, m2/s
+tmax = 60 * 60 * 24 * 7  # 7 days, seconds
+depth_of_interest = 0.05  # m, where we evaluate the solution
+
+def rates(t, c, D, dx):
+    dcdt = np.zeros_like(c)
+    for i in range(1, len(c)-1):
+        dcdt[i] = D * (c[i-1] - 2*c[i] + c[i+1]) / dx**2
+    return dcdt
+
+def run_model(dx):
+    x_grid = np.arange(0, L + dx, dx)
+    c0 = np.zeros(len(x_grid))
+    c0[0] = 10  # Dirichlet BC at surface
+
+    sol = solve_ivp(rates, t_span=[0, tmax], y0=c0,
+                     method="LSODA", t_eval=[tmax],
+                     args=(D, dx))
+
+    idx = np.argmin(abs(x_grid - depth_of_interest))
+    return sol.y[idx, -1]
+
+dx_values = [0.02, 0.01, 0.005, 0.0025, 0.00125]
+results = [run_model(dx) for dx in dx_values]
+
+for dx, c in zip(dx_values, results):
+    print(f"dx = {dx:.5f} m -> c(5 cm, 7 days) = {c:.5f} mg/L")
+    
+# plotting
+plt.plot(dx_values, results, marker="o")
+plt.xlabel("$\\Delta x$, m")
+plt.ylabel("Conc. at 5 cm after 7 days, mg/L")
+plt.gca().invert_xaxis()  # finer grids (smaller dx) on the right
+plt.show()   
 ```
+
+
+We see convergence around $\Delta x = 0.01$, but it is clear that $\Delta x = 0.02$ was not a good choice. There is no need to decrease $\Delta x$ further than 0.01, this may increase simulation time for the two reasons mentioned before: smaller $\Delta x$ increases the number of ODEs to be solved and `solve_ivp()` automatically also decreases the time step size to keep a stable solution. We can try and compare computation times with three different $\Delta x$:
+
+```{python}
+# -*- coding: utf-8 -*-
+import numpy as np
+from scipy.integrate import solve_ivp
+import matplotlib.pyplot as plt
+import time
+
+L = 0.1  # depth of pond, m
+D = 2.0 * 10**-9  # diffusion coefficient, m2/s
+tmax = 60 * 60 * 24 * 7  # 7 days, seconds
+
+def rates(t, c, D, dx):
+    dcdt = np.zeros_like(c)
+    for i in range(1, len(c)-1):
+        dcdt[i] = D * (c[i-1] - 2*c[i] + c[i+1]) / dx**2
+    return dcdt
+
+dx_values = [0.01, 0.005, 0.001, 0.0005]
+runtimes = []
+
+for dx in dx_values:
+    x_grid = np.arange(0, L + dx, dx)
+    c0 = np.zeros(len(x_grid))
+    c0[0] = 10  # Dirichlet BC at surface
+    
+    start = time.perf_counter()
+    sol = solve_ivp(rates, t_span=[0, tmax], y0=c0,
+                     method="LSODA", t_eval=[tmax],
+                     args=(D, dx))
+    elapsed = time.perf_counter() - start
+
+    runtimes.append(elapsed)
+    print(f"dx = {dx} m -> {len(x_grid)} nodes, runtime = {elapsed:.3f} s")
+
+plt.plot(dx_values, runtimes, marker="o")
+plt.xlabel("$\\Delta x$, m")
+plt.ylabel("Runtime, s")
+plt.xscale("log")
+plt.yscale("log")
+plt.gca().invert_xaxis()  # finer grids (smaller dx) on the right
+plt.xticks(dx_values, [str(dx) for dx in dx_values])  # force ticks at actual dx values
+plt.show()
+```
+
+Notice the y-axis is log transformed and computation time increases exponentially with smaller $\Delta x$, eventually becomming computationally infeasible. We could ask - but what if the time step was not adapted and kept constant? Well we cannot show that scenario directly, because the solvers automatically adjust the time step, but we can encode euler forward ourselves and see what happens and what is actually meant by stability.   
+
+Specifically for the euler forward applied to a diffusion problem in one dimension the stability criterion is: 
+
+$$
+\Delta t \leq \frac{\Delta x^2}{2\cdot D}
+$$
+
+So for a $\Delta x = 0.01$ we need the time step $\Delta t$ to be 25000 s.
+
+$$
+\frac{\Delta x^2}{2\cdot D} = \frac{0.01^2}{2 \cdot 2.0 * 10^{-9}} = 25000
+$$
+Lets replace solve_ivp with a nested euler forward loop with time steps below, above and exactly at the stability criterion. 
+```{python}
+# -*- coding: utf-8 -*-
+import numpy as np
+import matplotlib.pyplot as plt
+
+D = 2.0 * 10**-9  # diffusion coefficient, m2/s
+L = 0.1  # depth of pond, m
+dx = 0.01  # m, just using 1 spatial step size
+tmax = 60 * 60 * 24 * 7  # 7 days, seconds
+
+x_grid = np.arange(0, L + dx, dx)
+
+# max time step allowed
+dt_crit = dx**2 / (2*D)
+print(f"dx = {dx} m -> dt_crit = {dt_crit:.0f} s")
+
+# three time steps chosen, below, at, and above dt_crit
+dt_values = [0.8 * dt_crit, dt_crit, 1.2 * dt_crit]
+labels = ["below criterion (stable)", "at criterion", "above criterion (unstable)"]
+
+# empty list for holding results
+results = []
+
+# outer loop with different time steps chosen
+for dt in dt_values:
+    t_grid = np.arange(0, tmax + dt, dt)
+    c = np.zeros((len(t_grid), len(x_grid)))
+    c[0, 0] = 10  # Dirichlet BC at surface
+
+    # looping through time
+    for i in range(len(t_grid) - 1):
+        # first dimension is time, second dimension is spatial dimension x
+        c[i+1, 0] = 10  # Dirichlet BC at surface, re-imposed every step
+        
+        # looping through x space in interior loop
+        for j in range(1, len(x_grid) - 1):
+            c[i+1, j] = c[i, j] + dt * D * (c[i, j-1] - 2*c[i, j] + c[i, j+1]) / dx**2
+
+    results.append(c)
+    print(f"dt = {dt:.0f} s, {len(t_grid)-1} steps")
+
+fig, axes = plt.subplots(1, 3, figsize=(15, 4), sharey=False)
+# plotting profile after 7 days for three simulations using different time steps
+for ax, label, c in zip(axes, labels, results):
+    # converting from m to cm. 
+    ax.plot(c[-1], x_grid * 100)
+    ax.invert_yaxis()
+    ax.set_title(label)
+    ax.set_ylabel("Depth, cm")
+    ax.set_xlabel("Concentration, mg/L")
+
+plt.tight_layout()
+plt.show()
+```
+
+
+Here it is clear that exceeding the stability criterion results in nonsense output. Stability criteria for advanced euler methods (like the ones used by `solve_ivp`) are out of scope for this course, but you should know that they exists and it is one of the reasons that simulation time blows up with small $\Delta x$.
+
+
