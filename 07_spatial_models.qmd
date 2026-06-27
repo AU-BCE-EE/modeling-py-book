@@ -1237,6 +1237,6 @@ plt.show()
 ```
 
 
-Here it is clear that exceeding the stability criterion results in nonsense output. Stability criteria for advanced euler methods (like the ones used by `solve_ivp`) are out of scope for this course, but you should know that they exists and it is one of the reasons that simulation time blows up with small $\Delta x$.
+Here it is clear that exceeding the stability criterion results in nonsense output. Stability criteria for advanced Euler methods (like the ones used by `solve_ivp`) are out of scope for this course, but you should know that they exists and it is one of the reasons that simulation time blows up with small $\Delta x$.
 
 
