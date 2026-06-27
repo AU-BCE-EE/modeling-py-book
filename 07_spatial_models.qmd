@@ -819,8 +819,16 @@ boundary in the previous example case with the pound.
 
 2\) When we are dealing with a symmetric problem where $x = 0$ is a
 boundary e.g. in the middle of a sphere or cylinder that is symmetric
-around $x = 0$. This is actually what is done for BC2 in @fig-bcs where
-$r_0$ is in the middle of the cylindrical pipe in @fig-pipedisc.
+around $x = 0$. Symmetry is shown in @fig-symmetry with a tangent (gradient) of zero in the middle with r = 0.
+This BC is also the case BC2 in @fig-bcs where $r_0$ is in the middle of the cylindrical pipe in @fig-pipedisc.
+
+![Pipe from from two perspectives, showing the concentration profile symmetry along the radial dimension](drawings/symmetry.png){#fig-symmetry fig-alt="Pipe from from two perspectives, showing the concentration profile symmetry along the radial dimension"}
+
+}
+
+fig-alt="Sketch showing water flowing through a constant-diameter round pipe at a constant flow rate with heat applied from outside."}
+
+
 
 3\) If you have a problem with both advection and diffusion/conduction. Heat or mass is leaving you system at the outlet boundary by advection, but not by diffusion/conduction. Then we could impose such a BC on the conduction or diffusion terms. This is really the type of BC we should have implemented at the right end in @lst-pipe_model.
 
