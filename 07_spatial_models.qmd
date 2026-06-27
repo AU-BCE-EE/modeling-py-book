@@ -55,7 +55,7 @@ control volume. The conservation equation for a control volume can be
 written as:
 
 $$
-\text{accumulation} = adv_{in} + diff_{in} - adv_{out} - diff_{out}  + generated - consumed. 
+\text{accumulation} = \text{adv}_{in} + \text{diff}_{in} - \text{adv}_{out} - \text{diff}_{out}  + \text{generated} - \text{consumed} 
 $$ Earlier in Chapter 4, we already showed that advection was the
 product of the superficial velocity and temperature difference over the
 length of the control volume (gradient). We now flip the sign of the
@@ -1236,7 +1236,4 @@ plt.tight_layout()
 plt.show()
 ```
 
-
 Here it is clear that exceeding the stability criterion results in nonsense output. Stability criteria for advanced Euler methods (like the ones used by `solve_ivp`) are out of scope for this course, but you should know that they exists and it is one of the reasons that simulation time blows up with small $\Delta x$.
-
-
