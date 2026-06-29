@@ -38,7 +38,7 @@ Let's go through the list of conceptual model components, using @fig-coffee-conc
 The system boundary exactly what is being modeled.
 In a sketch, it is common to represent the system boundary with a dashed line; a green dashed line is used in @fig-coffee-concept2.
 Here, the boundary shows that we are modeling the temperature of the coffee and the mug.
-Air temperature sits outside the boudary, implying that is a fixed external condition.
+Air temperature sits outside the boundary, implying that is a fixed external condition.
 
 The state variable in this model is the coffee temperature, or really, coffee + mug system temperature.
 For a lumped parameter model like this one, the only way our state variable can change is by flow of energy through the system boundary;
@@ -46,10 +46,10 @@ here, that flow is shown by the wavy red arrows.
 
 We don't have much about geometry in this sketch.
 That can be hard to show clearly in a sketch, and a lumped parameter model doesn't really have any geometry.
-The $A$ that is shown in the model provides a hint that we are taking a simple approach here, and assuming surface temperature and so heat flux is uniform across the entire exposed surface, inclduing coffee and the mug.
+The $A$ that is shown in the model provides a hint that we are taking a simple approach here, and assuming surface temperature and so heat flux is uniform across the entire exposed surface, including coffee and the mug.
 The uniform temperature, shown by the horizontal red line, also shows that we are dealing with a lumped parameter model here.
 
-We defined one main model parameter in the sketch--$h$, the convectin heat transfer coefficient.
+We defined one main model parameter in the sketch--$h$, the convection heat transfer coefficient.
 Area $A$ is another *model input*, and one could argue about whether it should be called a parameter or not.
 We could add more details (Doesn't the coffee + mug mass play a role? And specific heat capacity? Some of that will have to wait until @sec-heat.), but this is a sufficient sketch.
 
@@ -73,6 +73,7 @@ For our coffee model (@sec-classification), the relevant conservation equation i
 $$
 \text{accumulation} = - \text{out}, 
 $${#eq-coffee-conservation}
+
 because there is no heat coming in, only heat loss, and not heat generated (e.g., from electricity or a reaction) or consumed (e.g., through a reaction).
 
 This is a very simple conservation equation.
