@@ -162,8 +162,23 @@ Some measurements might look like those shown in @fig-biomethmod1.
 @rafrafi2021
 
 ![Hypothetical measurements of biomethanation rate.](drawings/biometh_mod1.png){#fig-biomethmod1 fig-alt="Hypothetical biomethanation measurements"}
+### Linear vs Nonlinear models
+A model is linear if it satisfies the superposition principle: scaling the inputs scales the output by the same factor, and the response to a sum of inputs equals the sum of the individual responses. Formally, for a an ODE system it means that the equations can be written as:
 
-## Model simplification
+$$
+\dot{y} = Ay + by˙ =Ay+b
+$$
+where A is a constant coefficient matrix and b is a constant vector (independent of y). Critically, this requires that no state variable appears multiplied by another state variable, raised to a power other than 1, or passed through a nonlinear function (e.g. $\sin(y)$). However, independent variables does not have to obey these rules for the system to still be linear. 
+
+Why does this distinction matter so much? Several subjects withing mathematical modelling only hold — or only hold exactly — for linear systems:
+
+\cdot Analytical solvability: linear ODE systems can often be solved using matrix methods as in the formulation above, whereas nonlinear systems generally needs to be solved with numerical methods. 
+
+\cdot Stability analysis: for linear systems, stability is determined globally, whereas for nonlinear systems stability must be assessed locally and in many places. 
+
+\cdot Superposition-based intuition: in linear systems you can analyze the effect of multiple inputs independently and sum the results. This is not the case for nonlinear systems.
+
+### Model simplification
 *Simplification* is key part of model development.
 You might have the feeling that the more processes and dimensions you can cram into a model, the more accurate and in general the better it is.
 That's not true.
