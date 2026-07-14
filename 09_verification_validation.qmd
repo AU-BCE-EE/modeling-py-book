@@ -1,12 +1,13 @@
 # Verification and Validation {#sec-vv}
 
-There is a famous quote from George Box, a statistician or something. . .
-It is often paraphrased as *all models are wrong, but some are useful*.
+The statistician George Box is famous for a quote that goes something like "all models are wrong, but some are useful".
+Maybe he didn't use that exact wording but the sentiment is definitely correct (see @box_science_1976 and @Box_George_E_P_1987 for more).
 Indeed, both parts are true.
-Although model error, cannot be eliminated, it can and should be evaluated and controlled.
-Verification and validation address the problem of model error, and are essential steps in the "modelling process" and should be carried out before any confidence is placed in model predictions.
+Although model error cannot be completely eliminated, it can and should be evaluated and controlled.
+Verification and validation address the problem of model error, and are essential steps in the "modelling process".
+They should be carried out before any confidence is placed in model predictions.
 
-Verification is essentially ensuring that the mathematical model--developed through a model formulation process (@sec-formulation}--has been programmed or implemented correctly.
+Verification is essentially ensuring that the mathematical model--developed through a model formulation process (@sec-formulation)--has been programmed or implemented correctly.
 For us, that means checking that our Python code is correct.
 That alone does not ensure the model produces accurate predictions; of course any mathematical model of a real process or system has error too.
 It is common to find implementation errors through model verification.
@@ -353,19 +354,47 @@ pred01['temp']
 plt.plot(pred01['t'] / 3600, pred01['temp'])
 plt.xlabel('Time (h)')
 plt.ylabel('Pool temperature (deg. C)')
-plt.savefig('pred01.png')
+```
 
-# Conceptual and unit check (see md file)
-# . . . .
+Let's think about steady-state.
+Should there be a steady state condition?
+Sure! 
+Do we see one above?
+No.
+Why not?
 
-# Now some model calls
+How about if we run the model for 10 days?
 
-# 1. Think about steady-state
-# Should there be a steady state condition?
-# Sure! 
-# A. With the sun shining, the pool water will warm above ambient temperature 
-# but eventually reach a steady-state where it . . .  
+```{python}
+# And a demo model call
+pred01 = pm.dynmod(a_top = a_top,
+                   a_wall = a_wall,
+                   depth = depth,
+                   q_sol = 0,
+                   u_top = 100,
+                   u_wall = 3,
+                   temp_air = 10,
+                   temp_sub = 10,
+                   flow_renew = 0,
+                   temp_renew = 0,
+                   temp_init = 30,
+                   times = np.arange(0, 10 * 24 * 3600 + 3600, 3600)
+)
 
+plt.plot(pred01['t'] / 86400, pred01['temp'])
+plt.xlabel('Time (d)')
+plt.ylabel('Pool temperature (deg. C)')
+```
+
+Ah, just a matter of time, right?
+And does that steady-state (or equilibrium?) temperature match expectations?
+
+We have no solar radiation in these scenarios.
+With the sun shining, the pool water should warm above ambient temperature.
+But as the water warms above air temperature, it will lose heat at a higher and higher rate, until the fixed rate of heat gain from the sun matches the variable rate of heat loss to air.
+Do we see that behavior?
+
+```{python}
 # Let's add 200 W/m2 of sun, keep environment at 10, and see
 pred02 = pm.dynmod(a_top = a_top,
                    a_wall = a_wall,
@@ -384,7 +413,6 @@ pred02 = pm.dynmod(a_top = a_top,
 pred02
 
 # Run it for a long time
-# Is this a realistic simulation, by the way?
 pred03 = pm.dynmod(a_top = a_top,
                    a_wall = a_wall,
                    depth = depth,
@@ -401,17 +429,18 @@ pred03 = pm.dynmod(a_top = a_top,
 
 pred03['temp']
 
-plt.close()
 plt.plot(pred03['t'] / 86400, pred03['temp'])
 plt.xlabel('Time (d)')
 plt.ylabel('Pool temperature (deg. C)')
-plt.savefig('pred03.png')
+```
 
-# As expected?
-# Higher or lower than ambient?
-# What about the oscillations?
+As expected?
+Higher or lower than ambient?
+What about the oscillations?
 
-# Does it match steady state model?
+Does it match steady state model?
+
+```{python}
 pm.ssmod(a_top = a_top,
          a_wall = a_wall,
          depth = depth,
@@ -425,12 +454,15 @@ pm.ssmod(a_top = a_top,
 )
 
 pred03['temp'][10:]
+```
 
-# Hmmm. . . does it?
-# Is there an error in the model?
+Hmmm. . . does it?
+Is there an error in the model?
 
-# Try renewal
-# If we are interested in steady state, we might just return a few times
+Try renewal.
+If we are interested in steady state, we might just return a few times
+
+```{python}
 pm.dynmod(a_top = a_top,
           a_wall = a_wall,
           depth = depth,
@@ -444,13 +476,15 @@ pm.dynmod(a_top = a_top,
           temp_init = 10,
           times = [0, 3600, 86400, 10*86400] 
 )
+```
 
-# Big problem!
-# We get massively negative temperature
-# Let's dig into this, first with some more model calls
-# Think about it . . . 
-# Try smaller delta T and shorter time to slow down heat transfer and time, in a sense
+Big problem!
+We get massively negative temperature
+Let's dig into this, first with some more model calls
+Think about it . . . 
+Try smaller delta T and shorter time to slow down heat transfer and time, in a sense
 
+```{python}
 pm.dynmod(a_top = a_top,
           a_wall = a_wall,
           depth = depth,
@@ -465,11 +499,47 @@ pm.dynmod(a_top = a_top,
           times = np.arange(0, 101)
 )
 
-# Adjust the time a bit. . .
-# What does that tell us?
+```
 
-# Try breakpoint() to see what is happening
-# Edit module and . . .
+Adjust the time a bit. . .
+What does that tell us?
+
+Try `breakpoint()` to see what is happening.
+Let's edit the module like this, adding `breakpoint()` to a line where we can check the numeric value of `Q_renew`, and save it.
+     
+```{python}
+#| eval: false
+...
+    # Define rates function
+    def rates(t, temp_pool):
+
+        # Net energy, expressed as positive for increase 
+        # One nice things about numerical solutions is you are not required to simplify the governing equation.
+        # In fact it can be helpful to understand the different pathways to keep them separate
+
+        # Calculate heat flow (W) through individual pathways
+        # All are positive for heat flow in (this is arbitrary)
+        Q_solar = a_top * q_sol                                     # Solar energy
+        Q_top = a_top * u_top * (temp_air - temp_pool)              # Convection from top
+        Q_sub = a_wall * u_wall * (temp_sub - temp_pool)            # Conduction to/from substrate (soil or whatever is there)
+        Q_renew = cp * dens * flow_renew * (temp_pool - temp_renew) # Net energy coming in from renewal water
+
+        breakpoint()
+
+        # And sum them
+        Q_net = Q_solar + Q_top + Q_renew
+
+        # Express as temperature change
+        dtemp_dt = Q_net / (cp * dens * vol)
+
+        return dtemp_dt
+...
+```
+
+Then we need to reload the module and call the function, like this.
+
+```{python}
+#| eval: false
 reload(pm)
 
 pm.dynmod(a_top = a_top,
@@ -491,21 +561,135 @@ Q_renew
 # Negative or positive?
 temp_pool
 temp_renew
-# See it?
+```
 
-# See module code in rates()
-# Q_renew = cp * dens * flow_renew * (temp_pool - temp_renew) # Net energy coming in from renewal water
+In the interactive debugging session, we can check the value of any existing object by typing its name.
+So let's see what `Q_renew` looks like.
 
-# Possible checks
-# * Correct steady-state predictions with solar radiation and other changes to inputs (possibly changed independently or stepwise)
-# * Correct qualitative effects of changes to inputs (more or less radiation, higher or lower substrate temperature or resistance)
+```{python}
+#| eval: false
+> pool_mods.py(94) rates()
+-> Q_net = Q_solar + Q_top + Q_renew
+(Pdb) Q_renew
+array([-41800.])
+(Pdb) temp_pool
+array([10.])
+(Pdb) temp_renew
+10.1
+```
 
-# We can check implementation of constitutive equation quantitatively with some careful calls and analysis of results
-# breakpoint() can be used to check for object (variable) values during evlauation of rates() function
+So with a value of `temp_renew` higher than `temp_pool`, we get a negative value for `Q_renew`, while the comment at the top of that block (and the other code) shows that `all are positive for heat flow in (this is arbitrary)`.
+So that is a mistake!
 
-# For a quantitative check of energy balance, we can add cumulative heat transfer as state variables
-# Let's try this new version
+See module code in `rates()` in the relevant part of the `pool_mods.py` module.
 
+```{python}
+#| eval: false
+Q_renew = cp * dens * flow_renew * (temp_pool - temp_renew) # Net energy coming in from renewal water
+```
+
+It should look like this.
+
+```{python}
+#| eval: false
+Q_renew = cp * dens * flow_renew * (temp_pool - temp_renew) # Net energy coming in from renewal water
+```
+
+There are many ways that model calls can be used for model verification, but they depend on the specifics of the model.
+Other possible checks here could include:
+
+* Correct steady-state predictions with solar radiation and other changes to inputs (possibly changed independently or stepwise)
+* Correct qualitative effects of changes to inputs (more or less radiation, higher or lower substrate temperature or resistance)
+
+For a quantitative check of energy balance, we can add cumulative heat transfer as a state variable.
+This is done in the `dynmod_pp()` function defined in the same module. 
+The function is copied below as well.
+
+```{python}
+#| eval: false
+
+# Define a model with cumulative transport state variables
+# pp is for ++, as in more than the original model :)
+def dynmod_pp(a_top,    
+              a_wall,       
+              depth,
+              q_sol,
+              u_top,
+              u_wall,
+              temp_air,
+              temp_sub,
+              flow_renew,
+              temp_renew,
+              temp_init,
+              times, 
+              cp = 4180,
+              dens = 1000
+):  
+
+    """ 
+    Dynamic model for heat loss from an outdoor swimming pool. 
+
+    Parameters
+    ----------
+    a_top : float
+       Area of pool water surface at the top (m2) 
+    ... 
+    """
+     
+    # Define rates function
+    def rates(t, ys):
+
+        # Extract pool temperature from the array of ys
+        temp_pool = ys[0]
+
+        # Net energy, expressed as positive for increase 
+        # One nice things about numerical solutions is you are not required to simplify the governing equation.
+        # In fact it can be helpful to understand the different pathways to keep them separate
+
+        # Calculate heat flow (W) through individual pathways
+        # All are positive for heat flow in (this is arbitrary)
+        Q_solar = a_top * q_sol                                     # Solar energy
+        Q_top = a_top * u_top * (temp_air - temp_pool)              # Convection from top
+        Q_sub = a_wall * u_wall * (temp_sub - temp_pool)            # Conduction to/from substrate (soil or whatever is there)
+        Q_renew = cp * dens * flow_renew * (temp_pool - temp_renew) # Net energy coming in from renewal water
+
+        # And sum them
+        Q_net = Q_solar + Q_top + Q_renew
+
+        # Express as temperature change
+        dtemp_dt = Q_net / (cp * dens * vol)
+
+        # Also package the heat transfer rates (W)
+        Qs = np.array([Q_solar, Q_top, Q_sub, Q_renew])
+
+        return np.append(dtemp_dt, Qs)
+
+    # Total water volume (m3)
+    vol = a_top * depth
+
+    # Now solve with solve_ivp()
+    # See 0s for cumulative heat transfer
+    res = solve_ivp(rates, t_span = [min(times), max(times)], 
+                    y0 = [temp_init, 0, 0, 0, 0], t_eval = times
+    )
+
+    # Create a dictionary to hold results
+    out = {
+        "t": res.t, 
+        "temp": res.y[0, :], 
+        "h_solar": res.y[1, :], 
+        "h_top": res.y[2, :], 
+        "h_sub": res.y[3, :], 
+        "h_renew": res.y[4, :]
+    }
+
+    return(out)
+
+```
+ 
+Let's try this new version
+
+```{python}
 reload(pm)
 
 pm.dynmod_pp(a_top = a_top,
@@ -521,18 +705,30 @@ pm.dynmod_pp(a_top = a_top,
              temp_init = 10,
              times = np.arange(0, 10)
 )
+```
 
-# See huge negative h_renew (J).
-# Wrong sign!
-# And a flow of 0.1 m3/s (100 L/s) is probably high for a pool that is 10 x 4 x 2 = 80 m3
-
-# Let's try to fix the error
-
-# And do you see how these cumulative transport state variables can be useful and interesting?
-# Should we plot some for different scenarios?
-
+See huge negative h_renew (J).
+Wrong sign!
+And a flow of 0.1 $\mcbps$ is probably high for a pool that is 10 x 4 x 2 = 80 $\mcb$.
+And do you see how these cumulative transport state variables can be useful?
 
 ## Validation
+Validation is about assessing the accuracy of the model by comparison to the real world.
+A "validated" model cannot be assumed to be accurate under all possible conditions, but it can show that the model is accurate enough for its intended use.
+Take a look at @fig-vv1 for a reminder of where validation fits into the modelling process.
+
+Requirements:
+
+* Measurements and model outputs must be for the same thing (including time)
+* Application or conditions should be of interest (validation is specific)
+
+Selection of a variable for validation depends on what is available and what is useful.
+In some cases we won't have measurements of the arguably most important state variables in a model.
+For example, the active microbial biomass may be an important state variable in a microbial model, but it can be very difficult or impossible to measure. 
+Instead, the concentration of a substrate or product may be the only variable available.
+Therefore, validation must be based on these.
+
+It is entirely possible, and probably often the case, that a model could show suitable validation for one variable but actually be totally wrong for another.
 
 ## Problems
 
@@ -572,7 +768,7 @@ The conceptual model is quite simple.
 We have a column with some solute (NaCl for example, which is what was used in the measurements) diffusing from one end to the other through water.
 We can represent the conceptual model it with text symbols:
 
-```{python}
+```
        --------------------------
        |                        |
  c_l   |                        | c_r
@@ -612,27 +808,4 @@ Make sure you give the new function a good name.
 Save it in the same module as the original.
 Now repeat your mass mass balance verification with this new function.
 
-6. The code in the `rates()` function in `diff1D()` uses array indexing to efficiently calculate diffusion over spatial cells or layers.
-Here is an example:
-```{python}
-        j = -D * (ca[1:] - ca[:-1]) / dxi
-```
-If we have say 5 cells or layers in the model, we could represent them like this:
-```
-   ca[0]    ca[1]     ca[2]     ca[3]     ca[4]  
-```
-And then this calculation
-```{python}
-ca[1:] - ca[:-1]
-```
-means this
-```
-   ca[1]    ca[2]     ca[3]     ca[4]  
- - ca[0]    ca[1]     ca[2]     ca[3]  
- -------------------------------------
-```
-and returns an array with those differences.
-This is an efficient approach from a coding and evaluation (speed) perspective but it can be difficult to program or even understand!
-Create a new (now third) version of the `diff1D()` function that replaces the clever indexing operations with `for` loops as in some of the 1D code you have seen before in this course.
-Run it and show that it gives the same results as the original function.
 

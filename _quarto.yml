@@ -68,7 +68,8 @@ format:
               molps: "{\\mathrm{mol~s^{-1}}}",
               molpmcps: "{\\mathrm{mol~m^{-3}~s^{-1}}}",
               pers: "{\\mathrm{s^{-1}}}",
-              mcbps: "{\\mathrm{m^{3}~s^{-1}}}"
+              mcbps: "{\\mathrm{m^{3}~s^{-1}}}",
+              mcb: "{\\mathrm{m^{3}}}"
             }
           }
         };

@@ -1,0 +1,28 @@
+6. The code in the `rates()` function in `diff1D()` uses array indexing to efficiently calculate diffusion over spatial cells or layers.
+Here is an example:
+
+```{python}
+# | eval: false
+        j = -D * (ca[1:] - ca[:-1]) / dxi
+```
+If we have say 5 cells or layers in the model, we could represent them like this:
+```
+   ca[0]    ca[1]     ca[2]     ca[3]     ca[4]  
+```
+And then this calculation
+```{python}
+# | eval: false
+ca[1:] - ca[:-1]
+```
+means this
+```{python}
+# | eval: false
+   ca[1]    ca[2]     ca[3]     ca[4]  
+ - ca[0]    ca[1]     ca[2]     ca[3]  
+ -------------------------------------
+```
+and returns an array with those differences.
+This is an efficient approach from a coding and evaluation (speed) perspective but it can be difficult to program or even understand!
+Create a new (now third) version of the `diff1D()` function that replaces the clever indexing operations with `for` loops as in some of the 1D code you have seen before in this course.
+Run it and show that it gives the same results as the original function.
+

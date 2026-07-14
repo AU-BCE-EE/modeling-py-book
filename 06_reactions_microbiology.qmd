@@ -16,7 +16,7 @@ So the stoichiometry shows that hydrolysis of one mole of urea consumes one mole
 Why do we care?
 Well, these stoichiometric coefficients can then be used directly in a model to get state variable derivatives from the reaction rate, which itself is calculated using the appropriate constitutive equation.
 In the framework presented in @sec-formulation, the stoichiometric coefficients go into creating linking equations (see @sec-linking for a review, if needed).
-We then just need a single constitutive equation for the *overall reaction rate* (we will get to that in @sec-rxn-rate below) and simple linking equations for each chemical species.
+We then just need a single constitutive equation for the *overall reaction rate* (we will get to that in @sec-rxn-rates below) and simple linking equations for each chemical species.
 For example, if our reaction rate is $r$, with units of $\molpmcps$, then the derivative for $\ce{CO(NH2)2}$ would be
 
 $$

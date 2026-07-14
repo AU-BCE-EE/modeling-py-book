@@ -202,7 +202,7 @@ def dynmod_pp(a_top,
     vol = a_top * depth
 
     # Now solve with solve_ivp()
-    # See 0s for cumulative heat transfer?
+    # See 0s for cumulative heat transfer
     res = solve_ivp(rates, t_span = [min(times), max(times)], 
                     y0 = [temp_init, 0, 0, 0, 0], t_eval = times
     )

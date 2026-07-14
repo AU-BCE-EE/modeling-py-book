@@ -35,10 +35,11 @@ It is copied below (@fig-coffee-concept2).
 
 Let's go through the list of conceptual model components, using @fig-coffee-concept2 as an example.
 
-The system boundary exactly what is being modeled.
+The system boundary shows what is being modeled.
 In a sketch, it is common to represent the system boundary with a dashed line; a green dashed line is used in @fig-coffee-concept2.
 Here, the boundary shows that we are modeling the temperature of the coffee and the mug.
 Air temperature sits outside the boundary, implying that is a fixed external condition.
+(It can be hard to place the boundary exactly where it should be, but close usually works.)
 
 The state variable in this model is the coffee temperature, or really, coffee + mug system temperature.
 For a lumped parameter model like this one, the only way our state variable can change is by flow of energy through the system boundary;
@@ -68,13 +69,13 @@ Exactly what the terms mean, along with their dimensions and units, can vary.
 Of course dimensions and units must match for all terms.
 We will typically use rates for all terms, e.g., $\Jps$ = W for energy and $\kgps$ for mass.
 
-To develop a conservation equation for a new model, start with  @eq-conservation and place the flows that exist and the physical system and eliminate the terms that are not relevant.
+To develop a conservation equation for a new model, start with  @eq-conservation and eliminate the terms that are not relevant.
 For our coffee model (@sec-classification), the relevant conservation equation is
 $$
 \text{accumulation} = - \text{out}, 
 $${#eq-coffee-conservation}
 
-because there is no heat coming in, only heat loss, and not heat generated (e.g., from electricity or a reaction) or consumed (e.g., through a reaction).
+because there is no heat coming in, only heat loss, and no heat generated (e.g., from electricity or a reaction) or consumed (e.g., through a reaction).
 
 This is a very simple conservation equation.
 At the other extreme, it is common to have cases where each term in the cookbook equation includes multiple processes.
@@ -156,8 +157,8 @@ Why?
 Well, our state variable is temperature $T$, but our conservation equation, @eq-coffee-conservation, is for energy.
 The same is true for our constitutive equation, @eq-coffee-constitutive, which has $T$ on the RHS, but only energy on the LHS.
 So somehow we need to link the two, temperature and energy.
-To do so, we need to know something about heat energy and thermal temperature, but even without this knowledge we might guess that the two are directly proporational, i.e., $\Delta T = c \cdot \Delta Q$, where $c$ is some arbitrary constant.
-In fact this is correct, but $c$ depends on the material and the quantity present.
+To do so, we need to know something about heat energy and thermal temperature, but even without this knowledge we might guess that the two are directly proportional, i.e., $\Delta T = c \cdot \Delta Q$, where $c$ is some arbitrary constant.
+In fact this is (approximately) correct, but $c$ depends on the material and the quantity present.
 So here, the linking equation that we need is:
 
 $$
@@ -222,7 +223,7 @@ $$
 \frac{dT}{dt} = - \frac{A \cdot h}{c_p \cdot m} \cdot (T_s - T_\infty)
 $$ {#eq-coffee-ge2}
 
-And there, @eq-coffee-ge2, is a GE for our model!
+And there, @eq-coffee-ge2, is a GE for our model.
 It shows that the rate of temperature change depends on the size of the coffee + mug system ($m$ and $A$), a heat transfer coefficient specific to the conditions of the surrounding air ($h$), the air temperature of course ($T_\infty$), and the temperature of the coffee itself ($T$).
 
 We can't simply plug numbers into the GE and get a solution, because it is an ODE, and only tells how the coffee temperature *changes* over time, not the actual value.
@@ -234,10 +235,12 @@ In that simpler GE, several terms were combined together into a single constant:
 
 $$
 c = - \frac{A \cdot h}{c_p \cdot m}
-$$
+$$ {#eq-coffee-const}
 
-In fact, both approaches could give identical predictions.
-The difference implies something about what we know though, and that will be explored later.
+Both approaches can give identical predictions if @eq-coffee-const is true.
+The difference implies something about what we know and how we know it.
+Do we know the value of each term on the RHS of @eq-coffee-const, perhaps from measurements and correlations?
+Or instead do we just know the single lumped parameter on the LHS, $c$, perhaps from fitting to measurements?
 
 <!-- Show how balance + constitutive + linking equations combine to give the GE.
      Scope here: 0D (lumped-parameter) models only.
@@ -250,14 +253,15 @@ The difference implies something about what we know though, and that will be exp
    Try to get to a governing equation.
    What parameters would you need to apply the model? 
    We will learn more about this type of problem in @sec-mass, but these details are not needed for this problem.
+   Here, use your existing knowledge or make a guess about the form of the necessary constitutive equation.
 
 2. Refrigeration of animal slurry is a commercial technology used at full-scale to reduce emission of methane and other air pollutants from animal barns.
    Using the cooling coffee model for inspiration, follow the model formulation steps to try to develop a governing equation for a slurry cooling system.
 
 3. A denitrifying wood chip bioreactor is just a trench in the ground filled with wood chips.
    Nitrate ($\text{NO}_3^-$) in water draining from agricultural fields is removed by bacterial denitrification, with wood organic matter as the electron donor and carbon source.
-   The nitrate is converted to relatively inert dinitrogen gas ($\text{N}_2$) (or at least that is the intent).
+   The nitrate is converted to relatively inert dinitrogen gas ($\text{N}_2$) (or at least that is the intent--in fact some oxidized N gases are undoubtedly produced as well).
    You can find more information on the technology [here](https://www.agriculture.com/crops/conservation/woodchip-bioreactors-are-at-the-forefront-of-conservation-technology).
    Develop a conceptual model for this system.
    See the list of conceptual model components in @sec-conceptual-model to think about what to include.
-   We will learn more about reaction stoichiometry and microbiology in @sec-reactions.
+   (We will learn more about reaction stoichiometry and microbiology in @sec-reactions.)

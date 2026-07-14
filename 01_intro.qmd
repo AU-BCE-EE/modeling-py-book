@@ -91,11 +91,13 @@ plt.ylabel(r'Temperature $(^\circ~\mathregular{C})$')
 plt.show()
 ```
 
+Actually that code applies the model as well, carrying out the model calculation (the `Tc = ...` line) using specific values for input variables and parameters.
+
 ### Analytical (closed-form) vs. numerical {#sec-analytical-v-numerical}
 
 The solution to the cooling coffee model above, @eq-coffee-sol1, is an example of an *analytical* or *closed-form* model.
 That means the model can be written as an equation that could be plugged into a calculator.
-The only part of @eq-coffee-sol1 that could not be solved with pencil and paper is the $e^{()}$ bit.
+The only part of @eq-coffee-sol1 that could not be solved with pencil and paper is the $e^{()}$ bit, and that can be solved with a pocket calculator.
 Analytical solutions are great because they are easy to implement or program.
 The model solution is entered on a single line of code in the example above.
 They can also provide insight into model behavior at the mathematical model stage, without actually performing a single calculation.
@@ -148,7 +150,7 @@ Conversely, models based on simple relationship between inputs and outputs that 
 In reality, all models include some empirical components.
 Let's compare the two using a single concrete system.
 
-In a biomethanation reactor hydrogen gas ($\text{H}_2$) is combined with carbon dioxide ($\text{CO}_2$) to form methane ($\text{CH}_4$).
+In a biomethanation reactor hydrogen gas ($\text{H}_2$) is combined with carbon dioxide ($\text{CO}_2$) to form methane ($\text{CH}_4$) (@rafrafi2021).
 The rate of the reaction increases with temperature.
 So an empirical model could look like this, a simple equation:
 
@@ -159,24 +161,25 @@ $$
 where the reaction rate $r$ could be in $\kgps$, temperature $T$ in $\degC$, and $k_T$ is an empirical coefficient, determined from fitting to measurements.
 Some measurements might look like those shown in @fig-biomethmod1.
 
-@rafrafi2021
-
 ![Hypothetical measurements of biomethanation rate.](drawings/biometh_mod1.png){#fig-biomethmod1 fig-alt="Hypothetical biomethanation measurements"}
-### Linear vs Nonlinear models
-A model is linear if it satisfies the superposition principle: scaling the inputs scales the output by the same factor, and the response to a sum of inputs equals the sum of the individual responses. Formally, for a an ODE system it means that the equations can be written as:
+
+### Linear versus nonlinear models
+A model is linear if it satisfies the superposition principle: scaling the inputs scales the output by the same factor, and the response to a sum of inputs equals the sum of the individual responses. 
+Formally, for an ODE system it means that the equations can be written as:
 
 $$
-y' = Ay+b
+y' = A \cdot y + b
 $$
-where A is a constant coefficient matrix and b is a constant vector (independent of y). Critically, this requires that no state variable appears multiplied by another state variable, raised to a power other than 1, or passed through a nonlinear function (e.g. $\sin(y)$). However, independent variables does not have to obey these rules for the system to still be linear. 
 
-Why does this distinction matter so much? Several subjects withing mathematical modelling only hold — or only hold exactly — for linear systems:
+where A is a constant coefficient matrix and b is a constant vector (independent of y). 
+Critically, this requires that no state variable appears multiplied by another state variable, raised to a power other than 1, or passed through a nonlinear function (e.g. $\sin(y)$). 
+However, independent variables does not have to obey these rules for the system to still be linear. 
+Why does this distinction matter so much? 
+Several subjects withing mathematical modelling only hold — or only hold exactly — for linear systems:
 
-\cdot Analytical solvability: linear ODE systems can often be solved using matrix methods as in the formulation above, whereas nonlinear systems generally needs to be solved with numerical methods. 
-
-\cdot Stability analysis: for linear systems, stability is determined globally, whereas for nonlinear systems stability must be assessed locally and in many places. 
-
-\cdot Superposition-based intuition: in linear systems you can analyze the effect of multiple inputs independently and sum the results. This is not the case for nonlinear systems.
+* Analytical solvability: linear ODE systems can often be solved using matrix methods as in the formulation above, whereas nonlinear systems generally needs to be solved with numerical methods. 
+* Stability analysis: for linear systems, stability is determined globally, whereas for nonlinear systems stability must be assessed locally and in many places. 
+* Superposition-based intuition: in linear systems you can analyze the effect of multiple inputs independently and sum the results. This is not the case for nonlinear systems.
 
 ### Model simplification
 *Simplification* is key part of model development.
@@ -200,22 +203,25 @@ That depends--on the objectives of a project or the task requirements, on availa
 In this book we'll look at a variety of models that encompass a range of complexity.
 But in fact all of these models are relatively simple.
 
-
 ## Problems
 
 ### I. Model classification
 Some different models are described below.
 Apply the labels conceptual, mathematical, computer, analytical, numerical, lumped parameter, distributed parameter, 1D, steady-state, dynamic, mechanistic, and empirical appropriately. Is the answer always clear?
 
-1. The NLES5 model predicts nitrate leaching based on the equation shown in the figure below (@fig-NLES5), where $L$ is the predicted leaching rate and the other terms are input variables or model parameters. Is it mechanistic or empirical? 
+1. The NLES5 model predicts nitrate leaching based on the equation shown in the figure below (@fig-NLES5), where $L$ is the predicted leaching rate and the other terms are input variables or model parameters. 
+   Is it mechanistic or empirical? 
 
-![The NLES5 model, from @NLES52022.](web-images/NLES5.png){#fig-NLES5 fig-alt="NLES5 model."}
+   ![The NLES5 model, from @NLES52022.](web-images/NLES5.png){#fig-NLES5 fig-alt="NLES5 model."}
 
-2. ADM1 is a chemical and biological model that simulates conversion of organic waste to biogas. It tracks development of microbial communities over time. Is it mechanistic or empirical? Dynamic or steady-state? 
+2. ADM1 is a chemical and biological model that simulates conversion of organic waste to biogas. 
+   It tracks development of microbial communities over time. 
+   Is it mechanistic or empirical? Dynamic or steady-state? 
 
-![The ADM1 model, from @batstone_iwa_2002.](web-images/ADM1-1.png){#fig-ADM1 fig-alt="ADM1 model."}
+   ![The ADM1 model, from @batstone_iwa_2002.](web-images/ADM1-1.png){#fig-ADM1 fig-alt="ADM1 model."}
 
-3. The Gaussian plume model is a simple general approach for modeling dilution of atmospheric pollutants from a fixed source, e.g., a smokestack. It can be expressed as an equation for the concentration of pollutant,
+3. The Gaussian plume model is a simple general approach for modeling dilution of atmospheric pollutants from a fixed source, e.g., a smokestack. 
+   It can be expressed as an equation for the concentration of pollutant,
 
    $$
    c(x, y, z) = e \cdot f(h, \sigma_y, \sigma_z) ,
@@ -224,7 +230,7 @@ Apply the labels conceptual, mathematical, computer, analytical, numerical, lump
    where $e$ is pollutant emission rate, $x$, $y$, and $z$ define a position relative to the source smokestack with a height of $h$, and the $\sigma$ terms are parameters determined from large-scale measurements that quantify horizontal and vertical dispersion.
    How would you characterize this model?
 
-### Other problems
+### II. Other problems
 
 1. A hypothetical geospatial water quality model used to predict nutrient concentrations dissolved oxygen in the river and estuary near a major urban location in Europe incorporates many assumptions, including uniform temperature and solute concentrations over the vertical dimension. 
    The software tool is used to manage wastewater loading and help determine related governmental policy. 
@@ -232,9 +238,9 @@ Apply the labels conceptual, mathematical, computer, analytical, numerical, lump
    The agency applying the model counters that the developers have shown that the model is accurate.
    Who is right?
    Discuss.
-   Be sure to consider the concept of model simplification.
+   (Hint: Consider the concept of model simplification.)
 
-2. A fellow student claims that analytical modelling is outdated and completely illogical in the present age of cheap computing power.
+2. A fellow student claims that analytical modelling is outdated and completely illogical in the age of cheap computing power.
    Do you agree?
    Explain.
 

@@ -2,7 +2,7 @@
 
 A GE, like @eq-coffee-ge2, is a mathematical model.
 In order to get predictions, we need to solve the model.
-There are two general ways to do that: analytical versus numerical approaches.
+There are two general ways to do that: analytical and numerical approaches.
 The conceptual difference between the two of these should be familiar from @sec-analytical-v-numerical.
 In this chapter we'll explore the two types of models, also methods of solving models, in more detail.
 
@@ -10,8 +10,9 @@ Numerical models are almost always associated with computer code.
 One exception is pencil-and-paper demonstration of numerical calculations that you might perform on an exam.
 But to actually make useful predictions using numerical methods, the ability of computers to perform numerous calculations quickly is necessary.
 
-In this book, analytical models will also be associated with code in the end.
-
+In contrast, analytical models could be applied with some simple calculations and so creating a Python script or function isn't always necessary for model application.
+A calculator or even pencil and paper could be sufficient.
+But in this book, we will also implement analytical models in Python, to make application easier.
 
 <!-- Lots of variation in how to do this.
      Numerical implementations can use separate balance and constitutive equations without
@@ -25,6 +26,7 @@ The basic approach to numerical solutions of dynamic models is to repeatedly upd
 Any dynamic model needs explicit initial conditions, a quantitative description of the state of the system at the start.
 For the coffee model, it means knowing the initial temperature of the coffee + mug system.
 In general, it means having a value for each state variable.
+These types of problems are often known as initial value problems (IVP) for this reason.
 
 In Python and other programming languages, explicit *for loops* can be used to implement a numerical model.
 The simplest numerical method is based on calculating the state variable derivative at each time and extrapolating into the future by some fixed *time step*.
@@ -79,14 +81,15 @@ plt.show()
 ```
 So there are some predictions from a simple numerical model (@fig-coffee-preds1).
 Whether or not it is accurate depends on the model structure as well as the input variables.
-We'll leave that question for another time.
+We'll come back to that question later.
 Certainly predictions are plausible and the model provides the qualitative response that we had expected (see @sec-intro).
 
 The points in @fig-coffee-preds1 show the model predictions for specific times.
 Our model made no predictions for other times, and in the plot the straight lines just connect points. 
 We had to explicitly select a time step, called `dt` in the code; it was set to 10 minutes (600 s) above.
-We should try some different values to see the effect.
+It is good practice to try some different values to see the effect.
 While we could edit the chunk of code above, a more efficient and reproducible approach is to create a Python *function* of the model.
+We will generally use this approach for all the following computer models in this book.
 
 ```{python}
 def cool_eu(T_init, T_air, mass, area, h, time_range, dt, cp=4.2):
@@ -136,7 +139,7 @@ def cool_eu(T_init, T_air, mass, area, h, time_range, dt, cp=4.2):
     }
 ```
 
-Now we can call the function and run the model with a single line of code.
+Now we can call the function and run the model with a single functin call (could be a single line of code, but we'll split it across multiple lines for clarity).
 
 ```{python}
 pred_temp1 = cool_eu(
@@ -146,7 +149,7 @@ pred_temp1 = cool_eu(
     area=0.026, 
     h=75, 
     time_range=(0., 60 * 60), 
-    dt = 5 * 60
+    dt=5 * 60
 )
 ```
 
@@ -167,7 +170,7 @@ pred1 = cool_eu(
     area=0.026, 
     h=75, 
     time_range=(0., 60 * 60), 
-    dt = 5 * 60
+    dt=5 * 60
 )
 
 pred2 = cool_eu(
@@ -177,7 +180,7 @@ pred2 = cool_eu(
     area=0.026, 
     h=75, 
     time_range=(0., 60 * 60), 
-    dt = 10 * 60
+    dt=10 * 60
 )
 
 pred3 = cool_eu(
@@ -187,7 +190,7 @@ pred3 = cool_eu(
     area=0.026, 
     h=75, 
     time_range=(0., 60 * 60), 
-    dt = 20 * 60
+    dt=20 * 60
 )
 ```
 
@@ -211,7 +214,8 @@ Can you see the problem with Euler method?
 In brief, the derivative of a state variable at some particular time is not always a good estimate of its value at later times.
 For the method to work well, the time step needs to be relatively small.
 The 20 minute time step fails spectacularly, predicting a coffee temperature below -20 $\degC$ after 20 minutes, a full 40 $\degC$ below air temperature, and then *warming* up to 60 $\degC$, followed by another big drop in temperature.
-This type of *oscillating* response is an example of *numerical instability*, and reflects inaccuracy in the solution as well as solutions that depend on the details of the call, here, the solution depends strongly on the time step.
+This type of *oscillating* response is an example of *numerical instability*, and reflects inaccuracy in the solution as well as solutions that depend on the details of the call.
+Here, the solution depends strongly on the time step.
 
 Does this example prove that the Euler method is worthless?
 Nope!
@@ -229,16 +233,17 @@ We'll cover this general topic more in a later section.
 
 More sophisticated models usually use something called an *ODE solver*.
 ODE solvers are algorithms or computer functions that accept a GE and some initial conditions and return a solution.
-Just like the Euler method, the "solution" here is an actual numeric solution, i.e., the state of the system over time.
+Just like the Euler method, the solution here is an actual numeric solution, i.e., the state of the system over time.
 This is another numerical approach.
 In this book we'll use the Python ODE solver `solve_ivp()` from the scipy package.
+The `ivp` bit is for IVP, initial value problem.
 
 The `solve_ivp()` approach has two major differences when compared to the Euler method:
 
 1. adaptive step size, and
 2. higher-order methods.
 
-The first of these means that we, the user, doesn't set a fixed step size `dt`.
+The first of these means that we, the users, don't set a fixed step size `dt`.
 Instead, the algorithm implemented in `solve_ivp()` adjusts the value on the fly, as needed to ensure accurate results without long run times that could be avoided.
 When state variable derivatives change a lot over time or the problem is otherwise a *stiff* one, the solver will use a small step size.
 When a small step size is not needed, it will (or can, depending on the settings for some arguments) increase again to a larger (i.e., faster) value.
@@ -249,14 +254,15 @@ The `solve_ivp()` function implements *higher-order* methods that evaluate (calc
 The slopes considered in the 4th order Runge-Kutta method is in @fig-RK4-slopes.
 And the green asterisk shows the estimated value, which is quite close to the true response shown by the blue curve.
 Where would the the Euler method land?
-Hint: at $t_0 + h$, and look at $k_1$ for the single slope that is applied.
+(Hint: at $t_0 + h$, and look at $k_1$ for the single slope that is applied.)
 
 ![The slopes used in the classical Runge-Kutta method. $h=$ the time step. By HilberTraum <https://commons.wikimedia.org/w/index.php?curid=64366870>.](web-images/Runge-Kutta_slopes.png){#fig-RK4-slopes fig-alt="Runge-Kutta slopes."}
 
 So what does `solv_ivp()` look like in practice?
-In a way it is simpler to set up than the Euler method, because `solve_ivp()` takes care of the loop.
+In a way it is simpler to set up than the Euler method, because `solve_ivp()` takes care of the iterative bit that we have to program explicitly using a for loop.
 On the other hand, we need to define a function for calculating the derivate(s) of the state variable(s).
 Here we will define that function within our model and call it `rates()`, which is a convention we'll use throughout this book.
+There are other good approaches, but this one makes self-contained model functions and work well.
 Here is an implementation of the coffee example.
 
 ```{python}
@@ -317,7 +323,7 @@ def cool_rk(T_init, T_air, mass, area, h, time_range, dt, cp=4.2):
 
 ```
 
-Let's see how it works, and compare it the the first solution from the Euler method.
+Let's see how it works, and compare it to the first solution from the Euler method.
 
 
 ```{python}
@@ -404,9 +410,8 @@ Closed-form solutions are different.
 Here, the challenge is in the mathematical (symbolic) derivation; the programming part is simple.
 As soon a model becomes a bit complicated analytical solutions become impossible.
 Even in these cases though, it can be possible to derive an analtyical solution to a limiting case, often steady-state.
-
 There are many different ODEs that can be solved analytically.
-Here we will work with one that appears in many different applications, including our cooling coffee model: the exponential model.
+Here we will work with only one, which appears in many different applications, including our cooling coffee model: the exponential model.
 
 It is
 
@@ -638,7 +643,6 @@ pred_an = cool_an(
 )
 ```
 
-
 ```{python}
 #| label: fig-coffee-preds4
 #| fig-cap: "Predicted coffee temperature using Euler method, an RK45 approach based on `solve_ivp()`, and an analytical solution."
@@ -661,7 +665,7 @@ Here are three options.
 
 1. Script
     * Everything in a single `.py` file (a script)
-    * Model may be written with (as in most examples above) or without (as in first example) functions
+    * Model may be written using functions (as in most examples above) or without (as in first example)
     * Simple and quick
     * Not very modular or reusable
     * Model and model application code mixed together in single file
@@ -683,13 +687,13 @@ Because it
 * gives you a cleaner result that is easier for everyone to understand, 
 * helps you think explicitly about the model inputs and outputs,
 * makes code reuse easy, and
-* introduces you to concepts that will be useful if you continue working with Python.
-
+* introduces you to concepts that will be useful for future work with Python.
 
 How does it work in practice?
 Let's demonstrate with the RK45 model.
 
 First, we need to create a `.py` file with the function definition from above.
+This file will be a module.
 Here, we'll name the file `cooling_mods.py`.
 Here are the contents:
 
@@ -797,10 +801,10 @@ print(preds)
    And you are free to use an analytical or numeric approach.
    Using reasonable parameter estimates, generate and plot some predictions.
 
-2. Assume you have a big water cubic tank, say 10 $\text{m}^3$, that is draining from a horizontal pipe out of the bottom under the force of gravity.
+2. Assume you have a big water cubic tank, say 10 $\text{m}^3$, that is draining through a pipe at the bottom under the force of gravity.
    You measure an initial flow rate of 100 $\text{L}~\text{min}^{-1}$ when the tank is full.
-   If you assume that flow rate is proportional to the tank pressure, which is not an unreasonable assumption (but not always true), then it is also proportional to the quantity of water remaining in the tank.
-   Develop model, analytical or numerical, to calculate the volume of water remaining in the tank at any time.
+   If you assume that flow rate is proportional to the tank pressure, which is not an unreasonable assumption (but not always true), then it is also proportional to the quantity of water remaining in the tank (remember this is a cubic tank, i.e., water volume and water height are directly proportional).
+   Develop a model, analytical or numerical, to calculate the volume of water remaining in the tank at any time.
    Implement it in Python after coming up with a solution.
 
 ## References {.unnumbered}

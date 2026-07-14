@@ -47,16 +47,16 @@ It is possible to do a lot with just @eq-ficks1 using numerical modeling.
 Like constitutive equations in general, Fick's law includes on the RHS a material property, $D$, and a state variable, $c$.
 
 Diffusivity is properly called a *binary* diffusion coefficient, because it depends on both materials.
-For example, values of $D$ for oxygen in air and water are of course different, but so are the values for air and ethanol both in air. 
+For example, values of $D$ for oxygen in air and water are of course different, but so are the values for carbon dioxide in air and ethanol in air. 
 Diffusivity values vary widely; @tbl-diff-vals has *approximate* values for different media.
 These can be handy for setting parameter values.
 
-| Medium   | Approximate $D$     |                                                        
-|------    |------               |
-| Gases    | $10^{-5}~\msqps$    |
-| Liquids  | $10^{-9}~\msqps$    |
-| Polymers | $10^{-12}~\msqps$    |
-| Solids   | $10^{-34}~\msqps$    |
+| Medium   | Approximate $D$ $(\msqps)$   |
+|------    |------                        |
+| Gases    | $10^{-5}$                    |
+| Liquids  | $10^{-9}                     |
+| Polymers | $10^{-12}                    |
+| Solids   | $10^{-34}                    |
                                                                               
 : Approximate diffusivity values from @cussler_diffusion_1997 {#tbl-diff-vals}
 
@@ -171,5 +171,6 @@ We won't get into modelling concentration profiles until the spatial sections la
    Most of the resistance to mass transfer comes from the water.
    You can assume the overall mass transfer coefficient in air phase units, $K_G$, is 0.001 $\mps$.
    If the lagoon is 1 m deep, predict the relative daily loss with your model.
+   Do you expect it to be constant over time?
 
-
+## References {.unnumbered}
