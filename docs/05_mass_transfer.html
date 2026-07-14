@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>5&nbsp; Mass Transfer – Modelling</title>
+<title>5&nbsp; Mass Transfer – An Introduction to Modeling with Python</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -184,7 +184,7 @@ window.Quarto = {
       <a href="./index.html" class="sidebar-logo-link">
       </a>
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Modelling</a> 
+      <a href="./">An Introduction to Modeling with Python</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -357,6 +357,7 @@ window.Quarto = {
   <li><a href="#sec-interphase" id="toc-sec-interphase" class="nav-link" data-scroll-target="#sec-interphase"><span class="header-section-number">5.4</span> Interphase mass transfer</a></li>
   <li><a href="#other-stuff" id="toc-other-stuff" class="nav-link" data-scroll-target="#other-stuff"><span class="header-section-number">5.5</span> Other stuff</a></li>
   <li><a href="#problems" id="toc-problems" class="nav-link" data-scroll-target="#problems">Problems</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
     </div>
@@ -407,7 +408,7 @@ J = c \cdot v_x,
 J = - D \cdot \frac{dc}{dx},
 \tag{5.4}\]</span></span></p>
 <p>where <span class="math inline">\(D\)</span> is the diffusivity or diffusion coefficient (we will use <span class="math inline">\(\msqps\)</span>, but be aware that <span class="math inline">\(\mathrm{cm^{2}~s^{-1}}\)</span> is commonly used) and <span class="math inline">\(c\)</span> is concentration (<span class="math inline">\(\kgpmc\)</span>). The minus sign indicates that flow occurs down a concentration gradient, from high to low concentration. It is possible to do a lot with just <a href="#eq-ficks1" class="quarto-xref">Equation&nbsp;<span>5.4</span></a> using numerical modeling. Like constitutive equations in general, Fick’s law includes on the RHS a material property, <span class="math inline">\(D\)</span>, and a state variable, <span class="math inline">\(c\)</span>.</p>
-<p>Diffusivity is properly called a <em>binary</em> diffusion coefficient, because it depends on both materials. For example, values of <span class="math inline">\(D\)</span> for oxygen in air and water are of course different, but so are the values for air and ethanol both in air. Diffusivity values vary widely; <a href="#tbl-diff-vals" class="quarto-xref">Table&nbsp;<span>5.1</span></a> has <em>approximate</em> values for different media. These can be handy for setting parameter values.</p>
+<p>Diffusivity is properly called a <em>binary</em> diffusion coefficient, because it depends on both materials. For example, values of <span class="math inline">\(D\)</span> for oxygen in air and water are of course different, but so are the values for carbon dioxide in air and ethanol in air. Diffusivity values vary widely; <a href="#tbl-diff-vals" class="quarto-xref">Table&nbsp;<span>5.1</span></a> has <em>approximate</em> values for different media. These can be handy for setting parameter values.</p>
 <div id="tbl-diff-vals" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-diff-vals-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -418,25 +419,25 @@ Table&nbsp;5.1: Approximate diffusivity values from <span class="citation" data-
 <thead>
 <tr class="header">
 <th>Medium</th>
-<th>Approximate <span class="math inline">\(D\)</span></th>
+<th>Approximate <span class="math inline">\(D\)</span> <span class="math inline">\((\msqps)\)</span></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Gases</td>
-<td><span class="math inline">\(10^{-5}~\msqps\)</span></td>
+<td><span class="math inline">\(10^{-5}\)</span></td>
 </tr>
 <tr class="even">
 <td>Liquids</td>
-<td><span class="math inline">\(10^{-9}~\msqps\)</span></td>
+<td>$10^{-9}</td>
 </tr>
 <tr class="odd">
 <td>Polymers</td>
-<td><span class="math inline">\(10^{-12}~\msqps\)</span></td>
+<td>$10^{-12}</td>
 </tr>
 <tr class="even">
 <td>Solids</td>
-<td><span class="math inline">\(10^{-34}~\msqps\)</span></td>
+<td>$10^{-34}</td>
 </tr>
 </tbody>
 </table>
@@ -516,6 +517,9 @@ J = k_c \cdot (c^* - c),
 <p>If you struggle to find an appropriate value for <span class="math inline">\(D\)</span> you can use <span class="math inline">\(2 \cdot 10^{-9} \msqps\)</span>. Bulk oxygen concentration depends on temperature and consumption rate, but you may assume it is 10 <span class="math inline">\(\text{mg}~ \text{L}^{-1}\)</span>, which might be the case for cool, clean water. In the blood, free oxygen rapidly reacts with hemoglobin, so you can assume the dissolved oxygen concentration is zero.</p></li>
 <li><p>Develop a steady-state or dynamic model for benzene volatilization from an open industrial wastewater lagoon in Python. You can assume a negligible bulk air concentration. The bulk concentration in the lagoon is 10 <span class="math inline">\(\mgpl\)</span>, which corresponds to an vapor-phase equilibrium concentration of about 2 <span class="math inline">\(\gpmc\)</span> (that is based on Henry’s law). Most of the resistance to mass transfer comes from the water. You can assume the overall mass transfer coefficient in air phase units, <span class="math inline">\(K_G\)</span>, is 0.001 <span class="math inline">\(\mps\)</span>. If the lagoon is 1 m deep, predict the relative daily loss with your model. Do you expect it to be constant over time?</p></li>
 </ol>
+</section>
+<section id="references" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="references">References</h2>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
