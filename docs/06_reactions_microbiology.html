@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.24">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>6&nbsp; Chemical reactions and microbiology – Modelling</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./07_spatial_models.html" rel="next">
+<link href="./05_mass_transfer.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-03fb02fc132b93ec4eef7e9886d99257.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script>
+MathJax = {
+  loader: {load: ['[tex]/mhchem']},
+  tex: {
+    packages: {'[+]': ['mhchem']},
+    macros: {
+      degC: "{^\\circ\\mathrm{C}}",
+      degCpm: "{^\\circ\\mathrm{C}~m^{-1}}",
+      Wpms: "{\\mathrm{W~m^{-2}}}",
+      WpmspK: "{\\mathrm{W~m^{-2}~K^{-1}}}",
+      WpmpK: "{\\mathrm{W~m^{-1}~K^{-1}}}",
+      Jps: "{\\mathrm{J~s^{-1}}}",
+      kgps: "{\\mathrm{kg~s^{-1}}}",
+      kgpmc: "{\\mathrm{kg~m^{-3}}}",
+      kgpmcps: "{\\mathrm{kg~m^{-3}~s^{-1}}}",
+      kgpspms: "{\\mathrm{kg~s^{-1}~m^{-2}}}",
+      gps: "{\\mathrm{g~s^{-1}}}",
+      gpmc: "{\\mathrm{g~m^{-3}}}",
+      gpmcps: "{\\mathrm{g~m^{-3}~s^{-1}}}",
+      mgpl: "{\\mathrm{mg~L^{-1}}}",
+      gpmol: "{\\mathrm{g~mol^{-1}}}",
+      msq: "{\\mathrm{m^{2}}}",
+      mps: "{\\mathrm{m~s^{-1}}}",
+      msqps: "{\\mathrm{m^{2}~s^{-1}}}",
+      kJpkg: "{\\mathrm{kJ~kg^{-1}}}",
+      kJpkgpK: "{\\mathrm{kJ~kg^{-1}~K^{-1}}}",
+      molps: "{\\mathrm{mol~s^{-1}}}",
+      molpmcps: "{\\mathrm{mol~m^{-3}~s^{-1}}}",
+      pers: "{\\mathrm{s^{-1}}}",
+      mcbps: "{\\mathrm{m^{3}~s^{-1}}}",
+      mcb: "{\\mathrm{m^{3}}}"
+    }
+  }
+};
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04_heat_transfer.html">Part II: Applications</a></li><li class="breadcrumb-item"><a href="./06_reactions_microbiology.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chemical reactions and microbiology</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Modelling</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Part I: Foundations</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">An introduction to models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_components_formulation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Model Formulation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_solving.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Solving and implementing models</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Part II: Applications</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_heat_transfer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Heat Transfer</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05_mass_transfer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Mass Transfer</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06_reactions_microbiology.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chemical reactions and microbiology</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07_spatial_models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Spatial Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08_stability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Stability</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09_verification_validation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Verification and Validation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10_parameter_estimation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Parameter Estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11_time_variable_inputs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Time-Variable Inputs</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appx_derivatives.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Derivatives and Differential Equations</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appx_fdm_formulas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Finite difference formulas</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appx_python_style.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Python Style Guide</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appx_python_types.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Python data structures</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appx_slicing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Slicing in Python</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appx_symbols.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Symbols</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appx_parameter_values.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">G</span>&nbsp; <span class="chapter-title">Parameter values</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#stoichiometry" id="toc-stoichiometry" class="nav-link active" data-scroll-target="#stoichiometry"><span class="header-section-number">6.1</span> Stoichiometry</a></li>
+  <li><a href="#sec-rxn-rates" id="toc-sec-rxn-rates" class="nav-link" data-scroll-target="#sec-rxn-rates"><span class="header-section-number">6.2</span> Reaction rates</a></li>
+  <li><a href="#equilibrium-reactions" id="toc-equilibrium-reactions" class="nav-link" data-scroll-target="#equilibrium-reactions"><span class="header-section-number">6.3</span> Equilibrium reactions</a></li>
+  <li><a href="#ammonia-equilibrium" id="toc-ammonia-equilibrium" class="nav-link" data-scroll-target="#ammonia-equilibrium"><span class="header-section-number">6.4</span> Ammonia equilibrium</a></li>
+  <li><a href="#matrix-operations" id="toc-matrix-operations" class="nav-link" data-scroll-target="#matrix-operations"><span class="header-section-number">6.5</span> Matrix operations</a></li>
+  <li><a href="#microbiology" id="toc-microbiology" class="nav-link" data-scroll-target="#microbiology"><span class="header-section-number">6.6</span> Microbiology</a>
+  <ul class="collapse">
+  <li><a href="#stoichiometry-1" id="toc-stoichiometry-1" class="nav-link" data-scroll-target="#stoichiometry-1"><span class="header-section-number">6.6.1</span> Stoichiometry</a></li>
+  <li><a href="#kinetics" id="toc-kinetics" class="nav-link" data-scroll-target="#kinetics"><span class="header-section-number">6.6.2</span> Kinetics</a></li>
+  </ul></li>
+  <li><a href="#problems" id="toc-problems" class="nav-link" data-scroll-target="#problems"><span class="header-section-number">6.7</span> Problems</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04_heat_transfer.html">Part II: Applications</a></li><li class="breadcrumb-item"><a href="./06_reactions_microbiology.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chemical reactions and microbiology</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-reactions" class="quarto-section-identifier"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chemical reactions and microbiology</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Chemical reactions, including those carried out by microorganisms, are important in innumerable processes in both engineered and natural systems. This chapter will scratch the surface, barely, of the topics.</p>
+<section id="stoichiometry" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="stoichiometry"><span class="header-section-number">6.1</span> Stoichiometry</h2>
+<p>Chemical <em>stoichiometry</em> is about the coefficients that accompany the reactants and products in a balanced chemical reaction. For example, the simple organic compound urea (a waste product in mammal urine) is hydrolyzed like this:</p>
+<p><span id="eq-urea1"><span class="math display">\[
+\ce{CO(NH2)2 + H2O -&gt; 2NH3 + CO2}
+\tag{6.1}\]</span></span></p>
+<p>So the stoichiometry shows that hydrolysis of one mole of urea consumes one mole of water and produces two moles of ammonia and one of carbon dioxide. Why do we care? Well, these stoichiometric coefficients can then be used directly in a model to get state variable derivatives from the reaction rate, which itself is calculated using the appropriate constitutive equation. In the framework presented in <a href="02_components_formulation.html" class="quarto-xref"><span>Chapter 2</span></a>, the stoichiometric coefficients go into creating linking equations (see <a href="02_components_formulation.html#sec-linking" class="quarto-xref"><span>Section 2.5</span></a> for a review, if needed). We then just need a single constitutive equation for the <em>overall reaction rate</em> (we will get to that in <a href="#sec-rxn-rates" class="quarto-xref"><span>Section 6.2</span></a> below) and simple linking equations for each chemical species. For example, if our reaction rate is <span class="math inline">\(r\)</span>, with units of <span class="math inline">\(\molpmcps\)</span>, then the derivative for <span class="math inline">\(\ce{CO(NH2)2}\)</span> would be</p>
+<p><span class="math display">\[
+\frac{dc_{urea}}{dt} = -1 \cdot r,
+\]</span></p>
+<p>for ammonia,</p>
+<p><span class="math display">\[
+\frac{dc_{\ce{NH3}}}{dt} = 2 \cdot r,
+\]</span></p>
+<p>and carbon dioxide,</p>
+<p><span class="math display">\[
+\frac{dc_{\ce{CO2}}}{dt} = 2 \cdot r,
+\]</span></p>
+<p>all with units of <span class="math inline">\(\molpmcps\)</span>. The coefficients in these ODEs come directly from <a href="#eq-urea1" class="quarto-xref">Equation&nbsp;<span>6.1</span></a>. Simple! When implemented in Python (or written down on paper as a mathematical model, for that matter) a coefficient array can be combined with a state variable array for compact and efficient code when there is more than one state variable, as implied in the above example. We will see some of that later.</p>
+<p>There are some complications that come from using other units. In many cases, it is not moles but species mass, or even mass of a particular element that is of interest; then the coefficients need to be adjusted, and this can be done in at least these two ways:</p>
+<ol type="1">
+<li>hidden unit conversion: here the user only sees the input and output units, which should be identical, but internally the ODEs uses moles, and conversion is carried out in the model on inputs and output,</li>
+<li>consistent units: here the core of the computer model uses the input and output units; one set of units everywhere.</li>
+</ol>
+<p>Mistakes can be made with either approach! An advantage of 1 is that the coefficients have integer and usually obvious values, so it is easy to check values.</p>
+</section>
+<section id="sec-rxn-rates" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="sec-rxn-rates"><span class="header-section-number">6.2</span> Reaction rates</h2>
+<p>The constitutive equation for a chemical reaction must quantify its <em>rate</em>, or how fast it proceeds, e.g., <span class="math inline">\(\molps\)</span>, <span class="math inline">\(\molpmcps\)</span>, or on a mass basis, e.g., <span class="math inline">\(\gpmcps\)</span>. The term <em>kinetics</em> is used to describe reaction rates. Here we will look at only two simple, and to some degree, idealized, cases: first-order reactions and second-order reactions.</p>
+<p>A reaction that follows first-order kinetics has a rate that is proportional to the quantity of reactant present. So that means:</p>
+<p><span id="eq-fom1"><span class="math display">\[
+r_m = \frac{dM}{dt} = - k \cdot M,
+\tag{6.2}\]</span></span></p>
+<p>for mass or</p>
+<p><span id="eq-fom2"><span class="math display">\[
+r_c = \frac{dc}{dt} = - k \cdot c,
+\tag{6.3}\]</span></span></p>
+<p>for concentration. The inclusion of the derivatives in <a href="#eq-fom1" class="quarto-xref">Equation&nbsp;<span>6.2</span></a> and <a href="#eq-fom2" class="quarto-xref">Equation&nbsp;<span>6.3</span></a> only makes sense if the reaction is the <em>only</em> process affecting the quantity of reactant, i.e., a batch system with no addition of non-reaction removal of reactant. The <span class="math inline">\(k\)</span> is the first-order reaction rate constant with dimensions <span class="math inline">\(\text{T}^{-1}\)</span>. It is not necessarily constant, and depends at least on temperature for most chemical reactions. But its value does not change as the reaction proceeds, at least not for a true first-order reaction. A classic example of a first-order reaction is radioactive decay. Many other chemical reactions are not truly first-order, but come close enough for modelling purposes. Or, more honestly, an accurate description of the relevant kinetics is not available or too complicated, and a first-order model is assumed to be close enough! Even where the concentration of a reactant seems to follow first-order kinetics over time, the true rate often depends on other factors, e.g., the constant concentration of another reactant or competitor, or the solution pH, for example, These effects can be important when applying the model–the rate “constant” from one system may not apply directly to another.</p>
+<p>Thinking about math and implementation, the rate of a simple first-order reaction can be described analytically with the exponential model (see <a href="03_solving.html#sec-expmodel" class="quarto-xref"><span>Section 3.3</span></a>). You could have (should have, really!) realized this just from the form of <a href="#eq-fom1" class="quarto-xref">Equation&nbsp;<span>6.2</span></a> or <a href="#eq-fom2" class="quarto-xref">Equation&nbsp;<span>6.3</span></a>! Compare <a href="#eq-fom2" class="quarto-xref">Equation&nbsp;<span>6.3</span></a> to <a href="03_solving.html#eq-exp-ode" class="quarto-xref">Equation&nbsp;<span>3.1</span></a>. What specific variables or parameters go in for the <span class="math inline">\(x\)</span> and <span class="math inline">\(\lambda\)</span> in <a href="03_solving.html#eq-exp-ode" class="quarto-xref">Equation&nbsp;<span>3.1</span></a>? Well, <span class="math inline">\(x = c\)</span> and <span class="math inline">\(\lambda = -k\)</span>. Note the minus sign! Now take a look at <a href="03_solving.html#eq-exp-solution" class="quarto-xref">Equation&nbsp;<span>3.2</span></a> and plug these in. That gives:</p>
+<p><span id="eq-fom-solution1"><span class="math display">\[
+c = c_0 \cdot e^{-k \cdot t}.
+\tag{6.4}\]</span></span></p>
+<p>Simple!</p>
+<p>With this simple analytical model we can predict the concentration of our reactant (e.g., urea) at any time. We could also predict the rate by combining <a href="#eq-fom-solution1" class="quarto-xref">Equation&nbsp;<span>6.4</span></a> and <a href="03_solving.html#eq-exp-ode" class="quarto-xref">Equation&nbsp;<span>3.1</span></a>.</p>
+<p>If a reaction includes two reactants it might be possible to approximate the observed rate with a <em>second-order</em> model, i.e.,</p>
+<p><span id="eq-som1"><span class="math display">\[
+r_c = \frac{dc}{dt} = - k \cdot c_1 \cdot c_2,
+\tag{6.5}\]</span></span></p>
+<p>where <span class="math inline">\(c_1\)</span> is the concentration of the first reactant and <span class="math inline">\(c_2\)</span> the second one. While there are analytical solutions for some second-order reaction scenarios, we won’t cover them (you can read more <a href="https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Supplemental_Modules_(Physical_and_Theoretical_Chemistry)/Kinetics/02%3A_Reaction_Rates/2.08%3A_Second-Order_Reactions">here</a>). But <a href="#eq-som1" class="quarto-xref">Equation&nbsp;<span>6.5</span></a> can be dropped into a numerical model easily!</p>
+<p>You can find some guidance on determining reaction rate constant values in <a href="appx_parameter_values.html" class="quarto-xref"><span>Appendix G</span></a>.</p>
+<p>Here is a Python example. . .</p>
+</section>
+<section id="equilibrium-reactions" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="equilibrium-reactions"><span class="header-section-number">6.3</span> Equilibrium reactions</h2>
+<p>Rapid reversible chemical reactions are often at <em>equilibrium</em>, meaning the concentrations of chemical species do not change over time. Here we will look at one important type of equibrium reaction: acid-base or proton exchange. For more on these types of problems, see <span class="citation" data-cites="Snoeyink1980">Snoeyink (<a href="#ref-Snoeyink1980" role="doc-biblioref">1980</a>)</span>.</p>
+<p>Acid-base reactions are important in natural and engineered systems for influencing pH, which affects many processes. In both types of systems, a set of chemical species and reactions that are together called the <em>carbonate system</em> are an important system. The carbonate system plays an important role in processes in the oceans, municipal wastewater, and your blood! Several <em>chemical species</em> play a role:</p>
+<ul>
+<li><span class="math inline">\(\ce{CO2(g)}\)</span> is a gas,</li>
+<li><span class="math inline">\(\ce{CO2(aq)}\)</span> is a what you get when <span class="math inline">\(\ce{CO2}\)</span> dissolves in water–it is an uncharged solute surrounded by water molecules,</li>
+<li><span class="math inline">\(\ce{H2CO3}\)</span> is called carbonic acid, and is formed when <span class="math inline">\(\ce{CO2(aq)}\)</span> reacts with water in a hydration reaction,</li>
+<li><span class="math inline">\(\ce{H2CO3*}\)</span> is not actually a chemical species, but the sum of <span class="math inline">\(\ce{CO2(aq)}\)</span> and <span class="math inline">\(\ce{H2CO3}\)</span>, used because it is difficult to measure the two separately,</li>
+<li><span class="math inline">\(\ce{HCO3-}\)</span> is bicarbonate, and is the most important buffer component in some systems, and</li>
+<li><span class="math inline">\(\ce{CO32-}\)</span> is carbonate.</li>
+</ul>
+<p>Chemical speciation models are used to determine the concentration of specific chemical species. A fundamental concept here is that the <em>mass action expression</em> or <em>reaction quotient</em> takes on a specific numeric value at equilibrium. For example, let’s look at a reaction between only two of the carbonate system species:</p>
+<p><span id="eq-carb1"><span class="math display">\[
+\ce{H2CO3^* &lt;=&gt; HCO3- + H+}.
+\tag{6.6}\]</span></span></p>
+<p>The mass action expression or reaction quotient for any reaction is the (mathematical) product of (reaction) product concentrations divided by the product of reactant concentrations. Each concentration should be raised to the power of the stoichiometric coefficient, which are all 1 in this reaction. So for <a href="#eq-carb1" class="quarto-xref">Equation&nbsp;<span>6.6</span></a>, we have:</p>
+<p><span id="eq-carb-rq1"><span class="math display">\[
+\frac{c_{\ce{HCO3-}} \cdot c_{\ce{H+}}}{c_{\ce{H2CO3^*}}},
+\tag{6.7}\]</span></span></p>
+<p>where <span class="math inline">\(c=\)</span> molar or molal concentration, i.e., moles of species per L of water or moles per kg of water. At equilibrium, the numeric value of that reaction quotient, <a href="#eq-carb-rq1" class="quarto-xref">Equation&nbsp;<span>6.7</span></a>, is know: at 15<span class="math inline">\(\degC\)</span> it is <span class="math inline">\(3.80 \cdot 10^{-7}\)</span> (<span class="citation" data-cites="Snoeyink1980">Snoeyink (<a href="#ref-Snoeyink1980" role="doc-biblioref">1980</a>)</span>: p.&nbsp;157). Actually, except for very dilute solutions, for accurate results a correction is needed for interactions between ions, but the use of concentrations can still give decent approximate values. See <span class="citation" data-cites="Snoeyink1980">Snoeyink (<a href="#ref-Snoeyink1980" role="doc-biblioref">1980</a>)</span> for more information on chemical activity and ionic strength. But typically, because the value of constants vary by orders of magnitude, these constants are expressed as the negative logarithm (base 10) and we’ll see <span class="math inline">\(pK_a\)</span>. So here, <span class="math inline">\(pK_a = 6.42\)</span>. The numeric value is called the <em>equilibrium constant</em></p>
+<p>So, if we know the concentration of <span class="math inline">\(\ce{H2CO3^*}\)</span> and <span class="math inline">\(\ce{H^+}\)</span> we can calculate the concentration of bicarbonate <span class="math inline">\(\ce{HCO3-}\)</span> using the equilibrium constant. The hydrogen ion (or “proton”, because that it what it is) concentration is commonly take from pH, i.e.,</p>
+<p><span id="eq-pH-def"><span class="math display">\[
+p\text{H} = - log_{10}(c_{H^+}).
+\tag{6.8}\]</span></span></p>
+<p>Even better, if we could use other, independent, information, we can solve for all species concentrations, including <span class="math inline">\(\ce{H+}\)</span>, which means we could calculate pH. We can use element balance (commonly H balance) or charge balance for that other information. The programming might be a bit much for this course, so we will include an example in an appendix . . .</p>
+</section>
+<section id="ammonia-equilibrium" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="ammonia-equilibrium"><span class="header-section-number">6.4</span> Ammonia equilibrium</h2>
+<p>Here is a simple example for ammonia. This is another thing all environmental engineers should know!</p>
+<p>The relevant proton exchange (acid-base) reaction is:</p>
+<p><span id="eq-amm-dis"><span class="math display">\[
+\ce{NH4+ &lt;=&gt; NH3 + H+},
+\tag{6.9}\]</span></span></p>
+<p>with an equilbrium constant <span class="math inline">\(k_a\)</span>, where the <span class="math inline">\(a\)</span> is for acid dissociation constant. The numeric value is around <span class="math inline">\(pk_a = 9.56\)</span> at 15 <span class="math inline">\(\degC\)</span> (<span class="citation" data-cites="clegg_chemical-model_1995">Clegg and Whitfield (<a href="#ref-clegg_chemical-model_1995" role="doc-biblioref">1995</a>)</span>).</p>
+<p>Let’s write the mass action expression and set it to the acid dissociation constant:</p>
+<p><span id="eq-amm-mae1"><span class="math display">\[
+k_a = \frac{c_{\ce{NH3(aq)}} \cdot c_{\ce{H+}}} {c_{\ce{NH4+}}}.
+\tag{6.10}\]</span></span></p>
+<p>What else can we use? Well, we cannot measure the ammonium (<span class="math inline">\(\ce{NH4+}\)</span>) concentration directly. But it is trivial to measure the sum of <span class="math inline">\(\ce{NH4+}\)</span> and <span class="math inline">\(\ce{NH3}\)</span> as N mass, which is often called TAN (for total ammoniacal nitrogen) concentration in agriculture and related fields. And then from mass conservation, we know that:</p>
+<p><span id="eq-amm-mass-bal"><span class="math display">\[
+c_{\text{TAN}} = c_{\ce{NH4+}} + c_{\ce{NH3}(aq)}.
+\tag{6.11}\]</span></span></p>
+<p>Lastly, we can estimate <span class="math inline">\(\ce{H+}\)</span> from measured pH, or anyway use it as an input here. That’s all we need. To get an explicit closed-form solution, we can rearrange <a href="#eq-amm-mass-bal" class="quarto-xref">Equation&nbsp;<span>6.11</span></a> to solve for <span class="math inline">\(\ce{NH4+}\)</span>, and insert the result into <a href="#eq-amm-mae1" class="quarto-xref">Equation&nbsp;<span>6.10</span></a>, and finally rearrange to solve for <span class="math inline">\(\ce{NH3(aq)}\)</span>. We’ll show these steps below, in part because the ability to do these kinds of simple mathematical derivations seems to be declining among students!</p>
+<p>First, rearrange <a href="#eq-amm-mass-bal" class="quarto-xref">Equation&nbsp;<span>6.11</span></a> to solve for <span class="math inline">\(\ce{NH4+}\)</span>:</p>
+<p><span id="eq-amm-der1"><span class="math display">\[
+c_{\ce{NH4+}} = c_{\text{TAN}} - c_{\ce{NH3}(aq)}.
+\tag{6.12}\]</span></span></p>
+<p>And insert this into <a href="#eq-amm-mae1" class="quarto-xref">Equation&nbsp;<span>6.10</span></a>:</p>
+<p><span class="math display">\[
+k_a = \frac{c_{\ce{NH3(aq)}} \cdot c_{\ce{H+}}} {c_{\text{TAN}} - c_{\ce{NH3}(aq)}}.
+\]</span></p>
+<p>And rearrange:</p>
+<p><span class="math display">\[
+\frac{k_a} {c_{\ce{H+}}} \cdot (c_{\text{TAN}} - c_{\ce{NH3}(aq)}) = c_{\ce{NH3(aq)}} .
+\]</span></p>
+<p>A bit more, including multiplication of both sides by -1,</p>
+<p><span class="math display">\[
+\frac{k_a} {c_{\ce{H+}}} \cdot c_{\ce{NH3}(aq)} + c_{\ce{NH3(aq)}} = \frac{k_a} {c_{\ce{H+}}} \cdot c_{\text{TAN}},
+\]</span></p>
+<p>then</p>
+<p><span class="math display">\[
+\left( \frac{k_a} {c_{\ce{H+}}} + 1 \right) \cdot c_{\ce{NH3}(aq)} = \frac{k_a} {c_{\ce{H+}}} \cdot c_{\text{TAN}},
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+c_{\ce{NH3}(aq)} = \frac{\frac{k_a} {c_{\ce{H+}}} \cdot c_{\text{TAN}}} {(\frac{k_a} {c_{\ce{H+}}} + 1) \cdot},
+\]</span></p>
+<p>which, finally, can be simplified to</p>
+<p><span id="eq-free-nh3-calc"><span class="math display">\[
+c_{\ce{NH3}(aq)} = \frac{c_{\text{TAN}}} {1 + \frac {c_{\ce{H+}}} {k_a}}.
+\tag{6.13}\]</span></span></p>
+<p>Let’s implement <a href="#eq-free-nh3-calc" class="quarto-xref">Equation&nbsp;<span>6.13</span></a> in Python for a simple free ammonia calculator.</p>
+<div id="183654e6" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">Description:</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">    A free ammonia calculator function. Does not include corrections</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">    for non-ideal behavior; technically only accurate for very</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">    dilute solutions. </span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> free_NH3(TAN, pH, pKa <span class="op">=</span> <span class="fl">9.56</span>):</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">    Calculate free ammonia concentration (NH3 (aq)) from pH and TAN concentration.</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">    TAN : float</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">        Total ammoniacal nitrogen (TAN) concentration (any concentration units)</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">    pH : float</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">        Solution pH</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">    pKa : float</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co">        Acid dissociation constant for NH4+</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co">    -------</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co">    float with free ammonia concentration in same units as TAN input</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate H+ concentration from pH</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    c_H <span class="op">=</span> <span class="dv">10</span><span class="op">**</span>(<span class="op">-</span>pH)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># And Ka</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    Ka <span class="op">=</span> <span class="dv">10</span><span class="op">**</span>(<span class="op">-</span>pKa)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Apply equation from text</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    c_NH3 <span class="op">=</span> TAN <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> c_H <span class="op">/</span> Ka)</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Return solution</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> c_NH3 </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>We can test it.</p>
+<div id="4d000ab5" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(free_NH3(<span class="dv">1</span>, <span class="fl">9.56</span>))</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(free_NH3(<span class="dv">1</span>, <span class="dv">7</span>))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(free_NH3(<span class="dv">1</span>, <span class="dv">10</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.5
+0.0027466637631632404
+0.7336337024138072</code></pre>
+</div>
+</div>
+<p>We see <span class="math inline">\(\ce{NH4(aq)}\)</span> is exactly half of TAN when <span class="math inline">\(p\text{K}_a\)</span> = pH, very small at pH 7, and high at pH 10, all of which are expected.</p>
+</section>
+<section id="matrix-operations" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="matrix-operations"><span class="header-section-number">6.5</span> Matrix operations</h2>
+<p>Matrices are convenient for oranizing stoichiometric coefficients and then even using in compact code for speciation calculations. Here we will use the carbonate system as as demo.</p>
+<p>We’ll start with a stoichiometry matrix. First we need to think about how to set it up, because at this point there are multiple routes that could be taken. We need to select what are sometimes called “master species” or we might call “funamental species”. These species will be the reactants for all reactions. We’ll use <span class="math inline">\(\ce{H2CO3^*}\)</span> and <span class="math inline">\(\ce{H+}\)</span>. These reactants will define the columns in our stoichiometry matrix, and products will define rows. This too is arbitrary, but seems most convenient. If we only consider the species <span class="math inline">\(\ce{H2CO3^*}\)</span>, <span class="math inline">\(\ce{HCO3-}\)</span>, <span class="math inline">\(\ce{CO32-}\)</span>, and of course <span class="math inline">\(\ce{H+}\)</span> and <span class="math inline">\(\ce{OH-}\)</span>, our coefficient matrix is:</p>
+<div id="2342e2b9" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>       <span class="op">|</span> H2CO3<span class="op">*|</span>  H<span class="op">+</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>       <span class="op">--------|----</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>HCO3<span class="op">-</span>  <span class="op">|</span>  <span class="op">-</span><span class="dv">1</span>   <span class="op">|</span>  <span class="dv">1</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>CO3<span class="op">-</span><span class="dv">2</span>  <span class="op">|</span>  <span class="op">-</span><span class="dv">1</span>   <span class="op">|</span>  <span class="dv">2</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  OH<span class="op">-</span>  <span class="op">|</span>   <span class="dv">0</span>   <span class="op">|</span>  <span class="dv">1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Although <span class="math inline">\(\ce{CO32-}\)</span> forms from <span class="math inline">\(\ce{H2CO3^*}\)</span>, here our reactant is carbonic acid <span class="math inline">\(\ce{H2CO3^*}\)</span>, so in this model <span class="math inline">\(\ce{CO32-}\)</span> production is expressed as two reactions combined:</p>
+<p><span id="eq-carb2"><span class="math display">\[
+\ce{H2CO3^* &lt;=&gt; CO32- + 2H+}.
+\tag{6.14}\]</span></span></p>
+<p>So what is the use of this matrix? We’ll demonstrate after first creating the matrix in Python.</p>
+<div id="957315da" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Stoichometry matrix</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#        | H2CO3*|  H+</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#        --------|----</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># HCO3-  |  -1   |  1</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># CO3-2  |  -1   |  2</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#   OH-  |   0   |  1</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>sc <span class="op">=</span> np.array([[<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>],</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>               [<span class="op">-</span><span class="dv">1</span>, <span class="dv">2</span>],</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>               [ <span class="dv">0</span>, <span class="dv">1</span>]])</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sc)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[-1  1]
+ [-1  2]
+ [ 0  1]]</code></pre>
+</div>
+</div>
+<p>Note that we do not get row or column names with a matrix. So good comments (as above) are helpful.</p>
+<p>To use the matrix, we need equilibrium constants for each reaction–so three here, one for each row.</p>
+<div id="26b2a516" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>keq <span class="op">=</span> <span class="dv">10</span><span class="op">**</span>np.array([<span class="op">-</span><span class="fl">6.3</span>, <span class="op">-</span><span class="fl">16.6</span>, <span class="op">-</span><span class="fl">14.0</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The first thing we can do with the matrix is to calculate reactant species concentrations once we have master species concentrations. Look at <a href="#eq-carb2" class="quarto-xref">Equation&nbsp;<span>6.14</span></a>. The relevant mass action expression is</p>
+<p><span id="eq-carb-ma2"><span class="math display">\[
+k_2 = \frac{c_{\ce{CO32-}} \cdot c_{\ce{H+}}^2}{c_{\ce{H2CO3^*}}}.
+\tag{6.15}\]</span></span></p>
+<p>Rearranging gives an equation for the reactant species concentration,</p>
+<p><span id="eq-carb-ma2"><span class="math display">\[
+c_{\ce{CO32-}} = k_2 \cdot \frac{c_{\ce{H2CO3^*}}} {c_{\ce{H+}}^2}.
+\tag{6.16}\]</span></span></p>
+<p>We can actually carry out this calculation using the <code>sc</code> stoichiometry matrix.</p>
+<div id="02c24b24" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>cH2CO3s <span class="op">=</span> <span class="fl">0.001</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>cHp <span class="op">=</span> <span class="fl">1e-6</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>keq[<span class="dv">1</span>] <span class="op">*</span> cH2CO3s<span class="op">**</span>(<span class="op">-</span>sc[<span class="dv">1</span>, <span class="dv">0</span>]) <span class="op">/</span> cHp<span class="op">**</span>(sc[<span class="dv">1</span>, <span class="dv">1</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>np.float64(2.5118864315095718e-08)</code></pre>
+</div>
+</div>
+<p>Do you see what we’ve done? Do you understand why we included the <code>**(-sc[1, 0])</code> bit? That makes it more general, and adaptable to the complete calculations for all reactants, which we can do using matrix operations like this:</p>
+<div id="4a814b57" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>conc <span class="op">=</span> keq <span class="op">*</span> cH2CO3s<span class="op">**</span>(<span class="op">-</span>sc[:, <span class="dv">0</span>]) <span class="op">/</span> (cHp<span class="op">**</span>sc[:, <span class="dv">1</span>])</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>conc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>array([5.01187234e-04, 2.51188643e-08, 1.00000000e-08])</code></pre>
+</div>
+</div>
+<p>This approach could work with more reactants and species with different stoichiometric coefficients. Of course, we don’t typically know master species concentrations. When we make measurements on a water sample, create a solution in the laboratory, or simulate mass transfer and reaction of chemicals, it is the <em>total</em> concentrations that we know. So it takes a bit more conceptual and programming trickery to come up with a general approach for solving chemical speciation problems. In the example <code>carb_spec()</code> function below, we use two: (1) a proton balance and (2) an iterative root finder. Take a look.</p>
+<div id="e85016ec" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">File: carb_mods.py</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">Authors: Sasha D. Hafner and Frederik R. Dalby</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">Course: Modelling 2026</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">Description:</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">    A module with carbonate speciation functions.</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> root_scalar</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> carb_spec_tot(tot):</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="co">    Calculate pH and speciation given solute totals.</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="co">    tot: ndarray or float</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a><span class="co">        total concentration of dissolved inorganic carbon (mol/kg)</span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="co">    -------</span></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a><span class="co">    dictionary</span></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a><span class="co">        concentrations of individual species (mol/kg)</span></span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Set values for some constants</span></span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Stoichometry matrix</span></span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>    <span class="co">#        | H2CO3*|  H+</span></span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>    <span class="co">#        --------|----</span></span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># HCO3-  |  -1   |  1</span></span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>    <span class="co"># CO3-2  |  -1   |  2</span></span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>    <span class="co">#   OH-  |   0   |  1</span></span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>    sc <span class="op">=</span> np.array([[<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>],</span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>                   [<span class="op">-</span><span class="dv">1</span>, <span class="dv">2</span>],</span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>                   [ <span class="dv">0</span>, <span class="dv">1</span>]])</span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Equilibrium constant vector</span></span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a>    keq <span class="op">=</span> <span class="dv">10</span><span class="op">**</span>np.array([<span class="op">-</span><span class="fl">6.3</span>, <span class="op">-</span><span class="fl">16.6</span>, <span class="op">-</span><span class="fl">14.0</span>])</span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Define master species error function</span></span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> residC(cH2CO3):</span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""</span></span>
+<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a><span class="co">        Residual of total inorganic carbon concentration</span></span>
+<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a><span class="co">        for a given H2CO3* concentration</span></span>
+<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span>        </span>
+<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Define proton error function</span></span>
+<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a>        <span class="kw">def</span> residH(cH):</span>
+<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a>            <span class="co">"""</span></span>
+<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a><span class="co">            Residual of charge balance or proton condition for given </span></span>
+<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a><span class="co">            proton concentration cH.</span></span>
+<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a><span class="co">            """</span>        </span>
+<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Calculate concentrations of pH-dependent species</span></span>
+<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a>            conc <span class="op">=</span> keq <span class="op">*</span> cH2CO3<span class="op">**</span>(<span class="op">-</span>sc[:, <span class="dv">0</span>]) <span class="op">/</span> (cH<span class="op">**</span>sc[:, <span class="dv">1</span>])</span>
+<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Get charge balance</span></span>
+<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> cH <span class="op">-</span> np.<span class="bu">sum</span>(sc[:, <span class="dv">1</span>] <span class="op">*</span> conc)</span>
+<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Get H+ concentration</span></span>
+<span id="cb12-65"><a href="#cb12-65" aria-hidden="true" tabindex="-1"></a>        cH <span class="op">=</span> root_scalar(residH, bracket<span class="op">=</span>[<span class="fl">1E-14</span>, <span class="dv">1</span>], method<span class="op">=</span><span class="st">'brentq'</span>).root</span>
+<span id="cb12-66"><a href="#cb12-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-67"><a href="#cb12-67" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Species concentrations</span></span>
+<span id="cb12-68"><a href="#cb12-68" aria-hidden="true" tabindex="-1"></a>        conc <span class="op">=</span> keq <span class="op">*</span> cH2CO3 <span class="op">*</span> <span class="op">-</span>sc[:, <span class="dv">0</span>] <span class="op">/</span> (cH<span class="op">**</span>sc[:, <span class="dv">1</span>])</span>
+<span id="cb12-69"><a href="#cb12-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-70"><a href="#cb12-70" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Calculate error in total IC balance</span></span>
+<span id="cb12-71"><a href="#cb12-71" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Note that intermediate results cH and conc are returned here in addition to actual residual</span></span>
+<span id="cb12-72"><a href="#cb12-72" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> tot <span class="op">-</span> (cH2CO3 <span class="op">+</span> np.<span class="bu">sum</span>(conc <span class="op">*</span> <span class="op">-</span>sc[:, <span class="dv">0</span>])), cH, conc</span>
+<span id="cb12-73"><a href="#cb12-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Solve for H2CO3* concentration (mol/kg) </span></span>
+<span id="cb12-75"><a href="#cb12-75" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Because residC() returns more than just residual, lambda function and indexing of result is needed</span></span>
+<span id="cb12-76"><a href="#cb12-76" aria-hidden="true" tabindex="-1"></a>    cH2CO3 <span class="op">=</span> root_scalar(<span class="kw">lambda</span> x: residC(x)[<span class="dv">0</span>], bracket<span class="op">=</span>[<span class="fl">1E-10</span>, tot], method<span class="op">=</span><span class="st">'brentq'</span>).root</span>
+<span id="cb12-77"><a href="#cb12-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-78"><a href="#cb12-78" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get associated cH and concentrations of all species</span></span>
+<span id="cb12-79"><a href="#cb12-79" aria-hidden="true" tabindex="-1"></a>    resid, cH, conc <span class="op">=</span> residC(cH2CO3)</span>
+<span id="cb12-80"><a href="#cb12-80" aria-hidden="true" tabindex="-1"></a>    all_conc <span class="op">=</span> np.concatenate(([cH2CO3, cH], conc))</span>
+<span id="cb12-81"><a href="#cb12-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-82"><a href="#cb12-82" aria-hidden="true" tabindex="-1"></a>    nms <span class="op">=</span> [<span class="st">'H2CO3*'</span>, <span class="st">'H+'</span>, <span class="st">'HCO3-'</span>, <span class="st">'CO3-2'</span>, <span class="st">'OH-'</span>]</span>
+<span id="cb12-83"><a href="#cb12-83" aria-hidden="true" tabindex="-1"></a>    res <span class="op">=</span> <span class="bu">dict</span>(<span class="bu">zip</span>(nms, all_conc))</span>
+<span id="cb12-84"><a href="#cb12-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-85"><a href="#cb12-85" aria-hidden="true" tabindex="-1"></a>    <span class="co"># And return species concentrations (mol/kg)</span></span>
+<span id="cb12-86"><a href="#cb12-86" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> res</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="168d0f0a" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> carb_mods <span class="im">as</span> cm</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>tot <span class="op">=</span> <span class="fl">1.5E-5</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>concs <span class="op">=</span> cm.carb_spec_tot(tot)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>concs</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<pre><code>{'H2CO3*': np.float64(1.2499117289390624e-05),
+ 'H+': np.float64(2.5049248927154134e-06),
+ 'HCO3-': np.float64(2.500832673773985e-06),
+ 'CO3-2': np.float64(5.0036845942105924e-11),
+ 'OH-': np.float64(0.0)}</code></pre>
+</div>
+</div>
+<p>We can get predicted pH:</p>
+<div id="42d0a921" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="op">-</span>np.log10(concs[<span class="st">'H+'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>np.float64(5.601205291420791)</code></pre>
+</div>
+</div>
+</section>
+<section id="microbiology" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="microbiology"><span class="header-section-number">6.6</span> Microbiology</h2>
+<p>From a modeling perspective, microbial systems are just a set of chemical reactions. There are multiple ways microbial activity can be modelled, and selection of an aproach should depend on the objectives the model needs to meet. An important consideration is whether active microbial biomass should be explictly included or not. For dynamics in microbial activity related to changes in the microbial population, it must be included. So here are some components for one approach to creating microbial models:</p>
+<ol type="1">
+<li>state variables: active microbial biomass, essential chemical substrates, and important products,</li>
+<li>linking equations: a balanced chemical reaction that includes all state variables (stoichiometry), and</li>
+<li>constitutive equation: an equation for the rate of the overall reaction (kinetics).</li>
+</ol>
+<section id="stoichiometry-1" class="level3" data-number="6.6.1">
+<h3 data-number="6.6.1" class="anchored" data-anchor-id="stoichiometry-1"><span class="header-section-number">6.6.1</span> Stoichiometry</h3>
+<p>Unlike simple chemical reactions such as urea hydrolysis, it isn’t always possible to just look up the reaction. But there are a few different approaches that can be used, including the microbial stoiciometry approach presented by <span class="citation" data-cites="rittmann_environmental_2020">Rittmann and McCarty (<a href="#ref-rittmann_environmental_2020" role="doc-biblioref">2020</a>)</span>. <span class="citation" data-cites="rittmann_environmental_2020">Rittmann and McCarty (<a href="#ref-rittmann_environmental_2020" role="doc-biblioref">2020</a>)</span> is a worthwhile read for anyone working with microbial systems. Here we will give an introduction to the most essential parts.</p>
+<p>Microbes (and all known life) is powered by electron transfer. Chemotrophs harness energy from electrons transferred from reduced compounds to oxidized compounds. For organic compounds, reduced versions contain more C and H and oxidized more O. So these are sorted from most reduced to most oxidized: <span class="math inline">\(\ce{CH4}\)</span> (methane), <span class="math inline">\(\ce{C57H104O6}\)</span> (a lipid), <span class="math inline">\(\ce{C6H12O6}\)</span> (glucose), <span class="math inline">\(\ce{CO2}\)</span> (carbon dioxide, which provides no energy to chemotrophs). All of these compounds except <span class="math inline">\(\ce{CO2}\)</span> could serve as electron donors for some chemotroph (technically chemoorganotroph, which is a group of chemotrophs that use reduced <em>organic</em> compounds for energy). Of course the microorganism has to have the enzymatic machinery in place to use a particular substrate. But as a group, microorganisms are extremely capable.</p>
+<p>Chemotrophs need an electron acceptor too. These are oxidized chemicals with a strong affinity for electrons. Common electron acceptors include <span class="math inline">\(\ce{O2}\)</span>, <span class="math inline">\(\ce{NO3-}\)</span>, and <span class="math inline">\(\ce{SO42-}\)</span>.</p>
+<p>Finally, fermenters do not use exactly the same approach; they do not use external electron acceptors. Instead they essentially split a single organic compound, and transfer electrons from one product to the other. We will work with a simple fermentation: glucose to ethanol and <span class="math inline">\(\ce{CO2}\)</span> by yeast.</p>
+<p>Microorganisms and all life also need material to build up biomass, including numerous elements. In modeling work and elsewhere, it is common to focus on C, H, O, and N, although others may be added depending on their importance (e.g., if S is limiting or removal in biomass is important, it can be included). For chemoorganotrophs, the electron donor typically also serves as the source of C, H, and O. N can come from the donor or inorganic compounds in the environment, like <span class="math inline">\(\ce{NH4+}\)</span>. H comes from the electron donor and <span class="math inline">\(\ce{H2O}\)</span>, which is always available where life is active. It is common to call the electron donor and C source the substrate.</p>
+<p>A balanced reaction for our fermentation system is:</p>
+<p><span id="eq-eth-ferm"><span class="math display">\[
+\ce{C6H12O6 + 0.24NH4+ + 0.24HCO3- -&gt;
+1.6CH3CH2OH + 1.84CO2 + 0.24C5H7O2N + 0.96H2O}.
+\tag{6.17}\]</span></span></p>
+<p>The <span class="math inline">\(\ce{C5H7O2N}\)</span> “species” is yeast biomass, and is really an empirical chemical formula for microbial biomass. This reaction is balanced in terms of elements and reduction-oxidation (redox).</p>
+</section>
+<section id="kinetics" class="level3" data-number="6.6.2">
+<h3 data-number="6.6.2" class="anchored" data-anchor-id="kinetics"><span class="header-section-number">6.6.2</span> Kinetics</h3>
+<p>We have looked at a first-order approach above, and while this can be a component of microbial models, it is more accurate and useful to link reaction rate to both the quantity of microbial biomass and substrate (electron donor). A second-order approach is one option. One common alternative is the Monod equation:</p>
+<p><span id="eq-monod1"><span class="math display">\[
+r = c_{x_a} \cdot \frac{\hat{q_{max}} \cdot c_s} {c_s + k_s},
+\tag{6.18}\]</span></span></p>
+<p>where <span class="math inline">\(c_{x_a} =\)</span> active microbial biomass concentration (<span class="math inline">\(\gpmc\)</span>), <span class="math inline">\(\hat{q_{max}} =\)</span> maximum substrate utilization rate, and <span class="math inline">\(c_s =\)</span> substrate concentration.</p>
+<!-- Microbial rate of growth and biomass yield.
+     Monod kinetics.
+     Example: CSTR. -->
+</section>
+</section>
+<section id="problems" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="problems"><span class="header-section-number">6.7</span> Problems</h2>
+<ol type="1">
+<li><p>Formulate (pencil and paper) and implement (in Python) a simple urea hydrolysis model. You can assume the reaction is first-order. Plot predicted</p></li>
+<li><p>Create a Python function that calcuates free ammonia <span class="math inline">\(\ce{NH3(aq)}\)</span> from TAN, pH, and temperature. You can use this expression for the temperature dependency of Ka . . .</p></li>
+<li><p>Derive equations for calculating carbonate species concentrations from <span class="math inline">\(\ce{CO2}\)</span> partial pressure and solution pH. Try to implement it in Python as a function. Bonus: Can you include calculation of pH instead of using it as an input?</p></li>
+<li><p>Formulate and implement a model for a microbial community consuming milk processing wastewater that includes two groups: aerobic bacteria that use dissolved oxygen to oxidize the wastewater organice matter and fermentative bacteria that produce lactic acid. The reactor runs in batch mode, and you do not need to include aeration; there are no inputs or outputs to the reactor. You can use the following empirical formula for the substrate: . The Microbial Stoichiometry Calculator can be used to sort out stoichiometry: https:/…. For kinetics, use whichever approach you prefer: first-order, second-order, or Monod. Use your Python model to predict the effect of initial dissolved oxygen concentration on microbial populations and final lactic acid concentration.</p></li>
+<li><p>A reactor . . . catalytic. . . nonlinear. . . analytical or numerical?</p></li>
+</ol>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-clegg_chemical-model_1995" class="csl-entry" role="listitem">
+Clegg, S. L., and M. Whitfield. 1995. <span>“A Chemical-Model of Seawater Including Dissolved Ammonia and the Stoichiometric Dissociation-Constant of Ammonia in Estuarine Water and Seawater from -2C to 40C.”</span> <em>Geochimica Et Cosmochimica Acta</em> 59 (12): 2403–21.
+</div>
+<div id="ref-rittmann_environmental_2020" class="csl-entry" role="listitem">
+Rittmann, Bruce E., and Perry L. McCarty. 2020. <em>Environmental Biotechnology: Principles and Applications, Second Edition</em>. 2nd edition. New York, N.Y: McGraw Hill.
+</div>
+<div id="ref-Snoeyink1980" class="csl-entry" role="listitem">
+Snoeyink, Vernon L. 1980. <em>Water Chemistry</em>. Wiley.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./05_mass_transfer.html" class="pagination-link" aria-label="Mass Transfer">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Mass Transfer</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./07_spatial_models.html" class="pagination-link" aria-label="Spatial Models">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Spatial Models</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -3,8 +3,8 @@ project:
   output-dir: docs
 
 book:
-  title: "Modelling"
-  author: "Sasha Hafner and Frederik Dalby"
+  title: "An Introduction to Modelling with Python"
+  author: "Sasha D. Hafner and Frederik R. Dalby"
   chapters:
     - index.qmd
     - part: "Part I: Foundations"
