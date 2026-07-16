@@ -485,6 +485,9 @@ def carb_spec_tot(tot):
 ```
 
 ```{python}
+import sys
+sys.path.append('modules')
+
 import carb_mods as cm
 
 tot = 1.5E-5

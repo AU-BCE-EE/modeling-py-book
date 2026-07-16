@@ -290,6 +290,12 @@ MathJax = {
  <span class="menu-text"><span class="chapter-number">G</span>&nbsp; <span class="chapter-title">Parameter values</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appx_reading.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">H</span>&nbsp; <span class="chapter-title">appx_reading.html</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -297,8 +303,18 @@ MathJax = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#melting-ice-model-example" id="toc-melting-ice-model-example" class="nav-link active" data-scroll-target="#melting-ice-model-example"><span class="header-section-number">10.1</span> Melting ice model example</a></li>
+  <li><a href="#problems" id="toc-problems" class="nav-link" data-scroll-target="#problems"><span class="header-section-number">10.2</span> Problems</a>
+  <ul class="collapse">
+  <li><a href="#some-tips" id="toc-some-tips" class="nav-link" data-scroll-target="#some-tips"><span class="header-section-number">10.2.1</span> Some tips</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -322,13 +338,39 @@ MathJax = {
 </header>
 
 
+<p>Parameter estimation is about determining (estimating) the “best” (ideally, the most accurate) parameter values for a model based on comparing model output and measurements. It is related to model validation.</p>
+<section id="melting-ice-model-example" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="melting-ice-model-example"><span class="header-section-number">10.1</span> Melting ice model example</h2>
 <!-- Basic approach.
      Implementation with least_squares().
      Equifinality.
      Understanding whether measurements provide information about specific parameters.
      Include example. -->
+</section>
+<section id="problems" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="problems"><span class="header-section-number">10.2</span> Problems</h2>
+<p>This exercise is based on the model from the second mini-project. You can load the model function from the <code>O2dc_mods</code> module included in this directory. The model function is <code>O2dc()</code> and you can find a demo in the <a href="https://github.com/AU-BCE-EE/course-modelling-2025/blob/main/classes/19_04_nov_mini_project2/solution/demo.py">class 19 solution directory</a>. Work through the demo if needed to understand inputs and outputs.</p>
+<p>The 1D model was developed for diffusion-controlled oxygen and organic matter (OM) transport in a wastewater polishing lagoon. However, it may be reasonable to apply to model to cases where transport is enhanced by mixing, as long as most of the resistance to transport remains in the water column (not the air)and the mass transfer parameter <code>D</code> is not too large.</p>
+<p>Measurements are available from a 1 m deep lagoon and will be used for parameter estimation. The wastewater initially had a degradable organic matter (OM) concentration of 10 mg/L, initial oxygen 8 mg/L, and the system is run in batch mode. The file <code>meas_O2.csv</code> has measurements of dissolved oxygen concentration at the bottom of the lagoon at a daily frequency. The concentration of OM in a sample from around 50 cm deep is in the file <code>meas_OM.csv</code> at a roughly 1 week frequency. These measurements are made up, but could reflect the ease of making electrode-based measurements of dissolved oxygen and a more complicated analysis for OM (e.g., biochemical oxygen demand (BOD) incubation).</p>
+<ol type="1">
+<li><p>Assuming a reaction rate around 1E-4 m3/kg-s and that mass transfer is completely diffusion-controlled (see <code>parameter_values.md</code> if you need help coming up with a value), carry out a graphical validation of the model for both oxygen and OM. Come up with a hypothsis for any differences you observe between measurements and model output.</p></li>
+<li><p>Use <code>least_squares()</code> to estimate values for the (apparent) diffusivity and reaction rate (two parameters) based on the oxygen measurements. It might be a good idea to change the model function so it accepts arbitrary times instead of <code>tmax</code> and <code>nt</code>.</p></li>
+<li><p>Repeat the process, but this time use the OM concentrations. Compare to the previous estimates.</p></li>
+<li><p>Optional: Use both sets of measurements simultaneously for parameter estimation and compare the estimated values to what you got above. Use weights to ensure that each of the observed variables contributes equally to the parameter estimates, considering the lower sampling frequency of the OM measurements. Check out the <code>loss</code> parameter for the <code>least_squares()</code> function and try a setting that minimized the influence of outliers (extreme values). Do the parameter estimates change much?</p></li>
+<li><p>Optional: What values would you ultimately recommend for these parameters based on the available measurements? Are these results consistent with your hypothesis from 1?</p></li>
+</ol>
+<section id="some-tips" class="level3" data-number="10.2.1">
+<h3 data-number="10.2.1" class="anchored" data-anchor-id="some-tips"><span class="header-section-number">10.2.1</span> Some tips</h3>
+<ul>
+<li>Remember to try different starting values.</li>
+<li>Do you need different values for <code>D</code> for the two solutes?</li>
+<li>Use <code>print()</code> calls in your residuals function to see what the values of the parameter guesses (or residuals) are if you encounter problems.</li>
+<li>If you ever see (or suspect) the completely implausible or impossible parameter guesses are causing problems, check out the <code>bounds</code> parameter (argument) in the <code>least_squares()</code> help file.</li>
+</ul>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

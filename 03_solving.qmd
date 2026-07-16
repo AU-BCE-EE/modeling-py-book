@@ -779,6 +779,9 @@ Description:
     Application of the `cool_rk()` model function.
 """
 
+import sys
+sys.path.append('modules')
+
 import cooling_mods as cm
 
 preds = cm.cool(

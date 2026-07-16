@@ -454,6 +454,9 @@ Description:
     Application of the `cool2m()` model function.
 """
 
+import sys
+sys.path.append('modules')
+
 import cooling_mod_2m as cm
 
 pred = cm.cool2m(

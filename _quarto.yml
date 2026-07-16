@@ -30,6 +30,7 @@ book:
     - appx_slicing.qmd
     - appx_symbols.qmd
     - appx_parameter_values.qmd
+    - appx_reading.qmd
 
 bibliography: references.bib
 crossref:
