@@ -45,7 +45,7 @@ meas["ice_kg_2"] = meas["ice_g_2"] / 1000.
 
 We need to have measurements and predictions at the same times in order to quantify model fit.
 The best approach to have a model function that returns specified times.
-Here is the original model.
+Here is the original model, which returns evenly spaced times.
 
 ```{python}
 #| eval: false
@@ -140,7 +140,87 @@ def melt(mass_0,
 ```
 
 We'll change the original one.
+In this version, there is a single `times` argument.
 
+```{python}
+
+def melt2(mass_0,
+          temp_air,
+          h, 
+          times, 
+          dens = 920,
+          temp_freeze = 0,
+          Hf = 333000
+    ):  
+
+    """ 
+    Dynamic model for heat transfer to a melting block of ice, with 
+    disappearance of the ice over time. This version accepts a single
+    times input, unlike the original above.
+
+    Parameters
+    ----------
+    mass_0 : float
+        Initial mass of ice (kg) 
+    temp_air : float
+        Air temperature (deg. C)
+    h : float
+        Convection heat transfer coefficient (W/m2-K)
+    times : list or tuple or array
+        time in output (s) 
+    dens : float
+        Ice density (kg/m3)
+    temp_freeze : float
+        Freezing point (deg. C)
+    Hf : float
+        Heat of fusion (J/kg)
+
+    Returns
+    -------
+    dictionary
+        With elements 't' for time (s) and 'm' for ice mass remaining (kg)
+ 
+    """
+     
+    # Define rates function
+    def rates(t, mass_t):
+
+        if mass_t < 0:
+            mass_t = 0
+
+        # Get current exposed upper area, assuming hemisphere
+        area = 1/2 * np.pi * (3 * mass_t / (2 * np.pi * dens))**(2/3)
+
+        # Heat flow (W)
+        Q = area * h * (temp_air - temp_freeze)
+
+        # Melting rate (kg/s)
+        dmdt = -Q / Hf
+
+        return dmdt
+
+    res = solve_ivp(
+        rates, 
+        t_span = [min(times), max(times)], 
+        y0 = [mass_0], 
+        t_eval = times
+    )
+
+    # Return user-friendly results object (dictionary here)
+    out = {
+        "t": res.t, 
+        "m": res.y[0, :]
+    }
+
+    return out
+
+```
+
+So that is the software model we will work with.
+When calling it, we can extract the times from the measurement data frame `meas` and pass them right to the model function.
+Here is a demo with a reasonable value for the heat transfer coefficient $h$ for free convection.
+
+```{python}
 reload(im)
 
 pred01 = im.melt2(
@@ -150,28 +230,30 @@ pred01 = im.melt2(
     times =  meas.time_sec
 )
 
-pred02 = im.melt2(
-    mass_0 = 0.027, 
-    temp_air = 24, 
-    h = 75, 
-    times =  meas.time_sec
-)
-
-
 pred01
+```
 
-# Plot comparison of course!
-plt.close()
+Let's plot measurements and model output together for simple validation.
+
+```{python}
 plt.plot(meas.time_hr, meas.ice_g_1, "k.")
 plt.plot(pred01["t"] / 3600, 1000 * pred01["m"])
-plt.plot(pred02["t"] / 3600, 1000 * pred02["m"])
 plt.xlabel("Time (h)")
 plt.ylabel("Ice mass (g)")
-plt.savefig("plots/demo.png")
+```
 
-# Get sum of squared residuals
+It looks like the model underestimates the melting rate, at least with that value for $h$.
+For a higher rate we need a higher value of $h$.
+We could manually try a higher value, plot results again, and continue this cycle until we are happy with the visual validation of the model.
+But to automate parameter estimation and for reproducible and defensible estimates, we need to quantify model fit. 
+
+
+
+Get sum of squared residuals
+
+```{python}
 sum((meas.ice_g_1 - 1000 * pred01["m"])**2)
-sum((meas.ice_g_1 - 1000 * pred02["m"])**2)
+```
 
 <!-- Basic approach.
      Implementation with least_squares().

@@ -1,7 +1,7 @@
 """
 File name: melt_mods.py
 Author: Sasha D. Hafner
-Course: Modelling 2025
+Course: Modelling 2026
 
 Description:
     This module defines a numerical model for disappearance of a 

@@ -730,8 +730,66 @@ In some cases we won't have measurements of the arguably most important state va
 For example, the active microbial biomass may be an important state variable in a microbial model, but it can be very difficult or impossible to measure. 
 Instead, the concentration of a substrate or product may be the only variable available.
 Therefore, validation must be based on these.
-
 It is entirely possible, and probably often the case, that a model could show suitable validation for one variable but actually be totally wrong for another.
+
+Even when a variable has been identified, there are usually multiple ways that validation could be done.
+We will consider a few graphical (visual) approaches and some quantitative options here.
+
+## Graphical validation
+
+Plots can be useful for comparing the overall goodness of fit between a model output and mesurements, as well as details about particular issues.
+Here are the approaches we will explore:
+
+* both over time or some other input variable or parameter to show both overall comparison and response to the input,
+* residuals to show trends in bias, and
+* scatterplot showing correlation.
+
+For a dynamic model, it usually makes sense to do validation over time. 
+@fig-pestmod1 below shows an example for a model of pesticide volatilization from a soil surface.
+The main plot there shows volatilization rate as a flux.
+We can see a few things:
+
+1. The general level of model predictions is similar to measurements. 
+   There is no major overall bias.
+2. Both model and measurements show a clear diurnal pattern. 
+   (Presumably this is driven by diurnal temperature variation, and if we had developed or applied this model, this is a detail we should be aware of!) 
+3. The model underestimates the magnitude of the decline in volatilization rate over time, as well as the decline in the amplitude of the diurnal pattern.
+
+![Graphical validation of a pesticide volatilization model from @yates_simulating_2006. Measurements are shown as points, and model output as lines.](paper-images/pestmod1.png){#fig-pestmod1 fig-alt="Volatilization of a pesticide."}
+
+Do you see any other interesting results?
+
+The smaller inset plot in @fig-pestmod1 shows another variable, cumulative emission or volatilization.
+This variable is calculated directly from measured volatilization rate by some kind of numerical integration.
+For example, calculating the area under the dashed line in the main plot would be a kind of trapezoidal integration.
+While both variables may be interesting from a validation perspective, it is important to understand that they are not independent.
+
+The validation shown in @fig-denitmod1 includes multiple independent response variables.
+Model output is from a soil microbiology model.
+The multiple response variables are the flux of $\ce{N2O}$, $\ce{N2}$, and $\ce{CO2}$.
+The use of multiple variables can provide more information about problems with a model.
+For example, @fig-denitmod1 shows that while the model predicts nearly the same pattern for all three gases, measurements show a relatively flat response in $\ce{CO2}$.
+This suggests that the model processes responsible for $\ce{CO2}$ production may be structurally wrong.
+
+![Graphical validation of a soil microbiology model from @zhang-denit-mod-2023. Each plot shows a different variable. Measurements are shown as points, and model output as lines.](paper-images/denitmod1.png){#fig-denitmod1 fig-alt="Denitrification model validation."}
+
+Comparing measurements and model output over time has limitations.
+Especially for simple models, we may only see if the model predicts a higher or lower rate of change.
+Plotting state variable values vs. other model inputs can provide insight into why a model fails.
+
+### Model fit statistics
+
+Model fit statistics summarize the correspondence between measurements and model output.
+Several statistics exist, but we'll focus on three that are useful or common.
+
+Mean bias error (MBE) is the average difference between model output and measurements:
+
+$$
+MBE = \frac{ \sum_{i=1}^{N} y_{p,i} - y_{m,i}} {N},
+$${#eq-mbe}
+
+where $MBE=$ mean bias error, $y_{p,i}=$ the $i^{th}$ predicted value of the dependent variable $y$, $y_{m,i}=$ the $i^{th}$ measured value of the dependent variable, and $N=$ the number of observations.
+Positive MBE means the model tends to predict higher values than the measurements show (positive bias), and negative means lower (negative bias).
 
 ## Problems
 
@@ -761,7 +819,6 @@ In that case you probably want to set the manure pumping rate (flow) in and out 
 For more details on the mass balance and constitutive equations, see `amm_concept_model.pdf`.
 
 II. Validation
-
 
 In this exercise you will work with a 1D diffusion model.
 You will get some practice in verification of conservation with 1D models and try model validation.
