@@ -23,7 +23,7 @@ The model developer needs to determine whether changes are needed and then which
 @fig-vv1 shows where verification and validation fit in the model development process.
 The connections between the software model (your Python code) and, first, the mathematical model (what you developed through model formulation), and some measurement data, called the "reality of interest" in the figure.
 
-![Where verification and validation fit into the modeling process. From Thackner ....](images-web/Thackner_VV1.png){#fig-vv1 fig-alt="V&V concept."}
+![Where verification and validation fit into the modeling process. From @thackner_2004](images-web/Thackner_VV1.png){#fig-vv1 fig-alt="V&V concept."}
 
 One important point that model developers and users should both understand is that successful V&V does not prove that a model is correct. 
 In fact, only model failure shows anything with any certainty: that a model is wrong.
