@@ -256,7 +256,7 @@ And the green asterisk shows the estimated value, which is quite close to the tr
 Where would the the Euler method land?
 (Hint: at $t_0 + h$, and look at $k_1$ for the single slope that is applied.)
 
-![The slopes used in the classical Runge-Kutta method. $h=$ the time step. By HilberTraum <https://commons.wikimedia.org/w/index.php?curid=64366870>.](web-images/Runge-Kutta_slopes.png){#fig-RK4-slopes fig-alt="Runge-Kutta slopes."}
+![The slopes used in the classical Runge-Kutta method. $h=$ the time step. By HilberTraum <https://commons.wikimedia.org/w/index.php?curid=64366870>.](images-web/Runge-Kutta_slopes.png){#fig-RK4-slopes fig-alt="Runge-Kutta slopes."}
 
 So what does `solv_ivp()` look like in practice?
 In a way it is simpler to set up than the Euler method, because `solve_ivp()` takes care of the iterative bit that we have to program explicitly using a for loop.

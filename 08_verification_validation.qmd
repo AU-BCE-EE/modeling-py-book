@@ -23,7 +23,7 @@ The model developer needs to determine whether changes are needed and then which
 @fig-vv1 shows where verification and validation fit in the model development process.
 The connections between the software model (your Python code) and, first, the mathematical model (what you developed through model formulation), and some measurement data, called the "reality of interest" in the figure.
 
-![Where verification and validation fit into the modeling process. From Thackner ....](web-images/Thackner_VV1.png){#fig-vv1 fig-alt="V&V concept."}
+![Where verification and validation fit into the modeling process. From Thackner ....](images-web/Thackner_VV1.png){#fig-vv1 fig-alt="V&V concept."}
 
 One important point that model developers and users should both understand is that successful V&V does not prove that a model is correct. 
 In fact, only model failure shows anything with any certainty: that a model is wrong.
@@ -755,7 +755,7 @@ We can see a few things:
    (Presumably this is driven by diurnal temperature variation, and if we had developed or applied this model, this is a detail we should be aware of!) 
 3. The model underestimates the magnitude of the decline in volatilization rate over time, as well as the decline in the amplitude of the diurnal pattern.
 
-![Graphical validation of a pesticide volatilization model from @yates_simulating_2006. Measurements are shown as points, and model output as lines.](paper-images/pestmod1.png){#fig-pestmod1 fig-alt="Volatilization of a pesticide."}
+![Graphical validation of a pesticide volatilization model from @yates_simulating_2006. Measurements are shown as points, and model output as lines.](images-papers/pestmod1.png){#fig-pestmod1 fig-alt="Volatilization of a pesticide."}
 
 Do you see any other interesting results?
 

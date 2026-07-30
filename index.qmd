@@ -1,11 +1,28 @@
 # Preface {.unnumbered}
 
-This book is a course textbook for "Modelling" in the bachelor programs in Biotechnology and Chemical Engineering at the Department of Biological and Chemical Engineering, Aarhus University.
-**The book is currently under development**, with expected completion by August 2026.
+This book is a textbook for the course "Modelling" in the bachelor programs in Biotechnology and Chemical Engineering at the Department of Biological and Chemical Engineering, Aarhus University.
+The book is currently under development, with expected completion by August 2026.
 
-The book emphasizes both the underlying physical principles and their practical implementation.
-All computational examples are implemented using Python, enabling students to develop transferable skills in scientific programming while exploring key modelling concepts.
+There are a lot of different ways to write a book about modeling (see @sec-appx-reading for some examples).
+Here we have focused on dynamic models mainly related to heat and mass transfer.
+Chemical reactions and microbiology are other applcations.
+And steady-state models are covered as well.
+We think this content provides a good introduction to modeling and a decent foundation for more advanced work on model development or application in environmental, biological, and chemical engineering.
 
-This book is freely available under the Creative Commons Attribution 4.0 License, and code examples are under the MIT License. 
+This book takes a very practical approach to modeling.
+All computational examples are implemented using Python, helping students develop transferable skills in scientific programming while exploring key modeling concepts.
+
+*An Introduction to Modeling with Python* is freely available under the Creative Commons Attribution 4.0 License, and code examples are under the MIT License. 
 See LICENSE.md in the [source repository](https://github.com/AU-BCE-EE/modelling-course-book) for details.
+
+If you have any suggestions or find errors in text or code, please reach out!
+You can find contact information [here for Sasha](https://au.dk/sasha.hafner@bce.au.dk) and [here for Frederik](https://au.dk/fd@bce.au.dk).
+
+
+Sasha D. Hafner and Frederik R. Dalby
+
+Aarhus University, Aarhus, Denmark
+
+Version: 0.1 (2026 July)
+
 

@@ -299,26 +299,20 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./08_stability.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Stability</span></span></a>
+  <a href="./08_verification_validation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Verification and Validation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./09_verification_validation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Verification and Validation</span></span></a>
+  <a href="./09_parameter_estimation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Parameter Estimation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./10_parameter_estimation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Parameter Estimation</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./11_time_variable_inputs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Time-Variable Inputs</span></span></a>
+  <a href="./10_time_variable_inputs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Time-Variable Inputs</span></span></a>
   </div>
 </li>
       </ul>
@@ -475,7 +469,7 @@ Figure&nbsp;1.2: Conceptual model of coffee cooling.
 T(t) = (T_0 - T_{air}) \cdot e^{(-c \cdot t)} + T_{air}.
 \tag{1.2}\]</span></span></p>
 <p>We saw a <em>computer model</em> above. It is a piece of computer software that runs the model. Creating a computer model means <em>implementing</em> a mathematical model. We could also say that development of a software model means <em>programming</em> a mathematical model. Here is an implementation of the coffee model, i.e., a computer model for cooling coffee.</p>
-<div id="25ee3c55" class="cell" data-execution_count="1">
+<div id="3dcdadd5" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import modules</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -581,7 +575,7 @@ y' = A \cdot y + b
 <div id="fig-NLES5" class="quarto-float quarto-figure quarto-figure-center anchored" alt="NLES5 model.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-NLES5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="web-images/NLES5.png" class="img-fluid figure-img" alt="NLES5 model.">
+<img src="images-web/NLES5.png" class="img-fluid figure-img" alt="NLES5 model.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-NLES5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1.4: The NLES5 model, from <span class="citation" data-cites="NLES52022">Børgesen et al. (<a href="#ref-NLES52022" role="doc-biblioref">2022</a>)</span>.
@@ -592,7 +586,7 @@ Figure&nbsp;1.4: The NLES5 model, from <span class="citation" data-cites="NLES52
 <div id="fig-ADM1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="ADM1 model.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ADM1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="web-images/ADM1-1.png" class="img-fluid figure-img" alt="ADM1 model.">
+<img src="images-web/ADM1-1.png" class="img-fluid figure-img" alt="ADM1 model.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ADM1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1.5: The ADM1 model, from <span class="citation" data-cites="batstone_iwa_2002">Batstone et al. (<a href="#ref-batstone_iwa_2002" role="doc-biblioref">2002</a>)</span>.
@@ -609,7 +603,7 @@ c(x, y, z) = e \cdot f(h, \sigma_y, \sigma_z) ,
 <section id="ii.-other-problems" class="level3" data-number="1.2.2">
 <h3 data-number="1.2.2" class="anchored" data-anchor-id="ii.-other-problems"><span class="header-section-number">1.2.2</span> II. Other problems</h3>
 <ol type="1">
-<li><p>A hypothetical geospatial water quality model used to predict nutrient concentrations dissolved oxygen in the river and estuary near a major urban location in Europe incorporates many assumptions, including uniform temperature and solute concentrations over the vertical dimension. The software tool is used to manage wastewater loading and help determine related governmental policy. A critic points out that measurements made by a university researcher show that vertical gradients in fact exist in the water profile, and therefore the model is invalid and should not be trusted. The agency applying the model counters that the developers have shown that the model is accurate. Who is right? Discuss. (Hint: Consider the concept of model simplification.)</p></li>
+<li><p>A hypothetical geospatial water quality model used to predict nutrient concentrations dissolved oxygen in the river and estuary near a major urban location in Europe incorporates many assumptions, including uniform temperature and solute concentrations over the vertical dimension. The software tool is used to manage wastewater loading and help determine related governmental policy. A critic points out that measurements made by a university researcher show that vertical gradients in fact exist in the water profile, and therefore the model is invalid and should not be trusted. The agency applying the model counters that the developers have shown that the model is accurate. Who is right? Discuss.</p></li>
 <li><p>A fellow student claims that analytical modelling is outdated and completely illogical in the age of cheap computing power. Do you agree? Explain.</p></li>
 <li></li>
 </ol>

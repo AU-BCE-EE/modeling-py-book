@@ -1,4 +1,0 @@
-# Stability {#sec-stability}
-
-<!-- Frederik's chapter. Content TBD.
-     Covered in classes 13-14 of the 2025 course. -->

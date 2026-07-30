@@ -81,7 +81,7 @@ This is a very simple conservation equation.
 At the other extreme, it is common to have cases where each term in the cookbook equation includes multiple processes.
 For example, take a look at the diagram below, of the Aarhus University WET model of aquatic ecosystems.
 
-![Conceptual model of the Aarhus University WET model (https://projects.au.dk/wet/about-qwet).](web-images/AU_WET1.png){#fig-wet1 fig-alt="Diagram of a lake model."}           
+![Conceptual model of the Aarhus University WET model (https://projects.au.dk/wet/about-qwet).](images-web/AU_WET1.png){#fig-wet1 fig-alt="Diagram of a lake model."}           
 
 What is an appropriate mass balance for the water column nitrogen (N), shown toward the lower right?
 There are several arrows coming in and several going out.

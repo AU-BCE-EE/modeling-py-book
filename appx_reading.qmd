@@ -1,4 +1,63 @@
-# Books and other reading on modeling
+# Books and other reading on modeling {#sec-appx-reading}
 
-Wentworth. 
-<https://cdwentworth.github.io/CSBook/>
+Below, some books on modeling that might be interesting to students who hope to go further are listed and summarized.
+Note to students: The AU library provides access to many of these, and we (course instructors) can led you others, so don't hesitate to ask.
+
+Dutta, Binay K. 2017. Mathematical Methods in Chemical and Biological Engineering. Boca Raton, Florida: CRC Press.
+
+*Good book but focused on analytical methods.
+Several interesting applications.*
+
+Snape, Jonathan B. 1995. Dynamics of Environmental Bioprocesses: Modelling and Simulation. Weinheim: VCH.
+
+*Loaded with example applications. 
+Another good book. 
+But implementation is focused on the ISIM software.*
+
+Ingham, John. 2007. Chemical Engineering Dynamics: An Introduction to Modelling and Computer Simulation. 3rd ed. Weinheim: Wiley-VCH.
+
+*Uses [Berkely Madonna sofware](https://berkeley-madonna.myshopify.com/).
+Includes many examples.*
+
+Kinser, Jason M. 2022. Modeling and Simulation in Python. First edition. Chapman and Hall/CRC.
+
+*Uses Python, but nearly all the approaches covered are quite different from another we cover.
+Chatper 13 on motion is the most similar.
+Not recommended unless you are interested in very different types of quite simple models.*
+
+Rasmuson, Anders. 2014. Mathematical Modeling in Chemical Engineering. Cambridge: Cambridge University Press.
+
+*Some good material but little or no information on implementation.*
+
+Ford, Andrew. 2010. Modeling the Environment. Second edition. Washington, DC: Island Press.
+
+*Very different for our book. 
+Models are conceptually very simple. 
+No ODE sovlers, but instead fixed time step integration (Euler's method). 
+Includes some concepts that are important for environmental models like feedback.*
+
+Downey, Allen. 2023. Modeling and Simulation in Python: An Introduction for Scientists and Engineers. San Francisco, CA: No Starch Press, Inc.
+
+*A very gentle approach to modeling in Python.
+Not a bad book, but simple.
+Some applications (and limited explanation) of heat transfer, but most applications are quite different.
+Makes use of the Python ModSim library, which may no longer be available.*
+
+Odum, Howard T., and Elisabeth C. Odum. 2000. Modeling for All Scales : An Introduction to System Simulation. San Diego: Academic Press.
+
+*Interesting but very different book by an originator of systems ecology modeling. 
+Simple numerical models. 
+Good modeling symbols.
+Surprisingly simple (simplistic) approach to constitutive equations and parameter values.*
+
+Harte, John. 1988. Consider a Spherical Cow : A Course in Environmental Problem Solving. Sausalito, Calif.: University Science Books.
+
+*Unusual and interesting. 
+Excellent book.
+All about back-of-the-envelope calculations, essentially simple analytical models.
+A good reminder that simple models can often provide valuable insights or quantiative estimates.*
+
+Wentworth, C. D. 2025. Computational Science: An Introduction for Scientists and Engineers. <https://cdwentworth.github.io/CSBook/>
+
+*Interesting and probably useful free online book.
+Based on Python.*

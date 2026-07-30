@@ -212,13 +212,13 @@ Apply the labels conceptual, mathematical, computer, analytical, numerical, lump
 1. The NLES5 model predicts nitrate leaching based on the equation shown in the figure below (@fig-NLES5), where $L$ is the predicted leaching rate and the other terms are input variables or model parameters. 
    Is it mechanistic or empirical? 
 
-   ![The NLES5 model, from @NLES52022.](web-images/NLES5.png){#fig-NLES5 fig-alt="NLES5 model."}
+   ![The NLES5 model, from @NLES52022.](images-web/NLES5.png){#fig-NLES5 fig-alt="NLES5 model."}
 
 2. ADM1 is a chemical and biological model that simulates conversion of organic waste to biogas. 
    It tracks development of microbial communities over time. 
    Is it mechanistic or empirical? Dynamic or steady-state? 
 
-   ![The ADM1 model, from @batstone_iwa_2002.](web-images/ADM1-1.png){#fig-ADM1 fig-alt="ADM1 model."}
+   ![The ADM1 model, from @batstone_iwa_2002.](images-web/ADM1-1.png){#fig-ADM1 fig-alt="ADM1 model."}
 
 3. The Gaussian plume model is a simple general approach for modeling dilution of atmospheric pollutants from a fixed source, e.g., a smokestack. 
    It can be expressed as an equation for the concentration of pollutant,
@@ -238,7 +238,6 @@ Apply the labels conceptual, mathematical, computer, analytical, numerical, lump
    The agency applying the model counters that the developers have shown that the model is accurate.
    Who is right?
    Discuss.
-   (Hint: Consider the concept of model simplification.)
 
 2. A fellow student claims that analytical modelling is outdated and completely illogical in the age of cheap computing power.
    Do you agree?
