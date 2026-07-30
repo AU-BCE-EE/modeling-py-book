@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>9&nbsp; Parameter Estimation – An Introduction to Modeling with Python</title>
+<title>9&nbsp; Parameter estimation – An Introduction to Modeling with Python</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -182,7 +182,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04_heat_transfer.html">Part II: Applications</a></li><li class="breadcrumb-item"><a href="./09_parameter_estimation.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Parameter Estimation</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04_heat_transfer.html">Part II: Applications</a></li><li class="breadcrumb-item"><a href="./09_parameter_estimation.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Parameter estimation</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -233,7 +233,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02_components_formulation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Model Formulation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Model formulation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -256,13 +256,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04_heat_transfer.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Heat Transfer</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Heat transfer</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05_mass_transfer.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Mass Transfer</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Mass transfer</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -274,25 +274,25 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./07_spatial_models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Spatial Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Spatial models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./08_verification_validation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Verification and Validation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Verification and validation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./09_parameter_estimation.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Parameter Estimation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Parameter estimation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10_time_variable_inputs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Time-Variable Inputs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Time-variable inputs</span></span></a>
   </div>
 </li>
       </ul>
@@ -351,7 +351,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./appx_reading.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">H</span>&nbsp; <span class="chapter-title">Books and other reading on modeling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">H</span>&nbsp; <span class="chapter-title">Other books</span></span></a>
   </div>
 </li>
       </ul>
@@ -377,9 +377,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04_heat_transfer.html">Part II: Applications</a></li><li class="breadcrumb-item"><a href="./09_parameter_estimation.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Parameter Estimation</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04_heat_transfer.html">Part II: Applications</a></li><li class="breadcrumb-item"><a href="./09_parameter_estimation.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Parameter estimation</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-param-est" class="quarto-section-identifier"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Parameter Estimation</span></span></h1>
+<h1 class="title"><span id="sec-param-est" class="quarto-section-identifier"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Parameter estimation</span></span></h1>
 </div>
 
 
@@ -400,7 +400,7 @@ window.Quarto = {
 <section id="melting-ice-model-example" class="level2" data-number="9.1">
 <h2 data-number="9.1" class="anchored" data-anchor-id="melting-ice-model-example"><span class="header-section-number">9.1</span> Melting ice model example</h2>
 <p>Let’s load the model.</p>
-<div id="0a813b68" class="cell" data-execution_count="1">
+<div id="7ee5c33b" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python packages</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -415,7 +415,7 @@ window.Quarto = {
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ice_mods <span class="im">as</span> im</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Let’s get some real measurements. These are actually real–made on a dining table a year or two ago. Mass is in g. These were initially small ice cubes.</p>
-<div id="bc60a790" class="cell" data-execution_count="2">
+<div id="988ec5b8" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>meas <span class="op">=</span> pd.read_csv(<span class="st">"data/ice/ice_mass.csv"</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>meas</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -430,7 +430,7 @@ window.Quarto = {
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>meas[<span class="st">"ice_kg_2"</span>] <span class="op">=</span> meas[<span class="st">"ice_g_2"</span>] <span class="op">/</span> <span class="fl">1000.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We need to have measurements and predictions at the same times in order to quantify model fit. The best approach to have a model function that returns specified times. Here is the original model, which returns evenly spaced times.</p>
-<div id="09385c7a" class="cell" data-execution_count="3">
+<div id="65bfe877" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">File name: melt_mods.py</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">Author: Sasha D. Hafner</span></span>
@@ -521,7 +521,7 @@ window.Quarto = {
 <span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> out</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We’ll change the original one. In this version, there is a single <code>times</code> argument.</p>
-<div id="322a7b05" class="cell" data-execution_count="4">
+<div id="54d38145" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> melt2(mass_0,</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>          temp_air,</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>          h, </span>
@@ -593,7 +593,7 @@ window.Quarto = {
 <span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> out</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>So that is the software model we will work with. When calling it, we can extract the times from the measurement data frame <code>meas</code> and pass them right to the model function. Here is a demo with a reasonable value for the heat transfer coefficient <span class="math inline">\(h\)</span> for free convection.</p>
-<div id="c9f0b6c1" class="cell" data-execution_count="5">
+<div id="0a966833" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">reload</span>(im)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>pred01 <span class="op">=</span> im.melt2(</span>
@@ -613,7 +613,7 @@ window.Quarto = {
 </div>
 </div>
 <p>Let’s plot measurements and model output together for simple validation.</p>
-<div id="70b279a9" class="cell" data-execution_count="6">
+<div id="5aadb19d" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plt.plot(meas.time_hr, meas.ice_g_1, <span class="st">"k."</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>plt.plot(pred01[<span class="st">"t"</span>] <span class="op">/</span> <span class="dv">3600</span>, <span class="dv">1000</span> <span class="op">*</span> pred01[<span class="st">"m"</span>])</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Time (h)"</span>)</span>
@@ -631,7 +631,7 @@ window.Quarto = {
 </div>
 <p>It looks like the model underestimates the melting rate, at least with that value for <span class="math inline">\(h\)</span>. For a higher rate we need a higher value of <span class="math inline">\(h\)</span>. We could manually try a higher value, plot results again, and continue this cycle until we are happy with the visual validation of the model. But to automate parameter estimation and for reproducible and defensible estimates, we need to quantify model fit.</p>
 <p>Get sum of squared residuals</p>
-<div id="402a41c5" class="cell" data-execution_count="7">
+<div id="5d834ad4" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">sum</span>((meas.ice_g_1 <span class="op">-</span> <span class="dv">1000</span> <span class="op">*</span> pred01[<span class="st">"m"</span>])<span class="op">**</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>285.47779472097403</code></pre>
@@ -1071,13 +1071,13 @@ window.Quarto = {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./08_verification_validation.html" class="pagination-link" aria-label="Verification and Validation">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Verification and Validation</span></span>
+      <a href="./08_verification_validation.html" class="pagination-link" aria-label="Verification and validation">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Verification and validation</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./10_time_variable_inputs.html" class="pagination-link" aria-label="Time-Variable Inputs">
-        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Time-Variable Inputs</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./10_time_variable_inputs.html" class="pagination-link" aria-label="Time-variable inputs">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Time-variable inputs</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

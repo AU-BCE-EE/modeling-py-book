@@ -1,4 +1,4 @@
-# Parameter Estimation {#sec-param-est}
+# Parameter estimation {#sec-param-est}
 
 Parameter estimation is about determining (estimating) the "best" (ideally, the most accurate) parameter values for a model based on comparing model output and measurements.
 It is related to model validation.

@@ -253,7 +253,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02_components_formulation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Model Formulation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Model formulation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -276,13 +276,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04_heat_transfer.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Heat Transfer</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Heat transfer</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05_mass_transfer.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Mass Transfer</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Mass transfer</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -294,25 +294,25 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./07_spatial_models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Spatial Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Spatial models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./08_verification_validation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Verification and Validation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Verification and validation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./09_parameter_estimation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Parameter Estimation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Parameter estimation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10_time_variable_inputs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Time-Variable Inputs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Time-variable inputs</span></span></a>
   </div>
 </li>
       </ul>
@@ -371,7 +371,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./appx_reading.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">H</span>&nbsp; <span class="chapter-title">Books and other reading on modeling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">H</span>&nbsp; <span class="chapter-title">Other books</span></span></a>
   </div>
 </li>
       </ul>
@@ -397,6 +397,7 @@ window.Quarto = {
   <li><a href="#kinetics" id="toc-kinetics" class="nav-link" data-scroll-target="#kinetics"><span class="header-section-number">6.6.2</span> Kinetics</a></li>
   </ul></li>
   <li><a href="#problems" id="toc-problems" class="nav-link" data-scroll-target="#problems"><span class="header-section-number">6.7</span> Problems</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
     </div>
@@ -485,7 +486,7 @@ r_c = \frac{dc}{dt} = - k \cdot c_1 \cdot c_2,
 <li><span class="math inline">\(\ce{H2CO3}\)</span> is called carbonic acid, and is formed when <span class="math inline">\(\ce{CO2(aq)}\)</span> reacts with water in a hydration reaction,</li>
 <li><span class="math inline">\(\ce{H2CO3*}\)</span> is not actually a chemical species, but the sum of <span class="math inline">\(\ce{CO2(aq)}\)</span> and <span class="math inline">\(\ce{H2CO3}\)</span>, used because it is difficult to measure the two separately,</li>
 <li><span class="math inline">\(\ce{HCO3-}\)</span> is bicarbonate, and is the most important buffer component in some systems, and</li>
-<li><span class="math inline">\(\ce{CO32-}\)</span> is carbonate.</li>
+<li><span class="math inline">\(\ce{CO3^2-}\)</span> is carbonate.</li>
 </ul>
 <p>Chemical speciation models are used to determine the concentration of specific chemical species. A fundamental concept here is that the <em>mass action expression</em> or <em>reaction quotient</em> takes on a specific numeric value at equilibrium. For example, let’s look at a reaction between only two of the carbonate system species:</p>
 <p><span id="eq-carb1"><span class="math display">\[
@@ -509,10 +510,10 @@ p\text{H} = - log_{10}(c_{H^+}).
 <p><span id="eq-amm-dis"><span class="math display">\[
 \ce{NH4+ &lt;=&gt; NH3 + H+},
 \tag{6.9}\]</span></span></p>
-<p>with an equilbrium constant <span class="math inline">\(k_a\)</span>, where the <span class="math inline">\(a\)</span> is for acid dissociation constant. The numeric value is around <span class="math inline">\(pk_a = 9.56\)</span> at 15 <span class="math inline">\(\degC\)</span> (<span class="citation" data-cites="clegg_chemical-model_1995">Clegg and Whitfield (<a href="#ref-clegg_chemical-model_1995" role="doc-biblioref">1995</a>)</span>).</p>
+<p>with an equilbrium constant <span class="math inline">\(K_a\)</span>, where the <span class="math inline">\(a\)</span> is for acid dissociation constant. The numeric value is around <span class="math inline">\(pK_a = 9.56\)</span> at 15 <span class="math inline">\(\degC\)</span> (<span class="citation" data-cites="clegg_chemical-model_1995">Clegg and Whitfield (<a href="#ref-clegg_chemical-model_1995" role="doc-biblioref">1995</a>)</span>).</p>
 <p>Let’s write the mass action expression and set it to the acid dissociation constant:</p>
 <p><span id="eq-amm-mae1"><span class="math display">\[
-k_a = \frac{c_{\ce{NH3(aq)}} \cdot c_{\ce{H+}}} {c_{\ce{NH4+}}}.
+K_a = \frac{c_{\ce{NH3(aq)}} \cdot c_{\ce{H+}}} {c_{\ce{NH4+}}}.
 \tag{6.10}\]</span></span></p>
 <p>What else can we use? Well, we cannot measure the ammonium (<span class="math inline">\(\ce{NH4+}\)</span>) concentration directly. But it is trivial to measure the sum of <span class="math inline">\(\ce{NH4+}\)</span> and <span class="math inline">\(\ce{NH3}\)</span> as N mass, which is often called TAN (for total ammoniacal nitrogen) concentration in agriculture and related fields. And then from mass conservation, we know that:</p>
 <p><span id="eq-amm-mass-bal"><span class="math display">\[
@@ -525,30 +526,30 @@ c_{\ce{NH4+}} = c_{\text{TAN}} - c_{\ce{NH3}(aq)}.
 \tag{6.12}\]</span></span></p>
 <p>And insert this into <a href="#eq-amm-mae1" class="quarto-xref">Equation&nbsp;<span>6.10</span></a>:</p>
 <p><span class="math display">\[
-k_a = \frac{c_{\ce{NH3(aq)}} \cdot c_{\ce{H+}}} {c_{\text{TAN}} - c_{\ce{NH3}(aq)}}.
+K_a = \frac{c_{\ce{NH3(aq)}} \cdot c_{\ce{H+}}} {c_{\text{TAN}} - c_{\ce{NH3}(aq)}}.
 \]</span></p>
 <p>And rearrange:</p>
 <p><span class="math display">\[
-\frac{k_a} {c_{\ce{H+}}} \cdot (c_{\text{TAN}} - c_{\ce{NH3}(aq)}) = c_{\ce{NH3(aq)}} .
+\frac{K_a} {c_{\ce{H+}}} \cdot (c_{\text{TAN}} - c_{\ce{NH3}(aq)}) = c_{\ce{NH3(aq)}} .
 \]</span></p>
 <p>A bit more, including multiplication of both sides by -1,</p>
 <p><span class="math display">\[
-\frac{k_a} {c_{\ce{H+}}} \cdot c_{\ce{NH3}(aq)} + c_{\ce{NH3(aq)}} = \frac{k_a} {c_{\ce{H+}}} \cdot c_{\text{TAN}},
+\frac{K_a} {c_{\ce{H+}}} \cdot c_{\ce{NH3}(aq)} + c_{\ce{NH3(aq)}} = \frac{K_a} {c_{\ce{H+}}} \cdot c_{\text{TAN}},
 \]</span></p>
 <p>then</p>
 <p><span class="math display">\[
-\left( \frac{k_a} {c_{\ce{H+}}} + 1 \right) \cdot c_{\ce{NH3}(aq)} = \frac{k_a} {c_{\ce{H+}}} \cdot c_{\text{TAN}},
+\left( \frac{K_a} {c_{\ce{H+}}} + 1 \right) \cdot c_{\ce{NH3}(aq)} = \frac{K_a} {c_{\ce{H+}}} \cdot c_{\text{TAN}},
 \]</span></p>
 <p>and</p>
 <p><span class="math display">\[
-c_{\ce{NH3}(aq)} = \frac{\frac{k_a} {c_{\ce{H+}}} \cdot c_{\text{TAN}}} {(\frac{k_a} {c_{\ce{H+}}} + 1) \cdot},
+c_{\ce{NH3}(aq)} = \frac{\frac{K_a} {c_{\ce{H+}}} \cdot c_{\text{TAN}}} {(\frac{K_a} {c_{\ce{H+}}} + 1) \cdot},
 \]</span></p>
 <p>which, finally, can be simplified to</p>
 <p><span id="eq-free-nh3-calc"><span class="math display">\[
-c_{\ce{NH3}(aq)} = \frac{c_{\text{TAN}}} {1 + \frac {c_{\ce{H+}}} {k_a}}.
+c_{\ce{NH3}(aq)} = \frac{c_{\text{TAN}}} {1 + \frac {c_{\ce{H+}}} {K_a}}.
 \tag{6.13}\]</span></span></p>
 <p>Let’s implement <a href="#eq-free-nh3-calc" class="quarto-xref">Equation&nbsp;<span>6.13</span></a> in Python for a simple free ammonia calculator.</p>
-<div id="c3a495f7" class="cell" data-execution_count="1">
+<div id="69050079" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">Description:</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">    A free ammonia calculator function. Does not include corrections</span></span>
@@ -589,7 +590,7 @@ c_{\ce{NH3}(aq)} = \frac{c_{\text{TAN}}} {1 + \frac {c_{\ce{H+}}} {k_a}}.
 <span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> c_NH3 </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We can test it.</p>
-<div id="9d58fccc" class="cell" data-execution_count="2">
+<div id="2d8605a5" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(free_NH3(<span class="dv">1</span>, <span class="fl">9.56</span>))</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(free_NH3(<span class="dv">1</span>, <span class="dv">7</span>))</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(free_NH3(<span class="dv">1</span>, <span class="dv">10</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -604,20 +605,20 @@ c_{\ce{NH3}(aq)} = \frac{c_{\text{TAN}}} {1 + \frac {c_{\ce{H+}}} {k_a}}.
 <section id="matrix-operations" class="level2" data-number="6.5">
 <h2 data-number="6.5" class="anchored" data-anchor-id="matrix-operations"><span class="header-section-number">6.5</span> Matrix operations</h2>
 <p>Matrices are convenient for oranizing stoichiometric coefficients and then even using in compact code for speciation calculations. Here we will use the carbonate system as as demo.</p>
-<p>We’ll start with a stoichiometry matrix. First we need to think about how to set it up, because at this point there are multiple routes that could be taken. We need to select what are sometimes called “master species” or we might call “funamental species”. These species will be the reactants for all reactions. We’ll use <span class="math inline">\(\ce{H2CO3^*}\)</span> and <span class="math inline">\(\ce{H+}\)</span>. These reactants will define the columns in our stoichiometry matrix, and products will define rows. This too is arbitrary, but seems most convenient. If we only consider the species <span class="math inline">\(\ce{H2CO3^*}\)</span>, <span class="math inline">\(\ce{HCO3-}\)</span>, <span class="math inline">\(\ce{CO32-}\)</span>, and of course <span class="math inline">\(\ce{H+}\)</span> and <span class="math inline">\(\ce{OH-}\)</span>, our coefficient matrix is:</p>
-<div id="08b82b09" class="cell" data-execution_count="3">
+<p>We’ll start with a stoichiometry matrix. First we need to think about how to set it up, because at this point there are multiple routes that could be taken. We need to select what are sometimes called “master species” or we might call “funamental species”. These species will be the reactants for all reactions. We’ll use <span class="math inline">\(\ce{H2CO3^*}\)</span> and <span class="math inline">\(\ce{H+}\)</span>. These reactants will define the columns in our stoichiometry matrix, and products will define rows. This too is arbitrary, but seems most convenient. If we only consider the species <span class="math inline">\(\ce{H2CO3^*}\)</span>, <span class="math inline">\(\ce{HCO3-}\)</span>, <span class="math inline">\(\ce{CO3^2-}\)</span>, and of course <span class="math inline">\(\ce{H+}\)</span> and <span class="math inline">\(\ce{OH-}\)</span>, our coefficient matrix is:</p>
+<div id="1fc3f2fb" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>       <span class="op">|</span> H2CO3<span class="op">*|</span>  H<span class="op">+</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>       <span class="op">--------|----</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>HCO3<span class="op">-</span>  <span class="op">|</span>  <span class="op">-</span><span class="dv">1</span>   <span class="op">|</span>  <span class="dv">1</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>CO3<span class="op">-</span><span class="dv">2</span>  <span class="op">|</span>  <span class="op">-</span><span class="dv">1</span>   <span class="op">|</span>  <span class="dv">2</span></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  OH<span class="op">-</span>  <span class="op">|</span>   <span class="dv">0</span>   <span class="op">|</span>  <span class="dv">1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Although <span class="math inline">\(\ce{CO32-}\)</span> forms from <span class="math inline">\(\ce{H2CO3^*}\)</span>, here our reactant is carbonic acid <span class="math inline">\(\ce{H2CO3^*}\)</span>, so in this model <span class="math inline">\(\ce{CO32-}\)</span> production is expressed as two reactions combined:</p>
+<p>Although <span class="math inline">\(\ce{CO3^2-}\)</span> forms from <span class="math inline">\(\ce{H2CO3^*}\)</span>, here our reactant is carbonic acid <span class="math inline">\(\ce{H2CO3^*}\)</span>, so in this model <span class="math inline">\(\ce{CO3^2-}\)</span> production is expressed as two reactions combined:</p>
 <p><span id="eq-carb2"><span class="math display">\[
-\ce{H2CO3^* &lt;=&gt; CO32- + 2H+}.
+\ce{H2CO3^* &lt;=&gt; CO3^2- + 2H+}.
 \tag{6.14}\]</span></span></p>
 <p>So what is the use of this matrix? We’ll demonstrate after first creating the matrix in Python.</p>
-<div id="7853ba53" class="cell" data-execution_count="4">
+<div id="49b0c5ca" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Stoichometry matrix</span></span>
@@ -639,19 +640,19 @@ c_{\ce{NH3}(aq)} = \frac{c_{\text{TAN}}} {1 + \frac {c_{\ce{H+}}} {k_a}}.
 </div>
 <p>Note that we do not get row or column names with a matrix. So good comments (as above) are helpful.</p>
 <p>To use the matrix, we need equilibrium constants for each reaction–so three here, one for each row.</p>
-<div id="bb0589f3" class="cell" data-execution_count="5">
+<div id="05344a3c" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>keq <span class="op">=</span> <span class="dv">10</span><span class="op">**</span>np.array([<span class="op">-</span><span class="fl">6.3</span>, <span class="op">-</span><span class="fl">16.6</span>, <span class="op">-</span><span class="fl">14.0</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The first thing we can do with the matrix is to calculate reactant species concentrations once we have master species concentrations. Look at <a href="#eq-carb2" class="quarto-xref">Equation&nbsp;<span>6.14</span></a>. The relevant mass action expression is</p>
 <p><span id="eq-carb-ma2"><span class="math display">\[
-k_2 = \frac{c_{\ce{CO32-}} \cdot c_{\ce{H+}}^2}{c_{\ce{H2CO3^*}}}.
+k_2 = \frac{c_{\ce{CO3^2-}} \cdot c_{\ce{H+}}^2}{c_{\ce{H2CO3^*}}}.
 \tag{6.15}\]</span></span></p>
 <p>Rearranging gives an equation for the reactant species concentration,</p>
 <p><span id="eq-carb-ma2"><span class="math display">\[
-c_{\ce{CO32-}} = k_2 \cdot \frac{c_{\ce{H2CO3^*}}} {c_{\ce{H+}}^2}.
+c_{\ce{CO3^2-}} = k_2 \cdot \frac{c_{\ce{H2CO3^*}}} {c_{\ce{H+}}^2}.
 \tag{6.16}\]</span></span></p>
 <p>We can actually carry out this calculation using the <code>sc</code> stoichiometry matrix.</p>
-<div id="408313b2" class="cell" data-execution_count="6">
+<div id="51230160" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>cH2CO3s <span class="op">=</span> <span class="fl">0.001</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>cHp <span class="op">=</span> <span class="fl">1e-6</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>keq[<span class="dv">1</span>] <span class="op">*</span> cH2CO3s<span class="op">**</span>(<span class="op">-</span>sc[<span class="dv">1</span>, <span class="dv">0</span>]) <span class="op">/</span> cHp<span class="op">**</span>(sc[<span class="dv">1</span>, <span class="dv">1</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -660,7 +661,7 @@ c_{\ce{CO32-}} = k_2 \cdot \frac{c_{\ce{H2CO3^*}}} {c_{\ce{H+}}^2}.
 </div>
 </div>
 <p>Do you see what we’ve done? Do you understand why we included the <code>**(-sc[1, 0])</code> bit? That makes it more general, and adaptable to the complete calculations for all reactants, which we can do using matrix operations like this:</p>
-<div id="b4ee511c" class="cell" data-execution_count="7">
+<div id="cd910ecf" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>conc <span class="op">=</span> keq <span class="op">*</span> cH2CO3s<span class="op">**</span>(<span class="op">-</span>sc[:, <span class="dv">0</span>]) <span class="op">/</span> (cHp<span class="op">**</span>sc[:, <span class="dv">1</span>])</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>conc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
@@ -668,7 +669,7 @@ c_{\ce{CO32-}} = k_2 \cdot \frac{c_{\ce{H2CO3^*}}} {c_{\ce{H+}}^2}.
 </div>
 </div>
 <p>This approach could work with more reactants and species with different stoichiometric coefficients. Of course, we don’t typically know master species concentrations. When we make measurements on a water sample, create a solution in the laboratory, or simulate mass transfer and reaction of chemicals, it is the <em>total</em> concentrations that we know. So it takes a bit more conceptual and programming trickery to come up with a general approach for solving chemical speciation problems. In the example <code>carb_spec()</code> function below, we use two: (1) a proton balance and (2) an iterative root finder. Take a look.</p>
-<div id="fd3bd778" class="cell" data-execution_count="8">
+<div id="1fbc15b9" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">File: carb_mods.py</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">Authors: Sasha D. Hafner and Frederik R. Dalby</span></span>
@@ -756,7 +757,7 @@ c_{\ce{CO32-}} = k_2 \cdot \frac{c_{\ce{H2CO3^*}}} {c_{\ce{H+}}^2}.
 <span id="cb12-85"><a href="#cb12-85" aria-hidden="true" tabindex="-1"></a>    <span class="co"># And return species concentrations (mol/kg)</span></span>
 <span id="cb12-86"><a href="#cb12-86" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> res</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="0790cf6c" class="cell" data-execution_count="9">
+<div id="2e5c88d5" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">'modules'</span>)</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -774,7 +775,7 @@ c_{\ce{CO32-}} = k_2 \cdot \frac{c_{\ce{H2CO3^*}}} {c_{\ce{H+}}^2}.
 </div>
 </div>
 <p>We can get predicted pH:</p>
-<div id="bde6dfb9" class="cell" data-execution_count="10">
+<div id="4dc351a7" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="op">-</span>np.log10(concs[<span class="st">'H+'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <pre><code>np.float64(5.601205291420791)</code></pre>
@@ -793,7 +794,7 @@ c_{\ce{CO32-}} = k_2 \cdot \frac{c_{\ce{H2CO3^*}}} {c_{\ce{H+}}^2}.
 <h3 data-number="6.6.1" class="anchored" data-anchor-id="stoichiometry-1"><span class="header-section-number">6.6.1</span> Stoichiometry</h3>
 <p>Unlike simple chemical reactions such as urea hydrolysis, it isn’t always possible to just look up the reaction. But there are a few different approaches that can be used, including the microbial stoiciometry approach presented by <span class="citation" data-cites="rittmann_environmental_2020">Rittmann and McCarty (<a href="#ref-rittmann_environmental_2020" role="doc-biblioref">2020</a>)</span>. <span class="citation" data-cites="rittmann_environmental_2020">Rittmann and McCarty (<a href="#ref-rittmann_environmental_2020" role="doc-biblioref">2020</a>)</span> is a worthwhile read for anyone working with microbial systems. Here we will give an introduction to the most essential parts.</p>
 <p>Microbes (and all known life) is powered by electron transfer. Chemotrophs harness energy from electrons transferred from reduced compounds to oxidized compounds. For organic compounds, reduced versions contain more C and H and oxidized more O. So these are sorted from most reduced to most oxidized: <span class="math inline">\(\ce{CH4}\)</span> (methane), <span class="math inline">\(\ce{C57H104O6}\)</span> (a lipid), <span class="math inline">\(\ce{C6H12O6}\)</span> (glucose), <span class="math inline">\(\ce{CO2}\)</span> (carbon dioxide, which provides no energy to chemotrophs). All of these compounds except <span class="math inline">\(\ce{CO2}\)</span> could serve as electron donors for some chemotroph (technically chemoorganotroph, which is a group of chemotrophs that use reduced <em>organic</em> compounds for energy). Of course the microorganism has to have the enzymatic machinery in place to use a particular substrate. But as a group, microorganisms are extremely capable.</p>
-<p>Chemotrophs need an electron acceptor too. These are oxidized chemicals with a strong affinity for electrons. Common electron acceptors include <span class="math inline">\(\ce{O2}\)</span>, <span class="math inline">\(\ce{NO3-}\)</span>, and <span class="math inline">\(\ce{SO42-}\)</span>.</p>
+<p>Chemotrophs need an electron acceptor too. These are oxidized chemicals with a strong affinity for electrons. Common electron acceptors include <span class="math inline">\(\ce{O2}\)</span>, <span class="math inline">\(\ce{NO3-}\)</span>, and <span class="math inline">\(\ce{SO4^2-}\)</span>.</p>
 <p>Finally, fermenters do not use exactly the same approach; they do not use external electron acceptors. Instead they essentially split a single organic compound, and transfer electrons from one product to the other. We will work with a simple fermentation: glucose to ethanol and <span class="math inline">\(\ce{CO2}\)</span> by yeast.</p>
 <p>Microorganisms and all life also need material to build up biomass, including numerous elements. In modeling work and elsewhere, it is common to focus on C, H, O, and N, although others may be added depending on their importance (e.g., if S is limiting or removal in biomass is important, it can be included). For chemoorganotrophs, the electron donor typically also serves as the source of C, H, and O. N can come from the donor or inorganic compounds in the environment, like <span class="math inline">\(\ce{NH4+}\)</span>. H comes from the electron donor and <span class="math inline">\(\ce{H2O}\)</span>, which is always available where life is active. It is common to call the electron donor and C source the substrate.</p>
 <p>A balanced reaction for our fermentation system is:</p>
@@ -807,9 +808,9 @@ c_{\ce{CO32-}} = k_2 \cdot \frac{c_{\ce{H2CO3^*}}} {c_{\ce{H+}}^2}.
 <h3 data-number="6.6.2" class="anchored" data-anchor-id="kinetics"><span class="header-section-number">6.6.2</span> Kinetics</h3>
 <p>We have looked at a first-order approach above, and while this can be a component of microbial models, it is more accurate and useful to link reaction rate to both the quantity of microbial biomass and substrate (electron donor). A second-order approach is one option. One common alternative is the Monod equation:</p>
 <p><span id="eq-monod1"><span class="math display">\[
-r = c_{x_a} \cdot \frac{\hat{q_{max}} \cdot c_s} {c_s + k_s},
+r = c_{x_a} \cdot \frac{\hat{q}_{max} \cdot c_s} {c_s + k_s},
 \tag{6.18}\]</span></span></p>
-<p>where <span class="math inline">\(c_{x_a} =\)</span> active microbial biomass concentration (<span class="math inline">\(\gpmc\)</span>), <span class="math inline">\(\hat{q_{max}} =\)</span> maximum substrate utilization rate, and <span class="math inline">\(c_s =\)</span> substrate concentration.</p>
+<p>where <span class="math inline">\(c_{x_a} =\)</span> active microbial biomass concentration (<span class="math inline">\(\gpmc\)</span>), <span class="math inline">\(\hat{q}_{max} =\)</span> maximum substrate utilization rate, and <span class="math inline">\(c_s =\)</span> substrate concentration.</p>
 <!-- Microbial rate of growth and biomass yield.
      Monod kinetics.
      Example: CSTR. -->
@@ -818,12 +819,18 @@ r = c_{x_a} \cdot \frac{\hat{q_{max}} \cdot c_s} {c_s + k_s},
 <section id="problems" class="level2" data-number="6.7">
 <h2 data-number="6.7" class="anchored" data-anchor-id="problems"><span class="header-section-number">6.7</span> Problems</h2>
 <ol type="1">
-<li><p>Formulate (pencil and paper) and implement (in Python) a simple urea hydrolysis model. You can assume the reaction is first-order. Plot predicted</p></li>
-<li><p>Create a Python function that calcuates free ammonia <span class="math inline">\(\ce{NH3(aq)}\)</span> from TAN, pH, and temperature. You can use this expression for the temperature dependency of Ka . . .</p></li>
-<li><p>Derive equations for calculating carbonate species concentrations from <span class="math inline">\(\ce{CO2}\)</span> partial pressure and solution pH. Try to implement it in Python as a function. Bonus: Can you include calculation of pH instead of using it as an input?</p></li>
-<li><p>Formulate and implement a model for a microbial community consuming milk processing wastewater that includes two groups: aerobic bacteria that use dissolved oxygen to oxidize the wastewater organice matter and fermentative bacteria that produce lactic acid. The reactor runs in batch mode, and you do not need to include aeration; there are no inputs or outputs to the reactor. You can use the following empirical formula for the substrate: . The Microbial Stoichiometry Calculator can be used to sort out stoichiometry: https:/…. For kinetics, use whichever approach you prefer: first-order, second-order, or Monod. Use your Python model to predict the effect of initial dissolved oxygen concentration on microbial populations and final lactic acid concentration.</p></li>
-<li><p>A reactor . . . catalytic. . . nonlinear. . . analytical or numerical?</p></li>
+<li><p>Formulate (pencil and paper) and implement (in Python) a simple urea hydrolysis model. You can assume the reaction is first-order. Plot predicted urea, ammonia, and carbon dioxide concentration over time.</p></li>
+<li><p>Create a Python function that calcuates free ammonia <span class="math inline">\(\ce{NH3(aq)}\)</span> from TAN, pH, and temperature. You can use this expression for the temperature dependency of <span class="math inline">\(K_a\)</span>:</p>
+<p><span class="math display">\[
+\log_{10}{K_a} = 0.0905 + \frac{2729.31}{T},
+\]</span></p>
+<p>where <span class="math inline">\(T\)</span> is temperature in K. Plot free ammonia concentration vs.&nbsp;temperature in one plot and vs.&nbsp;pH in another.</p></li>
+<li><p>Derive equations for calculating carbonate species concentrations from <span class="math inline">\(\ce{CO2}\)</span> partial pressure and solution pH. Try to implement it in Python as a function. This is a difficult problem. Bonus: Can you include calculation of pH instead of using it as an input?</p></li>
+<li><p>Formulate and implement a model for a microbial community consuming milk processing wastewater that includes two groups: aerobic bacteria that use dissolved oxygen to oxidize the wastewater organice matter and fermentative bacteria that produce lactic acid. The reactor runs in batch mode, and you do not need to include aeration; there are no inputs or outputs to the reactor. You can use the following empirical formula for the substrate: . The Microbial Stoichiometry Calculator can be used to sort out stoichiometry: <a href="https://micstoich.com" class="uri">https://micstoich.com</a>. For kinetics, use whichever approach you prefer: first-order, second-order, or Monod. Use your Python model to predict the effect of initial dissolved oxygen concentration on microbial populations and final lactic acid concentration.</p></li>
 </ol>
+</section>
+<section id="references" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="references">References</h2>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
@@ -1242,13 +1249,13 @@ Snoeyink, Vernon L. 1980. <em>Water Chemistry</em>. Wiley.
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./05_mass_transfer.html" class="pagination-link" aria-label="Mass Transfer">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Mass Transfer</span></span>
+      <a href="./05_mass_transfer.html" class="pagination-link" aria-label="Mass transfer">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Mass transfer</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./07_spatial_models.html" class="pagination-link" aria-label="Spatial Models">
-        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Spatial Models</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./07_spatial_models.html" class="pagination-link" aria-label="Spatial models">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Spatial models</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

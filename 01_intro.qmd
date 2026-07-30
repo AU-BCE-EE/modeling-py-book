@@ -181,7 +181,7 @@ Several subjects withing mathematical modelling only hold — or only hold exact
 * Stability analysis: for linear systems, stability is determined globally, whereas for nonlinear systems stability must be assessed locally and in many places. 
 * Superposition-based intuition: in linear systems you can analyze the effect of multiple inputs independently and sum the results. This is not the case for nonlinear systems.
 
-### Model simplification
+## Model simplification
 *Simplification* is key part of model development.
 You might have the feeling that the more processes and dimensions you can cram into a model, the more accurate and in general the better it is.
 That's not true.
@@ -203,9 +203,9 @@ That depends--on the objectives of a project or the task requirements, on availa
 In this book we'll look at a variety of models that encompass a range of complexity.
 But in fact all of these models are relatively simple.
 
-## Problems
+## Problems {.unnumbered}
 
-### I. Model classification
+### Model classification {.unnumbered}
 Some different models are described below.
 Apply the labels conceptual, mathematical, computer, analytical, numerical, lumped parameter, distributed parameter, 1D, steady-state, dynamic, mechanistic, and empirical appropriately. Is the answer always clear?
 
@@ -230,20 +230,20 @@ Apply the labels conceptual, mathematical, computer, analytical, numerical, lump
    where $e$ is pollutant emission rate, $x$, $y$, and $z$ define a position relative to the source smokestack with a height of $h$, and the $\sigma$ terms are parameters determined from large-scale measurements that quantify horizontal and vertical dispersion.
    How would you characterize this model?
 
-### II. Other problems
+### Other problems {.unnumbered}
 
-1. A hypothetical geospatial water quality model used to predict nutrient concentrations dissolved oxygen in the river and estuary near a major urban location in Europe incorporates many assumptions, including uniform temperature and solute concentrations over the vertical dimension. 
+4. A hypothetical geospatial water quality model used to predict nutrient concentrations dissolved oxygen in the river and estuary near a major urban location in Europe incorporates many assumptions, including uniform temperature and solute concentrations over the vertical dimension. 
    The software tool is used to manage wastewater loading and help determine related governmental policy. 
    A critic points out that measurements made by a university researcher show that vertical gradients in fact exist in the water profile, and therefore the model is invalid and should not be trusted.
    The agency applying the model counters that the developers have shown that the model is accurate.
    Who is right?
    Discuss.
 
-2. A fellow student claims that analytical modelling is outdated and completely illogical in the age of cheap computing power.
+5. A fellow student claims that analytical modelling is outdated and completely illogical in the age of cheap computing power.
    Do you agree?
    Explain.
 
-3. 
+6. Two competing models of ammonia emission from pig houses (barns) include an effect of temperature; increasing indoor temperature means more emission. Model A is completely empirical, where emission rate is a linear function of temperature, ventilation rate, and the total weight (mass) of pigs. Model B includes nitrogen input in feed, partitioning between growth and excretion, accumulation of manure, and finally volatilization based on physical chemistry and mass transfer theory, along with some empirical fudge factors. Which model is the better choice for predicting the emission response to new, higher temperatures resulting from climate change?
 
 ## References {.unnumbered}
 

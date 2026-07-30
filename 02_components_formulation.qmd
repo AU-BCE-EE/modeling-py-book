@@ -1,4 +1,4 @@
-# Model Formulation {#sec-formulation}
+# Model formulation {#sec-formulation}
 
 Model *formulation* or, more broadly, *development*, means producing a mathematical model. 
 Once a mathematical model has been formulated, it usually has to be implemented to create a software model for use.

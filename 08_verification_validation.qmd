@@ -1,4 +1,4 @@
-# Verification and Validation {#sec-vv}
+# Verification and validation {#sec-vv}
 
 The statistician George Box is famous for a quote that goes something like "all models are wrong, but some are useful".
 Maybe he didn't use that exact wording but the sentiment is definitely correct (see @box_science_1976 and @Box_George_E_P_1987 for more).
@@ -771,7 +771,7 @@ The use of multiple variables can provide more information about problems with a
 For example, @fig-denitmod1 shows that while the model predicts nearly the same pattern for all three gases, measurements show a relatively flat response in $\ce{CO2}$.
 This suggests that the model processes responsible for $\ce{CO2}$ production may be structurally wrong.
 
-![Graphical validation of a soil microbiology model from @zhang-denit-mod-2023. Each plot shows a different variable. Measurements are shown as points, and model output as lines.](paper-images/denitmod1.png){#fig-denitmod1 fig-alt="Denitrification model validation."}
+![Graphical validation of a soil microbiology model from @zhang-denit-mod-2023. Each plot shows a different variable. Measurements are shown as points, and model output as lines.](images-papers/denitmod1.png){#fig-denitmod1 fig-alt="Denitrification model validation."}
 
 Comparing measurements and model output over time has limitations.
 Especially for simple models, we may only see if the model predicts a higher or lower rate of change.
@@ -828,7 +828,8 @@ The conceptual model is quite simple.
 We have a column with some solute (NaCl for example, which is what was used in the measurements) diffusing from one end to the other through water.
 We can represent the conceptual model it with text symbols:
 
-```
+```{python}
+#| eval: false
        --------------------------
        |                        |
  c_l   |                        | c_r
@@ -868,4 +869,4 @@ Make sure you give the new function a good name.
 Save it in the same module as the original.
 Now repeat your mass mass balance verification with this new function.
 
-
+## References {.unnumbered}

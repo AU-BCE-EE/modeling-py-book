@@ -1,10 +1,4 @@
----
-editor: 
-  markdown: 
-    wrap: 72
----
-
-# Spatial Models {#sec-spatial}
+# Spatial models {#sec-spatial}
 
 ## From 0D (lumped model) to a spatial model
 

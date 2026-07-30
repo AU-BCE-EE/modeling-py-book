@@ -128,7 +128,7 @@ Several *chemical species* play a role:
 * $\ce{H2CO3}$ is called carbonic acid, and is formed when $\ce{CO2(aq)}$ reacts with water in a hydration reaction,
 * $\ce{H2CO3*}$ is not actually a chemical species, but the sum of $\ce{CO2(aq)}$ and $\ce{H2CO3}$, used because it is difficult to measure the two separately,
 * $\ce{HCO3-}$ is bicarbonate, and is the most important buffer component in some systems, and
-* $\ce{CO32-}$ is carbonate.
+* $\ce{CO3^2-}$ is carbonate.
 
 Chemical speciation models are used to determine the concentration of specific chemical species.
 A fundamental concept here is that the *mass action expression* or *reaction quotient* takes on a specific numeric value at equilibrium.
@@ -176,13 +176,13 @@ $$
 \ce{NH4+ <=> NH3 + H+},
 $${#eq-amm-dis}
 
-with an equilbrium constant $k_a$, where the $a$ is for acid dissociation constant.
-The numeric value is around $pk_a = 9.56$ at 15 $\degC$ (@clegg_chemical-model_1995). 
+with an equilbrium constant $K_a$, where the $a$ is for acid dissociation constant.
+The numeric value is around $pK_a = 9.56$ at 15 $\degC$ (@clegg_chemical-model_1995). 
 
 Let's write the mass action expression and set it to the acid dissociation constant:
 
 $$
-k_a = \frac{c_{\ce{NH3(aq)}} \cdot c_{\ce{H+}}} {c_{\ce{NH4+}}}.
+K_a = \frac{c_{\ce{NH3(aq)}} \cdot c_{\ce{H+}}} {c_{\ce{NH4+}}}.
 $${#eq-amm-mae1}
 
 What else can we use?
@@ -208,37 +208,37 @@ $${#eq-amm-der1}
 And insert this into @eq-amm-mae1:
 
 $$
-k_a = \frac{c_{\ce{NH3(aq)}} \cdot c_{\ce{H+}}} {c_{\text{TAN}} - c_{\ce{NH3}(aq)}}.
+K_a = \frac{c_{\ce{NH3(aq)}} \cdot c_{\ce{H+}}} {c_{\text{TAN}} - c_{\ce{NH3}(aq)}}.
 $$
 
 And rearrange:
 
 $$
-\frac{k_a} {c_{\ce{H+}}} \cdot (c_{\text{TAN}} - c_{\ce{NH3}(aq)}) = c_{\ce{NH3(aq)}} .
+\frac{K_a} {c_{\ce{H+}}} \cdot (c_{\text{TAN}} - c_{\ce{NH3}(aq)}) = c_{\ce{NH3(aq)}} .
 $$
 
 A bit more, including multiplication of both sides by -1,
 
 $$
- \frac{k_a} {c_{\ce{H+}}} \cdot c_{\ce{NH3}(aq)} + c_{\ce{NH3(aq)}} = \frac{k_a} {c_{\ce{H+}}} \cdot c_{\text{TAN}},
+ \frac{K_a} {c_{\ce{H+}}} \cdot c_{\ce{NH3}(aq)} + c_{\ce{NH3(aq)}} = \frac{K_a} {c_{\ce{H+}}} \cdot c_{\text{TAN}},
 $$
 
 then
 
 $$
- \left( \frac{k_a} {c_{\ce{H+}}} + 1 \right) \cdot c_{\ce{NH3}(aq)} = \frac{k_a} {c_{\ce{H+}}} \cdot c_{\text{TAN}},
+ \left( \frac{K_a} {c_{\ce{H+}}} + 1 \right) \cdot c_{\ce{NH3}(aq)} = \frac{K_a} {c_{\ce{H+}}} \cdot c_{\text{TAN}},
 $$
 
 and
 
 $$
- c_{\ce{NH3}(aq)} = \frac{\frac{k_a} {c_{\ce{H+}}} \cdot c_{\text{TAN}}} {(\frac{k_a} {c_{\ce{H+}}} + 1) \cdot},
+ c_{\ce{NH3}(aq)} = \frac{\frac{K_a} {c_{\ce{H+}}} \cdot c_{\text{TAN}}} {(\frac{K_a} {c_{\ce{H+}}} + 1) \cdot},
 $$
 
 which, finally, can be simplified to
 
 $$
- c_{\ce{NH3}(aq)} = \frac{c_{\text{TAN}}} {1 + \frac {c_{\ce{H+}}} {k_a}}.
+ c_{\ce{NH3}(aq)} = \frac{c_{\text{TAN}}} {1 + \frac {c_{\ce{H+}}} {K_a}}.
 $${#eq-free-nh3-calc}
 
 Let's implement @eq-free-nh3-calc in Python for a simple free ammonia calculator.
@@ -311,7 +311,7 @@ These species will be the reactants for all reactions.
 We'll use $\ce{H2CO3^*}$ and $\ce{H+}$.
 These reactants will define the columns in our stoichiometry matrix, and products will define rows.
 This too is arbitrary, but seems most convenient.
-If we only consider the species $\ce{H2CO3^*}$, $\ce{HCO3-}$, $\ce{CO32-}$, and of course $\ce{H+}$ and $\ce{OH-}$, our coefficient matrix is:
+If we only consider the species $\ce{H2CO3^*}$, $\ce{HCO3-}$, $\ce{CO3^2-}$, and of course $\ce{H+}$ and $\ce{OH-}$, our coefficient matrix is:
 
 ```{python}
 #| eval: false
@@ -322,10 +322,10 @@ CO3-2  |  -1   |  2
   OH-  |   0   |  1
 ```
 
-Although $\ce{CO32-}$ forms from $\ce{H2CO3^*}$, here our reactant is carbonic acid $\ce{H2CO3^*}$, so in this model $\ce{CO32-}$ production is expressed as two reactions combined:
+Although $\ce{CO3^2-}$ forms from $\ce{H2CO3^*}$, here our reactant is carbonic acid $\ce{H2CO3^*}$, so in this model $\ce{CO3^2-}$ production is expressed as two reactions combined:
 
 $$
-\ce{H2CO3^* <=> CO32- + 2H+}.
+\ce{H2CO3^* <=> CO3^2- + 2H+}.
 $${#eq-carb2}
 
 So what is the use of this matrix?
@@ -361,13 +361,13 @@ Look at @eq-carb2.
 The relevant mass action expression is
 
 $$
-k_2 = \frac{c_{\ce{CO32-}} \cdot c_{\ce{H+}}^2}{c_{\ce{H2CO3^*}}}.
+k_2 = \frac{c_{\ce{CO3^2-}} \cdot c_{\ce{H+}}^2}{c_{\ce{H2CO3^*}}}.
 $${#eq-carb-ma2}
 
 Rearranging gives an equation for the reactant species concentration,
 
 $$
-c_{\ce{CO32-}} = k_2 \cdot \frac{c_{\ce{H2CO3^*}}} {c_{\ce{H+}}^2}.
+c_{\ce{CO3^2-}} = k_2 \cdot \frac{c_{\ce{H2CO3^*}}} {c_{\ce{H+}}^2}.
 $${#eq-carb-ma2}
 
 We can actually carry out this calculation using the `sc` stoichiometry matrix.
@@ -530,7 +530,7 @@ But as a group, microorganisms are extremely capable.
 
 Chemotrophs need an electron acceptor too. 
 These are oxidized chemicals with a strong affinity for electrons.
-Common electron acceptors include $\ce{O2}$, $\ce{NO3-}$, and $\ce{SO42-}$.
+Common electron acceptors include $\ce{O2}$, $\ce{NO3-}$, and $\ce{SO4^2-}$.
 
 Finally, fermenters do not use exactly the same approach; they do not use external electron acceptors.
 Instead they essentially split a single organic compound, and transfer electrons from one product to the other.
@@ -560,10 +560,10 @@ A second-order approach is one option.
 One common alternative is the Monod equation:
 
 $$
-r = c_{x_a} \cdot \frac{\hat{q_{max}} \cdot c_s} {c_s + k_s},
+r = c_{x_a} \cdot \frac{\hat{q}_{max} \cdot c_s} {c_s + k_s},
 $${#eq-monod1}
 
-where $c_{x_a} =$ active microbial biomass concentration ($\gpmc$), $\hat{q_{max}} =$ maximum substrate utilization rate, and $c_s =$ substrate concentration.
+where $c_{x_a} =$ active microbial biomass concentration ($\gpmc$), $\hat{q}_{max} =$ maximum substrate utilization rate, and $c_s =$ substrate concentration.
 
 
 <!-- Microbial rate of growth and biomass yield.
@@ -574,20 +574,28 @@ where $c_{x_a} =$ active microbial biomass concentration ($\gpmc$), $\hat{q_{max
 
 1. Formulate (pencil and paper) and implement (in Python) a simple urea hydrolysis model.
    You can assume the reaction is first-order.
-   Plot predicted 
+   Plot predicted urea, ammonia, and carbon dioxide concentration over time.
 
 2. Create a Python function that calcuates free ammonia $\ce{NH3(aq)}$ from TAN, pH, and temperature.
-   You can use this expression for the temperature dependency of Ka . . . 
+   You can use this expression for the temperature dependency of $K_a$:
+
+   $$
+   \log_{10}{K_a} = 0.0905 + \frac{2729.31}{T}, 
+   $$
+
+   where $T$ is temperature in K.
+   Plot free ammonia concentration vs. temperature in one plot and vs. pH in another.
 
 3. Derive equations for calculating carbonate species concentrations from $\ce{CO2}$ partial pressure and solution pH. 
    Try to implement it in Python as a function.
+   This is a difficult problem.
    Bonus: Can you include calculation of pH instead of using it as an input?
 
 4. Formulate and implement a model for a microbial community consuming milk processing wastewater that includes two groups: aerobic bacteria that use dissolved oxygen to oxidize the wastewater organice matter and fermentative bacteria that produce lactic acid. 
    The reactor runs in batch mode, and you do not need to include aeration; there are no inputs or outputs to the reactor.
    You can use the following empirical formula for the substrate: .
-   The Microbial Stoichiometry Calculator can be used to sort out stoichiometry: https:/....
+   The Microbial Stoichiometry Calculator can be used to sort out stoichiometry: <https://micstoich.com>. 
    For kinetics, use whichever approach you prefer: first-order, second-order, or Monod.
    Use your Python model to predict the effect of initial dissolved oxygen concentration on microbial populations and final lactic acid concentration.
 
-5. A reactor . . . catalytic. . . nonlinear. . .  analytical or numerical?
+## References {.unnumbered}

@@ -1,4 +1,4 @@
-# Mass Transfer {#sec-mass}
+# Mass transfer {#sec-mass}
 Mass transfer occurs through similar processes as heat transfer.
 In fact the mathematics of mass transfer is often based on a formal analogy with heat transfer. 
 Mass transfer is simpler in some ways--in particular there is only mass, unlike heat where we have temperature and energy to think about.
