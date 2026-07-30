@@ -353,12 +353,11 @@ These constants directly link the mass-based rate of phase change to energy flow
 
 $$
 \dot{m_m} = \frac{\dot{Q}} {h_f} 
-$${eq-hf-link}
+$${#eq-hf-link}
 
 $$
 \dot{m_v} = \frac{\dot{Q}} {h_v} 
-$${eq-hf-link}
-
+$${#eq-hf-link}
 
 <!-- Specific heat capacity links energy and temperature. -->
 

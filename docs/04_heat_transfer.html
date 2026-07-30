@@ -664,12 +664,12 @@ q = U \cdot \Delta T.
 <section id="phase-changes" class="level2" data-number="4.8">
 <h2 data-number="4.8" class="anchored" data-anchor-id="phase-changes"><span class="header-section-number">4.8</span> Phase changes</h2>
 <p>If a substance remains in a single phase, any change in thermal energy causes a change in temperature following <a href="#eq-cp-def" class="quarto-xref">Equation&nbsp;<span>4.21</span></a>. But when a change, between solid, liquid, and gas, occurs, energy is consumed or released in the phase change, and does not show up in temperature. In systems with phase changes, it is necessary to track one or more specific phases as a state variable. We can think of the equations that relate energy transfer and phase change as linking equations. There are only two important parameters, which are physical constants: the heat of fusion <span class="math inline">\(h_f\)</span> and heat of vaporization <span class="math inline">\(k_v\)</span>, both typically <span class="math inline">\(\kJpkg\)</span>. These constants directly link the mass-based rate of phase change to energy flow.</p>
-<p><span class="math display">\[
+<p><span id="eq-hf-link"><span class="math display">\[
 \dot{m_m} = \frac{\dot{Q}} {h_f}
-\]</span>{eq-hf-link}</p>
-<p><span class="math display">\[
+\tag{4.22}\]</span></span></p>
+<p><span id="eq-hf-link"><span class="math display">\[
 \dot{m_v} = \frac{\dot{Q}} {h_v}
-\]</span>{eq-hf-link}</p>
+\tag{4.23}\]</span></span></p>
 <!-- Specific heat capacity links energy and temperature. -->
 </section>
 <section id="example-lumped-parameter-model-with-all-modes" class="level2" data-number="4.9">
@@ -685,7 +685,7 @@ Figure&nbsp;4.10: Extended coffee model.
 </figcaption>
 </figure>
 </div>
-<div id="0241af33" class="cell" data-execution_count="1">
+<div id="8c609df4" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">File: cooling_mods_2m.py</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">Authors: Sasha D. Hafner and Frederik R. Dalby</span></span>
@@ -752,7 +752,7 @@ Figure&nbsp;4.10: Extended coffee model.
 <span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>    }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Then, to use the model, we first <em>import</em> the module we defined and then run the function, like this:</p>
-<div id="8d9af957" class="cell" data-execution_count="2">
+<div id="6e1d0058" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">File: cool_pred_2m.py</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">Authors: Sasha D. Hafner and Frederik R. Dalby</span></span>
