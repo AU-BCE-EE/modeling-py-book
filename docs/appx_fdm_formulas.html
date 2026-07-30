@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Appendix B — Finite difference formulas – An Introduction to Modeling with Python</title>
+<title>Appendix E — Finite difference formulas – An Introduction to Modeling with Python</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./appx_python_style.html" rel="next">
-<link href="./appx_derivatives.html" rel="prev">
+<link href="./appx_parameter_values.html" rel="next">
+<link href="./appx_vs_code.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -147,7 +147,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./appx_derivatives.html">Appendices</a></li><li class="breadcrumb-item"><a href="./appx_fdm_formulas.html"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Finite difference formulas</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./appx_symbols.html">Appendices</a></li><li class="breadcrumb-item"><a href="./appx_fdm_formulas.html"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Finite difference formulas</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -273,50 +273,44 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appx_derivatives.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Derivatives and Differential Equations</span></span></a>
+  <a href="./appx_symbols.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Symbols</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appx_fdm_formulas.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Finite difference formulas</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./appx_python_style.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Python Style Guide</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./appx_python_types.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Python data structures</span></span></a>
+  <a href="./appx_python_data_structures.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Python data structures</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./appx_slicing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Slicing in Python</span></span></a>
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Slicing in Python</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appx_symbols.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Symbols</span></span></a>
+  <a href="./appx_vs_code.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Introduction to VS Code</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appx_fdm_formulas.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Finite difference formulas</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./appx_parameter_values.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">G</span>&nbsp; <span class="chapter-title">Parameter values</span></span></a>
+ <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Parameter values</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./appx_reading.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">H</span>&nbsp; <span class="chapter-title">Other books</span></span></a>
+ <span class="menu-text"><span class="chapter-number">G</span>&nbsp; <span class="chapter-title">Other books</span></span></a>
   </div>
 </li>
       </ul>
@@ -331,15 +325,15 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#approximation-of-the-first-derivative-fracdcdx" id="toc-approximation-of-the-first-derivative-fracdcdx" class="nav-link active" data-scroll-target="#approximation-of-the-first-derivative-fracdcdx"><span class="header-section-number">B.1</span> approximation of the first derivative: <span class="math inline">\(\frac{dc}{dx}\)</span></a>
+  <li><a href="#approximation-of-the-first-derivative-fracdcdx" id="toc-approximation-of-the-first-derivative-fracdcdx" class="nav-link active" data-scroll-target="#approximation-of-the-first-derivative-fracdcdx"><span class="header-section-number">E.1</span> approximation of the first derivative: <span class="math inline">\(\frac{dc}{dx}\)</span></a>
   <ul class="collapse">
-  <li><a href="#first-order-accuracy" id="toc-first-order-accuracy" class="nav-link" data-scroll-target="#first-order-accuracy"><span class="header-section-number">B.1.1</span> first order accuracy:</a></li>
-  <li><a href="#second-order-accuracy" id="toc-second-order-accuracy" class="nav-link" data-scroll-target="#second-order-accuracy"><span class="header-section-number">B.1.2</span> second order accuracy:</a></li>
+  <li><a href="#first-order-accuracy" id="toc-first-order-accuracy" class="nav-link" data-scroll-target="#first-order-accuracy"><span class="header-section-number">E.1.1</span> first order accuracy:</a></li>
+  <li><a href="#second-order-accuracy" id="toc-second-order-accuracy" class="nav-link" data-scroll-target="#second-order-accuracy"><span class="header-section-number">E.1.2</span> second order accuracy:</a></li>
   </ul></li>
-  <li><a href="#approximation-of-the-second-derivative-fracd2cdx2" id="toc-approximation-of-the-second-derivative-fracd2cdx2" class="nav-link" data-scroll-target="#approximation-of-the-second-derivative-fracd2cdx2"><span class="header-section-number">B.2</span> approximation of the second derivative: <span class="math inline">\(\frac{d^2c}{dx^2}\)</span></a>
+  <li><a href="#approximation-of-the-second-derivative-fracd2cdx2" id="toc-approximation-of-the-second-derivative-fracd2cdx2" class="nav-link" data-scroll-target="#approximation-of-the-second-derivative-fracd2cdx2"><span class="header-section-number">E.2</span> approximation of the second derivative: <span class="math inline">\(\frac{d^2c}{dx^2}\)</span></a>
   <ul class="collapse">
-  <li><a href="#first-order-accuracy-1" id="toc-first-order-accuracy-1" class="nav-link" data-scroll-target="#first-order-accuracy-1"><span class="header-section-number">B.2.1</span> first order accuracy:</a></li>
-  <li><a href="#second-order-accuracy-1" id="toc-second-order-accuracy-1" class="nav-link" data-scroll-target="#second-order-accuracy-1"><span class="header-section-number">B.2.2</span> second order accuracy:</a></li>
+  <li><a href="#first-order-accuracy-1" id="toc-first-order-accuracy-1" class="nav-link" data-scroll-target="#first-order-accuracy-1"><span class="header-section-number">E.2.1</span> first order accuracy:</a></li>
+  <li><a href="#second-order-accuracy-1" id="toc-second-order-accuracy-1" class="nav-link" data-scroll-target="#second-order-accuracy-1"><span class="header-section-number">E.2.2</span> second order accuracy:</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -347,9 +341,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./appx_derivatives.html">Appendices</a></li><li class="breadcrumb-item"><a href="./appx_fdm_formulas.html"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Finite difference formulas</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./appx_symbols.html">Appendices</a></li><li class="breadcrumb-item"><a href="./appx_fdm_formulas.html"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Finite difference formulas</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-appx-fdm" class="quarto-section-identifier">Appendix B — Finite difference formulas</span></h1>
+<h1 class="title"><span id="sec-appx-fdm" class="quarto-section-identifier">Appendix E — Finite difference formulas</span></h1>
 </div>
 
 
@@ -366,29 +360,29 @@ window.Quarto = {
 </header>
 
 
-<section id="approximation-of-the-first-derivative-fracdcdx" class="level2" data-number="B.1">
-<h2 data-number="B.1" class="anchored" data-anchor-id="approximation-of-the-first-derivative-fracdcdx"><span class="header-section-number">B.1</span> approximation of the first derivative: <span class="math inline">\(\frac{dc}{dx}\)</span></h2>
-<section id="first-order-accuracy" class="level3" data-number="B.1.1">
-<h3 data-number="B.1.1" class="anchored" data-anchor-id="first-order-accuracy"><span class="header-section-number">B.1.1</span> first order accuracy:</h3>
+<section id="approximation-of-the-first-derivative-fracdcdx" class="level2" data-number="E.1">
+<h2 data-number="E.1" class="anchored" data-anchor-id="approximation-of-the-first-derivative-fracdcdx"><span class="header-section-number">E.1</span> approximation of the first derivative: <span class="math inline">\(\frac{dc}{dx}\)</span></h2>
+<section id="first-order-accuracy" class="level3" data-number="E.1.1">
+<h3 data-number="E.1.1" class="anchored" data-anchor-id="first-order-accuracy"><span class="header-section-number">E.1.1</span> first order accuracy:</h3>
 <p>forward difference formula: <span class="math inline">\(\frac{c[i+1] - c[i]}{\Delta x}\)</span></p>
 <p>backward difference formula: <span class="math inline">\(\frac{c[i] - c[i-1]}{\Delta x}\)</span></p>
 </section>
-<section id="second-order-accuracy" class="level3" data-number="B.1.2">
-<h3 data-number="B.1.2" class="anchored" data-anchor-id="second-order-accuracy"><span class="header-section-number">B.1.2</span> second order accuracy:</h3>
+<section id="second-order-accuracy" class="level3" data-number="E.1.2">
+<h3 data-number="E.1.2" class="anchored" data-anchor-id="second-order-accuracy"><span class="header-section-number">E.1.2</span> second order accuracy:</h3>
 <p>forward difference formula: <span class="math inline">\(\frac{-3c[i] + 4c[i+1] - c[i+2]}{2\Delta x}\)</span></p>
 <p>backward difference formula: <span class="math inline">\(\frac{3c[i] - 4c[i-1] + c[i-2]}{2\Delta x}\)</span></p>
 <p>central difference formula: <span class="math inline">\(\frac{c[i+1] - c[i-1]}{2\Delta x}\)</span></p>
 </section>
 </section>
-<section id="approximation-of-the-second-derivative-fracd2cdx2" class="level2" data-number="B.2">
-<h2 data-number="B.2" class="anchored" data-anchor-id="approximation-of-the-second-derivative-fracd2cdx2"><span class="header-section-number">B.2</span> approximation of the second derivative: <span class="math inline">\(\frac{d^2c}{dx^2}\)</span></h2>
-<section id="first-order-accuracy-1" class="level3" data-number="B.2.1">
-<h3 data-number="B.2.1" class="anchored" data-anchor-id="first-order-accuracy-1"><span class="header-section-number">B.2.1</span> first order accuracy:</h3>
+<section id="approximation-of-the-second-derivative-fracd2cdx2" class="level2" data-number="E.2">
+<h2 data-number="E.2" class="anchored" data-anchor-id="approximation-of-the-second-derivative-fracd2cdx2"><span class="header-section-number">E.2</span> approximation of the second derivative: <span class="math inline">\(\frac{d^2c}{dx^2}\)</span></h2>
+<section id="first-order-accuracy-1" class="level3" data-number="E.2.1">
+<h3 data-number="E.2.1" class="anchored" data-anchor-id="first-order-accuracy-1"><span class="header-section-number">E.2.1</span> first order accuracy:</h3>
 <p>forward difference formula: <span class="math inline">\(\frac{c[i] - 2c[i+1] + c[i+2]}{\Delta x^2}\)</span></p>
 <p>backward difference formula: <span class="math inline">\(\frac{c[i] - 2c[i-1] + c[i-2]}{\Delta x^2}\)</span></p>
 </section>
-<section id="second-order-accuracy-1" class="level3" data-number="B.2.2">
-<h3 data-number="B.2.2" class="anchored" data-anchor-id="second-order-accuracy-1"><span class="header-section-number">B.2.2</span> second order accuracy:</h3>
+<section id="second-order-accuracy-1" class="level3" data-number="E.2.2">
+<h3 data-number="E.2.2" class="anchored" data-anchor-id="second-order-accuracy-1"><span class="header-section-number">E.2.2</span> second order accuracy:</h3>
 <p>forward difference formula: <span class="math inline">\(\frac{-c[i] + 4c[i+1] - 5c[i+2] + 2c[i+3]}{\Delta x^2}\)</span></p>
 <p>backward difference formula: <span class="math inline">\(\frac{-c[i] + 4c[i-1] - 5c[i-2] + 2c[i-3]}{\Delta x^2}\)</span></p>
 <p>central difference formula: <span class="math inline">\(\frac{c[i+1] - 2c[i] + c[i-1]}{\Delta x^2}\)</span></p>
@@ -800,13 +794,13 @@ window.Quarto = {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./appx_derivatives.html" class="pagination-link" aria-label="Derivatives and Differential Equations">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Derivatives and Differential Equations</span></span>
+      <a href="./appx_vs_code.html" class="pagination-link" aria-label="Introduction to VS Code">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Introduction to VS Code</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./appx_python_style.html" class="pagination-link" aria-label="Python Style Guide">
-        <span class="nav-page-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Python Style Guide</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./appx_parameter_values.html" class="pagination-link" aria-label="Parameter values">
+        <span class="nav-page-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Parameter values</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

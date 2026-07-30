@@ -1,3 +1,213 @@
 # Slicing in Python {#sec-appx-slicing}
 
-<!-- Explanation of slicing, with applications in spatial models. -->
+"Slicing" in Python means extracting or maniupulating some specific elements within an array all at one time, or at least all with one line of code.
+It is an alternative to the use of loops, requiring less code and evalating faster.
+The drawback is complexity; it can be difficult to understand slicing.
+
+## Slicing basics
+
+Let's create a NumPy array with integers.
+
+```{python}
+import numpy as np
+
+y = np.array([1, 2, 3, 4, 5, 6, 7])
+```
+
+To extract a single element, just use its position index.
+We'll show the position indices in comments.
+Remember that Python objects start with position `0`!
+
+```{python}
+#             0  1  2  3  4  5  6
+y = np.array([1, 2, 3, 4, 5, 6, 7])
+```
+
+So to exctract the third position, 
+
+```{python}
+y[2]
+```
+
+And to change the value, just put that expresson on the LHS of an assignment command, like this:
+
+```{python}
+y[2] = 10
+
+y
+```
+
+Slicing starts to get powerful with the use of the colon `:`.
+(Colons do a lot in Python.
+See this interesting post for more information: <https://www.askpython.com/python/examples/colon-in-python>.)
+It can be used to specify a range.
+For example, the first and second positions (indices `0` and `1`):
+
+```{python}
+y[0:2]
+```
+
+If you are confused to only see two elements returned, you are not alone!
+The colon notation is `[start:end:step]` (so far we've omitted to step, for a default value of `1`).
+And the `start` value is inclusive (the element is returned) but the `stop` value is not!
+So to include the third element, use:
+
+```{python}
+y[0:3]
+```
+
+When the `start` or `stop` are omitted, the end of the array is used.
+So,
+
+```{python}
+y[3:]
+```
+
+gives the fourth element and all following ones, and
+
+```{python}
+y[:3]
+```
+
+gives the first through third elements.
+Here is the entire `y` array again. 
+
+```{python}
+y
+```
+
+Make sure you understand!
+That means being able to explain why the text just above has "fourth" and "third" for the same number `3`.
+
+What if you want to count in from the end (the right side)?
+For that, use a negative integer, like this:
+
+```{python}
+y[1:-1]
+```
+
+```{python}
+y[:-1]
+```
+
+```{python}
+y[:-3]
+```
+
+```{python}
+y[3:-3]
+```
+
+```{python}
+y[4:-3]
+```
+
+Any of these expressions could be used with an assignment command.
+The RHS just needs to fit in the specified space.
+
+```{python}
+y[1:-1] = 2
+y
+```
+
+```{python}
+#| error: true
+y[1:-1] = [1, 2, 3]
+y
+```
+
+```{python}
+y[:-4] = [-3, -2, -1]
+y
+```
+
+Do you understand why the second example above threw an error?
+The RHS did not fit!
+
+## Application to spatial models
+
+Slicing lets us do at least two things are useful in implementing spatial models: 
+
+* calculate differences (and second differences) between adjacent nodes, and
+* apply position-specific calculations to specific nodes.
+
+Let's say we have a 1D array of concentrations, with each element representing the value in a different node.
+
+```{python}
+import numpy as np
+
+conc = np.array([0, 2, 3, 4.5, 5, 5, 4, 3, 2, 0])
+```
+
+And we'll set up a few parameters and variables to make the example calculations realistic.
+
+```{python}
+dx = 0.01     # Node spacing (m)
+vv = 0.03     # Superficial advection velocity (left to right) (m3/m2-s = m/s)
+D = 1e-9      # Diffusivity (m2/s)
+```
+
+Now for slicing applications.
+
+From Fick's law (@eq-ficks1), diffusive flux is proportional to the first derivative in concentration over space.
+In a numerical scheme that is the first difference.
+We can calculate the first difference with slicing:
+
+
+```{python}
+conc[1:] - conc[:-1]
+```
+
+So then the flux is:
+
+```{python}
+D * (conc[1:] - conc[:-1]) / dx
+```
+
+Because we have nodes to the left subtracted from nodes on the right with `(conc[1:] - conc[:-1])` (make sure you understand the slicing!), we get flux to the right.
+Does it make sense that the value to the right are negative, i.e., the solute if diffusing to the left?
+
+We would typically go straight to an expression for the derviative.
+For diffusion we typically use the central difference approximation.
+With slicing, that is:
+
+```{python}
+(conc[2:] - 2 * conc[1:-1] + conc[:-2]) / dx**2
+```
+
+In effect, what this is doing is lining up copies of the array as shown below, and carrying out the subtraction, multiplication, and addition operations.
+
+```{python}
+#| eval: false
+
+       [ ,  , 3, 4.5, 5, 5, 4, 3, 2, 0])
+ - 2 *    [ , 2, 3, 4.5, 5, 5, 4, 3, 2,  ])
+ +           [0, 2, 3, 4.5, 5, 5, 4, 3,  ,  ])
+```
+
+So in the answer, for the first element, we should expect `3 - 2 * 2 + 0 = -1`.
+And the second, `4.5 - 2 * 3 + 2 = 0.5`.
+Let's check.
+
+```{python}
+conc[2:] - 2 * conc[1:-1] + conc[:-2]
+```
+
+That looks right.
+
+How about advection?
+For that we use forward difference.
+So the difference we want is that same as the one for diffusive flux above.
+
+
+```{python}
+conc[1:] - conc[:-1]
+```
+
+If you are still confused, you might find these helpful:
+
+* W3 Schools tutorial <https://www.w3schools.com/python/numpy/numpy_array_slicing.asp>
+* NumPy guide <https://numpy.org/doc/stable/user/basics.indexing.html>
+
+
+

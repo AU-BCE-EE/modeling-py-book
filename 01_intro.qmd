@@ -1,10 +1,10 @@
 # An introduction to models {#sec-intro}
-A *model* is a representation of a real system.
+A *model* is a representation of a more complex real system.
 The term itself is quite general.
-In this book, we will focus on models that are simplified representations of a physcial, chemical, or biological system.
+In this book, we will focus on models that are simplified representations of physcial, chemical, or biological systems.
 
 Students in science and engineering might assume that a model means a piece of software or the underlying code.
-This can be the case, but is not the only meaning of the term model.
+This can be the case, but is not the only meaning of the term.
 A software implementation of a model, i.e., some kind of a software program or script that can be run to make model predictions, is called a *software model* or *computer model*.
 
 What are models used for?

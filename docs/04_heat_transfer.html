@@ -328,50 +328,44 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appx_derivatives.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Derivatives and Differential Equations</span></span></a>
+  <a href="./appx_symbols.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Symbols</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appx_fdm_formulas.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Finite difference formulas</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./appx_python_style.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Python Style Guide</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./appx_python_types.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Python data structures</span></span></a>
+  <a href="./appx_python_data_structures.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Python data structures</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./appx_slicing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Slicing in Python</span></span></a>
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Slicing in Python</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appx_symbols.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Symbols</span></span></a>
+  <a href="./appx_vs_code.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Introduction to VS Code</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appx_fdm_formulas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Finite difference formulas</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./appx_parameter_values.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">G</span>&nbsp; <span class="chapter-title">Parameter values</span></span></a>
+ <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Parameter values</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./appx_reading.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">H</span>&nbsp; <span class="chapter-title">Other books</span></span></a>
+ <span class="menu-text"><span class="chapter-number">G</span>&nbsp; <span class="chapter-title">Other books</span></span></a>
   </div>
 </li>
       </ul>
@@ -657,7 +651,7 @@ q = U \cdot \Delta T.
 </section>
 <section id="parameter-values" class="level2" data-number="4.6">
 <h2 data-number="4.6" class="anchored" data-anchor-id="parameter-values"><span class="header-section-number">4.6</span> Parameter values</h2>
-<p>In modeling, there are two ways to get parameter values: from (1) theory or (2) measurements. For example, for the system in <a href="#fig-composite-wall2" class="quarto-xref">Figure&nbsp;<span>4.9</span></a> we could use individual <span class="math inline">\(k\)</span> (from compilations by material) and <span class="math inline">\(h\)</span> (from published correlations and fluid properties) values and combine them as in <a href="#eq-series-overall-u1" class="quarto-xref">Equation&nbsp;<span>4.19</span></a> to estimate <span class="math inline">\(U\)</span>. Or, we could use some measurements of heat flow and temperature to estimate best-fit or empirical parameter values. Really the two approaches are not completely separate. After all, the starting parameters from the theoretical approach often originally come from fitting to measurements. For this book and course, we’ll add (3) from guesses. Using a very rough estimate based on values in <a href="appx_parameter_values.html" class="quarto-xref"><span>Appendix G</span></a> combined with a gut feeling is perfectly acceptable <em>for this course</em> and for the examples and problems in this book.</p>
+<p>In modeling, there are two ways to get parameter values: from (1) theory or (2) measurements. For example, for the system in <a href="#fig-composite-wall2" class="quarto-xref">Figure&nbsp;<span>4.9</span></a> we could use individual <span class="math inline">\(k\)</span> (from compilations by material) and <span class="math inline">\(h\)</span> (from published correlations and fluid properties) values and combine them as in <a href="#eq-series-overall-u1" class="quarto-xref">Equation&nbsp;<span>4.19</span></a> to estimate <span class="math inline">\(U\)</span>. Or, we could use some measurements of heat flow and temperature to estimate best-fit or empirical parameter values. Really the two approaches are not completely separate. After all, the starting parameters from the theoretical approach often originally come from fitting to measurements. For this book and course, we’ll add (3) from guesses. Using a very rough estimate based on values in <a href="appx_parameter_values.html" class="quarto-xref"><span>Appendix F</span></a> combined with a gut feeling is perfectly acceptable <em>for this course</em> and for the examples and problems in this book.</p>
 </section>
 <section id="sec-heat-link" class="level2" data-number="4.7">
 <h2 data-number="4.7" class="anchored" data-anchor-id="sec-heat-link"><span class="header-section-number">4.7</span> Linking equation</h2>
@@ -691,7 +685,7 @@ Figure&nbsp;4.10: Extended coffee model.
 </figcaption>
 </figure>
 </div>
-<div id="b79a5b19" class="cell" data-execution_count="1">
+<div id="0241af33" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">File: cooling_mods_2m.py</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">Authors: Sasha D. Hafner and Frederik R. Dalby</span></span>
@@ -758,7 +752,7 @@ Figure&nbsp;4.10: Extended coffee model.
 <span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>    }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Then, to use the model, we first <em>import</em> the module we defined and then run the function, like this:</p>
-<div id="d386ea5c" class="cell" data-execution_count="2">
+<div id="8d9af957" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">File: cool_pred_2m.py</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">Authors: Sasha D. Hafner and Frederik R. Dalby</span></span>
@@ -817,7 +811,7 @@ Figure&nbsp;4.11: Predicted coffee temperature using the cooling_mod_2m.
 <section id="problems" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="problems">Problems</h2>
 <ol type="1">
-<li><p>You have a fermenter that is heated to around 45 <span class="math inline">\(\degC\)</span> using a water jacket. The water flowing into the water jacket has a constant temperature of 50 <span class="math inline">\(\degC\)</span>. Develop and implement a steady-state model to predict fermemter temperature based on heating water flow and relevant parameters and system characteristics.</p></li>
+<li><p>You have a fermenter that is heated to around 45 <span class="math inline">\(\degC\)</span> using a water jacket. The water flowing into the water jacket has a constant temperature of 50 <span class="math inline">\(\degC\)</span>. Develop and implement a steady-state model to predict fermenter temperature based on heating water flow and relevant parameters and system characteristics.</p></li>
 <li><p>How long will it take for an ice cube to melt once it is exposed to room temperature air? Follow the model formulation steps we covered in class to develop a model to simulate the processes. You can use an analytical or numerical approach. Predict the time required for melting for a couple ice cube sizes.</p></li>
 </ol>
 </section>

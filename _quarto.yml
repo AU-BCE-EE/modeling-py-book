@@ -22,12 +22,11 @@ book:
         - 09_parameter_estimation.qmd
         - 10_time_variable_inputs.qmd
   appendices:
-    - appx_derivatives.qmd
-    - appx_fdm_formulas.qmd
-    - appx_python_style.qmd
-    - appx_python_types.qmd
-    - appx_slicing.qmd
     - appx_symbols.qmd
+    - appx_python_data_structures.qmd
+    - appx_slicing.qmd
+    - appx_vs_code.qmd
+    - appx_fdm_formulas.qmd
     - appx_parameter_values.qmd
     - appx_reading.qmd
 

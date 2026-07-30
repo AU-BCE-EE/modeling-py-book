@@ -328,50 +328,44 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appx_derivatives.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Derivatives and Differential Equations</span></span></a>
+  <a href="./appx_symbols.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Symbols</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appx_fdm_formulas.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Finite difference formulas</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./appx_python_style.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Python Style Guide</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./appx_python_types.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Python data structures</span></span></a>
+  <a href="./appx_python_data_structures.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Python data structures</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./appx_slicing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Slicing in Python</span></span></a>
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Slicing in Python</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appx_symbols.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Symbols</span></span></a>
+  <a href="./appx_vs_code.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Introduction to VS Code</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appx_fdm_formulas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Finite difference formulas</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./appx_parameter_values.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">G</span>&nbsp; <span class="chapter-title">Parameter values</span></span></a>
+ <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Parameter values</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./appx_reading.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">H</span>&nbsp; <span class="chapter-title">Other books</span></span></a>
+ <span class="menu-text"><span class="chapter-number">G</span>&nbsp; <span class="chapter-title">Other books</span></span></a>
   </div>
 </li>
       </ul>
@@ -394,7 +388,11 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#model-fit-statistics" id="toc-model-fit-statistics" class="nav-link" data-scroll-target="#model-fit-statistics"><span class="header-section-number">8.5.1</span> Model fit statistics</a></li>
   </ul></li>
-  <li><a href="#problems" id="toc-problems" class="nav-link" data-scroll-target="#problems"><span class="header-section-number">8.6</span> Problems</a></li>
+  <li><a href="#problems" id="toc-problems" class="nav-link" data-scroll-target="#problems">Problems</a>
+  <ul class="collapse">
+  <li><a href="#verification-1" id="toc-verification-1" class="nav-link" data-scroll-target="#verification-1">Verification</a></li>
+  <li><a href="#validation-1" id="toc-validation-1" class="nav-link" data-scroll-target="#validation-1">Validation</a></li>
+  </ul></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
@@ -447,7 +445,7 @@ Figure&nbsp;8.1: Where verification and validation fit into the modeling process
 <li>consistent units.</li>
 </ul>
 <p>When checking code, you should look for equations completeness and correctness by comparison to your model equations, written with pencil and paper or typed out somewhere. Of course, this presumes that the original model formulation and description are accurate. Unit consistency can be checked by entering units above terms in equations right in the model code, like this, where line 2 has the original model code and 1 a comment with units:</p>
-<div id="269db3dd" class="cell" data-execution_count="1">
+<div id="0969b2f9" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#                  m^2 *  W/m^2 -&gt; W</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>        Q_solar <span class="op">=</span> a_top <span class="op">*</span> q_sol             <span class="co"># Solar energy (W)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -458,7 +456,7 @@ Figure&nbsp;8.1: Where verification and validation fit into the modeling process
 <section id="pool-model-code-verification" class="level2" data-number="8.2">
 <h2 data-number="8.2" class="anchored" data-anchor-id="pool-model-code-verification"><span class="header-section-number">8.2</span> Pool model code verification</h2>
 <p>Let’s use the swimming pool model as a demo for verification. First, the model code from the <code>pool_mods</code> module:</p>
-<div id="209040df" class="cell" data-execution_count="2">
+<div id="0095aa3b" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">File name: pool_mods.py</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">Author: Sasha D. Hafner and Frederik Dalby</span></span>
@@ -571,21 +569,21 @@ Figure&nbsp;8.1: Where verification and validation fit into the modeling process
 <li>constitutive equations.</li>
 </ol>
 <p>During model formulation we came up with this energy conservation equation:</p>
-<div id="f1132ee5" class="cell" data-execution_count="3">
+<div id="f8ba33d8" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Rate of energy accumulation <span class="op">=</span> solar <span class="op">+</span> air<span class="op">/</span>top <span class="op">+</span> soil<span class="op">/</span>substrate <span class="op">+</span> renewal</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>All in W.</p>
 <p>And the code has this:</p>
-<div id="9ccc425c" class="cell" data-execution_count="4">
+<div id="a322ec93" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>        Q_net <span class="op">=</span> Q_solar <span class="op">+</span> Q_top <span class="op">+</span> Q_renew</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>OK? Nope! We are missing energy transfer from soil/substrate. Checking the module code above shows it is actually calculated, just not used. So we can add it:</p>
-<div id="81918a6d" class="cell" data-execution_count="5">
+<div id="6267a8b4" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>        Q_net <span class="op">=</span> Q_solar <span class="op">+</span> Q_top <span class="op">+</span> Q_sub <span class="op">+</span> Q_renew</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Now for a check of the constitutive equations.</p>
 <p>The code:</p>
-<div id="e427636a" class="cell" data-execution_count="6">
+<div id="a814c3b3" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Calculate heat flow (W) through individual pathways</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>        <span class="co"># All are positive for heat flow in (this is arbitrary)</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>        Q_solar <span class="op">=</span> a_top <span class="op">*</span> q_sol                                     <span class="co"># Solar energy</span></span>
@@ -594,7 +592,7 @@ Figure&nbsp;8.1: Where verification and validation fit into the modeling process
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        Q_renew <span class="op">=</span> cp <span class="op">*</span> dens <span class="op">*</span> flow_renew <span class="op">*</span> (temp_pool <span class="op">-</span> temp_renew) <span class="co"># Net energy coming in from renewal water</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The check, where we have copied a single line a few times to think about it in some different ways</p>
-<div id="8e7070ca" class="cell" data-execution_count="7">
+<div id="3cc43ecd" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>        <span class="co">#         Area  * flux -&gt; OK</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>        Q_solar <span class="op">=</span> a_top <span class="op">*</span> q_sol                                     <span class="co"># Solar energy</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -607,13 +605,13 @@ Figure&nbsp;8.1: Where verification and validation fit into the modeling process
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        Q_top <span class="op">=</span> a_top <span class="op">*</span> u_top <span class="op">*</span> (temp_air <span class="op">-</span> temp_pool)              <span class="co"># Convection from top</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Now some check of units. During actual V&amp;V, we would need to check <em>all</em> equations. But here let’s focus on that same line of code from above as an example.</p>
-<div id="242797fd" class="cell" data-execution_count="8">
+<div id="e8060d91" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#        Overall heat transfer coefficient from the upper water surface (W/m2-K)</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#               m^2   * W/m2-K  * ----------K---------- -&gt; W OK </span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>        Q_top <span class="op">=</span> a_top <span class="op">*</span> u_top   <span class="op">*</span> (temp_air <span class="op">-</span> temp_pool)              <span class="co"># Convection from top</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>To be sure that even this single line of code is correct, we have to check that the inputs <code>a_top</code> etc. have the correct units. These should be defined in the docstring. We see:</p>
-<div id="576bdc7a" class="cell" data-execution_count="9">
+<div id="3e66a6d0" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>    a_top : <span class="bu">float</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>       Area of pool water surface at the top (m2) </span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    . . . </span>
@@ -625,17 +623,17 @@ Figure&nbsp;8.1: Where verification and validation fit into the modeling process
 </div>
 <p>Those three look fine, once we remember that a temperature difference is the same in <span class="math inline">\(\degC\)</span> and K. Now, of course this doc string has no effect on the actual calculations carried out by the model, but it tells the user the units for the inputs. And if everything is correct up/back to here, the rest is up to the user.</p>
 <p>Now the linking equation, starting with a conceptual check.</p>
-<div id="83ed8965" class="cell" data-execution_count="10">
+<div id="e7865ece" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># temp change = energy in / (energy required for 1 K change in 1 kg * mass/vol * vol) -&gt; seems OK</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>        dtemp_dt <span class="op">=</span> Q_net <span class="op">/</span> (cp <span class="op">*</span> dens <span class="op">*</span> vol)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>And unit check.</p>
-<div id="2eef626c" class="cell" data-execution_count="11">
+<div id="1d560159" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>        <span class="co">#          J/s   / J/K-kg * kg/m3 * m3 -&gt; K/s OK</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>        dtemp_dt <span class="op">=</span> Q_net <span class="op">/</span> (cp    <span class="op">*</span> dens <span class="op">*</span> vol)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Compare to the information in the model function docstring:</p>
-<div id="ee7972ba" class="cell" data-execution_count="12">
+<div id="2c5e2994" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>    cp : <span class="bu">float</span> </span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>        Specific heat capacity of water (J<span class="op">/</span>kg<span class="op">-</span>K) </span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    dens : <span class="bu">float</span></span>
@@ -646,7 +644,7 @@ Figure&nbsp;8.1: Where verification and validation fit into the modeling process
 <section id="verification-with-model-calls" class="level2" data-number="8.3">
 <h2 data-number="8.3" class="anchored" data-anchor-id="verification-with-model-calls"><span class="header-section-number">8.3</span> Verification with model calls</h2>
 <p>Next, let’s look at some model calls.</p>
-<div id="5eccf196" class="cell" data-execution_count="13">
+<div id="d86d1c6a" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Packages</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">'modules'</span>)</span>
@@ -706,7 +704,7 @@ Figure&nbsp;8.1: Where verification and validation fit into the modeling process
 </div>
 <p>Let’s think about steady-state. Should there be a steady state condition? Sure! Do we see one above? No. Why not?</p>
 <p>How about if we run the model for 10 days?</p>
-<div id="92ff87f4" class="cell" data-execution_count="14">
+<div id="75b1aae6" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># And a demo model call</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>pred01 <span class="op">=</span> pm.dynmod(a_top <span class="op">=</span> a_top,</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                   a_wall <span class="op">=</span> a_wall,</span>
@@ -738,7 +736,7 @@ Figure&nbsp;8.1: Where verification and validation fit into the modeling process
 </div>
 <p>Ah, just a matter of time, right? And does that steady-state (or equilibrium?) temperature match expectations?</p>
 <p>We have no solar radiation in these scenarios. With the sun shining, the pool water should warm above ambient temperature. But as the water warms above air temperature, it will lose heat at a higher and higher rate, until the fixed rate of heat gain from the sun matches the variable rate of heat loss to air. Do we see that behavior?</p>
-<div id="09bff0cd" class="cell" data-execution_count="15">
+<div id="b356e948" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's add 200 W/m2 of sun, keep environment at 10, and see</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>pred02 <span class="op">=</span> pm.dynmod(a_top <span class="op">=</span> a_top,</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>                   a_wall <span class="op">=</span> a_wall,</span>
@@ -789,7 +787,7 @@ Figure&nbsp;8.1: Where verification and validation fit into the modeling process
 </div>
 <p>As expected? Higher or lower than ambient? What about the oscillations?</p>
 <p>Does it match steady state model?</p>
-<div id="9bbe2dc6" class="cell" data-execution_count="16">
+<div id="5fd09098" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>pm.ssmod(a_top <span class="op">=</span> a_top,</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>         a_wall <span class="op">=</span> a_wall,</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>         depth <span class="op">=</span> depth,</span>
@@ -813,7 +811,7 @@ Figure&nbsp;8.1: Where verification and validation fit into the modeling process
 </div>
 <p>Hmmm. . . does it? Is there an error in the model?</p>
 <p>Try renewal. If we are interested in steady state, we might just return a few times</p>
-<div id="31ad9b7b" class="cell" data-execution_count="17">
+<div id="7eb5c3b3" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>pm.dynmod(a_top <span class="op">=</span> a_top,</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>          a_wall <span class="op">=</span> a_wall,</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>          depth <span class="op">=</span> depth,</span>
@@ -843,7 +841,7 @@ Figure&nbsp;8.1: Where verification and validation fit into the modeling process
 </div>
 </div>
 <p>Big problem! We get massively negative temperature Let’s dig into this, first with some more model calls Think about it . . . Try smaller delta T and shorter time to slow down heat transfer and time, in a sense</p>
-<div id="727e1043" class="cell" data-execution_count="18">
+<div id="f55f3fda" class="cell" data-execution_count="18">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>pm.dynmod(a_top <span class="op">=</span> a_top,</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>          a_wall <span class="op">=</span> a_wall,</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>          depth <span class="op">=</span> depth,</span>
@@ -891,7 +889,7 @@ Figure&nbsp;8.1: Where verification and validation fit into the modeling process
 </div>
 <p>Adjust the time a bit. . . What does that tell us?</p>
 <p>Try <code>breakpoint()</code> to see what is happening. Let’s edit the module like this, adding <code>breakpoint()</code> to a line where we can check the numeric value of <code>Q_renew</code>, and save it.</p>
-<div id="5a9b95bd" class="cell" data-execution_count="19">
+<div id="c698daf6" class="cell" data-execution_count="19">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>...</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Define rates function</span></span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> rates(t, temp_pool):</span>
@@ -919,7 +917,7 @@ Figure&nbsp;8.1: Where verification and validation fit into the modeling process
 <span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a>...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Then we need to reload the module and call the function, like this.</p>
-<div id="f2689740" class="cell" data-execution_count="20">
+<div id="0125766f" class="cell" data-execution_count="20">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="bu">reload</span>(pm)</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>pm.dynmod(a_top <span class="op">=</span> a_top,</span>
@@ -943,7 +941,7 @@ Figure&nbsp;8.1: Where verification and validation fit into the modeling process
 <span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>temp_renew</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>In the interactive debugging session, we can check the value of any existing object by typing its name. So let’s see what <code>Q_renew</code> looks like.</p>
-<div id="def1b66e" class="cell" data-execution_count="21">
+<div id="7553eb1d" class="cell" data-execution_count="21">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> pool_mods.py(<span class="dv">94</span>) rates()</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="op">-&gt;</span> Q_net <span class="op">=</span> Q_solar <span class="op">+</span> Q_top <span class="op">+</span> Q_renew</span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>(Pdb) Q_renew</span>
@@ -955,11 +953,11 @@ Figure&nbsp;8.1: Where verification and validation fit into the modeling process
 </div>
 <p>So with a value of <code>temp_renew</code> higher than <code>temp_pool</code>, we get a negative value for <code>Q_renew</code>, while the comment at the top of that block (and the other code) shows that <code>all are positive for heat flow in (this is arbitrary)</code>. So that is a mistake!</p>
 <p>See module code in <code>rates()</code> in the relevant part of the <code>pool_mods.py</code> module.</p>
-<div id="16c653b9" class="cell" data-execution_count="22">
+<div id="8fa3fd7c" class="cell" data-execution_count="22">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>Q_renew <span class="op">=</span> cp <span class="op">*</span> dens <span class="op">*</span> flow_renew <span class="op">*</span> (temp_pool <span class="op">-</span> temp_renew) <span class="co"># Net energy coming in from renewal water</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>It should look like this.</p>
-<div id="0d6af90c" class="cell" data-execution_count="23">
+<div id="70d4f5d8" class="cell" data-execution_count="23">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>Q_renew <span class="op">=</span> cp <span class="op">*</span> dens <span class="op">*</span> flow_renew <span class="op">*</span> (temp_pool <span class="op">-</span> temp_renew) <span class="co"># Net energy coming in from renewal water</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>There are many ways that model calls can be used for model verification, but they depend on the specifics of the model. Other possible checks here could include:</p>
@@ -968,7 +966,7 @@ Figure&nbsp;8.1: Where verification and validation fit into the modeling process
 <li>Correct qualitative effects of changes to inputs (more or less radiation, higher or lower substrate temperature or resistance)</li>
 </ul>
 <p>For a quantitative check of energy balance, we can add cumulative heat transfer as a state variable. This is done in the <code>dynmod_pp()</code> function defined in the same module. The function is copied below as well.</p>
-<div id="10567b31" class="cell" data-execution_count="24">
+<div id="26b4b42c" class="cell" data-execution_count="24">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a model with cumulative transport state variables</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="co"># pp is for ++, as in more than the original model :)</span></span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> dynmod_pp(a_top,    </span>
@@ -1047,7 +1045,7 @@ Figure&nbsp;8.1: Where verification and validation fit into the modeling process
 <span id="cb31-76"><a href="#cb31-76" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span>(out)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Let’s try this new version</p>
-<div id="af6c99c9" class="cell" data-execution_count="25">
+<div id="f5826f6e" class="cell" data-execution_count="25">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="bu">reload</span>(pm)</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>pm.dynmod_pp(a_top <span class="op">=</span> a_top,</span>
@@ -1139,21 +1137,24 @@ MBE = \frac{ \sum_{i=1}^{N} y_{p,i} - y_{m,i}} {N},
 <p>where <span class="math inline">\(MBE=\)</span> mean bias error, <span class="math inline">\(y_{p,i}=\)</span> the <span class="math inline">\(i^{th}\)</span> predicted value of the dependent variable <span class="math inline">\(y\)</span>, <span class="math inline">\(y_{m,i}=\)</span> the <span class="math inline">\(i^{th}\)</span> measured value of the dependent variable, and <span class="math inline">\(N=\)</span> the number of observations. Positive MBE means the model tends to predict higher values than the measurements show (positive bias), and negative means lower (negative bias).</p>
 </section>
 </section>
-<section id="problems" class="level2" data-number="8.6">
-<h2 data-number="8.6" class="anchored" data-anchor-id="problems"><span class="header-section-number">8.6</span> Problems</h2>
-<p>I. Verification</p>
+<section id="problems" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="problems">Problems</h2>
+<section id="verification-1" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="verification-1">Verification</h3>
 <p>In this exercise you will work with a version of the ammonia volatilization model from the first mini-project. This document provides some details, the <code>amm_concept_model.pdf</code> has more, and for even more, see the solutions to that mini-project. Remember that you need to have a good understanding of the underlying conceptual and mathematical models in order to verify a computer model! So make use of those documents.</p>
 <p>You’ll use the <code>dynmod()</code> function defined in the <code>amm_mods.py</code> file in the same subdirectory as this document. The <code>amm_mods.py</code> file is a <em>module</em> that defines the model as a Python function called <code>dynmod()</code>. The script <code>amm_demo.py</code> has a short demonstration.</p>
 <p>The model simulates total ammonia nitrogen (TAN, the sum of free ammonia (NH3) and ammonium (NH4+)) in manure in a storage tank. It includes continuous addition and removal of manure at a fixed rate, so the volume of manure in the tank does not change. But TAN is lost through volatilization of ammonia from the surface.</p>
-<p>Can you verify the model following the approach we went through in class? Save your work in a Python script and a text file, or really in any form that you think is appropriate. If you prefer commenting in the module file <code>amm_mods.py</code> directly, that is fine.</p>
+<ol type="1">
+<li><p>Can you verify the model following the approach we went through in class? Save your work in a Python script and a text file, or really in any form that you think is appropriate. If you prefer commenting in the module file <code>amm_mods.py</code> directly, that is fine.</p>
 <p>If you struggle to work with the volume-normalized variables and expressions, you can use the second model function <code>ddynmod()</code>, named for <em>double</em> dynamic model because can also simulation tank volume dynamics. It does not use volume-normalize values, because the volume is variable over time. In that case you probably want to set the manure pumping rate (flow) in and out to the same value for simplicity.</p>
-<p>For more details on the mass balance and constitutive equations, see <code>amm_concept_model.pdf</code>.</p>
-<ol start="2" type="I">
-<li>Validation</li>
+<p>For more details on the mass balance and constitutive equations, see <code>amm_concept_model.pdf</code>.</p></li>
 </ol>
+</section>
+<section id="validation-1" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="validation-1">Validation</h3>
 <p>In this exercise you will work with a 1D diffusion model. You will get some practice in verification of conservation with 1D models and try model validation. There are also two optional questions on some different ways to implement and verify (program) 1D models.</p>
 <p>The conceptual model is quite simple. We have a column with some solute (NaCl for example, which is what was used in the measurements) diffusing from one end to the other through water. We can represent the conceptual model it with text symbols:</p>
-<div id="5adb2e60" class="cell" data-execution_count="26">
+<div id="c8811021" class="cell" data-execution_count="26">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>       <span class="op">--------------------------</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>       <span class="op">|</span>                        <span class="op">|</span></span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a> c_l   <span class="op">|</span>                        <span class="op">|</span> c_r</span>
@@ -1169,8 +1170,9 @@ MBE = \frac{ \sum_{i=1}^{N} y_{p,i} - y_{m,i}} {N},
 <li><p>Given what you know about Fick’s law of diffusion at steady-state in a plane wall, predict the steady-state flux of the solute without the model, and then compare your expected value to model predictions.</p></li>
 <li><p>Can you use the output from the <code>diff1D()</code> to verify implementation of mass balance in the model? Check the function docstring (look at the module file contents or run <code>help(diff1D)</code> in Python) to check function parameters and outputs. This is meant to be a quick check, and not a detailed verification, but it is still good practice to keep a record of your function calls, output, and interpretation. That could be done in many ways, including a Markdown document or <code>*.txt</code> file with code and output (manually pasted in), or an MS Word file, a Jupyter Notebook file, or a Quarto Markdown (<code>q.md</code>) file.</p></li>
 <li><p>See the data file <code>col_salt.csv</code> for some (fabricated) measurements of the total salt (NaCl here) mass within a 0.1 m long column with a diameter of 0.02 m. Fixed salt concentrations at the boundaries were 36 kg/m3 at the left and zero at the right. Use the measurements to validate the model graphically and with relevant model fit statistics. The diffusivity of NaCl in water is known to be around 1.6E-9 m2/s. What do you think about the accuracy of the model? Hint: Be careful with units and variables. You have to convert model predictions to the variable that was measured.</p></li>
+<li><p>You may have noticed that the cumulative mass transfer at the left and right boundaries are both positive for flow to the right. Create a new version of the <code>diff1D()</code> function and change this feature, so that both terms are positive for mass going into the column (model domain). Make sure you give the new function a good name. Save it in the same module as the original. Now repeat your mass mass balance verification with this new function.</p></li>
 </ol>
-<p>Optional: 5. You may have noticed that the cumulative mass transfer at the left and right boundaries are both positive for flow to the right. Create a new version of the <code>diff1D()</code> function and change this feature, so that both terms are positive for mass going into the column (model domain). Make sure you give the new function a good name. Save it in the same module as the original. Now repeat your mass mass balance verification with this new function.</p>
+</section>
 </section>
 <section id="references" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="references">References</h2>

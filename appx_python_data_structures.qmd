@@ -71,7 +71,7 @@ print(s)
 
 ## 3. Lists
 
-Lists are can contain multiple elements.
+Lists are composite objects that can contain multiple elements.
 There are multiple ways to create them, but the simplest is with square brackets: `[` and `]`.
 For example,
 
@@ -205,7 +205,7 @@ Another difference between the two data structures is that there are fewer metho
 
 ## 5. Arrays
 
-Proper NumPy arrays are typically better than lists (and certainly tuples) for working with array-like data when developing models in Python.
+Proper NumPy arrays are typically better than lists (and certainly tuples) for working with array-like data when implementing models in Python.
 There are many different ways to create NumPy arrays.
 For example, we can use lists.
 Here is a one-dimensional (1D) array, or a vector, for example.
