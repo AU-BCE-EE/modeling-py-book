@@ -19,7 +19,7 @@ Expand. . .add a couple examples
 
 ## Types of models {#sec-classification}
 There are multiple ways to group models, and the categories are useful for understanding, developing, and explaining models.
-The different classification groups are not exclusive, so a single model could be a lumped parameter analytical model.
+The different classification groups are not exclusive, so a single model could for example be both a "lumped parameter" and an "analytical model".
 
 ### Conceptual, mathematical, and computer models
 Conceptual, mathematical, and computer models are not really levels in a model classification scheme, but terms for the stage of model development.
