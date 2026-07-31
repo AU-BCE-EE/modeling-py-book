@@ -414,18 +414,13 @@ MathJax = {
 <h3 data-number="D.2.3" class="anchored" data-anchor-id="vs-code-python-extension"><span class="header-section-number">D.2.3</span> VS Code Python extension</h3>
 <p>Lastly, you will need a Python extension. 1. Open up VS Code and click the Extensions icon (near top left, looks like four squares) or use <code>Ctrl + Shift + x</code>. 2. Search for <code>Python</code>. 3. Carefully find the one published by Microsoft that has a description similar to this: “Python language support with extension access points for IntelliSense (Pylance), Debugging (Python Debugger), linting, formatting, refactoring, unit tests, and more.” 4. Install it.</p>
 <p>Your VS Code program may not give you access to all the features you need by default, including extensions, depending on which folder it is running in. If you see this warning at the top, you must “trust” the folder.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images-vs-code/75c36dbf-2b7a-4fec-866f-4c5416153f3c.png" class="img-fluid figure-img" width="727"></p>
-<figcaption>image</figcaption>
-</figure>
-</div>
+<p><img src="images-vs-code/75c36dbf-2b7a-4fec-866f-4c5416153f3c.png" class="img-fluid" width="727"></p>
 <p>Click on “Manage” and then “Trust” to do that.</p>
 </section>
 <section id="python-libraries" class="level3" data-number="D.2.4">
 <h3 data-number="D.2.4" class="anchored" data-anchor-id="python-libraries"><span class="header-section-number">D.2.4</span> Python libraries</h3>
 <p>In this course you will need a few external Python libraries (collections of modules, which provide the functions that we will need). You can install them all by opening up a new terminal window (PowerShell), either with “Terminal” -&gt; “New Terminal” or the keyboard shortcut (<code>Ctrl + Shift + æ</code> for me) and running the following command:</p>
-<div id="375d8eee" class="cell" data-execution_count="1">
+<div id="09058552" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>python <span class="op">-</span>m pip install numpy scipy matplotlib pandas</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
@@ -434,12 +429,7 @@ MathJax = {
 <h2 data-number="D.3" class="anchored" data-anchor-id="powershell"><span class="header-section-number">D.3</span> PowerShell</h2>
 <p>A <em>shell</em> is a text-based program that reads commands and does things. Most of the readers of this guide are probably using Windows, and for that operating system, the modern shell that you should use is called <em>PowerShell</em>. In your Python work you may mostly interact with PowerShell through VS Code. But here we’ll start by running PowerShell outside of VS Code in the Windows terminal program (the window that runs shells), partially for understanding.</p>
 <p>Open up PowerShell (e.g., hit the Windows or super key ⊞ and type PowerShell), and you should see something like this:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images-vs-code/5451e621-f61d-42f1-9c53-f739cc62d8be.png" class="img-fluid figure-img" width="1112"></p>
-<figcaption>image</figcaption>
-</figure>
-</div>
+<p><img src="images-vs-code/5451e621-f61d-42f1-9c53-f739cc62d8be.png" class="img-fluid" width="1112"></p>
 <p>The bit at the left, <code>PS C:\Users\au594831&gt;</code> is called the “prompt”. The single <code>&gt;</code> is one way to tell you are working in PowerShell. It will look the same when you open it up in VS Code. And while you can do a lot in VS Code by clicking buttons, you still need to be aware of what is running in the terminal pane below.</p>
 <p>(If you are working with Mac OS, the shell is just called <em>Terminal</em>, and on Linux it could be <em>Bash</em> or another shell program. The few commands we will cover here are identical in all three, so you can use the appropriate program but replace PowerShell with e.g., Terminal or Bash and follow the instructions.)</p>
 <p>There are many commands that PowerShell understands. You can probably work with PowerShell in VS Code without knowing any PowerShell commands, but anyone working on Windows should really know some, and these are some useful ones:</p>
@@ -456,30 +446,15 @@ MathJax = {
 <h2 data-number="D.4" class="anchored" data-anchor-id="using-python-in-a-shell"><span class="header-section-number">D.4</span> Using Python in a shell</h2>
 <p>Python scripts can be run directly in PowerShell with the <code>python</code> command. This is the <em>script mode</em> listed at the top of this document. The command is <code>python script_name.py</code>. Of course, this requires that <code>script_name.py</code> is in the current directory in PowerShell.</p>
 <p>A shell can also run Python interactively. To start an interactive session with Python, just type <code>python</code> at the prompt, like this:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images-vs-code/7a0dcede-b838-4683-88aa-d09a8ace90dd.png" class="img-fluid figure-img" width="1105"></p>
-<figcaption>image</figcaption>
-</figure>
-</div>
+<p><img src="images-vs-code/7a0dcede-b838-4683-88aa-d09a8ace90dd.png" class="img-fluid" width="1105"></p>
 <p>Notice how the prompt now looks different? Like this: <code>&gt;&gt;&gt;</code>, and also fuchsia in color. That is a hint to show that you are now in a Python <em>interpreter</em>, the program that will read any commands you enter and evaluate them. This mode is called a <em>REPL</em>, from “read-evaluate-print loop”. And the term REPL is often used to refer to an interactive interpreter session.</p>
 <p>This window will now act like any interactive Python session, for example,</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images-vs-code/1ea6e9dd-dc66-422a-9487-04b0731a8f6c.png" class="img-fluid figure-img" width="1101"></p>
-<figcaption>image</figcaption>
-</figure>
-</div>
+<p><img src="images-vs-code/1ea6e9dd-dc66-422a-9487-04b0731a8f6c.png" class="img-fluid" width="1101"></p>
 </section>
 <section id="terminal-window-and-powershell-in-vs-code" class="level2" data-number="D.5">
 <h2 data-number="D.5" class="anchored" data-anchor-id="terminal-window-and-powershell-in-vs-code"><span class="header-section-number">D.5</span> Terminal window and PowerShell in VS Code</h2>
 <p>Open up VS Code and open a terminal pane at the bottom through the <code>Terminal</code> menu by clicking on <code>New terminal</code>. Now you will see PowerShell running in the terminal pane at the bottom of VS Code, like this:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images-vs-code/357d8eac-2727-44a5-9173-a17db9cabf23.png" class="img-fluid figure-img" width="1285"></p>
-<figcaption>image</figcaption>
-</figure>
-</div>
+<p><img src="images-vs-code/357d8eac-2727-44a5-9173-a17db9cabf23.png" class="img-fluid" width="1285"></p>
 <p>How can you tell this is a PowerShell terminal? You should be able to tell because the prompt starts with <code>PS</code> and ends with <code>&gt;</code>. Also, can you see the <code>powershell</code> label toward the upper right?</p>
 <p>Click in that pane and type <code>python</code>, followed by hitting <code>Enter</code>.</p>
 <p>Now you are in an interactive Python session. Do you see that the prompt changed? This may be a quick way to check some ideas in Python, but for a couple reasons is not the best way to use Python in VS Code. See the next sections for better options.</p>
@@ -488,19 +463,9 @@ MathJax = {
 <h2 data-number="D.6" class="anchored" data-anchor-id="vs-code-workspace"><span class="header-section-number">D.6</span> VS Code workspace</h2>
 <p>VS Code uses something called <em>workspaces</em> to keep track of all the files involved in a project or assignment. Generally each set of homework exercises or mini-project should be in a separate subdirectory on your computer and should be handled as a distinct workspace in VS Code. Fortunately it is easy to sort this out–just set the project location before working.</p>
 <p>Let’s open up VS Code and start and new project. First, make sure you have a directory or folder for your project. To follow along with this guide, you can create a folder called <code>simple_project</code> in any appropriate location on your local computer. (Or, you can clone this repo and use the <code>demos/simple_project</code> folder that is included.) Then, in VS Code, under the <code>File</code> menu, click <code>Open folder</code> (or hit <code>Ctrl + k</code> followed by <code>Ctrl + o</code>),</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images-vs-code/908e8994-9553-46d5-917f-35d7f64f6d72.png" class="img-fluid figure-img" width="1487"></p>
-<figcaption>image</figcaption>
-</figure>
-</div>
+<p><img src="images-vs-code/908e8994-9553-46d5-917f-35d7f64f6d72.png" class="img-fluid" width="1487"></p>
 <p>and browse to your folder,</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images-vs-code/3925bb3f-2507-4b46-9b4e-71dbbb84c3e3.png" class="img-fluid figure-img" width="1564"></p>
-<figcaption>image</figcaption>
-</figure>
-</div>
+<p><img src="images-vs-code/3925bb3f-2507-4b46-9b4e-71dbbb84c3e3.png" class="img-fluid" width="1564"></p>
 <p>and click “Open”.</p>
 <p>What does this do? It ensures that when Python is run it will have this folder as the <em>working directory</em>, i.e., the location where the Python interpreter looks for files and saves output. It also “pins” settings for this particular project, e.g., pane layout or Python interpreter. Generally you won’t have to think about that though. <em>Making sure that you start with this <code>open folder</code> step avoids a whole lot of problems related to file paths!</em></p>
 </section>
@@ -508,7 +473,7 @@ MathJax = {
 <h2 data-number="D.7" class="anchored" data-anchor-id="create-and-edit-a-script-in-vs-code"><span class="header-section-number">D.7</span> Create and edit a script in VS Code</h2>
 <p>A <em>script</em> is just a text file with commands in Python or some other computer language. Python scripts are typically named with the <code>.py</code> extension, e.g., <code>simple1.py</code>.</p>
 <p>In VS Code you can create a new script with the <code>File</code> menu by selecting <code>New File</code> or <code>New Text File</code> (or using the keyboard shortcuts that are shown in the menu, e.g., <code>Ctrl + n</code>). You can now edit the file using the feature-rich script editor. Open a new file and add some content, e.g.,</p>
-<div id="c18d16f9" class="cell" data-execution_count="2">
+<div id="03a870b7" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">file: simple1.py</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">author: Your Name</span></span>
@@ -526,118 +491,53 @@ MathJax = {
 <p>Then save the file with <code>Ctrl + s</code> or <code>Save</code> under the <code>File</code> menu. You should see that the default location is your project folder–perfect!</p>
 <p>Alternatively, you can open the <code>simple1.py</code> script that is included in this repo. But remember the <code>Open folder</code> step from above!</p>
 <p>VS Code has several features that are meant to make script editing easier. Syntax highlighting is obvious here:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images-vs-code/1a80dff6-ead1-43c1-94ba-03e8e74e4422.png" class="img-fluid figure-img" width="1188"></p>
-<figcaption>image</figcaption>
-</figure>
-</div>
+<p><img src="images-vs-code/1a80dff6-ead1-43c1-94ba-03e8e74e4422.png" class="img-fluid" width="1188"></p>
 <p>Be sure to save your script occasionally when editing it, and before you try to run it in script mode (next section).</p>
 </section>
 <section id="run-a-script-in-python-in-script-mode" class="level2" data-number="D.8">
 <h2 data-number="D.8" class="anchored" data-anchor-id="run-a-script-in-python-in-script-mode"><span class="header-section-number">D.8</span> Run a script in Python in “script mode”</h2>
 <p>Under the <code>Terminal</code> menu select <code>New terminal</code>. You should then see something like this at the bottom of your VS Code window:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images-vs-code/be613d51-ce46-4b61-a806-ea1f0f6e87d6.png" class="img-fluid figure-img" width="1420"></p>
-<figcaption>image</figcaption>
-</figure>
-</div>
+<p><img src="images-vs-code/be613d51-ce46-4b61-a806-ea1f0f6e87d6.png" class="img-fluid" width="1420"></p>
 <p>Now you can tell that this terminal pane is running PowerShell (right?). And that is exactly what we need to run the <code>simple1.py</code> script in Python in <em>script mode</em>. To do that, click in the terminal pane and enter this command:</p>
-<div id="50b801e7" class="cell" data-execution_count="3">
+<div id="717c64e3" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>python simple1.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>You should see this:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images-vs-code/dfca20e2-2a23-4427-9620-23885bbcfe93.png" class="img-fluid figure-img" width="1416"></p>
-<figcaption>image</figcaption>
-</figure>
-</div>
+<p><img src="images-vs-code/dfca20e2-2a23-4427-9620-23885bbcfe93.png" class="img-fluid" width="1416"></p>
 <p>If you get an error like the one below, check the script name spelling.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images-vs-code/5963428b-bf22-4334-99ae-1bbb97300af3.png" class="img-fluid figure-img" width="1450"></p>
-<figcaption>image</figcaption>
-</figure>
-</div>
+<p><img src="images-vs-code/5963428b-bf22-4334-99ae-1bbb97300af3.png" class="img-fluid" width="1450"></p>
 <p>Or, did you forget to open the correct folder? Remember that this window is a PowerShell terminal, so you have access to commands that can help, like <code>ls</code>.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images-vs-code/67b39692-4197-41c0-a640-662e1d2719da.png" class="img-fluid figure-img" width="1461"></p>
-<figcaption>image</figcaption>
-</figure>
-</div>
+<p><img src="images-vs-code/67b39692-4197-41c0-a640-662e1d2719da.png" class="img-fluid" width="1461"></p>
 <p>If you saw an error message about <code>python</code> not being recognized, check that you have actually installed Python.</p>
 <p>How is this any different from part 5 above? The key difference is that here we did the <code>open folder</code> step first, so we know that PowerShell is in the right directory, so Python will run in the right directory, and will be able to find our script.</p>
 <p>If you prefer clicking buttons, you can click this “Run in Python” button at the top right of VS Code:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images-vs-code/6129d1ee-5937-414b-a1a9-5b03b7c68660.png" class="img-fluid figure-img" width="1385"></p>
-<figcaption>image</figcaption>
-</figure>
-</div>
+<p><img src="images-vs-code/6129d1ee-5937-414b-a1a9-5b03b7c68660.png" class="img-fluid" width="1385"></p>
 <p>What does that do? The button sends a command to a terminal pane. The overall effect is the same as explicitly opening a terminal and typing <code>python simple1.py</code>, but there are some differences. Here is what you should see below:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images-vs-code/233fabbe-e5f5-4422-92ef-7940a76db43e.png" class="img-fluid figure-img" width="1450"></p>
-<figcaption>image</figcaption>
-</figure>
-</div>
+<p><img src="images-vs-code/233fabbe-e5f5-4422-92ef-7940a76db43e.png" class="img-fluid" width="1450"></p>
 <p>First, note that the actual command is different from what you manually typed. This “Run” button generates a very explicit command, with the complete path to both the python executable and your script included. This is a bit safer, in that it is less susceptible to details about how you installed Python.</p>
 <p>Second, did you notice that this command was sent to a new terminal pane, running a different instance of PowerShell? Unless you already closed it, the one that was opened from the <code>Terminal</code> menu is still open, but hidden. Click here to go back to it:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images-vs-code/974bda0b-ccef-4874-87c4-8b68d184f45f.png" class="img-fluid figure-img" width="1386"></p>
-<figcaption>image</figcaption>
-</figure>
-</div>
+<p><img src="images-vs-code/974bda0b-ccef-4874-87c4-8b68d184f45f.png" class="img-fluid" width="1386"></p>
 <p>The “Run” button will never use it though–it will use a designated terminal pane that it opens if needed. So if we click that button again, the newer instance is used. If you prefer the button and the VS Code-spawned terminal pane, you can close the original one (or any others) with this “trash/kill” button:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images-vs-code/5f602ae6-de5d-437b-8c92-a2d331b6efb2.png" class="img-fluid figure-img" width="1387"></p>
-<figcaption>image</figcaption>
-</figure>
-</div>
-<p>There is a keyboard shortcut for the <code>Run in Python</code> button: <code>Ctrl + F5</code>. (The first time you use it you will have to select a “debugger”, and the recommendation is fine. It won’t actually be used unless you just hit <code>F5</code> without the <code>Ctrl</code> key.)</p>
+<p><img src="images-vs-code/5f602ae6-de5d-437b-8c92-a2d331b6efb2.png" class="img-fluid" width="1387"></p>
+<p>There is a keyboard shortcut for the <code>Run in Python</code> button: <code>Ctrl + F5</code> (or, on a laptop, <code>Fn + Ctrl + F5</code>). The first time you use it you will have to select a “debugger”, and the recommendation is fine. (It won’t actually be used unless you just hit <code>F5</code> without the <code>Ctrl</code> key.)</p>
 <p>What if you wrote another script with only this line:</p>
-<div id="f50c5ba8" class="cell" data-execution_count="4">
+<div id="b09df48e" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Would it in fact print the value of <code>x</code>, calculated in the <code>simple1.py</code> script, if you ran first <code>script1.py</code> and then <code>script2.py</code> in script mode? We can try to prove a point!</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images-vs-code/9f011eff-9814-4677-8682-337f8e335356.png" class="img-fluid figure-img" width="1391"></p>
-<figcaption>image</figcaption>
-</figure>
-</div>
+<p><img src="images-vs-code/9f011eff-9814-4677-8682-337f8e335356.png" class="img-fluid" width="1391"></p>
 <p>Nope! Why not? Because that is the behavior of an <em>interactive Python session</em> but we are running Python in <em>script mode</em>. When we call <code>python simple1.py</code>, the Python interpreter is started, it runs the code in the <code>simple1.py</code> script <strong>and then closes</strong>, and the <em>state</em> of the interpreter is discarded. Whatever variables were created by code in the script are lost. For a different approach, see the next section.</p>
 </section>
 <section id="interactive-script-development" class="level2" data-number="D.9">
 <h2 data-number="D.9" class="anchored" data-anchor-id="interactive-script-development"><span class="header-section-number">D.9</span> Interactive script development</h2>
 <p>In many cases, especially when learning something new about Python, or developing a script with multiple steps, it is helpful to be able to send only a single line or piece from a script. This lets you check code as you write it, and you can be sure exactly which lines cause errors. And because the same instance of the Python interpreter stays open, the <em>state</em> of the interpreter, or everything that the interpreter is holding in memory, which for us mainly means any variables that were created and any modules that were imported, <em>persists</em> until you close the Python interpreter. You could get by by always running scripts in script mode, and checking any error messages if there are problems, perhaps using <code>breakpoint()</code> once in a while to go through code line-by-line. But the interactive script development approach described here is probably easier and quicker.</p>
 <p>Let’s keep working with the simple1.py script. The simplest way to send a line of code is the <code>Shift + Enter</code> keyboard shortcut. Here is what you should see if you try that:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images-vs-code/aef04a53-7091-4dc2-a426-85a2ffc0ef91.png" class="img-fluid figure-img" width="1199"></p>
-<figcaption>image</figcaption>
-</figure>
-</div>
+<p><img src="images-vs-code/aef04a53-7091-4dc2-a426-85a2ffc0ef91.png" class="img-fluid" width="1199"></p>
 <p>It did the job by opening an interactive Python session, and then sending the single line of code. You can see the command for starting Python at the top. The telltale Python prompt is circled in bright green. And the line of code submitted to the interpreter is underlined in light blue.</p>
 <p>If you prefer using a menu option (I am not sure why anyone would), you can find it by right-clicking on the line or selection, then scrolling way down to <code>Run Python</code>, and under that, <code>Run Selection/Line...</code> here:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images-vs-code/6a98105c-3a61-45ab-bd06-9d1b09b168ed.png" class="img-fluid figure-img" width="1018"></p>
-<figcaption>image</figcaption>
-</figure>
-</div>
+<p><img src="images-vs-code/6a98105c-3a61-45ab-bd06-9d1b09b168ed.png" class="img-fluid" width="1018"></p>
 <p>If you try the <code>Shift + Enter</code> shortcut again, VS Code recognizes that there is already a Python interpreter running, so it just sends the code. And if you send the following lines, Python works as expected, “remembering” the value of <code>x</code>, because all this code is run in the same instance of Python.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images-vs-code/671eb382-7370-43b5-80d4-d3115716ce11.png" class="img-fluid figure-img" width="1290"></p>
-<figcaption>image</figcaption>
-</figure>
-</div>
+<p><img src="images-vs-code/671eb382-7370-43b5-80d4-d3115716ce11.png" class="img-fluid" width="1290"></p>
 <p>The cursor in the script editor automatically advances to the next line of Python code when you use <code>Shift + Enter</code>. So it is easy to run a few lines sequentially without moving your fingers from the <code>Shift</code> and <code>Enter</code> keys. But if you want to run several lines, you can highlight (select) them with the trackpad/mouse or keyboard (<code>Shift</code> and arrow keys) and hit <code>Shift + Enter</code> again. Simple!</p>
 </section>
 <section id="troubleshooting" class="level2" data-number="D.10">
