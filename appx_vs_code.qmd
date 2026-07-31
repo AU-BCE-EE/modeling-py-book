@@ -346,6 +346,6 @@ The latest one that you installed that is (should be?) in `AppData\Local\Program
 * <https://realpython.com/interacting-with-python/>
 * <https://www.geeksforgeeks.org/computer-science-fundamentals/what-is-the-difference-between-interactive-and-script-mode-in-python-programming/>
 * <https://code.visualstudio.com/docs/python/run>
-
+* <https://code.visualstudio.com/docs/editing/workspaces/workspaces>
 
 

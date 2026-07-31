@@ -949,7 +949,7 @@
     "href": "appx_vs_code.html#other-resources",
     "title": "Appendix D — Introduction to VS Code",
     "section": "D.12 Other resources",
-    "text": "D.12 Other resources\n\nhttps://realpython.com/interacting-with-python/\nhttps://www.geeksforgeeks.org/computer-science-fundamentals/what-is-the-difference-between-interactive-and-script-mode-in-python-programming/\nhttps://code.visualstudio.com/docs/python/run",
+    "text": "D.12 Other resources\n\nhttps://realpython.com/interacting-with-python/\nhttps://www.geeksforgeeks.org/computer-science-fundamentals/what-is-the-difference-between-interactive-and-script-mode-in-python-programming/\nhttps://code.visualstudio.com/docs/python/run\nhttps://code.visualstudio.com/docs/editing/workspaces/workspaces",
     "crumbs": [
       "Appendices",
       "<span class='chapter-number'>D</span>  <span class='chapter-title'>Introduction to VS Code</span>"
