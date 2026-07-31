@@ -413,7 +413,7 @@ window.Quarto = {
 </header>
 
 
-<p>A GE, like <a href="#eq-coffee-ge2" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-coffee-ge2</span></a>, is a mathematical model. In order to get predictions, we need to solve the model. There are two general ways to do that: analytical and numerical approaches. The conceptual difference between the two of these should be familiar from <a href="#sec-analytical-v-numerical" class="quarto-xref"><span class="quarto-unresolved-ref">sec-analytical-v-numerical</span></a>. In this chapter we’ll explore the two types of models, also methods of solving models, in more detail.</p>
+<p>A GE, like <a href="02_components_formulation.html#eq-coffee-ge2" class="quarto-xref">Equation&nbsp;<span>2.8</span></a>, is a mathematical model. In order to get predictions, we need to solve the model. There are two general ways to do that: analytical and numerical approaches. The conceptual difference between the two of these should be familiar from <a href="01_intro.html#sec-analytical-v-numerical" class="quarto-xref"><span>Section 1.1.2</span></a>. In this chapter we’ll explore the two types of models, also methods of solving models, in more detail.</p>
 <p>Numerical models are almost always associated with computer code. One exception is pencil-and-paper demonstration of numerical calculations that you might perform on an exam. But to actually make useful predictions using numerical methods, the ability of computers to perform numerous calculations quickly is necessary.</p>
 <p>In contrast, analytical models could be applied with some simple calculations and so creating a Python script or function isn’t always necessary for model application. A calculator or even pencil and paper could be sufficient. But in this book, we will also implement analytical models in Python, to make application easier.</p>
 <!-- Lots of variation in how to do this.
@@ -480,8 +480,8 @@ Figure&nbsp;3.1: Predicted coffee temperature using Euler method.
 </div>
 </div>
 </div>
-<p>So there are some predictions from a simple numerical model (<a href="#fig-coffee-preds1" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-coffee-preds1</span></a>). Whether or not it is accurate depends on the model structure as well as the input variables. We’ll come back to that question later. Certainly predictions are plausible and the model provides the qualitative response that we had expected (see <a href="#sec-intro" class="quarto-xref"><span class="quarto-unresolved-ref">sec-intro</span></a>).</p>
-<p>The points in <a href="#fig-coffee-preds1" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-coffee-preds1</span></a> show the model predictions for specific times. Our model made no predictions for other times, and in the plot the straight lines just connect points. We had to explicitly select a time step, called <code>dt</code> in the code; it was set to 10 minutes (600 s) above. It is good practice to try some different values to see the effect. While we could edit the chunk of code above, a more efficient and reproducible approach is to create a Python <em>function</em> of the model. We will generally use this approach for all the following computer models in this book.</p>
+<p>So there are some predictions from a simple numerical model (<a href="#fig-coffee-preds1" class="quarto-xref">Figure&nbsp;<span>3.1</span></a>). Whether or not it is accurate depends on the model structure as well as the input variables. We’ll come back to that question later. Certainly predictions are plausible and the model provides the qualitative response that we had expected (see <a href="01_intro.html" class="quarto-xref"><span>Chapter 1</span></a>).</p>
+<p>The points in <a href="#fig-coffee-preds1" class="quarto-xref">Figure&nbsp;<span>3.1</span></a> show the model predictions for specific times. Our model made no predictions for other times, and in the plot the straight lines just connect points. We had to explicitly select a time step, called <code>dt</code> in the code; it was set to 10 minutes (600 s) above. It is good practice to try some different values to see the effect. While we could edit the chunk of code above, a more efficient and reproducible approach is to create a Python <em>function</em> of the model. We will generally use this approach for all the following computer models in this book.</p>
 <div id="a2764442" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cool_eu(T_init, T_air, mass, area, h, time_range, dt, cp<span class="op">=</span><span class="fl">4.2</span>):</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
@@ -621,7 +621,7 @@ Figure&nbsp;3.2: Predicted coffee temperature using the Euler method, showing re
 <li>higher-order methods.</li>
 </ol>
 <p>The first of these means that we, the users, don’t set a fixed step size <code>dt</code>. Instead, the algorithm implemented in <code>solve_ivp()</code> adjusts the value on the fly, as needed to ensure accurate results without long run times that could be avoided. When state variable derivatives change a lot over time or the problem is otherwise a <em>stiff</em> one, the solver will use a small step size. When a small step size is not needed, it will (or can, depending on the settings for some arguments) increase again to a larger (i.e., faster) value.</p>
-<p>The Euler method is a <em>first-order</em> method, because it is based completely on first derivatives. By applying it, we explicitly assume that the we can approximate the derivative over some time interval as equal to the exact value at the start of the interval. The <code>solve_ivp()</code> function implements <em>higher-order</em> methods that evaluate (calculate) the derivative at other times and use a weighted average value to move onto the next time step. The slopes considered in the 4th order Runge-Kutta method is in <a href="#fig-RK4-slopes" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-RK4-slopes</span></a>. And the green asterisk shows the estimated value, which is quite close to the true response shown by the blue curve. Where would the the Euler method land? (Hint: at <span class="math inline">\(t_0 + h\)</span>, and look at <span class="math inline">\(k_1\)</span> for the single slope that is applied.)</p>
+<p>The Euler method is a <em>first-order</em> method, because it is based completely on first derivatives. By applying it, we explicitly assume that the we can approximate the derivative over some time interval as equal to the exact value at the start of the interval. The <code>solve_ivp()</code> function implements <em>higher-order</em> methods that evaluate (calculate) the derivative at other times and use a weighted average value to move onto the next time step. The slopes considered in the 4th order Runge-Kutta method is in <a href="#fig-RK4-slopes" class="quarto-xref">Figure&nbsp;<span>3.3</span></a>. And the green asterisk shows the estimated value, which is quite close to the true response shown by the blue curve. Where would the the Euler method land? (Hint: at <span class="math inline">\(t_0 + h\)</span>, and look at <span class="math inline">\(k_1\)</span> for the single slope that is applied.)</p>
 <div id="fig-RK4-slopes" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Runge-Kutta slopes.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-RK4-slopes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -769,7 +769,7 @@ Figure&nbsp;3.4: Predicted coffee temperature using Euler method and an RK45 app
 </section>
 <section id="sec-expmodel" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="sec-expmodel"><span class="header-section-number">3.3</span> Closed-form (analytical) solutions</h2>
-<p>Closed-form solutions are different. (Refer back to <a href="#sec-analytical-v-numerical" class="quarto-xref"><span class="quarto-unresolved-ref">sec-analytical-v-numerical</span></a> if you don’t remember what a closed-form solution is.) Here, the challenge is in the mathematical (symbolic) derivation; the programming part is simple. As soon a model becomes a bit complicated analytical solutions become impossible. Even in these cases though, it can be possible to derive an analtyical solution to a limiting case, often steady-state. There are many different ODEs that can be solved analytically. Here we will work with only one, which appears in many different applications, including our cooling coffee model: the exponential model.</p>
+<p>Closed-form solutions are different. (Refer back to <a href="01_intro.html#sec-analytical-v-numerical" class="quarto-xref"><span>Section 1.1.2</span></a> if you don’t remember what a closed-form solution is.) Here, the challenge is in the mathematical (symbolic) derivation; the programming part is simple. As soon a model becomes a bit complicated analytical solutions become impossible. Even in these cases though, it can be possible to derive an analtyical solution to a limiting case, often steady-state. There are many different ODEs that can be solved analytically. Here we will work with only one, which appears in many different applications, including our cooling coffee model: the exponential model.</p>
 <p>It is</p>
 <p><span id="eq-exp-ode"><span class="math display">\[
 \frac{dx}{dt} = \lambda \cdot x.
@@ -811,26 +811,26 @@ Figure&nbsp;3.4: Predicted coffee temperature using Euler method and an RK45 app
 <p><span class="math display">\[
 \left|x\right| = e^{\lambda \cdot t} \cdot e^{c}.
 \]</span></p>
-<p>The last term on the RHS is a constant, and we can roll the <span class="math inline">\(\pm\)</span> from the LHS into it as well. We’ll call the new constant <span class="math inline">\(x_0\)</span> for a reason that you’ll see below. So, an analytical solution to <a href="#eq-exp-ode" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-exp-ode</span></a> is:</p>
+<p>The last term on the RHS is a constant, and we can roll the <span class="math inline">\(\pm\)</span> from the LHS into it as well. We’ll call the new constant <span class="math inline">\(x_0\)</span> for a reason that you’ll see below. So, an analytical solution to <a href="#eq-exp-ode" class="quarto-xref">Equation&nbsp;<span>3.1</span></a> is:</p>
 <p><span id="eq-exp-solution"><span class="math display">\[
 x = x_0 \cdot e^{\lambda \cdot t}.
 \tag{3.2}\]</span></span></p>
 </section>
 <section id="application-to-cooling-coffee-model" class="level3" data-number="3.3.2">
 <h3 data-number="3.3.2" class="anchored" data-anchor-id="application-to-cooling-coffee-model"><span class="header-section-number">3.3.2</span> Application to cooling coffee model</h3>
-<p>Let’s apply <a href="#eq-exp-solution" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-exp-solution</span></a> to our cooling coffee model. Doing so just requires a bit of symbolic math manipulation.</p>
-<p>Let’s copy our GE from <a href="#eq-coffee-ge2" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-coffee-ge2</span></a>.</p>
+<p>Let’s apply <a href="#eq-exp-solution" class="quarto-xref">Equation&nbsp;<span>3.2</span></a> to our cooling coffee model. Doing so just requires a bit of symbolic math manipulation.</p>
+<p>Let’s copy our GE from <a href="02_components_formulation.html#eq-coffee-ge2" class="quarto-xref">Equation&nbsp;<span>2.8</span></a>.</p>
 <p><span class="math display">\[
 \frac{dT}{dt} = - \frac{A \cdot h}{c_p \cdot m} \cdot (T - T_\infty)
 \]</span></p>
-<p>To use the solution to <a href="#eq-exp-ode" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-exp-ode</span></a> we need to express our GE in the same form. We can lump those constants on the RHS into a single one we’ll call <span class="math inline">\(k_{cool}\)</span>.</p>
+<p>To use the solution to <a href="#eq-exp-ode" class="quarto-xref">Equation&nbsp;<span>3.1</span></a> we need to express our GE in the same form. We can lump those constants on the RHS into a single one we’ll call <span class="math inline">\(k_{cool}\)</span>.</p>
 <p><span class="math display">\[
 k_{cool} = \frac{A \cdot h}{c_p \cdot m},
 \]</span></p>
 <p><span class="math display">\[
 \frac{dT}{dt} = -k_{cool} \cdot (T - T_\infty).
 \]</span></p>
-<p>What corresponds with our dependent variable <span class="math inline">\(x\)</span> in the generic form <a href="#eq-exp-ode" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-exp-ode</span></a> and <a href="#eq-exp-solution" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-exp-solution</span></a>? It must be <span class="math inline">\(T\)</span>, the coffee temperature. But then the RHS is not in the right form. To get it into the right form, we will have to define a new dependent variable <span class="math inline">\(\theta\)</span>.</p>
+<p>What corresponds with our dependent variable <span class="math inline">\(x\)</span> in the generic form <a href="#eq-exp-ode" class="quarto-xref">Equation&nbsp;<span>3.1</span></a> and <a href="#eq-exp-solution" class="quarto-xref">Equation&nbsp;<span>3.2</span></a>? It must be <span class="math inline">\(T\)</span>, the coffee temperature. But then the RHS is not in the right form. To get it into the right form, we will have to define a new dependent variable <span class="math inline">\(\theta\)</span>.</p>
 <p><span class="math display">\[
 \theta = T - T_\infty
 \]</span></p>
@@ -843,7 +843,7 @@ k_{cool} = \frac{A \cdot h}{c_p \cdot m},
 \frac{d\theta}{dt} = -k_{cool} \cdot \theta.
 \tag{3.3}\]</span></span></p>
 <p>This substitution is actually a common form of model simplification. Here <span class="math inline">\(\theta\)</span> is a <em>normalized temperature</em> and in other cases we’ll divide our response variable by some constants to normalize it. This approach makes our model more <em>general</em>.</p>
-<p>Moving on, do you see how <a href="#eq-theta-ode" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-theta-ode</span></a> now looks like <a href="#eq-exp-ode" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-exp-ode</span></a>? We just have to recognize that <span class="math inline">\(\lambda = -k_{cool}\)</span> and <span class="math inline">\(x = \theta\)</span>. So, applying the solution <a href="#eq-exp-solution" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-exp-solution</span></a> we get:</p>
+<p>Moving on, do you see how <a href="#eq-theta-ode" class="quarto-xref">Equation&nbsp;<span>3.3</span></a> now looks like <a href="#eq-exp-ode" class="quarto-xref">Equation&nbsp;<span>3.1</span></a>? We just have to recognize that <span class="math inline">\(\lambda = -k_{cool}\)</span> and <span class="math inline">\(x = \theta\)</span>. So, applying the solution <a href="#eq-exp-solution" class="quarto-xref">Equation&nbsp;<span>3.2</span></a> we get:</p>
 <p><span id="eq-cooling-an-sol"><span class="math display">\[
 \theta = \theta_0 \cdot e^{-k_cool \cdot t}.
 \tag{3.4}\]</span></span></p>
@@ -851,7 +851,7 @@ k_{cool} = \frac{A \cdot h}{c_p \cdot m},
 </section>
 <section id="implementation" class="level3" data-number="3.3.3">
 <h3 data-number="3.3.3" class="anchored" data-anchor-id="implementation"><span class="header-section-number">3.3.3</span> Implementation</h3>
-<p>Implementing <a href="#eq-cooling-an-sol" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-cooling-an-sol</span></a> in Python is easier than implementing a numerical approach. Maybe the only tricky part is going between <span class="math inline">\(\theta\)</span> and <span class="math inline">\(T\)</span>.</p>
+<p>Implementing <a href="#eq-cooling-an-sol" class="quarto-xref">Equation&nbsp;<span>3.4</span></a> in Python is easier than implementing a numerical approach. Maybe the only tricky part is going between <span class="math inline">\(\theta\)</span> and <span class="math inline">\(T\)</span>.</p>
 <div id="ca79c927" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> solve_ivp</span>
