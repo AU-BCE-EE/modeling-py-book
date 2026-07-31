@@ -23,16 +23,16 @@ But all Python code and PowerShell commands can be applied outside of VS Code.
 
 The rest of this guide includes:
 
-* installing software (section 2),
-* introduction to PowerShell (section 3)
+* installing software,
+* introduction to PowerShell
 * running Python in PowerShell--script and interactive mode (section 4),
 * opening a terminal pane and running Python in VS Code (section 5),
-* **VS Code projects (section 6)**,
-* **Working with scripts in VS Code (section 7)**,
-* **Script mode Python usage in VS Code (section 8)**,
-* **Interactive script development and running (section 9)**,
-* troubleshooting (section 10), and
-* a summary (section 11)
+* **VS Code projects**,
+* **Working with scripts in VS Code**,
+* **Script mode Python usage in VS Code**,
+* **Interactive script development and running**,
+* troubleshooting, and
+* a summary
 
 Those section names shown in **bold** are key sections.
 
@@ -44,6 +44,8 @@ If you don't already have it, you can download it from here: <https://code.visua
 
 ### Python
 Python (3) should be installed from here: <https://www.python.org/downloads/>.
+Select the stand-alone installer.
+In the first step after running the installer, be sure you select the option to add the exe path to the `PATH` variable.
 
 ### VS Code Python extension
 Lastly, you will need a Python extension.
@@ -59,6 +61,15 @@ If you see this warning at the top, you must "trust" the folder.
 
 Click on "Manage" and then "Trust" to do that.
 
+### Python libraries
+In this course you will need a few external Python libraries (collections of modules, which provide the functions that we will need).
+You can install them all by opening up a new terminal window (PowerShell), either with "Terminal" -> "New Terminal" or the keyboard shortcut (`Ctrl + Shift + æ` for me) and running the following command:
+
+```{python}
+#| eval: false
+python -m pip install numpy scipy matplotlib pandas
+```
+
 ## PowerShell
 A *shell* is a text-based program that reads commands and does things. 
 Most of the readers of this guide are probably using Windows, and for that operating system, the modern shell that you should use is called *PowerShell*. 
@@ -72,7 +83,7 @@ Open up PowerShell (e.g., hit the Windows or super key ⊞ and type PowerShell),
 The bit at the left, `PS C:\Users\au594831>` is called the "prompt".
 The single `>` is one way to tell you are working in PowerShell.
 It will look the same when you open it up in VS Code.
-And while you can do a lot in VS Code by clicking buttons, you still need to aware of what is running in the terminal pane below.
+And while you can do a lot in VS Code by clicking buttons, you still need to be aware of what is running in the terminal pane below.
 
 (If you are working with Mac OS, the shell is just called *Terminal*, and on Linux it could be *Bash* or another shell program.
 The few commands we will cover here are identical in all three, so you can use the appropriate program but replace PowerShell with e.g., Terminal or Bash and follow the instructions.)
@@ -127,15 +138,16 @@ Do you see that the prompt changed?
 This may be a quick way to check some ideas in Python, but for a couple reasons is not the best way to use Python in VS Code.
 See the next sections for better options.
 
-## VS Code projects
-VS Code uses something called *projects* to keep track of all the files involved in a project or assignment.
-There is really only one part of this that is important to us--to set the project location *before* working.
+## VS Code workspace
+VS Code uses something called *workspaces* to keep track of all the files involved in a project or assignment.
+Generally each set of homework exercises or mini-project should be in a separate subdirectory on your computer and should be handled as a distinct workspace in VS Code.
+Fortunately it is easy to sort this out--just set the project location before working.
 
 Let's open up VS Code and start and new project.
 First, make sure you have a directory or folder for your project.
 To follow along with this guide, you can create a folder called `simple_project` in any appropriate location on your local computer.
 (Or, you can clone this repo and use the `demos/simple_project` folder that is included.)
-Then, in VS Code, under the `File` menu, click `Open folder`, 
+Then, in VS Code, under the `File` menu, click `Open folder` (or hit `Ctrl + k` followed by `Ctrl + o`), 
 
 ![image](images-vs-code/908e8994-9553-46d5-917f-35d7f64f6d72.png){width="1487px"}
 
@@ -145,10 +157,10 @@ and browse to your folder,
 
 and click "Open".
 
-Alternatively, you can hit `Ctrl + k` followed by `Ctrl + o`, and browse to the correct folder.
-
 What does this do?
 It ensures that when Python is run it will have this folder as the *working directory*, i.e., the location where the Python interpreter looks for files and saves output.
+It also "pins" settings for this particular project, e.g., pane layout or Python interpreter.
+Generally you won't have to think about that though.
 *Making sure that you start with this `open folder` step avoids a whole lot of problems related to file paths!*
 
 ## Create and edit a script in VS Code
@@ -196,7 +208,7 @@ You should then see something like this at the bottom of your VS Code window:
 ![image](images-vs-code/be613d51-ce46-4b61-a806-ea1f0f6e87d6.png){width="1420px"}
 
 Now you can tell that this terminal pane is running PowerShell (right?).
-And that is exactly what we need to run the `simpler1.py` script in Python in *script mode*.
+And that is exactly what we need to run the `simple1.py` script in Python in *script mode*.
 To do that, click in the terminal pane and enter this command:
 
 ```{python}
@@ -259,7 +271,7 @@ What if you wrote another script with only this line:
 print(x)
 ```
 
-Would it in fact print the value of `x`, calculcated in the `simple1.py` script, if you ran first `script1.py` and then `script2.py` in script mode?
+Would it in fact print the value of `x`, calculated in the `simple1.py` script, if you ran first `script1.py` and then `script2.py` in script mode?
 We can try to prove a point!
 
 ![image](images-vs-code/9f011eff-9814-4677-8682-337f8e335356.png){width="1391px"}
@@ -312,6 +324,14 @@ Remember that you can see what is running by checking the prompts.
 How do you solve this problem?
 By closing ("killing") the pane running Python interactively and trying again.
 Now you should get PowerShell.
+
+The wrong working directory is another common cause of problems.
+Whenever you open a script, get used to setting the working directory to the location of that script with "File" -> "Open Folder" or `Ctrl + k` immediately followed by `Ctrl + o`.
+
+And the last common cause of problems is that VS Code is using the wrong version of Python.
+Hit `Ctrl + Shift + p` and then "Python Select Interpretor", and select the correct exe file.
+Which one? 
+The latest one that you installed that is (should be?) in `AppData\Local\Program\Python`.
 
 ## Summary
 1. To work with Python in VS Code, always start by opening the project folder: Under the `File` menu, click `Open folder` or use the keyboard shortcut listed there. 
