@@ -55,7 +55,7 @@ Lastly, you will need a Python extension.
 Your VS Code program may not give you access to all the features you need by default, including extensions, depending on which folder it is running in.
 If you see this warning at the top, you must "trust" the folder.
 
-<img width="727" height="76" alt="image" src="https://github.com/user-attachments/assets/75c36dbf-2b7a-4fec-866f-4c5416153f3c" />
+![image](images-vs-code/75c36dbf-2b7a-4fec-866f-4c5416153f3c.png){width="727px"}
 
 Click on "Manage" and then "Trust" to do that.
 
@@ -67,7 +67,7 @@ But here we'll start by running PowerShell outside of VS Code in the Windows ter
 
 Open up PowerShell (e.g., hit the Windows or super key ⊞ and type PowerShell), and you should see something like this:
 
-<img width="1112" height="316" alt="image" src="https://github.com/user-attachments/assets/5451e621-f61d-42f1-9c53-f739cc62d8be" />
+![image](images-vs-code/5451e621-f61d-42f1-9c53-f739cc62d8be.png){width="1112px"}
 
 The bit at the left, `PS C:\Users\au594831>` is called the "prompt".
 The single `>` is one way to tell you are working in PowerShell.
@@ -96,7 +96,7 @@ Of course, this requires that `script_name.py` is in the current directory in Po
 A shell can also run Python interactively.
 To start an interactive session with Python, just type `python` at the prompt, like this:
 
-<img width="1105" height="177" alt="image" src="https://github.com/user-attachments/assets/7a0dcede-b838-4683-88aa-d09a8ace90dd" />
+![image](images-vs-code/7a0dcede-b838-4683-88aa-d09a8ace90dd.png){width="1105px"}
 
 Notice how the prompt now looks different?
 Like this: `>>>`, and also fuchsia in color.
@@ -106,13 +106,13 @@ And the term REPL is often used to refer to an interactive interpreter session.
 
 This window will now act like any interactive Python session, for example,
 
-<img width="1101" height="243" alt="image" src="https://github.com/user-attachments/assets/1ea6e9dd-dc66-422a-9487-04b0731a8f6c" />
+![image](images-vs-code/1ea6e9dd-dc66-422a-9487-04b0731a8f6c.png){width="1101px"}
 
 ## Terminal window and PowerShell in VS Code
 Open up VS Code and open a terminal pane at the bottom through the `Terminal` menu by clicking on `New terminal`.
 Now you will see PowerShell running in the terminal pane at the bottom of VS Code, like this:
 
-<img width="1285" height="192" alt="image" src="https://github.com/user-attachments/assets/357d8eac-2727-44a5-9173-a17db9cabf23" />
+![image](images-vs-code/357d8eac-2727-44a5-9173-a17db9cabf23.png){width="1285px"}
 
 How can you tell this is a PowerShell terminal?
 You should be able to tell because the prompt starts with `PS` and ends with `>`.
@@ -137,11 +137,11 @@ To follow along with this guide, you can create a folder called `simple_project`
 (Or, you can clone this repo and use the `demos/simple_project` folder that is included.)
 Then, in VS Code, under the `File` menu, click `Open folder`, 
 
-<img width="1487" height="381" alt="image" src="https://github.com/user-attachments/assets/908e8994-9553-46d5-917f-35d7f64f6d72" />
+![image](images-vs-code/908e8994-9553-46d5-917f-35d7f64f6d72.png){width="1487px"}
 
 and browse to your folder,
 
-<img width="1564" height="763" alt="image" src="https://github.com/user-attachments/assets/3925bb3f-2507-4b46-9b4e-71dbbb84c3e3" />
+![image](images-vs-code/3925bb3f-2507-4b46-9b4e-71dbbb84c3e3.png){width="1564px"}
 
 and click "Open".
 
@@ -185,7 +185,7 @@ But remember the `Open folder` step from above!
 VS Code has several features that are meant to make script editing easier. 
 Syntax highlighting is obvious here:
 
-<img width="1188" height="545" alt="image" src="https://github.com/user-attachments/assets/1a80dff6-ead1-43c1-94ba-03e8e74e4422" />
+![image](images-vs-code/1a80dff6-ead1-43c1-94ba-03e8e74e4422.png){width="1188px"}
 
 Be sure to save your script occasionally when editing it, and before you try to run it in script mode (next section).
 
@@ -193,7 +193,7 @@ Be sure to save your script occasionally when editing it, and before you try to 
 Under the `Terminal` menu select `New terminal`.
 You should then see something like this at the bottom of your VS Code window:
 
-<img width="1420" height="154" alt="image" src="https://github.com/user-attachments/assets/be613d51-ce46-4b61-a806-ea1f0f6e87d6" />
+![image](images-vs-code/be613d51-ce46-4b61-a806-ea1f0f6e87d6.png){width="1420px"}
 
 Now you can tell that this terminal pane is running PowerShell (right?).
 And that is exactly what we need to run the `simpler1.py` script in Python in *script mode*.
@@ -206,16 +206,16 @@ python simple1.py
 
 You should see this:
 
-<img width="1416" height="207" alt="image" src="https://github.com/user-attachments/assets/dfca20e2-2a23-4427-9620-23885bbcfe93" />
+![image](images-vs-code/dfca20e2-2a23-4427-9620-23885bbcfe93.png){width="1416px"}
 
 If you get an error like the one below, check the script name spelling.
 
-<img width="1450" height="159" alt="image" src="https://github.com/user-attachments/assets/5963428b-bf22-4334-99ae-1bbb97300af3" />
+![image](images-vs-code/5963428b-bf22-4334-99ae-1bbb97300af3.png){width="1450px"}
 
 Or, did you forget to open the correct folder?
 Remember that this window is a PowerShell terminal, so you have access to commands that can help, like `ls`.
 
-<img width="1461" height="306" alt="image" src="https://github.com/user-attachments/assets/67b39692-4197-41c0-a640-662e1d2719da" />
+![image](images-vs-code/67b39692-4197-41c0-a640-662e1d2719da.png){width="1461px"}
 
 If you saw an error message about `python` not being recognized, check that you have actually installed Python.
 
@@ -224,14 +224,14 @@ The key difference is that here we did the `open folder` step first, so we know 
 
 If you prefer clicking buttons, you can click this "Run in Python" button at the top right of VS Code:
 
-<img width="1385" height="135" alt="image" src="https://github.com/user-attachments/assets/6129d1ee-5937-414b-a1a9-5b03b7c68660" />
+![image](images-vs-code/6129d1ee-5937-414b-a1a9-5b03b7c68660.png){width="1385px"}
 
 What does that do?
 The button sends a command to a terminal pane.
 The overall effect is the same as explicitly opening a terminal and typing `python simple1.py`, but there are some differences.
 Here is what you should see below:
 
-<img width="1450" height="169" alt="image" src="https://github.com/user-attachments/assets/233fabbe-e5f5-4422-92ef-7940a76db43e" />
+![image](images-vs-code/233fabbe-e5f5-4422-92ef-7940a76db43e.png){width="1450px"}
 
 First, note that the actual command is different from what you manually typed.
 This "Run" button generates a very explicit command, with the complete path to both the python executable and your script included.
@@ -241,13 +241,13 @@ Second, did you notice that this command was sent to a new terminal pane, runnin
 Unless you already closed it, the one that was opened from the `Terminal` menu is still open, but hidden.
 Click here to go back to it:
 
-<img width="1386" height="144" alt="image" src="https://github.com/user-attachments/assets/974bda0b-ccef-4874-87c4-8b68d184f45f" />
+![image](images-vs-code/974bda0b-ccef-4874-87c4-8b68d184f45f.png){width="1386px"}
 
 The "Run" button will never use it though--it will use a designated terminal pane that it opens if needed.
 So if we click that button again, the newer instance is used.
 If you prefer the button and the VS Code-spawned terminal pane, you can close the original one (or any others) with this "trash/kill" button:
 
-<img width="1387" height="84" alt="image" src="https://github.com/user-attachments/assets/5f602ae6-de5d-437b-8c92-a2d331b6efb2" />
+![image](images-vs-code/5f602ae6-de5d-437b-8c92-a2d331b6efb2.png){width="1387px"}
 
 There is a keyboard shortcut for the `Run in Python` button: `Ctrl + F5`.
 (The first time you use it you will have to select a "debugger", and the recommendation is fine. It won't actually be used unless you just hit `F5` without the `Ctrl` key.)
@@ -262,12 +262,12 @@ print(x)
 Would it in fact print the value of `x`, calculcated in the `simple1.py` script, if you ran first `script1.py` and then `script2.py` in script mode?
 We can try to prove a point!
 
-<img width="1391" height="173" alt="image" src="https://github.com/user-attachments/assets/9f011eff-9814-4677-8682-337f8e335356" />
+![image](images-vs-code/9f011eff-9814-4677-8682-337f8e335356.png){width="1391px"}
 
 Nope!
 Why not?
 Because that is the behavior of an *interactive Python session* but we are running Python in *script mode*.
-When we call `python simple1.py`, the Python interpreter is started, it runs the code in the `simple1.py` script **and then closes**, and the *state* of the interpreter is discared.
+When we call `python simple1.py`, the Python interpreter is started, it runs the code in the `simple1.py` script **and then closes**, and the *state* of the interpreter is discarded.
 Whatever variables were created by code in the script are lost.
 For a different approach, see the next section.
 
@@ -282,7 +282,7 @@ Let's keep working with the simple1.py script.
 The simplest way to send a line of code is the `Shift + Enter` keyboard shortcut. 
 Here is what you should see if you try that:
 
-<img width="1199" height="163" alt="image" src="https://github.com/user-attachments/assets/aef04a53-7091-4dc2-a426-85a2ffc0ef91" />
+![image](images-vs-code/aef04a53-7091-4dc2-a426-85a2ffc0ef91.png){width="1199px"}
 
 It did the job by opening an interactive Python session, and then sending the single line of code.
 You can see the command for starting Python at the top.
@@ -291,12 +291,12 @@ And the line of code submitted to the interpreter is underlined in light blue.
 
 If you prefer using a menu option (I am not sure why anyone would), you can find it by right-clicking on the line or selection, then scrolling way down to `Run Python`, and under that, `Run Selection/Line...` here:
 
-<img width="1018" height="947" alt="image" src="https://github.com/user-attachments/assets/6a98105c-3a61-45ab-bd06-9d1b09b168ed" />
+![image](images-vs-code/6a98105c-3a61-45ab-bd06-9d1b09b168ed.png){width="1018px"}
 
 If you try the `Shift + Enter` shortcut again, VS Code recognizes that there is already a Python interpreter running, so it just sends the code. 
 And if you send the following lines, Python works as expected, "remembering" the value of `x`, because all this code is run in the same instance of Python.
 
-<img width="1290" height="564" alt="image" src="https://github.com/user-attachments/assets/671eb382-7370-43b5-80d4-d3115716ce11" />
+![image](images-vs-code/671eb382-7370-43b5-80d4-d3115716ce11.png){width="1290px"}
 
 The cursor in the script editor automatically advances to the next line of Python code when you use `Shift + Enter`.
 So it is easy to run a few lines sequentially without moving your fingers from the `Shift` and `Enter` keys.
