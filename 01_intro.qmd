@@ -58,11 +58,7 @@ $$
 T(t) = (T_0 - T_{air}) \cdot e^{(-c \cdot t)} + T_{air}.
 $$ {#eq-coffee-sol1}
 
-We saw a *computer model* above.
-It is a piece of computer software that runs the model.
-Creating a computer model means *implementing* a mathematical model.
-We could also say that development of a software model means *programming* a mathematical model.
-Here is an implementation of the coffee model, i.e., a computer model for cooling coffee.
+
 
 ```{python}
 # Import modules
@@ -91,7 +87,11 @@ plt.ylabel(r'Temperature $(^\circ~\mathregular{C})$')
 plt.show()
 ```
 
-Actually that code applies the model as well, carrying out the model calculation (the `Tc = ...` line) using specific values for input variables and parameters.
+We saw a *computer model* above.
+It is a piece of computer software that runs the model.
+Creating a computer model means *implementing* a mathematical model.
+We could also say that development of a software model means *programming* a mathematical model.
+Here is an implementation of the coffee model, i.e., a computer model for cooling coffee. Actually that code applies the model as well, carrying out the model calculation (the `Tc = ...` line) using specific values for input variables and parameters.
 
 ### Analytical (closed-form) vs. numerical {#sec-analytical-v-numerical}
 
@@ -122,7 +122,8 @@ The name "lumped **parameter**" is a bit confusing because it isn't model parame
 What if we created a two-dimensional (*2D*) model that explicitly included the temperature *profile* over space?
 That means our model would predict not just a single temperature, but the temperature for multiple locations within the coffee and mug, as well as the effect that differences in temperature over space have on cooling.
 That would be a much more complicated model, and potentially more accurate, and would be called a *distributed parameter* model.
-Deciding whether to use a lumped parameter approach is an important step in model simplification.
+
+A partial differential equation is an example of a distributed parameter model, because it includes partial derivatives with respect to multiple independent variables, e.g., time and space.  
 
 ### Steady-state vs. dynamic
 
