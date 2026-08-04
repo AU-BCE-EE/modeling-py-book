@@ -107,7 +107,7 @@ During model development, it is common for the domain to be a *control volume*, 
 This can be convenient for GE development.
 
 Every state variable in a model needs a conservation equation.
-Fortunately, most of the models we'll cover in this book have a single state variable and so a single conservation equation.
+Fortunately, many of the models we'll cover in the first part of this book have a single state variable and so a single conservation equation.
 For the simple coffee model, the state variable is the coffee temperature and the domain is the entire cup of coffee.
 Units for our conservation equation, @eq-coffee-conservation, should be W, i.e., $\Jps$.
 
