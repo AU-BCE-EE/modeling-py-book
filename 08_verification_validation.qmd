@@ -773,27 +773,75 @@ This suggests that the model processes responsible for $\ce{CO2}$ production may
 
 ![Graphical validation of a soil microbiology model from @zhang-denit-mod-2023. Each plot shows a different variable. Measurements are shown as points, and model output as lines.](images-papers/denitmod1.png){#fig-denitmod1 fig-alt="Denitrification model validation."}
 
+Do you notice how the model output in @fig-pestmod1 is shown using smooth lines?
+This suggests that the model was evaluated with a high temporal resolution, i.e., at times that were close together.
+While the measurements (points) seem to have a timestep of 2-3 hours, the model output must have a much closer spacing, because it is clear that the lines show curvature between measurement times.
+This is common; use of a small timestep to produce model output provides a smooth curve that shows, graphically, precisely what the model predicts, even between measurement times.
+
 Comparing measurements and model output over time has limitations.
 Especially for simple models, we may only see if the model predicts a higher or lower rate of change.
 Plotting state variable values vs. other model inputs can provide insight into why a model fails.
 
-### Model fit statistics
+## Model fit statistics
 
-Model fit statistics summarize the correspondence between measurements and model output.
-Several statistics exist, but we'll focus on three that are useful or common.
+Model fit statistics summarize how well the measurements and model output match.
+Here, a statistic is just some defined measurement that summarizes data.
+Several statistics exist, but we'll focus on three that are useful and common.
+All are based on the numeric difference between the model output and available measurements, also called *residuals* or *model error*.
+@fig-fit-stats0 show residuals as dashed gray lines.
+Note that residuals can be positive (when the model overpredicts, meaning the model output is larger than the measurement) or negative (model underpredicts).
+But note that the sign of residuals varies among different fields.
 
-Mean bias error (MBE) is the average difference between model output and measurements:
+![Residuals or model error shown as dotted gray lines between model output (fuchsia line) and measurements (blue points).](drawings/fit_stats0.png){#fig-fit-stats0 fig-alt="Model residuals or error"}
+
+Mean bias error (MBE) is the average difference between model output and measurements, or the average error:
 
 $$
 MBE = \frac{ \sum_{i=1}^{N} y_{p,i} - y_{m,i}} {N},
 $${#eq-mbe}
 
 where $MBE=$ mean bias error, $y_{p,i}=$ the $i^{th}$ predicted value of the dependent variable $y$, $y_{m,i}=$ the $i^{th}$ measured value of the dependent variable, and $N=$ the number of observations.
+The expression $y_{p,i} - y_{m,i}$ is the model residual or error for time or observation $i$.
+
 Positive MBE means the model tends to predict higher values than the measurements show (positive bias), and negative means lower (negative bias).
+In @fig-fit-stats1, output C has a large positive MBE, because it is consistently larger than the measurements.
+Output B in the same figure has a negative MBE, because its values are lower than measurements for all but one point.
+But the absolute value (distance from zero) of MBE is much smaller for B than C.
+
+![Demonstration of two different model fits. Measurements shown as point, model output as lines. Output B has a negative MBE (bias) because it underpredicts almost every measurement point. MBE for A could be smaller (closer to zero). But the overall fit is better for B, and this would be reflected in lower values for MAE and RMSE. Output C has a high (positive) MBE and large (poor) MAE and RMSE.](drawings/fit_stats1.png){#fig-fit-stats1 fig-alt="Fit statistics demo"}
+
+Mean absolute error (MAE) is the mean of absolute error.
+It is always positive, and a smaller value means lower error.
+
+$$
+MAE = \frac{ \sum_{i=1}^{N} | y_{p,i} - y_{m,i}|} {N},
+$${#eq-mae}
+
+Lastly, root mean square error (RMSE) (also called root mean squared deviation, RMSD) is based on the squared errors: 
+
+$$
+RMSE = \sqrt{ \frac{ \sum_{i=1}^{N} ( y_{p,i} - y_{m,i} )^2} {N}}.
+$${#eq-rmse}
+
+Like MAE, it is always positive, and higher values mean a worse fit.
+In @fig-fit-stats1, output B has the smallest MAE and RMSE, followed by A, and finally C.
+Also, the difference between MAE for B and A is less than the difference between RMSE for these two.
+This is because RMSE gives more weight to larger errors through the squared term.
+Of the two, RMSE is more commonly used than MAE.
+
+To quantitatively validate a model, i.e., to apply MBE, RMSE, or other fit statistics, it is essential to have measurements and model output at the exact same time.
+This differs from graphical validation, where additional insights into model predictions can come from using a small timestep to generate model predictions.
+In fact, a better representation of the data used for quantitative model validation in @fig-fit-stats1 would look like @fig-fit-stats2.
+It can be harder to understand a plot where measurements and model output are both shown as points though.
+In practice, it is common to produce two distinct sets of model output when performing validation: one for graphical and one for quantitative validation.
+
+![The same demonstration of model fit as in @fig-fit-stats1 but only showing the model output used for calculating fit statistics, i.e., perfect alignment of measurements and model output.](drawings/fit_stats2.png){#fig-fit-stats2 fig-alt="Fit statistics demo with points"}
 
 ## Problems {.unnumbered}
 
 ### Verification {.unnumbered}
+
+#### Ammonia emission model {.unnumbered}
 
 In this exercise you will work with a version of the ammonia volatilization model from the first mini-project.
 This document provides some details, the `amm_concept_model.pdf` has more, and for even more, see the solutions to that mini-project.
@@ -818,7 +866,7 @@ But TAN is lost through volatilization of ammonia from the surface.
    
    For more details on the mass balance and constitutive equations, see `amm_concept_model.pdf`.
 
-### Validation {.unnumbered}
+#### Diffusion model {.unnumbered}
 
 In this exercise you will work with a 1D diffusion model.
 You will get some practice in verification of conservation with 1D models and try model validation.
@@ -855,17 +903,19 @@ Check the docstring and, if needed, `rates()` to see exactly what `diff1D()` ret
    This is meant to be a quick check, and not a detailed verification, but it is still good practice to keep a record of your function calls, output, and interpretation.
    That could be done in many ways, including a Markdown document or `*.txt` file with code and output (manually pasted in), or an MS Word file, a Jupyter Notebook file, or a Quarto Markdown (`q.md`) file.
 
-4. See the data file `col_salt.csv` for some (fabricated) measurements of the total salt (NaCl here) mass within a 0.1 m long column with a diameter of 0.02 m. 
-   Fixed salt concentrations at the boundaries were 36 kg/m3 at the left and zero at the right.
-   Use the measurements to validate the model graphically and with relevant model fit statistics.
-   The diffusivity of NaCl in water is known to be around 1.6E-9 m2/s.
-   What do you think about the accuracy of the model?
-   Hint: Be careful with units and variables. You have to convert model predictions to the variable that was measured.
-
 5. You may have noticed that the cumulative mass transfer at the left and right boundaries are both positive for flow to the right.
    Create a new version of the `diff1D()` function and change this feature, so that both terms are positive for mass going into the column (model domain).
    Make sure you give the new function a good name.
    Save it in the same module as the original.
    Now repeat your mass mass balance verification with this new function.
+
+### Validation {.unnumbered}
+
+1. See the data file `col_salt.csv` for some (fabricated) measurements of the total salt (NaCl here) mass within a 0.1 m long column with a diameter of 0.02 m. 
+   Fixed salt concentrations at the boundaries were 36 kg/m3 at the left and zero at the right.
+   Use the measurements to validate the model graphically and with relevant model fit statistics.
+   The diffusivity of NaCl in water is known to be around 1.6E-9 m2/s.
+   What do you think about the accuracy of the model?
+   Hint: Be careful with units and variables. You have to convert model predictions to the variable that was measured.
 
 ## References {.unnumbered}

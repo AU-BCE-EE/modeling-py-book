@@ -247,8 +247,6 @@ For a higher rate we need a higher value of $h$.
 We could manually try a higher value, plot results again, and continue this cycle until we are happy with the visual validation of the model.
 But to automate parameter estimation and for reproducible and defensible estimates, we need to quantify model fit. 
 
-
-
 Get sum of squared residuals
 
 ```{python}
@@ -261,7 +259,7 @@ sum((meas.ice_g_1 - 1000 * pred01["m"])**2)
      Understanding whether measurements provide information about specific parameters.
      Include example. -->
 
-## Problems
+## Problems {.unnumbered}
 
 This exercise is based on the model from the second mini-project.
 You can load the model function from the `O2dc_mods` module included in this directory.
@@ -294,7 +292,7 @@ Do the parameter estimates change much?
 5. Optional: What values would you ultimately recommend for these parameters based on the available measurements?
 Are these results consistent with your hypothesis from 1?
 
-### Some tips
+### Some tips {.unnumbered}
 * Remember to try different starting values.
 * Do you need different values for `D` for the two solutes?
 * Use `print()` calls in your residuals function to see what the values of the parameter guesses (or residuals) are if you encounter problems.
