@@ -12,6 +12,7 @@ Of course, an actual temperature is not.
 | Symbol | Description | Typical units |
 |--------|-------------|---------------|
 | $A$ | Surface or cross-sectional area | $\msq$ |
+| $\Delta H_f$ | Enthalpy (heat) of fusion | $\Jpg$ |
 | $Q$ | Thermal energy | $\mathrm{J}$ |
 | $\dot{Q}$ | Rate of thermal energy flow | $\Jps = \mathrm{W}$ |
 | $q$ | Heat flux | $\Wpms$ |

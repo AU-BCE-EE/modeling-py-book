@@ -346,6 +346,10 @@ where $M =$ the material mass and $c_p =$ specific heat capacity.
 
 If a substance remains in a single phase, any change in thermal energy causes a change in temperature following @eq-cp-def.
 But when a change, between solid, liquid, and gas, occurs, energy is consumed or released in the phase change, and does not show up in temperature.
+For example, a cube of ice can absorb a large quantity of heat energy without any noticeable change in temperature if it is undergoing melting, a phase change.
+The heat energy has not disappeared though--the laws of thermodynamics don't allow that!
+Instead we have a conversion between *sensible* and *latent* heat energy.
+
 In systems with phase changes, it is necessary to track one or more specific phases as a state variable.
 We can think of the equations that relate energy transfer and phase change as linking equations.
 There are only two important parameters, which are physical constants: the heat of fusion $h_f$ and heat of vaporization $k_v$, both  typically $\kJpkg$.
