@@ -117,6 +117,7 @@ MathJax = {
       WpmspK: "{\\mathrm{W~m^{-2}~K^{-1}}}",
       WpmpK: "{\\mathrm{W~m^{-1}~K^{-1}}}",
       Jps: "{\\mathrm{J~s^{-1}}}",
+      Jpg: "{\\mathrm{J~g^{-1}}}",
       kgps: "{\\mathrm{kg~s^{-1}}}",
       kgpmc: "{\\mathrm{kg~m^{-3}}}",
       kgpmcps: "{\\mathrm{kg~m^{-3}~s^{-1}}}",
@@ -360,7 +361,10 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#melting-ice-model-example" id="toc-melting-ice-model-example" class="nav-link active" data-scroll-target="#melting-ice-model-example"><span class="header-section-number">9.1</span> Melting ice model example</a></li>
+  <li><a href="#underlying-algorithm" id="toc-underlying-algorithm" class="nav-link active" data-scroll-target="#underlying-algorithm"><span class="header-section-number">9.1</span> Underlying algorithm</a></li>
+  <li><a href="#local-and-global-minima" id="toc-local-and-global-minima" class="nav-link" data-scroll-target="#local-and-global-minima"><span class="header-section-number">9.2</span> Local and global minima</a></li>
+  <li><a href="#loss-function" id="toc-loss-function" class="nav-link" data-scroll-target="#loss-function"><span class="header-section-number">9.3</span> Loss function</a></li>
+  <li><a href="#melting-ice-model-example" id="toc-melting-ice-model-example" class="nav-link" data-scroll-target="#melting-ice-model-example"><span class="header-section-number">9.4</span> Melting ice model example</a></li>
   <li><a href="#problems" id="toc-problems" class="nav-link" data-scroll-target="#problems">Problems</a>
   <ul class="collapse">
   <li><a href="#some-tips" id="toc-some-tips" class="nav-link" data-scroll-target="#some-tips">Some tips</a></li>
@@ -390,11 +394,76 @@ window.Quarto = {
 </header>
 
 
-<p>Parameter estimation is about determining (estimating) the “best” (ideally, the most accurate) parameter values for a model based on comparing model output and measurements. It is related to model validation.</p>
-<section id="melting-ice-model-example" class="level2" data-number="9.1">
-<h2 data-number="9.1" class="anchored" data-anchor-id="melting-ice-model-example"><span class="header-section-number">9.1</span> Melting ice model example</h2>
+<p>Parameter estimation is about determining (estimating) the “best” (ideally, the most accurate) parameter values for a model based on comparing model output and measurements. It is related to model validation. Parameter estimation requires a model with some adjustable parameter(s) and some measurement data. The flexible approach that we will use has three steps:</p>
+<ol type="1">
+<li>run the model with a specific numeric parameter value to get output,</li>
+<li>quantify fit by comparing model output to measurement data, and see if the fit is good enough, and finally,</li>
+<li>if needed, come up with a new parameter value and return to step 1.</li>
+</ol>
+<section id="underlying-algorithm" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="underlying-algorithm"><span class="header-section-number">9.1</span> Underlying algorithm</h2>
+<p>Parameter estimation is an application of <em>optimization</em>, which works by repeated evaluation of an <em>objective function</em>, and updating the parameter guess each time based on how the values change. For some hypothetical model, we might get the output shown as the orange line in <a href="#fig-par-est1" class="quarto-xref">Figure&nbsp;<span>9.1</span></a>.</p>
+<div id="fig-par-est1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Model residuals or error">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-par-est1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="drawings/par_est1.png" class="img-fluid figure-img" alt="Model residuals or error">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-par-est1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.1: Residuals shown as dotted gray lines between model output (orange line) and measurements (blue points).
+</figcaption>
+</figure>
+</div>
+<p>To quantify model fit, the residuals, shown as dotted gray lines, are used. To summarize the fit in a single numeric value, it is typically the sum of squared residuals that is used:</p>
+<p><span id="eq-ssr"><span class="math display">\[
+SSR =  \sum_{i=1}^{N} r_i^2 = \sum_{i=1}^{N} (y_{p,i} - y_{m,i})^2.
+\tag{9.1}\]</span></span></p>
+<p><a href="#eq-ssr" class="quarto-xref">Equation&nbsp;<span>9.1</span></a> is then the <em>objective function</em>, which is the function we want to optimize in an optimization problem. In this case, we want to minimize it, so we could call it a <em>cost function</em>.</p>
+<p>Let’s say we make two more guesses for the single model parameter we are estimating in this problem and they provide the output shown in <a href="#fig-par-est2" class="quarto-xref">Figure&nbsp;<span>9.2</span></a>.</p>
+<div id="fig-par-est2" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Parameter estimation">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-par-est2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="drawings/par_est2.png" class="img-fluid figure-img" alt="Parameter estimation">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-par-est2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.2: Comparison of model output from three parameter guesses (colored lines) to measurements (blue points).
+</figcaption>
+</figure>
+</div>
+<p>These plots are shown in <span class="math inline">\(t, y\)</span> space, but our optimization algorithm uses <span class="math inline">\(p, SSR\)</span> space, where <span class="math inline">\(p\)</span> is the parameter we want to estimate. In fact the <span class="math inline">\(t\)</span> (for time) dimension in the <a href="#fig-par-est1" class="quarto-xref">Figure&nbsp;<span>9.1</span></a> and <a href="#fig-par-est2" class="quarto-xref">Figure&nbsp;<span>9.2</span></a> does not enter the parameter optimization problem at all; it just helps us visualize the fit. Instead, the view of an optimization algorithm for those data shown in <a href="#fig-par-est2" class="quarto-xref">Figure&nbsp;<span>9.2</span></a> is more like <a href="#fig-par-est3" class="quarto-xref">Figure&nbsp;<span>9.3</span></a>.</p>
+<div id="fig-par-est3" class="quarto-float quarto-figure quarto-figure-center anchored" alt="SSR vs. parameter value">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-par-est3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="drawings/par_est3.png" class="img-fluid figure-img" alt="SSR vs. parameter value">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-par-est3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.3: Sum of squared residuals versus parameter value for the example shown in <a href="#fig-par-est2" class="quarto-xref">Figure&nbsp;<span>9.2</span></a>.
+</figcaption>
+</figure>
+</div>
+<p>And it is the change in <span class="math inline">\(SSR\)</span> between guesses that is used to come up with the next guess. A simple way of doing this is shown by the dotted gray line in <a href="#fig-par-est3" class="quarto-xref">Figure&nbsp;<span>9.3</span></a>, where the next estimate would that <span class="math inline">\(p\)</span> value shown by the arrow. This is the Newton-Raphson method. The methods we’ll use are more sophisticated, but the principle is similar.</p>
+</section>
+<section id="local-and-global-minima" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="local-and-global-minima"><span class="header-section-number">9.2</span> Local and global minima</h2>
+<p>To get the best parameter value, typically defined as that value that gives the lowest value for <span class="math inline">\(SSR\)</span>, we would need to know the shape of the <span class="math inline">\(SSR\)</span> vs.&nbsp;<span class="math inline">\(p\)</span> curve for all possible values of <span class="math inline">\(p\)</span>. But there is some cost to generating each value of <span class="math inline">\(SSR\)</span>–it requires running a model. Without that complete curve, it is possible that our parameter estimation algorithm returns a value at the <em>local</em> minimum <span class="math inline">\(SSR\)</span>, while in fact we would like the <em>global</em> minium. The difference is demonstrated in <a href="#fig-par-est4" class="quarto-xref">Figure&nbsp;<span>9.4</span></a>.</p>
+<div id="fig-par-est4" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Local vs. global min.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-par-est4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="drawings/par_est4.png" class="img-fluid figure-img" alt="Local vs. global min.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-par-est4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.4: Local vs.&nbsp;global minima.
+</figcaption>
+</figure>
+</div>
+<p>How is this problem avoided? By starting with a good guess for the initial parameter estimate, and trying different values. If you get a different and better estimate by switching to a new initial guess, the earlier attempts did not provide the best parameter estimate.</p>
+</section>
+<section id="loss-function" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="loss-function"><span class="header-section-number">9.3</span> Loss function</h2>
+</section>
+<section id="melting-ice-model-example" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="melting-ice-model-example"><span class="header-section-number">9.4</span> Melting ice model example</h2>
 <p>Let’s load the model.</p>
-<div id="e6662d0a" class="cell" data-execution_count="1">
+<div id="00ce9386" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python packages</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -409,7 +478,7 @@ window.Quarto = {
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ice_mods <span class="im">as</span> im</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Let’s get some real measurements. These are actually real–made on a dining table a year or two ago. Mass is in g. These were initially small ice cubes.</p>
-<div id="8e21fad2" class="cell" data-execution_count="2">
+<div id="4cf9fa86" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>meas <span class="op">=</span> pd.read_csv(<span class="st">"data/ice/ice_mass.csv"</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>meas</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -424,7 +493,7 @@ window.Quarto = {
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>meas[<span class="st">"ice_kg_2"</span>] <span class="op">=</span> meas[<span class="st">"ice_g_2"</span>] <span class="op">/</span> <span class="fl">1000.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We need to have measurements and predictions at the same times in order to quantify model fit. The best approach to have a model function that returns specified times. Here is the original model, which returns evenly spaced times.</p>
-<div id="f7ed3509" class="cell" data-execution_count="3">
+<div id="eb29afdc" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">File name: melt_mods.py</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">Author: Sasha D. Hafner</span></span>
@@ -515,7 +584,7 @@ window.Quarto = {
 <span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> out</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We’ll change the original one. In this version, there is a single <code>times</code> argument.</p>
-<div id="b2f27a61" class="cell" data-execution_count="4">
+<div id="ea5e82ad" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> melt2(mass_0,</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>          temp_air,</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>          h, </span>
@@ -587,7 +656,7 @@ window.Quarto = {
 <span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> out</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>So that is the software model we will work with. When calling it, we can extract the times from the measurement data frame <code>meas</code> and pass them right to the model function. Here is a demo with a reasonable value for the heat transfer coefficient <span class="math inline">\(h\)</span> for free convection.</p>
-<div id="bf13d3e7" class="cell" data-execution_count="5">
+<div id="07a043da" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">reload</span>(im)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>pred01 <span class="op">=</span> im.melt2(</span>
@@ -607,7 +676,7 @@ window.Quarto = {
 </div>
 </div>
 <p>Let’s plot measurements and model output together for simple validation.</p>
-<div id="5af423c0" class="cell" data-execution_count="6">
+<div id="ce27fb90" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plt.plot(meas.time_hr, meas.ice_g_1, <span class="st">"k."</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>plt.plot(pred01[<span class="st">"t"</span>] <span class="op">/</span> <span class="dv">3600</span>, <span class="dv">1000</span> <span class="op">*</span> pred01[<span class="st">"m"</span>])</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Time (h)"</span>)</span>
@@ -625,7 +694,7 @@ window.Quarto = {
 </div>
 <p>It looks like the model underestimates the melting rate, at least with that value for <span class="math inline">\(h\)</span>. For a higher rate we need a higher value of <span class="math inline">\(h\)</span>. We could manually try a higher value, plot results again, and continue this cycle until we are happy with the visual validation of the model. But to automate parameter estimation and for reproducible and defensible estimates, we need to quantify model fit.</p>
 <p>Get sum of squared residuals</p>
-<div id="5c043c5c" class="cell" data-execution_count="7">
+<div id="3b934f9b" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">sum</span>((meas.ice_g_1 <span class="op">-</span> <span class="dv">1000</span> <span class="op">*</span> pred01[<span class="st">"m"</span>])<span class="op">**</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>285.47779472097403</code></pre>

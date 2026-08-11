@@ -20,6 +20,8 @@ while read -r file; do
   fi
 done < <(find . -maxdepth 1 -type f -name "*.xopp")
 
+rm blank.png
+
 echo
 echo "Summary:"
 echo "  PNGs generated: $generated"

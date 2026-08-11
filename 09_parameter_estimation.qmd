@@ -2,6 +2,73 @@
 
 Parameter estimation is about determining (estimating) the "best" (ideally, the most accurate) parameter values for a model based on comparing model output and measurements.
 It is related to model validation.
+Parameter estimation requires a model with some adjustable parameter(s) and some measurement data.
+The flexible approach that we will use has three steps: 
+
+1. run the model with a specific numeric parameter value to get output,
+2. quantify fit by comparing model output to measurement data, and see if the fit is good enough, and finally,
+3. if needed, come up with a new parameter value and return to step 1.
+
+Note that parameter estimation is yet another area where terminology is not consistently used!
+What we call "measurements" or "measurement data" here are called "observations" or just "data" in other cases, but both are ambiguous.
+What we call "model output" here might be called "predictions" or "theoretical values" in other cases.
+
+## Underlying algorithm
+
+Parameter estimation is an application of *optimization*, which works by repeated evaluation of an *objective function*, and updating the parameter guess each time based on how the values change.
+For some hypothetical model, we might get the output shown as the orange line in @fig-par-est1.
+
+![Residuals shown as dotted gray lines between model output (orange line) and measurements (blue points).](drawings/par_est1.png){#fig-par-est1 fig-alt="Model residuals or error"}
+
+To quantify model fit, the residuals, shown as dotted gray lines, are used.
+These are the same residuals used in MAE, MBE, RMSE, and NSME.
+To summarize the fit in a single numeric value, it is typically the sum of squared residuals that is used:
+
+$$
+SSR =  \sum_{i=1}^{N} r_i^2 = \sum_{i=1}^{N} (y_{p,i} - y_{m,i})^2.
+$${#eq-ssr}
+
+@eq-ssr is then the *objective function*, which is the function we want to optimize in an optimization problem.
+In this case, we want to minimize it, so we could call it a *cost function*.
+Note that the numeric value itself is not so important.
+It is typically not seen or thought about during parameter estimation.
+It is not normalized by the number of observations or total variability because it does not need to be.
+
+Let's say we make two more guesses for the single model parameter we are estimating in this problem and they provide the output shown in @fig-par-est2.
+
+![Comparison of model output from three parameter guesses (colored lines) to measurements (blue points).](drawings/par_est2.png){#fig-par-est2 fig-alt="Parameter estimation"}
+
+These plots are shown in $t, y$ space, but our optimization algorithm uses $p, SSR$ space, where $p$ is the parameter we want to estimate.
+In fact the $t$ (for time) dimension in the @fig-par-est1 and @fig-par-est2 does not enter the parameter optimization problem at all; it just helps us visualize the fit.
+Instead, the view of an optimization algorithm for those data shown in @fig-par-est2 is more like @fig-par-est3.
+
+![Sum of squared residuals versus parameter value for the example shown in @fig-par-est2.](drawings/par_est3.png){#fig-par-est3 fig-alt="SSR vs. parameter value"}
+
+And it is the change in $SSR$ between guesses that is used to come up with the next guess.
+A simple way of doing this is shown by the dotted gray line in @fig-par-est3, where the next estimate would that $p$ value shown by the arrow.
+This is the Newton-Raphson method.
+The methods we'll use are more sophisticated, but the principle is similar.
+
+## Local and global minima
+
+To get the best parameter value, typically defined as that value that gives the lowest value for $SSR$, we would need to know the shape of the $SSR$ vs. $p$ curve for all possible values of $p$.
+But there is some cost to generating each value of $SSR$--it requires running a model.
+Without that complete curve, it is possible that our parameter estimation algorithm returns a value at the *local* minimum $SSR$, while in fact we would like the *global* minium.
+The difference is demonstrated in @fig-par-est4.
+
+![Local vs. global minima.](drawings/par_est4.png){#fig-par-est4 fig-alt="Local vs. global min."}
+
+How is this problem avoided? 
+By starting with a good guess for the initial parameter estimate, and trying different values.
+If you get a different and better estimate by switching to a new initial guess, the earlier attempts did not provide the best parameter estimate!
+
+## Loss function
+
+The simplest way to use the residuals in a parameter estimation problem is to sum them, as in @eq-ssr, giving SSR.
+Other approaches can be used those.
+As with the model fit statistics $RMSE$ and $MAE$, squaring the residuals increases the relative effect of measurements far from the model output.
+
+ 
 
 ## Melting ice model example
 
