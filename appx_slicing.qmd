@@ -180,9 +180,11 @@ In effect, what this is doing is lining up copies of the array as shown below, a
 ```{python}
 #| eval: false
 
-       [ ,  , 3, 4.5, 5, 5, 4, 3, 2, 0])
- - 2 *    [ , 2, 3, 4.5, 5, 5, 4, 3, 2,  ])
- +           [0, 2, 3, 4.5, 5, 5, 4, 3,  ,  ])
+       [ ,  , 3, 4.5,  5,   5,    4,  3,  2,   0])
+ - 2 *    [ , 2, 3,    4.5, 5,    5,  4,  3,   2,  ])
+ +           [0, 2,    3,   4.5,  5,  5,  4,   3,  ,  ])
+       -------------------------------------
+            -1,  0.5, -1., -0.5, -1., 0., 0., -1.
 ```
 
 So in the answer, for the first element, we should expect `3 - 2 * 2 + 0 = -1`.
