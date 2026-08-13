@@ -758,6 +758,39 @@
     ]
   },
   {
+    "objectID": "10_time_variable_inputs.html",
+    "href": "10_time_variable_inputs.html",
+    "title": "10  Time-variable inputs",
+    "section": "",
+    "text": "10.1 Interpolation\nSome of the simple models presented as examples in this book or described in the problems could be solved analytically. In a sense, the those models didn’t really make use of the capabilities of solve_ivp(). But how about when model inputs are not constant? It’s easy to think of examples:\nHere an analytical solution is impossible. But a numerical approach works well, as long as care is taken in how the time-variable inputs enter the model.\nWe’ll use the ice melting model from an earlier problem in a demo.\nLet’s say we have some measured temperature data that look like these:\nimport pandas as pd\nimport matplotlib.pyplot as plt\n\nmeas_temp = pd.read_csv('data/air_temp.csv')\n\nmeas_temp.time = meas_temp.time * 3600\n\nplt.plot(meas_temp.time, meas_temp.temp, 'ro')\nplt.xlabel('Time (s)')\nplt.ylabel('Air temperature (deg. C)')\n\nText(0, 0.5, 'Air temperature (deg. C)')\nWe cannot just send those multiple discrete temperature values into our model function. Inside it, the rates() function needs to be able to access a temperature value for any time. We have to figure out the Python code for making that happen. The solution is interpolation. We create a Python interpolation function based on the measurements. Then when rates() needs a temperature, it can call the function.\nLet’s start with some interpolation outside of the model. We’ll use the interpl1d() function from the interpolate module in the scipy library.\nfrom scipy.interpolate import make_interp_spline\nair_temp_func = make_interp_spline(meas_temp.time, meas_temp.temp)\nThe result is a function, not any specific values.\nair_temp_func\n\n&lt;scipy.interpolate._bsplines.BSpline at 0x74881858ef90&gt;\nTo use it, it needs some x values (time here).\nair_temp_func(0)\n\narray(18.)\nair_temp_func(5000)\n\narray(27.31375942)\nTo see what the function does, we can call it with some high-resolution input and plot results.\nimport numpy as np\ntimes = np.arange(0, 86400 + 60, 60)\nimport matplotlib.pyplot as plt\n\nplt.plot(meas_temp.time, meas_temp.temp, 'ro')\nplt.plot(times, air_temp_func(times))\nplt.xlabel('Time (s)')\nplt.ylabel('Air temperature (deg. C)')\n\nText(0, 0.5, 'Air temperature (deg. C)')\nThe function created by the make_interp_spline() function is smooth–we do not have any kinks or corners at the points. Linear interpolation is an alternative, but ODE solvers tend to struggle with these responses.",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Time-variable inputs</span>"
+    ]
+  },
+  {
+    "objectID": "10_time_variable_inputs.html#building-the-model-function",
+    "href": "10_time_variable_inputs.html#building-the-model-function",
+    "title": "10  Time-variable inputs",
+    "section": "10.2 Building the model function",
+    "text": "10.2 Building the model function\nHere is a new model function\n\ndef meltv(mass_0,\n          air_temp_dat,\n          h, \n          times, \n          dens = 920,\n          temp_freeze = 0,\n          Hf = 333000\n    ):  \n\n    \"\"\" \n    Dynamic model for heat transfer to a melting block of ice, with \n    disappearance of the ice over time. This version accepts time-\n    variable air temperature.\n\n    Parameters\n    ----------\n    mass_0 : float\n        Initial mass of ice (kg) \n    air_temp : DataFrame\n        Air temperature over time as a Pandas DataFrame with columns `time` (s) and `temp` (deg. C)\n    h : float\n        Convection heat transfer coefficient (W/m2-K)\n    times : list or tuple or array\n        time in output (s) \n    dens : float\n        Ice density (kg/m3)\n    temp_freeze : float\n        Freezing point (deg. C)\n    Hf : float\n        Heat of fusion (J/kg)\n\n    Returns\n    -------\n    dictionary\n        With elements 't' for time (s) and 'm' for ice mass remaining (kg)\n \n    \"\"\"\n\n    # Make function for air temperature\n    air_temp_func = make_interp_spline(air_temp_dat.time, air_temp_dat.temp)\n     \n    # Define rates function\n    def rates(t, mass_t):\n\n        if mass_t &lt; 0:\n            mass_t = 0\n\n        # Get current air temperature (deg. C)\n        air_temp = air_temp_func(t)\n\n        # Get current exposed upper area, assuming hemisphere\n        area = 2 * np.pi * (3 * mass_t / (2 * np.pi * dens))**(2/3)\n\n        # Heat flow (W)\n        Q = area * h * (air_temp - temp_freeze)\n\n        # Melting rate (kg/s)\n        dmdt = -Q / Hf\n\n        return dmdt\n\n    res = solve_ivp(\n        rates, \n        t_span = [min(times), max(times)], \n        y0 = [mass_0], \n        t_eval = times\n    )\n\n    # Calculate temperature for output as well\n    air_temp_t = air_temp_func(times)\n\n    # Return user-friendly results object (dictionary here)\n    out = {\n        \"time\": res.t, \n        \"air_temp\": air_temp_t,\n        \"ice_mass\": res.y[0, :]\n    }\n\nLet’s try it.\n\nfrom importlib import reload\n\nimport sys\n\nsys.path.append('modules')\n\n# Our module\nimport ice_mods as im\n\nreload(im)\n\n&lt;module 'ice_mods' from '/home/sasha/repos/modeling-py-book/modules/ice_mods.py'&gt;\n\n\n\npred01 = im.meltv(\n    mass_0 = 0.050, \n    air_temp_dat = meas_temp, \n    h = 120, \n    times = 3600 * np.linspace(0, 3, 70),\n)\n\nPlot predictions\n\nplt.plot(pred01[\"time\"] / 3600, 1000 * pred01[\"ice_mass\"], label=\"Linear temp.\")\nplt.xlabel(\"Time (s)\")\nplt.ylabel(\"Ice mass (g)\")\nplt.legend()\n\n\n\n\n\n\n\n\n\nplt.plot(pred01[\"time\"] / 3600, pred01[\"air_temp\"], label=\"Linear temp.\")\nplt.xlabel(\"Time (s)\")\nplt.ylabel(\"Air temperature (deg. C)\")\nplt.legend()",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Time-variable inputs</span>"
+    ]
+  },
+  {
+    "objectID": "10_time_variable_inputs.html#problems",
+    "href": "10_time_variable_inputs.html#problems",
+    "title": "10  Time-variable inputs",
+    "section": "Problems",
+    "text": "Problems\n\nWorking with the wastewater lagoon polishing model (see module in this subdirectory), make the reaction rate constant time-variable. Test your model by comparing OM predictions for the middle of the lagoon from the original with a constant rate and the a rate that varies 10x every 24 hours.\n\nNote that in the melting ice demo it was an input variable that we varied, while here it is a model parameter. But the same concepts and programming applies.\nIf you have trouble seeing a difference, shorten the model run time and make sure you use a high resolution.",
+    "crumbs": [
+      "Part II: Applications",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Time-variable inputs</span>"
+    ]
+  },
+  {
     "objectID": "appx_symbols.html",
     "href": "appx_symbols.html",
     "title": "Appendix A — Symbols",
