@@ -170,7 +170,7 @@ We won't get into modelling concentration profiles until the spatial sections la
    The bulk concentration in the lagoon is 10 $\mgpl$, which corresponds to an vapor-phase equilibrium concentration of about 2 $\gpmc$ (that is based on Henry's law).
    Most of the resistance to mass transfer comes from the water.
    You can assume the overall mass transfer coefficient in air phase units, $K_G$, is 0.001 $\mps$.
-   If the lagoon is 1 m deep, predict the relative daily loss with your model.
+   If the lagoon is 1 m deep, predict the relative hourly loss with your model.
    Do you expect it to be constant over time?
 
 ## References {.unnumbered}
