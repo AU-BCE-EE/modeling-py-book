@@ -407,7 +407,7 @@ Figure&nbsp;2.1: Conceptual model of coffee cooling.
 \text{accumulation} = \text{in} - \text{out} + \text{generation} - \text{consumption}.
 \tag{2.1}\]</span></span></p>
 <p>Exactly what the terms mean, along with their dimensions and units, can vary. Of course dimensions and units must match for all terms. We will typically use rates for all terms, e.g., <span class="math inline">\(\Jps\)</span> = W for energy and <span class="math inline">\(\kgps\)</span> for mass.</p>
-<p>To develop a conservation equation for a new model, start with <a href="#eq-conservation" class="quarto-xref">Equation&nbsp;<span>2.1</span></a> and eliminate the terms that are not relevant. For our coffee model (<a href="01_intro.html#sec-classification" class="quarto-xref"><span>Section 1.1</span></a>), the relevant conservation equation is <span id="eq-coffee-conservation"><span class="math display">\[
+<p>To develop a conservation equation for a new model, start with <a href="#eq-conservation" class="quarto-xref">Equation&nbsp;<span>2.1</span></a> and eliminate the terms that are not relevant. For our coffee model (<a href="01_intro.html#sec-classification" class="quarto-xref"><span>Section 1.2</span></a>), the relevant conservation equation is <span id="eq-coffee-conservation"><span class="math display">\[
 \text{accumulation} = - \text{out},
 \tag{2.2}\]</span></span></p>
 <p>because there is no heat coming in, only heat loss, and no heat generated (e.g., from electricity or a reaction) or consumed (e.g., through a reaction).</p>
@@ -493,7 +493,7 @@ c_p \cdot m \cdot \frac{dT}{dt} = - A \cdot h \cdot (T_s - T_\infty)
 <p>We can’t simply plug numbers into the GE and get a solution, because it is an ODE, and only tells how the coffee temperature <em>changes</em> over time, not the actual value. We’ll look at actually getting results in <a href="03_solving.html" class="quarto-xref"><span>Chapter 3</span></a>. But here we can see what inputs will be needed.</p>
 <p>You might notice that this GE is different from the one presented in <a href="01_intro.html" class="quarto-xref"><span>Chapter 1</span></a>, <a href="01_intro.html#eq-coffee-ge1" class="quarto-xref">Equation&nbsp;<span>1.1</span></a>. In that simpler GE, several terms were combined together into a single constant:</p>
 <p><span id="eq-coffee-const"><span class="math display">\[
-c = - \frac{A \cdot h}{c_p \cdot m}
+c = \frac{A \cdot h}{c_p \cdot m}
 \tag{2.9}\]</span></span></p>
 <p>Both approaches can give identical predictions if <a href="#eq-coffee-const" class="quarto-xref">Equation&nbsp;<span>2.9</span></a> is true. The difference implies something about what we know and how we know it. Do we know the value of each term on the RHS of <a href="#eq-coffee-const" class="quarto-xref">Equation&nbsp;<span>2.9</span></a>, perhaps from measurements and correlations? Or instead do we just know the single lumped parameter on the LHS, <span class="math inline">\(c\)</span>, perhaps from fitting to measurements?</p>
 <!-- Show how balance + constitutive + linking equations combine to give the GE.
