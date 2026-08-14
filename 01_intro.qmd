@@ -13,9 +13,9 @@ They are used to make useful predictions about the future.
 For example, national policy and international agreements on greenhouse gas emissions rely on sophisticated "general circulation models" of the atmosphere.
 These models are used to predict future climate under different input scenarios, including more or less greenhouse gases in the atmosphere.
 
-In research, models are used for understanding complex systems.
-And in product development, models are used for design.
-Expand. . .add a couple examples
+In research, models are used for understanding complex systems, for example, microbial models are used to understand the effect of interactions between microbial populations, substrates, and products.
+Resulting knowledge can lead to new industrial processes.
+And in product development, models are used for design, for example, a heat transfer model might be used to size a heat exchanger system before it is built.
 
 ## Types of models {#sec-classification}
 There are multiple ways to group models, and the categories are useful for understanding, developing, and explaining models.
@@ -52,7 +52,7 @@ In particular, it is an *ordinary differential equation* (*ODE*) because the dep
 @eq-coffee-ge1 is also the *governing equation* or *GE* for this model, or that complete equation that describes the system.
 Governing equations typically need to be *solved* in order for a model to be useful.
 In some cases a solution can be found using only mathematical tools and expressed as a simple *closed-form* equation.
-Eq. (1) is one such example, and a solution is:
+@eq-coffee-ge1 is one such example, and a solution is:
 
 $$
 T(t) = (T_0 - T_{air}) \cdot e^{(-c \cdot t)} + T_{air}.
