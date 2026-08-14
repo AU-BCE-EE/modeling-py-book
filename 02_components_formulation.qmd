@@ -234,7 +234,7 @@ You might notice that this GE is different from the one presented in @sec-intro,
 In that simpler GE, several terms were combined together into a single constant:
 
 $$
-c = - \frac{A \cdot h}{c_p \cdot m}
+c = \frac{A \cdot h}{c_p \cdot m}
 $$ {#eq-coffee-const}
 
 Both approaches can give identical predictions if @eq-coffee-const is true.

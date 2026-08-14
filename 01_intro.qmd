@@ -1,7 +1,7 @@
 # An introduction to models {#sec-intro}
 A *model* is a representation of a more complex real system.
 The term itself is quite general.
-In this book, we will focus on models that are simplified representations of physcial, chemical, or biological systems.
+In this book, we will focus on models that are simplified representations of physical, chemical, or biological systems.
 
 Students in science and engineering might assume that a model means a piece of software or the underlying code.
 This can be the case, but is not the only meaning of the term.
@@ -43,7 +43,7 @@ Formulation of a *mathematical model* is typically the objective of a model form
 A mathematical model for our coffee example could be:
 
 $$
-\frac{dT}{dt} = c \cdot (T - T_{air}). 
+\frac{dT}{dt} = - c \cdot (T - T_{air}). 
 $$ {#eq-coffee-ge1}
 
 @eq-coffee-ge1 is actually a *differential equation* (*DE*) because it describes the rate of change in coffee temperature $T$ over time.
