@@ -17,6 +17,32 @@ In research, models are used for understanding complex systems, for example, mic
 Resulting knowledge can lead to new industrial processes.
 And in product development, models are used for design, for example, a heat transfer model might be used to size a heat exchanger system before it is built.
 
+This chapter introduces some terms used in modeling and components of models (#sec-components) and introduces models through a description of different types (#sec-classification).
+
+## Model components and terms {#sec-components}
+State variables, parameters, inputs, code. . . what do these terms mean?
+Vocabulary is a key part of a new topic, and modeling vocabularly is particularly tricky because terminology is not used consistently among different modeling fields.
+Fortunately the most basic terms are relatively universal.
+
+The models that we deal with calculate something, and that something can be called the *dependent variable* or *state variable*.
+In a model of phosphorus pollution in a lake, the total phosphorus concentration or mass in the lake might be the state variable.
+Models can have more than one.
+In an epidemiological model of disease spread, the number of infected and healthy individuals might be the state variables.
+
+We can use the informal term *model output* for the value of the state variable under the specified conditions.
+Output from a computer model could include other, intermediate results, depending on what the programmer decided would be useful.
+
+The term *model inputs* can then be used for everything that goes into a model.
+Below, we'll work with a simple model for a cooling cup of coffee.
+Model inputs inclue the times for which the solution is desired, one or more physical constants that affect heat transfer, and an initial value of the state variable, coffee temperature.
+
+It is important to recognize that there are different types of model inputs.
+*Parameters* are those constants that enter model equations.
+The term can be confusing because the same word, parameters, is used for inputs to a Python function (*arguments* is used in other programming languages).
+Model parameters in the general (not Python) sense might be a well-defined physical constant, like the specific heat capacity of some material.
+They might also be completely empirical values that quantify some rate of change or anything else that is important in a model. 
+Heat or mass transfer coefficients are common model parameters.
+
 ## Types of models {#sec-classification}
 There are multiple ways to group models, and the categories are useful for understanding, developing, and explaining models.
 The different classification groups are not exclusive, so a single model could for example be both a "lumped parameter" and an "analytical model".
