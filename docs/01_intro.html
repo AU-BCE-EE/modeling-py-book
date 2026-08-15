@@ -432,35 +432,48 @@ window.Quarto = {
 <h2 data-number="1.1" class="anchored" data-anchor-id="sec-components"><span class="header-section-number">1.1</span> Model components and terms</h2>
 <p>State variables, parameters, inputs. . . what do these terms mean? Vocabulary is a key part of a new topic, and modeling vocabulary is particularly tricky because terminology is not used consistently among different modeling fields. Fortunately the most basic terms are relatively universal.</p>
 <p>The models that we deal with calculate something, and that something can be called the <em>dependent variable</em> or <em>state variable</em>. In a model of phosphorus pollution in a lake, the total phosphorus concentration or mass in the lake might be the state variable. Models can have more than one. You may also see the term <em>independent variable</em> used. For a dynamic model that describes how a dependent variables changes over time, time is the independent variable.</p>
-<p>We can use the informal term <em>model output</em> for the value of the state variable under the specified conditions. Output from a computer model could include other, intermediate results, depending on what the programmer decided would be useful.</p>
+<p>We can use the informal term <em>model output</em> for the value of the state variable under the specified conditions. Output from a computer model could include other, intermediate results, depending on what the programmer decided would be useful. For example, if parameter values are calculated in the model from inputs, it is good practice to return these so the user can check that they are realistic.</p>
 <p>The term <em>model inputs</em> can then be used for everything that goes into a model. Below, we’ll work with a simple model for a cooling cup of coffee. Model inputs include the times for which the solution is desired, one or more physical constants that affect heat transfer, and an initial value of the state variable, coffee temperature.</p>
-<p>It is important to recognize that there are different types of model inputs. <em>Parameters</em> are those constants that enter model equations. (The term can be confusing because in Python, “parameter” also refers to a placeholder name in a function’s definition. The actual objects or values in <code>()</code> in a function call are called <em>arguments</em>. This is consistent with C++ and other languages but not all programming languages!). Model parameters in the general (not Python) sense might be a well-defined physical constant, like the specific heat capacity of some material. They might also be completely empirical values that quantify some rate of change or anything else that is important in a model. Heat or mass transfer coefficients are common model parameters.</p>
-<p><em>Differential equations</em> (DEs) are symbolic equations that describe how a dependent or state variable changes with respect to another, independent variable. A dynamic model, which describes how a dependent variable changes over time are built around a DE that has, of course, <em>time</em>, as the independent variable. If an equation shows that the state variable depends only on time, or some other independent variable, but only one, it is called an <em>ordinary differential equation</em> (ODE). If the state variable depends on more than one independent variable, we have to work with what are called <em>partial differential equations</em> (PDEs). In reality, few things depend on only one variable, but it is a common type of model simplification to focus on one. The distinction between independent variables, parameters, and other model inputs is important here. The lake phosphorus model could include effects of temperature and animal activity, but if the fundamental DE used to develop the model only expresses the state variable phosphorus as a derivative with respect to time (<span class="math inline">\(\frac{dP}{dt} =...\)</span>) then it is an ODE, not a PDE.</p>
+<div id="fig-mod-terms" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Model terms and concepts.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mod-terms-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="drawings/model_terms.png" class="img-fluid figure-img" alt="Model terms and concepts.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mod-terms-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.1: Model terms and concepts for a dynamic model. In this model, <span class="math inline">\(y\)</span> is the state variable (or dependent variable) and time <span class="math inline">\(t\)</span> is the independent variable. It is a numerical model because an ODE solver is used to solve the governing equation.
+</figcaption>
+</figure>
+</div>
+<p>There are different types of model inputs. <em>Parameters</em> are those constants that enter model equations. (The term can be confusing because in Python, “parameter” also refers to a placeholder name in a function’s definition. The actual objects or values in <code>()</code> in a function call are called <em>arguments</em>. This is consistent with C++ and other languages but not all programming languages!). Model parameters in the general (not Python) sense might be a well-defined physical constant, like the specific heat capacity of some material. In empirical models, parameters might be completely quantities without a clear physical interpretation. Heat or mass transfer coefficients are common model parameters that are in between these two extremes. Inputs for computer models can also include <em>settings</em> that instruct the model how to run or how to return results. For example, in a dynamic model the times for which a solution is desired could be called a setting.</p>
+<p><em>Differential equations</em> (DEs) are a core part of models. They describe exactly how a dependent (state) variable changes with respect to an independent variable, or even more than one independent variable. A dynamic model, which describes how a dependent variable changes over time are built around DEs with time as the independent variable. A DE taken with respect to only one independent variable is called an <em>ordinary differential equation</em> (ODE). If a derivative is taken with more than one independent variable, e.g., both space and time in a 1D model, the DE is called a <em>partial differential equation</em> (PDE).</p>
+<p>The distinction between independent variables, parameters, and other model inputs is important here. A state variable may depend on multiple model inputs, but only if the DE is taken with respect to multiple independent variables is it a PDE. For example, the lake phosphorus model could include effects of temperature and animal activity on the rate of change in phosphorus concentration, but if the fundamental DE used to develop the model only expresses the state variable phosphorus as a derivative with respect to time, i.e., <span class="math inline">\(\frac{dP}{dt} =...\)</span>, then it is an ODE, not a PDE. These other inputs can still show up on the right hand side (RHS) of the DE, but still, this would be an ODE. The DE that sums up the behavior of the state variable in a model is called the governing equation (GE).</p>
+<p>During model forumulation, the objective is to develop a GE. To actually get model output, it is then necessary to <em>solve</em> the GE. As described in some detail below (<a href="#sec-analytical-v-numerical" class="quarto-xref"><span>Section 1.2.2</span></a>), this could be done with pencil and paper in an <em>analytical</em> approach, or with computing power in a <em>numerical</em> approach. The numerical approach relies on an algorithm or software function called an <em>ODE solver</em>.</p>
+<p>The relationships among most of these terms are shown in <a href="#fig-mod-terms" class="quarto-xref">Figure&nbsp;<span>1.1</span></a>, which is a representation of a numerical dynamic model.</p>
 </section>
 <section id="sec-classification" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="sec-classification"><span class="header-section-number">1.2</span> Types of models</h2>
 <p>There are multiple ways to group models, and the categories are useful for understanding, developing, and explaining models. The different classification groups are not exclusive, so a single model could for example be both a “lumped parameter” and an “analytical model”.</p>
 <section id="conceptual-mathematical-and-computer-models" class="level3" data-number="1.2.1">
 <h3 data-number="1.2.1" class="anchored" data-anchor-id="conceptual-mathematical-and-computer-models"><span class="header-section-number">1.2.1</span> Conceptual, mathematical, and computer models</h3>
-<p>Conceptual, mathematical, and computer models are not really levels in a model classification scheme, but terms for the stage of model development. A <em>conceptual model</em> is some kind of qualitative description of a system. Conceptual models can be explained and summarized with the help of a good sketch. For example, let’s say we want to develop a model to describe how the coffee in a mug (<a href="#fig-coffee" class="quarto-xref">Figure&nbsp;<span>1.1</span></a>) cools over time.</p>
+<p>Conceptual, mathematical, and computer models are not really levels in a model classification scheme, but terms for the stage of model development. A <em>conceptual model</em> is some kind of qualitative description of a system. Conceptual models can be explained and summarized with the help of a good sketch. For example, let’s say we want to develop a model to describe how the coffee in a mug (<a href="#fig-coffee" class="quarto-xref">Figure&nbsp;<span>1.2</span></a>) cools over time.</p>
 <div id="fig-coffee" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Sketch showing a cup of coffee.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-coffee-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="drawings/coffee1.png" class="img-fluid figure-img" alt="Sketch showing a cup of coffee.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-coffee-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1.1: A cooling cup of coffee, losing heat to the surrounding air.
+Figure&nbsp;1.2: A cooling cup of coffee, losing heat to the surrounding air.
 </figcaption>
 </figure>
 </div>
-<p>Our conceptual model could be summarized in the sketch below (<a href="#fig-coffee-concept" class="quarto-xref">Figure&nbsp;<span>1.2</span></a>).</p>
+<p>Our conceptual model could be summarized in the sketch below (<a href="#fig-coffee-concept" class="quarto-xref">Figure&nbsp;<span>1.3</span></a>).</p>
 <div id="fig-coffee-concept" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Sketch showing a conceptual model of coffee cooling.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-coffee-concept-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="drawings/coffee2.png" class="img-fluid figure-img" alt="Sketch showing a conceptual model of coffee cooling.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-coffee-concept-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1.2: Conceptual model of coffee cooling.
+Figure&nbsp;1.3: Conceptual model of coffee cooling.
 </figcaption>
 </figure>
 </div>
@@ -474,7 +487,7 @@ Figure&nbsp;1.2: Conceptual model of coffee cooling.
 <p><span id="eq-coffee-sol1"><span class="math display">\[
 T(t) = (T_0 - T_{air}) \cdot e^{(-c \cdot t)} + T_{air}.
 \tag{1.2}\]</span></span></p>
-<div id="d12fea14" class="cell" data-execution_count="1">
+<div id="605a55b4" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import modules</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -538,14 +551,14 @@ T =  T_{air}.
 <p><span class="math display">\[
 r = k_{T} \cdot T,
 \]</span></p>
-<p>where the reaction rate <span class="math inline">\(r\)</span> could be in <span class="math inline">\(\kgps\)</span>, temperature <span class="math inline">\(T\)</span> in <span class="math inline">\(\degC\)</span>, and <span class="math inline">\(k_T\)</span> is an empirical coefficient, determined from fitting to measurements. Some measurements might look like those shown in <a href="#fig-biomethmod1" class="quarto-xref">Figure&nbsp;<span>1.3</span></a>.</p>
+<p>where the reaction rate <span class="math inline">\(r\)</span> could be in <span class="math inline">\(\kgps\)</span>, temperature <span class="math inline">\(T\)</span> in <span class="math inline">\(\degC\)</span>, and <span class="math inline">\(k_T\)</span> is an empirical coefficient, determined from fitting to measurements. Some measurements might look like those shown in <a href="#fig-biomethmod1" class="quarto-xref">Figure&nbsp;<span>1.4</span></a>.</p>
 <div id="fig-biomethmod1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Hypothetical biomethanation measurements">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-biomethmod1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="drawings/biometh_mod1.png" class="img-fluid figure-img" alt="Hypothetical biomethanation measurements">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biomethmod1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1.3: Hypothetical measurements of biomethanation rate.
+Figure&nbsp;1.4: Hypothetical measurements of biomethanation rate.
 </figcaption>
 </figure>
 </div>
@@ -577,14 +590,14 @@ y' = A \cdot y + b
 <h3 class="unnumbered anchored" data-anchor-id="model-classification">Model classification</h3>
 <p>Some different models are described below. Apply the labels conceptual, mathematical, computer, analytical, numerical, lumped parameter, distributed parameter, 1D, steady-state, dynamic, mechanistic, and empirical appropriately. Is the answer always clear?</p>
 <ol type="1">
-<li><p>The NLES5 model predicts nitrate leaching based on the equation shown in the figure below (<a href="#fig-NLES5" class="quarto-xref">Figure&nbsp;<span>1.4</span></a>), where <span class="math inline">\(L\)</span> is the predicted leaching rate and the other terms are input variables or model parameters. Is it mechanistic or empirical?</p>
+<li><p>The NLES5 model predicts nitrate leaching based on the equation shown in the figure below (<a href="#fig-NLES5" class="quarto-xref">Figure&nbsp;<span>1.5</span></a>), where <span class="math inline">\(L\)</span> is the predicted leaching rate and the other terms are input variables or model parameters. Is it mechanistic or empirical?</p>
 <div id="fig-NLES5" class="quarto-float quarto-figure quarto-figure-center anchored" alt="NLES5 model.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-NLES5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images-web/NLES5.png" class="img-fluid figure-img" alt="NLES5 model.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-NLES5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1.4: The NLES5 model, from <span class="citation" data-cites="NLES52022">Børgesen et al. (<a href="#ref-NLES52022" role="doc-biblioref">2022</a>)</span>.
+Figure&nbsp;1.5: The NLES5 model, from <span class="citation" data-cites="NLES52022">Børgesen et al. (<a href="#ref-NLES52022" role="doc-biblioref">2022</a>)</span>.
 </figcaption>
 </figure>
 </div></li>
@@ -595,7 +608,7 @@ Figure&nbsp;1.4: The NLES5 model, from <span class="citation" data-cites="NLES52
 <img src="images-web/ADM1-1.png" class="img-fluid figure-img" alt="ADM1 model.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ADM1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1.5: The ADM1 model, from <span class="citation" data-cites="batstone_iwa_2002">Batstone et al. (<a href="#ref-batstone_iwa_2002" role="doc-biblioref">2002</a>)</span>.
+Figure&nbsp;1.6: The ADM1 model, from <span class="citation" data-cites="batstone_iwa_2002">Batstone et al. (<a href="#ref-batstone_iwa_2002" role="doc-biblioref">2002</a>)</span>.
 </figcaption>
 </figure>
 </div></li>
