@@ -28,7 +28,7 @@ The models that we deal with calculate something, and that something can be call
 In a model of phosphorus pollution in a lake, the total phosphorus concentration or mass in the lake might be the state variable.
 Models can have more than one.
 You may also see the term *independent variable* used.
-For a dynamic model that describes how a dependent variables changes over time, time is the independent variable.
+For a *dynamic model* that describes how a dependent variables changes over time, time is the independent variable.
 
 We can use the informal term *model output* for the value of the state variable under the specified conditions.
 Output from a computer model could include other, intermediate results, depending on what the programmer decided would be useful.
