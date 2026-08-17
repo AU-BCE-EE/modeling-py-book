@@ -110,10 +110,18 @@ $$
 \frac{dT}{dt} = v_x \cdot \frac{(T_{x=0} - T_{x=\Delta x})}{\Delta x}.
 $${#eq-advection5}
 
-And that quotient on the RHS of @eq-advection5 becomes the definition of a derivative as $\Delta x$ approaches 0, so the associated ODE is:
+This equation and those above calculate a temperature difference from left to right because it is conceptually simpler and does not require a negative sign on the RHS.
+But it is actually more common to define differences from right to left, or, technically, from farther from the domain origin to closer.
+Here, that would be:
 
 $$ 
-\frac{dT}{dt} = v_x \cdot \frac{dT}{dx}.
+\frac{dT}{dt} = - v_x \cdot \frac{( T_{x=\Delta x} - T_{x=0} )}{\Delta x}.
+$${#eq-advection6}
+
+That quotient on the RHS of @eq-advection6 becomes the definition of a derivative as $\Delta x$ approaches 0, so the associated ODE is:
+
+$$ 
+\frac{dT}{dt} = - v_x \cdot \frac{dT}{dx}.
 $${#eq-advection-ode1}
 
 @eq-advection-ode1 is actually pretty intuitive.
@@ -302,8 +310,8 @@ Remember that $\Delta T$ is the overall temperature difference.
 So for @fig-composite-wall2, for example, $\Delta T = T_{\infty, l} - T_{\infty, r}$.
 And for @fig-composite-wall1, $\Delta T = T_{l} - T_{r}$.
 Does it seem inconsistent, that both expressions could be true?
-Really the two figures could be different interpretations or the same physical system.
-The resolution comes from defining $U$ correctly (it is different for the two) and using the appropriate temperatures.
+Really the two figures could be different interpretations of the same physical system.
+The resolution comes from defining $U$ correctly (it is conceptually and numerically different for the two) and using the appropriate temperatures.
 We could, in fact, use $\Delta T = T_{l} - T_{r}$ for the system in @fig-composite-wall2, but then (1) should not include the fluids in the calculation of $U$ and (2) must use the temperatures at the fluid/solid interfaces ($T_l$ and $T_r$) for calculating flux.
 If the fluids actually do contribute significant resistance to heat flow, those interface temperatures could be quite different from the bulk fluid temperatures $T_{\infty...}$, and difficult to determine.
 

@@ -392,7 +392,7 @@ J = c \cdot v_x,
 <p>where <span class="math inline">\(\frac{\dot{V}}{A} = v_x =\)</span> superficial fluid velocity.</p>
 <p>For a fixed point in space,</p>
 <p><span id="eq-mass-advect-ode1"><span class="math display">\[
-\frac{dc}{dt} = v_x \cdot \frac{dc}{dx}.
+\frac{dc}{dt} = - v_x \cdot \frac{dc}{dx}.
 \tag{5.3}\]</span></span></p>
 <p>With mass, we don’t have anything like the temperature vs.&nbsp;energy distinction. Mass concentration gradients drive mass flow directly, altering concentrations over time.</p>
 <!-- Simple bulk flow. Include note on dispersion. -->
@@ -425,24 +425,24 @@ Table&nbsp;5.1: Approximate diffusivity values from <span class="citation" data-
 </tr>
 <tr class="even">
 <td>Liquids</td>
-<td>$10^{-9}</td>
+<td><span class="math inline">\(10^{-9}\)</span></td>
 </tr>
 <tr class="odd">
 <td>Polymers</td>
-<td>$10^{-12}</td>
+<td><span class="math inline">\(10^{-12}\)</span></td>
 </tr>
 <tr class="even">
 <td>Solids</td>
-<td>$10^{-34}</td>
+<td><span class="math inline">\(&lt; 10^{-13}\)</span></td>
 </tr>
 </tbody>
 </table>
 </div>
 </figure>
 </div>
-<p>The time derivative of concentration is the integral of <a href="#eq-ficks1" class="quarto-xref">Equation&nbsp;<span>5.4</span></a>, or: <span id="eq-ficks2"><span class="math display">\[
-\frac{dc}{dt} = - D \cdot \frac{d^2c}{dx^2}.
-\tag{5.5}\]</span></span> This form can be used as a starting point for a numerical or analytical solution.</p>
+<p>The time derivative of concentration <span class="math inline">\(\frac{dc}{dt}\)</span> is proportional to the second space derivative: <span id="eq-ficks2"><span class="math display">\[
+\frac{dc}{dt} = D \cdot \frac{d^2c}{dx^2}.
+\tag{5.5}\]</span></span> This form can be used as a starting point for a numerical or analytical solution. Note the difference from advection–this can be conceptually confusing!</p>
 <p>Mathematically and conceptually, mass diffusion is analogous to thermal conduction. This should be clear from comparing the equations for Fick’s and Fourier’s laws here and in <a href="04_heat_transfer.html" class="quarto-xref"><span>Chapter 4</span></a>. So when the concentration gradient (derivative) is linear, i.e., <span class="math inline">\(\frac{dc}{dx}\)</span> is uniform, the system is at steady-state, with constant (but not uniform) concentrations over time. When this is the case or we can approximate reality with this simplification, a simpler expression can be used:</p>
 <p><span id="eq-ficks3"><span class="math display">\[
 J = -D \cdot \frac{\Delta c}{L},
@@ -465,7 +465,7 @@ Figure&nbsp;5.1: Steady-state diffusion of <span class="math inline">\(\text{CO}
 <p><span id="eq-mass-trans1"><span class="math display">\[
 J = k_c \cdot \Delta c,
 \tag{5.7}\]</span></span></p>
-<p>where <span class="math inline">\(k_c=\)</span> the mass transfer convection coefficient, or the mass transfer coefficient, and <span class="math inline">\(\Delta c\)</span> = some appropriate concentration difference, e.g., from a surface into ambient air. For an example, see <a href="#fig-gasoline1" class="quarto-xref">Figure&nbsp;<span>5.2</span></a>, where <span class="math inline">\(\Delta c = c_{surface} - c_\infty\)</span>. As with heat convection, the exact shape of the concentration (temperature) profile is generally unknown and not needed. Intead, all resistance to mass transfer is lumped into a single convection coefficient <span class="math inline">\(k_c\)</span>.</p>
+<p>where <span class="math inline">\(k_c=\)</span> the mass transfer convection coefficient, or the mass transfer coefficient, and <span class="math inline">\(\Delta c\)</span> = some appropriate concentration difference, e.g., from a surface into ambient air. For an example, see <a href="#fig-gasoline1" class="quarto-xref">Figure&nbsp;<span>5.2</span></a>, where <span class="math inline">\(\Delta c = c_{surface} - c_\infty\)</span>. As with heat convection, the exact shape of the concentration (temperature) profile is generally unknown and not needed. Instead, all resistance to mass transfer is lumped into a single convection coefficient <span class="math inline">\(k_c\)</span>.</p>
 <div id="fig-gasoline1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Gasoline volatilization.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-gasoline1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -482,7 +482,7 @@ Figure&nbsp;5.2: Convection of volatile components in gasoline through convectio
 <section id="sec-interphase" class="level2" data-number="5.4">
 <h2 data-number="5.4" class="anchored" data-anchor-id="sec-interphase"><span class="header-section-number">5.4</span> Interphase mass transfer</h2>
 <p>As with heat transfer, it is also possible to model mass transfer through multiple layers of different materials or substances. Unfortunately, this is where we really run into complexity. When different phases, e.g., water and air, are stacked together, differences in the affinity of the transported substance for each phase makes for some challenges for both understanding and modelling.</p>
-<p>Take a look at the example in <a href="#fig-aeration1" class="quarto-xref">Figure&nbsp;<span>5.3</span></a>. The discontinuity at the interface between the two phases is a defining feature of interpase mass transfer (note that interface and interphase are two different words with two different meanings!). Thinking about <em>equilibrium</em> conditions, when a system without consumption or production is allowed to stabilize after some amount of time, can be very helpful. In <a href="#fig-aeration1" class="quarto-xref">Figure&nbsp;<span>5.3</span></a>, equilibrium is shown with dotted lines. The straight lines with <span class="math inline">\(\frac{dc}{dz}\)</span> show that there is no mass transfer–you should be able to infer this result from <a href="#eq-ficks1" class="quarto-xref">Equation&nbsp;<span>5.4</span></a>. The discontinuity at the interface reflects the different affinities of water and air for oxygen. It can also reflect the challenge of units, which is one reason units are omitted from the figure. Oxygen is relatively insoluble in water, so even thought air is around 20% oxygen by volume, the corresponding equilibrium concentration in water is around 10 <span class="math inline">\(\mgpl\)</span> (= 10 <span class="math inline">\(\gpmc\)</span>).</p>
+<p>Take a look at the example in <a href="#fig-aeration1" class="quarto-xref">Figure&nbsp;<span>5.3</span></a>. The discontinuity at the interface between the two phases is a defining feature of interphase mass transfer (note that interface and interphase are two different words with two different meanings!). Thinking about <em>equilibrium</em> conditions, when a system without consumption or production is allowed to stabilize after some amount of time, can be very helpful. In <a href="#fig-aeration1" class="quarto-xref">Figure&nbsp;<span>5.3</span></a>, equilibrium is shown with dotted lines. The straight lines with <span class="math inline">\(\frac{dc}{dz} = 0\)</span> show that there is no mass transfer–you should be able to infer this result from <a href="#eq-ficks1" class="quarto-xref">Equation&nbsp;<span>5.4</span></a>. The discontinuity at the interface reflects the different affinities of water and air for oxygen. It can also reflect the challenge of units, which is one reason units are omitted from the figure. Oxygen is relatively insoluble in water, so even though air is around 20% oxygen by volume, the corresponding equilibrium concentration in water is around 10 <span class="math inline">\(\mgpl\)</span> (= 10 <span class="math inline">\(\gpmc\)</span>).</p>
 <div id="fig-aeration1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="O2 profiles.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-aeration1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -498,6 +498,7 @@ Figure&nbsp;5.3: Oxygen (<span class="math inline">\(\text{O}_2\)</span>) concen
 J = k_c \cdot (c^* - c),
 \tag{5.8}\]</span></span></p>
 <p>where <span class="math inline">\(c^*=\)</span> the bulk equilibrium concentration of the transported substance in phase A in phase B units, and <span class="math inline">\(c=\)</span> the bulk phase A concentration. That seems complicated! For our water-air system, we could have <span class="math inline">\(c^*=\)</span> 10 <span class="math inline">\(\gpmc\)</span>. This is the equilibrium concentration of oxygen in the water, which is another way of saying it is the bulk concentration of oxygen in air converted into aqueous phase units. And <span class="math inline">\(c=\)</span> bulk concentration of oxygen in water, which could be around 5 <span class="math inline">\(\gpmc\)</span> based on the figure. Our <span class="math inline">\(k_c\)</span> value must be consistent with the units used for the <span class="math inline">\((c^* - c)\)</span> bit of the calculation. Typically, the symbol <span class="math inline">\(K_L\)</span> would be used for this system. The capital (big) <span class="math inline">\(K\)</span> indicates that this is an <em>overall</em> mass transfer coefficient, for transport through both phases, and the <span class="math inline">\(_L\)</span> bit shows that it is in liquid-phase (or more properly, aqueous phase) units.</p>
+<p>An overall interphase mass transfer coefficient can also be expressed in gas phase units.</p>
 <p>Interphase mass transfer can be approached from a more theoretical and more complicated perspective, and it is common to calculate mass transfer coefficients based on estimates of resistance in both phases as well as the partitioning behavior of the substance being transported. But you can do a lot with this simple explanation if you just make sure that units are consistent and for a single phase.</p>
 </section>
 <section id="other-stuff" class="level2" data-number="5.5">

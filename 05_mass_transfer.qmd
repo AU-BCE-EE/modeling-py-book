@@ -24,7 +24,7 @@ where $\frac{\dot{V}}{A} = v_x =$ superficial fluid velocity.
 For a fixed point in space, 
 
 $$ 
-\frac{dc}{dt} = v_x \cdot \frac{dc}{dx}.
+\frac{dc}{dt} = - v_x \cdot \frac{dc}{dx}.
 $${#eq-mass-advect-ode1}
 
 With mass, we don't have anything like the temperature vs. energy distinction.
@@ -54,17 +54,18 @@ These can be handy for setting parameter values.
 | Medium   | Approximate $D$ $(\msqps)$   |
 |------    |------                        |
 | Gases    | $10^{-5}$                    |
-| Liquids  | $10^{-9}                     |
-| Polymers | $10^{-12}                    |
-| Solids   | $10^{-34}                    |
+| Liquids  | $10^{-9}$                    |
+| Polymers | $10^{-12}$                   |
+| Solids   | $< 10^{-13}$                 |
                                                                               
 : Approximate diffusivity values from @cussler_diffusion_1997 {#tbl-diff-vals}
 
-The time derivative of concentration is the integral of @eq-ficks1, or:
+The time derivative of concentration $\frac{dc}{dt}$ is proportional to the second space derivative:
 $$ 
-\frac{dc}{dt} = - D \cdot \frac{d^2c}{dx^2}.
+\frac{dc}{dt} = D \cdot \frac{d^2c}{dx^2}.
 $${#eq-ficks2}
 This form can be used as a starting point for a numerical or analytical solution.
+Note the difference from advection--this can be conceptually confusing!
 
 Mathematically and conceptually, mass diffusion is analogous to thermal conduction.
 This should be clear from comparing the equations for Fick's and Fourier's laws here and in @sec-heat.
@@ -92,7 +93,7 @@ $${#eq-mass-trans1}
 where $k_c=$ the mass transfer convection coefficient, or the mass transfer coefficient, and $\Delta c$ = some appropriate concentration difference, e.g., from a surface into ambient air.
 For an example, see @fig-gasoline1, where $\Delta c = c_{surface} - c_\infty$.
 As with heat convection, the exact shape of the concentration (temperature) profile is generally unknown and not needed.
-Intead, all resistance to mass transfer is lumped into a single convection coefficient $k_c$.
+Instead, all resistance to mass transfer is lumped into a single convection coefficient $k_c$.
 
 ![Convection of volatile components in gasoline through convection.](drawings/gasoline1.png){#fig-gasoline1 fig-alt="Gasoline volatilization."}
 
@@ -114,13 +115,13 @@ Unfortunately, this is where we really run into complexity.
 When different phases, e.g., water and air, are stacked together, differences in the affinity of the transported substance for each phase makes for some challenges for both understanding and modelling.
 
 Take a look at the example in @fig-aeration1.
-The discontinuity at the interface between the two phases is a defining feature of interpase mass transfer (note that interface and interphase are two different words with two different meanings!).
+The discontinuity at the interface between the two phases is a defining feature of interphase mass transfer (note that interface and interphase are two different words with two different meanings!).
 Thinking about *equilibrium* conditions, when a system without consumption or production is allowed to stabilize after some amount of time, can be very helpful.
 In @fig-aeration1, equilibrium is shown with dotted lines.
-The straight lines with $\frac{dc}{dz}$ show that there is no mass transfer--you should be able to infer this result from @eq-ficks1.
+The straight lines with $\frac{dc}{dz} = 0$ show that there is no mass transfer--you should be able to infer this result from @eq-ficks1.
 The discontinuity at the interface reflects the different affinities of water and air for oxygen.
 It can also reflect the challenge of units, which is one reason units are omitted from the figure.
-Oxygen is relatively insoluble in water, so even thought air is around 20% oxygen by volume, the corresponding equilibrium concentration in water is around 10 $\mgpl$ (= 10 $\gpmc$).
+Oxygen is relatively insoluble in water, so even though air is around 20% oxygen by volume, the corresponding equilibrium concentration in water is around 10 $\mgpl$ (= 10 $\gpmc$).
 
 ![Oxygen ($\text{O}_2$) concentration profiles in an air-water system. Dashed lines shown profiles at equilibrium, with no oxygen consumption.](drawings/aeration1.png){#fig-aeration1 fig-alt="O2 profiles."}
 
@@ -140,6 +141,9 @@ And $c=$ bulk concentration of oxygen in water, which could be around 5 $\gpmc$ 
 Our $k_c$ value must be consistent with the units used for the $(c^* - c)$ bit of the calculation.
 Typically, the symbol $K_L$ would be used for this system.
 The capital (big) $K$ indicates that this is an *overall* mass transfer coefficient, for transport through both phases, and the $_L$ bit shows that it is in liquid-phase (or more properly, aqueous phase) units.
+
+An overall interphase mass transfer coefficient can also be expressed in gas phase units.
+
 
 Interphase mass transfer can be approached from a more theoretical and more complicated perspective, and it is common to calculate mass transfer coefficients based on estimates of resistance in both phases as well as the partitioning behavior of the substance being transported.
 But you can do a lot with this simple explanation if you just make sure that units are consistent and for a single phase.
