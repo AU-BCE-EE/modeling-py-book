@@ -38,15 +38,18 @@ Let's go through the list of conceptual model components, using @fig-coffee-conc
 The system boundary shows what is being modeled.
 In a sketch, it is common to represent the system boundary with a dashed line; a green dashed line is used in @fig-coffee-concept2.
 Here, the boundary shows that we are modeling the temperature of the coffee and the mug.
-Air temperature sits outside the boundary, implying that is a fixed external condition.
-(It can be hard to place the boundary exactly where it should be, but close usually works.)
+Air temperature sits outside the boundary, implying it is a fixed external condition.
+It could also be called an input variable, following \@sec-components.
+(It can be hard to draw the boundary exactly where it should be, but close usually works.)
 
 The state variable in this model is the coffee temperature, or really, coffee + mug system temperature.
 For a lumped parameter model like this one, the only way our state variable can change is by flow of energy through the system boundary;
 here, that flow is shown by the wavy red arrows.
 
-We don't have much about geometry in this sketch.
-That can be hard to show clearly in a sketch, and a lumped parameter model doesn't really have any geometry.
+Here, geometry means the shape of the modeled domain.
+It could be plane wall or a cylinder for example, and it determines the form that the GE takes (@sec-spatial).
+The actual numeric values that quantify the geometry, e.g., length, are themselves parameters.
+In our coffee model the geometry is a well-mixed lumped volume, but that can be hard to show clearly in a sketch.
 The $A$ that is shown in the model provides a hint that we are taking a simple approach here, and assuming surface temperature and so heat flux is uniform across the entire exposed surface, including coffee and the mug.
 The uniform temperature, shown by the horizontal red line, also shows that we are dealing with a lumped parameter model here.
 
@@ -56,7 +59,7 @@ We could add more details (Doesn't the coffee + mug mass play a role? And specif
 
 ## Conservation equations {#sec-conservation}
 
-*Conservation equations* or *balance equations* are a fundamental part of most models and all that we will consider, whether or not the equations are explicitly considered during model formulation.
+*Conservation equations* or *balance equations* are a fundamental part of all models that we will consider, whether or not the equations are explicitly considered during model formulation.
 The word conservation simply means that something is preserved, i.e., not produced or destroyed.
 In our models, we will be concerned with conservation of *energy* and *matter*.
 
@@ -67,7 +70,7 @@ $${#eq-conservation}
 
 Exactly what the terms mean, along with their dimensions and units, can vary. 
 Of course dimensions and units must match for all terms.
-We will typically use rates for all terms, e.g., $\Jps$ = W for energy and $\kgps$ for mass.
+We will typically use rates for all terms, e.g., $\Jps$ = W for energy and $\gps$ or $\kgps$ for mass.
 
 To develop a conservation equation for a new model, start with  @eq-conservation and eliminate the terms that are not relevant.
 For our coffee model (@sec-classification), the relevant conservation equation is
@@ -95,7 +98,7 @@ $$
 \end{aligned}                                                                                                                                                                         
 $$    
 
-There highlights an important point: that conservation equations apply to a specific state variable and a specific *domain*.
+This highlights an important point: that conservation equations apply to a specific state variable and a specific *domain*.
 This clarity is necessary when developing a model.
 In the WET model example, the state variable could be the water column total N concentration, or perhaps the inorganic N concentration, or the inorganic N mass.
 We don't know for sure, but if we were developing or even applying this model, we must!
@@ -150,7 +153,7 @@ And the heat transfer coefficient $h$ depends on the properties of air--it would
 
 ## Linking equations {#sec-linking}
 
-*Linking equations* are those relationships that are sometimes needed to connect or related different physical quantities included in the model.
+*Linking equations* are those relationships that are sometimes needed to connect or relate different physical quantities included in the model.
 Not all models need linking equations.
 Our simple coffee model does though! 
 Why?
@@ -165,7 +168,7 @@ $$
 \Delta Q = c_p \cdot m \cdot \Delta T,
 $$ {#eq-coffee-linking}
 
-where $\Delta Q=$ a change in thermal energy (J), $c_p=$ a new parameter called *specific heat capacity* ($\kJpkgpK$), $m=$ the material mass (kg), and $\Delta T=$ the corresponding change in material temperature (K or $\degC$).
+where $\Delta Q=$ a change in thermal energy (J), $c_p=$ a new parameter called *specific heat capacity* ($\JpgpK$), $m=$ the material mass (g), and $\Delta T=$ the corresponding change in material temperature (K or $\degC$).
 Somehow our three equations will have to be combined to derive our GE.
 This is explained in @sec-formulation-steps below.
 

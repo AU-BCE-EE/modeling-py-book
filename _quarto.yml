@@ -65,6 +65,7 @@ format:
               msqps: "{\\mathrm{m^{2}~s^{-1}}}",
               kJpkg: "{\\mathrm{kJ~kg^{-1}}}",
               kJpkgpK: "{\\mathrm{kJ~kg^{-1}~K^{-1}}}",
+              JpgpK: "{\\mathrm{J~g^{-1}~K^{-1}}}",
               molps: "{\\mathrm{mol~s^{-1}}}",
               molpmcps: "{\\mathrm{mol~m^{-3}~s^{-1}}}",
               pers: "{\\mathrm{s^{-1}}}",

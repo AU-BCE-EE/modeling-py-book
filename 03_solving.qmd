@@ -4,7 +4,7 @@ A GE, like @eq-coffee-ge2, is a mathematical model.
 In order to get predictions, we need to solve the model.
 There are two general ways to do that: analytical and numerical approaches.
 The conceptual difference between the two of these should be familiar from @sec-analytical-v-numerical.
-In this chapter we'll explore the two types of models, also methods of solving models, in more detail.
+In this chapter we'll explore the two types of models, an methods of solving models, in more detail.
 
 Numerical models are almost always associated with computer code.
 One exception is pencil-and-paper demonstration of numerical calculations that you might perform on an exam.
@@ -31,7 +31,7 @@ These types of problems are often known as initial value problems (IVP) for this
 In Python and other programming languages, explicit *for loops* can be used to implement a numerical model.
 The simplest numerical method is based on calculating the state variable derivative at each time and extrapolating into the future by some fixed *time step*.
 This approach is also called the *explicit forward finite difference method* or the *Euler method*.
-It was first described by Leonhard Euler more than 300 years ago.
+It was first described by Leonhard Euler more than 250 years ago.
 Let's write some code to implement it using the coffee model.
 
 ```{python}
@@ -219,7 +219,7 @@ Here, the solution depends strongly on the time step.
 
 Does this example prove that the Euler method is worthless?
 Nope!
-It was the method of choice for ecological models for years @odum2000modeling and is most likely still used in many existing computer models.
+It was the method of choice for ecological models for years [@odum2000modeling] and is most likely still used in many existing computer models.
 It is in fact still a useful method, as long as care is taken in selecting a reasonable time step.
 How do you know when a time step is small enough?
 In general, simply try a smaller value and see if there is any effect.
@@ -251,14 +251,14 @@ When a small step size is not needed, it will (or can, depending on the settings
 The Euler method is a *first-order* method, because it is based completely on first derivatives.
 By applying it, we explicitly assume that the we can approximate the derivative over some time interval as equal to the exact value at the start of the interval.
 The `solve_ivp()` function implements *higher-order* methods that evaluate (calculate) the derivative at other times and use a weighted average value to move onto the next time step.
-The slopes considered in the 4th order Runge-Kutta method is in @fig-RK4-slopes.
+The slopes considered in the 4th order Runge-Kutta method are in @fig-RK4-slopes.
 And the green asterisk shows the estimated value, which is quite close to the true response shown by the blue curve.
-Where would the the Euler method land?
+Where would the Euler method land?
 (Hint: at $t_0 + h$, and look at $k_1$ for the single slope that is applied.)
 
 ![The slopes used in the classical Runge-Kutta method. $h=$ the time step. By HilberTraum <https://commons.wikimedia.org/w/index.php?curid=64366870>.](images-web/Runge-Kutta_slopes.png){#fig-RK4-slopes fig-alt="Runge-Kutta slopes."}
 
-So what does `solv_ivp()` look like in practice?
+So what does `solve_ivp()` look like in practice?
 In a way it is simpler to set up than the Euler method, because `solve_ivp()` takes care of the iterative bit that we have to program explicitly using a for loop.
 On the other hand, we need to define a function for calculating the derivate(s) of the state variable(s).
 Here we will define that function within our model and call it `rates()`, which is a convention we'll use throughout this book.
@@ -408,8 +408,8 @@ def cool_rk_debug(T_init, T_air, mass, area, h, time_range, dt, cp=4.2):
 Closed-form solutions are different.
 (Refer back to @sec-analytical-v-numerical if you don't remember what a closed-form solution is.)
 Here, the challenge is in the mathematical (symbolic) derivation; the programming part is simple.
-As soon a model becomes a bit complicated analytical solutions become impossible.
-Even in these cases though, it can be possible to derive an analtyical solution to a limiting case, often steady-state.
+As soon as a model becomes a bit complicated analytical solutions become impossible.
+Even in these cases though, it can be possible to derive an analytical solution to a limiting case, often steady-state.
 There are many different ODEs that can be solved analytically.
 Here we will work with only one, which appears in many different applications, including our cooling coffee model: the exponential model.
 
@@ -425,7 +425,7 @@ Where does the exponential model show up?
 All over! 
 For example:
 
-1. In first-order chemical reactions, where $x$ might be a the concentration or mass of a reactant and $\lambda$ is entered as the negative of the first-order rate constant. 
+1. In first-order chemical reactions, where $x$ might be the concentration or mass of a reactant and $\lambda$ is entered as the negative of the first-order rate constant. 
    Note that "first-order" here is different from a first-order ODE. 
    It might be called a first-order model or exponential decay model here.
 
@@ -495,6 +495,29 @@ $$
 x = x_0 \cdot e^{\lambda \cdot t}.
 $${#eq-exp-solution}
 
+The $x_0$ constant turns out to be the value of $x$ at time $0$, which is why we gave it that symbol.
+
+Now, let's check the solution using a general approach.
+We'll differentiate it and compare it with the original ODE @eq-exp-ode.
+
+So, we want:
+
+$$
+\frac{d ( x_0 \cdot e^{\lambda \cdot t} )}{dt}.
+$$
+
+You can check a table of derivatives to see that the derivative of any $a \cdot e^{b \cdot t}$ with respect to $t$ is just $b \cdot a \cdot e^{b \cdot t}$:
+
+$$
+\frac{d (x_0 \cdot e^{\lambda \cdot t} )}{dt} = \lambda [ \cdot x_0 \cdot e^{\lambda \cdot t} ]. 
+$$
+
+And the part in square brackets $[ ~~ ]$ above is the solution to $x$, we see that in fact,
+
+$$
+\frac{d (x_0 \cdot e^{\lambda \cdot t} )}{dt} = \lambda \cdot x. 
+$$
+
 ### Application to cooling coffee model
 
 Let's apply @eq-exp-solution to our cooling coffee model.
@@ -547,10 +570,10 @@ We just have to recognize that $\lambda = -k_{cool}$ and $x = \theta$.
 So, applying the solution @eq-exp-solution we get:
 
 $$
-\theta = \theta_0 \cdot e^{-k_cool \cdot t}.
+\theta = \theta_0 \cdot e^{-k_{cool} \cdot t}.
 $${#eq-cooling-an-sol}
 
-So this is our solution--an equation that gives us the coffee temperature at any time depending on the input that go into the $k_{cool}$ term.
+So this is our solution--an equation that gives us the coffee temperature at any time depending on the inputs that go into the $k_{cool}$ term.
 We could have used any name for the contant of integration called $\theta_0$ here, but by plugging in $t=0$ we can see that $\theta_0$ is the initial value of $\theta$, or the normalized temperature at the start of exposure to air. 
 
 ### Implementation
