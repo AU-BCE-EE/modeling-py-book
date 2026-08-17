@@ -22,13 +22,13 @@ This chapter introduces some terms used in modeling and components of models (@s
 ## Model components and terms {#sec-components}
 State variables, parameters, inputs. . . what do these terms mean?
 Vocabulary is a key part of a new topic, and modeling vocabulary is particularly tricky because terminology is not used consistently among different modeling fields.
-Fortunately the most basic terms are relatively universal.
+Fortunately the most basic terms are relatively universal, but this does not apply to all terms in this section.
 
 The models that we deal with calculate something, and that something can be called the *dependent variable* or *state variable*.
 In a model of phosphorus pollution in a lake, the total phosphorus concentration or mass in the lake might be the state variable.
 Models can have more than one.
 You may also see the term *independent variable* used.
-For a *dynamic model* that describes how a dependent variables changes over time, time is the independent variable.
+For a *dynamic model* that describes how a dependent variable changes over time, time is the independent variable.
 
 We can use the informal term *model output* for the value of the state variable under the specified conditions.
 Output from a computer model could include other, intermediate results, depending on what the programmer decided would be useful.
@@ -42,29 +42,36 @@ Model inputs include the times for which the solution is desired, one or more ph
 
 There are different types of model inputs.
 *Parameters* are those constants that enter model equations.
-(The term can be confusing because in Python, "parameter" also refers to a placeholder name in a function's definition. The actual objects or values in `()` in a function call are called *arguments*. This is consistent with C++ and other languages but not all programming languages!).
-Model parameters in the general (not Python) sense might be a well-defined physical constant, like the specific heat capacity of some material.
-In empirical models, parameters might be completely quantities without a clear physical interpretation.
+(The term can be confusing because in Python, "parameter" also refers to a placeholder name in a function's definition. The actual objects or values in `()` in a function call are called *arguments*. This is consistent with C++ and other languages but not all programming languages!)
+Model parameters in the general sense might be a well-defined physical constant, like the specific heat capacity of some material, or the length of an object.
+In empirical models, parameters might be quantities without a clear physical interpretation.
 Heat or mass transfer coefficients are common model parameters that are in between these two extremes.
-Inputs for computer models can also include *settings* that instruct the model how to run or how to return results.
-For example, in a dynamic model the times for which a solution is desired could be called a setting.
+Dynamic models need information on the *initial conditions*, which is another input.
+In the lake phosphorus model, the phosphorus concentration at the start of the simulation would be the initial condition.
+Additionally, some models may have *input variables*, like the water temperature in our hypothetical lake model.
+Input variables can even vary over time in some models.
+Lastly, computer models can also include *settings* that instruct the model how to run or how to return results.
+For example, in a dynamic model the times for which a solution is desired would be called a setting.
+In a one dimensional (1D) model, the spacing between the cells or nodes in a model grid is a setting.
 
 *Differential equations* (DEs) are a core part of models.
 They describe exactly how a dependent (state) variable changes with respect to an independent variable, or even more than one independent variable.
-A dynamic model, which describes how a dependent variable changes over time are built around DEs with time as the independent variable.
+A dynamic model, which describes how a dependent variable changes over time is built around DEs with time as the independent variable.
 A DE taken with respect to only one independent variable is called an *ordinary differential equation* (ODE).
-If a derivative is taken with more than one independent variable, e.g., both space and time in a 1D model, the DE is called a *partial differential equation* (PDE).
+If a derivative is taken with respect to more than one independent variable, e.g., both space and time in a 1D model, the DE is called a *partial differential equation* (PDE).
 
 The distinction between independent variables, parameters, and other model inputs is important here.
-A state variable may depend on multiple model inputs, but only if the DE is taken with respect to multiple independent variables is it a PDE.
-For example, the lake phosphorus model could include effects of temperature and animal activity on the rate of change in phosphorus concentration, but if the fundamental DE used to develop the model only expresses the state variable phosphorus as a derivative with respect to time, i.e., $\frac{dP}{dt} =...$, then it is an ODE, not a PDE.
+A state variable may depend on multiple model inputs, but only if the DE includes derivatives for multiple independent variables is it a PDE.
+For example, the lake phosphorus model could include effects of temperature and animal activity on the rate of change in phosphorus concentration, but if the fundamental DE used to develop the model only has the derivative of the state variable phosphorus with respect to time, i.e., $\frac{dP}{dt} =...$, then it is an ODE, not a PDE.
 These other inputs can still show up on the right hand side (RHS) of the DE, but still, this would be an ODE.
-The DE that sums up the behavior of the state variable in a model is called the governing equation (GE).
+An example of a PDE is the heat diffusion equation, which, for a 1D model, would include two derivatives: $\frac{\partial T}{\partial t}$ and $\frac{\partial T}{\partial x}$.
 
+The DE that sums up the behavior of the state variable in a model is called the governing equation (GE).
 During model forumulation, the objective is to develop a GE.
-To actually get model output, it is then necessary to *solve* the GE.
+But to actually get model output, it is then necessary to *solve* the GE.
 As described in some detail below (@sec-analytical-v-numerical), this could be done with pencil and paper in an *analytical* approach, or with computing power in a *numerical* approach.
 The numerical approach relies on an algorithm or software function called an *ODE solver*.
+ODE solvers repeatedly evaluate the GE and numerically *integrate* to solve for the value of the state variable as a function of the independent variable(s).
 
 The relationships among most of these terms are shown in @fig-mod-terms, which is a representation of a numerical dynamic model.
 
@@ -98,7 +105,7 @@ $$
 $$ {#eq-coffee-ge1}
 
 @eq-coffee-ge1 is actually a *differential equation* (*DE*) because it describes the rate of change in coffee temperature $T$ over time.
-In particular, it is an *ordinary differential equation* (*ODE*) because the dependent variable (temperature) depends on only a single independent variable (time).
+In particular, it is an *ordinary differential equation* (*ODE*) because it includes a single derivative with a single independent variable (time).
 
 @eq-coffee-ge1 is also the *governing equation* or *GE* for this model, or that complete equation that describes the system.
 Governing equations typically need to be *solved* in order for a model to be useful.
