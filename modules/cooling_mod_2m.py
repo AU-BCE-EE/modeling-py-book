@@ -45,7 +45,7 @@ def cool2m(T_init, T_air, mass, area_t, area_s, U_t, U_s, time_range, dt, cp=4.2
     """
 
     # Calculate constant, which does not change over time
-    con_cool = (area_t * U_t + area_s + U_s) / (cp * mass)
+    con_cool = (area_t * U_t + area_s * U_s) / (cp * mass)
 
     # Create an array of times
     times = np.arange(time_range[0], time_range[1] + dt, dt)

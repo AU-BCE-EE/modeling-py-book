@@ -39,7 +39,6 @@ If $T_{inflow}$ is higher than $T_{tank}$, the tank temperature is increasing; i
 
 The fundamental advection equation for heat transfer needs a *reference temperature*, which we'll call $T_{ref}$ here.
 The value used will not matter in our work, because it should always cancel in our applications because our domain will have constant volume.
-Advection becomes trickier when we don't have a constant volume (or mass) within our model domain or control volume.
 
 $$
 \dot{Q} = \dot{V} \cdot{\rho} \cdot c_p \cdot (T - T_{ref}),
@@ -124,7 +123,7 @@ It says that the rate of temperature change at a fixed location is equal to the 
 For others, derivation of an advection equation is pretty simple.
 
 In our pipe conceptual model, we've implicitly assumed that radial position has no bearing on transfer.
-In reality, 
+In reality, we could have both differences in longitudinal transfer with radial position (slower flow near the wall) and significant radial resistance to trasnfer.
 
 In heat transfer models (as well as mass transfer), it is common to work with flow rates normalized by the cross-sectional area of the space through which the flow is moving, i.e., heat *flux*.
 Our heat flow units are typically W and heat flow $\Wpms$.
@@ -147,11 +146,6 @@ we get an equation that does not depend on pipe size, but only the superficial f
 So for a given velocity, the diameter is immaterial.
 (Of course this is true only if our assumption about uniform radial profile, i.e., a 1D system, is accurate.)
 
-...
-
-
-((Do we need to start with integration to go from flux to dT/dt already here? Kind of have some above on advection accidentially))
-
 ## Conduction and Fourier's law {#sec-fourier}
 
 *Conduction* is the transfer of heat through solids and fluids by random motion of molecules or atoms (electrons also play a role, at least in metals). 
@@ -163,9 +157,9 @@ $$
 q = -k \cdot \frac{dT}{dx}
 $${#eq-fouriers-law1}
 
-@eq-fouriers-law1 says that the heat flux in the $x$ direction is proporational to derivative of temperature with respect to $x$, or the temperature gradient.
-The two--heat flux and temperature gradient--are linked through a proporationality constant called $thermal conductivity$, which typically has units of $\WpmpK$ and depends strongly on the substance through which heat is diffusing.
-Thermal conductivity is high for metals (around $10^2$ $\WpmpK$), low for gases (around $10^{-1}$ $\WpmpK$, or about 1000-fold less), and somewhere in the middle for other materials.
+@eq-fouriers-law1 says that the heat flux in the $x$ direction is proportional to derivative of temperature with respect to $x$, or the temperature gradient.
+The two--heat flux and temperature gradient--are linked through a proportionality constant called *thermal conductivity*, which typically has units of $\WpmpK$ and depends strongly on the substance through which heat is diffusing.
+Thermal conductivity is high for metals (around $10^2$ $\WpmpK$), low for gases (around $10^{-2}$ to $10^{-1}$ $\WpmpK$), and somewhere in the middle for other materials.
 
 So @eq-fouriers-law1 depends on material properties and a state variable--temperature, or more specifically, the temperature gradient.
 This is a characteristic of constitutive equations.
@@ -190,7 +184,7 @@ Why?
 Well, let's apply @eq-fouriers-law1.
 Let's say the temperature difference is 10 $\degC$ over 0.2 m, so the average gradient is therefore 50 $\degCpm$.
 And thermal conductivity is exactly 1 $\WpmpK$.
-Applying @eq-fouriers-law1, the heat flux is 10 $\Wpms$ at all locations.
+Applying @eq-fouriers-law1, the heat flux is 50 $\Wpms$ at all locations.
 So for any point in the wall between $x=0$ and $x=L$, heat energy is travelling at a fixed rate to the right.
 
 Remember the relationship between heat flux and heat flow: $\dot{Q} = A \cdot q$.
@@ -225,7 +219,7 @@ We'll see it a lot more in the following sections.
 
 With this approach (@eq-fouriers-law2) we can also use a *resistance* concept.
 We will define resistance $R$ as $\frac{L}{k}$.
-For a fixed wall thickness, resistance is inversely proporational to thermal conductivity.
+For a fixed wall thickness, resistance is inversely proportional to thermal conductivity.
 So the analog to @eq-fouriers-law2 is @eq-resistance1:
 
 $$
@@ -238,9 +232,9 @@ Below, we will see how the resistance approach can be used to combine resistance
 ## Convection and Newton's law of cooling {#sec-newtons-law}
 
 If you are bald and go outside in Canada in the winter without covering your head (@fig-head1) the mode of heat loss that you experience is called *convection*.
-The term is, unfortunately, used in some different ways, but we'll follow @bergman_introduction_2011 and use it for a combination of conduction and advection that causes heat transfer between a fluid and a surface.
+The term is, unfortunately, used in some different ways, but we'll follow @Bergman2013 and use it for a combination of conduction and advection that causes heat transfer between a fluid and a surface.
 Temperature gradients driving convection are commonly shown like @fig-convection-prof1.
-It is common to use the symbole $T_\infty$ for the *bulk* fluid temperature, "far away" from the surface.
+It is common to use the symbol $T_\infty$ for the *bulk* fluid temperature, "far away" from the surface.
 In practice this means far enough away to not be influenced by the surface temperature, or outside of the fluid *boundary layer*.
 
 ![The cold feeling this lumpy-headed bald person is experiencing is due to convective heat loss to the cold air.](drawings/head_convection1.png){#fig-head1 fig-alt="Bald person in cold wind."}
@@ -268,14 +262,14 @@ $${#eq-newtons-restance1}
 
 With multiple layers in series, in a composite wall for example as in @fig-composite-wall1, the multiple layers together influence heat flow.
 
-![A composite wall, including a layer of concrete and insultions.](drawings/composite_wall1.png){#fig-composite-wall1 fig-alt="Composite wall."}
+![A composite wall, including a layer of concrete and insulation.](drawings/composite_wall1.png){#fig-composite-wall1 fig-alt="Composite wall."}
 
 It turns out that multiple sources of resistance can easily be combined by summing resistances.
 This can be shown with a little bit of simple symbolic math.
 If the individual values for $k$ and $L$ are known, then the overall resistance is:
 
 $$
-R = \frac{L_1}{k_1} + \frac{L_2}{k_2} + ... \frac{L_n}{k_n}.
+R = \frac{L_1}{k_1} + \frac{L_2}{k_2} + ... + \frac{L_n}{k_n}.
 $${#eq-series-resistance1}
 
 Although intermediate temperatures, like $T_m$ in @fig-composite-wall1, could be calculated, only the overall temperature difference, $\Delta T = T_l - T_r$ is needed for application of @eq-resistance1.
@@ -286,8 +280,8 @@ Looking at @eq-newtons-restance1, you might be able to see that convection and c
 
 For example, with $n_d$ layers with conduction and $n_v$ with convection, 
 $$
-R = \frac{L_1}{k_1} + \frac{L_2}{k_2} + ... \frac{L_n}{k_{n_d}} + \frac{1}{h_1} + \frac{1}{h_2} + ... \frac{1}{h_{n_v}}.
-$${#eq-series-resistance1}
+R = \frac{L_1}{k_1} + \frac{L_2}{k_2} + ... + \frac{L_n}{k_{n_d}} + \frac{1}{h_1} + \frac{1}{h_2} + ... + \frac{1}{h_{n_v}}.
+$${#eq-series-resistance2}
 
 For calculating heat flux, the overall temperature difference $\Delta T$ is *divided* by resistance $R$.
 It is a matter of preference to use instead the inverse of $R$.
@@ -295,7 +289,7 @@ Of course, for a single layer, the inverse of $R$ is $\frac{k}{L}$ or $h$.
 For multiple layers, the quantity is called *overall heat transfer coefficient* and the symbol $U$ is used, so,
 
 $$
-U = \frac{1}{\frac{L_1}{k_1} + \frac{L_2}{k_2} + ... \frac{L_n}{k_{n_d}} + \frac{1}{h_1} + \frac{1}{h_2} + ... \frac{1}{h_{n_v}}}.
+U = \frac{1}{\frac{L_1}{k_1} + \frac{L_2}{k_2} + ... + \frac{L_n}{k_{n_d}} + \frac{1}{h_1} + \frac{1}{h_2} + ... + \frac{1}{h_{n_v}}}.
 $${#eq-series-overall-u1}
 
 And for flux,
@@ -304,13 +298,13 @@ $$
 q = U \cdot \Delta T.
 $${#eq-series-flux1}
 
-Remember that $\Delta T$ is the overall temperaure difference.
+Remember that $\Delta T$ is the overall temperature difference.
 So for @fig-composite-wall2, for example, $\Delta T = T_{\infty, l} - T_{\infty, r}$.
 And for @fig-composite-wall1, $\Delta T = T_{l} - T_{r}$.
 Does it seem inconsistent, that both expressions could be true?
 Really the two figures could be different interpretations or the same physical system.
 The resolution comes from defining $U$ correctly (it is different for the two) and using the appropriate temperatures.
-We could, in fact, use $\Delta T = T_{l} - T_{r}$ for the system in @fig-composite-wall2, but then (1) should not include the fluids in the calculation of $U$ and (2) must use the temperaures at the fluid/solid interfaces ($T_l$ and $T_r$) for calculating flux.
+We could, in fact, use $\Delta T = T_{l} - T_{r}$ for the system in @fig-composite-wall2, but then (1) should not include the fluids in the calculation of $U$ and (2) must use the temperatures at the fluid/solid interfaces ($T_l$ and $T_r$) for calculating flux.
 If the fluids actually do contribute significant resistance to heat flow, those interface temperatures could be quite different from the bulk fluid temperatures $T_{\infty...}$, and difficult to determine.
 
 This general approach is quite useful and we'll use it extensively.
@@ -352,7 +346,7 @@ Instead we have a conversion between *sensible* and *latent* heat energy.
 
 In systems with phase changes, it is necessary to track one or more specific phases as a state variable.
 We can think of the equations that relate energy transfer and phase change as linking equations.
-There are only two important parameters, which are physical constants: the heat of fusion $h_f$ and heat of vaporization $k_v$, both  typically $\kJpkg$.
+There are only two important parameters, which are physical constants: the heat of fusion $h_f$ and heat of vaporization $h_v$, both  typically $\kJpkg$ or $\Jpg$.
 These constants directly link the mass-based rate of phase change to energy flow.
 
 $$
@@ -361,17 +355,19 @@ $${#eq-hf-link}
 
 $$
 \dot{m_v} = \frac{\dot{Q}} {h_v} 
-$${#eq-hf-link}
+$${#eq-hv-link}
 
 <!-- Specific heat capacity links energy and temperature. -->
 
-## Example: lumped-parameter model with all modes
+## Example: lumped-parameter model with multiple modes
 
 Let's extend our coffee model as an application of some of the concepts explored in this chapter.
 @fig-coffee2modes is a revised model sketch.
 Now we will explicitly consider heat loss through two different routes: the exposed coffee surface (through two fluid layers) and the mug sides (two fluids and one solid wall). 
 We have a choice of using more fundamental parameter inputs or more empirical.
-We'll go with the more empirical route, where only $U_t$ (t for top) and $U_s$ (s for side) are specified.
+The more fundamental approach would be to include parameters for liquid phase convection coefficients, conductivity and thickness of the cup itself, and convection coefficients for the air, and calculate both $U$ parameters internally.
+We'll go with the more empirical route, where only $U_t$ (t for top) and $U_s$ (s for side) are specified as inputs.
+This is done in the module `cooling_mods_2m.py` (`2m` is for "2 modes").
 
 ![Extended coffee model.](drawings/coffee2modes.png){#fig-coffee2modes fig-alt="Extended coffee model sketch."}
 
@@ -384,13 +380,14 @@ Course: Modelling 2026
 
 Description:
     A module with a single function implementing a numerical
-    model for a cooling cup of coffee.
+    model for a cooling cup of coffee, including 2 modes of
+    heat transfer from two locations.
 """
 
 import numpy as np
 from scipy.integrate import solve_ivp
 
-def cool(T_init, T_air, mass, area, h, time_range, dt, cp=4.2):
+def cool2m(T_init, T_air, mass, area_t, area_s, U_t, U_s, time_range, dt, cp=4.2):
     """
     Simulate coffee cooling using the RK45 method in `solve_ivp()`.
 
@@ -402,10 +399,14 @@ def cool(T_init, T_air, mass, area, h, time_range, dt, cp=4.2):
         Ambient air temperature (deg. C)
     mass : float
         Mass of coffee (g)
-    area : float
-        Surface area of mug (m2)
-    h : float
-        Convective heat transfer coefficient (W m-2 K-1)
+    area_t : float
+        Upper surface area of the coffee (m2)
+    area_s : float
+        Surface area of the sides of the mug (m2)
+    U_t : float
+        Combined heat transfer coefficient from the top (W m-2 K-1)
+    U_s : float
+        Combined heat transfer coefficient from the sides (W m-2 K-1)
     time_range : tuple
         Start and end time (s), e.g. (0, 3600)
     dt : float
@@ -419,7 +420,7 @@ def cool(T_init, T_air, mass, area, h, time_range, dt, cp=4.2):
     """
 
     # Calculate constant, which does not change over time
-    con_cool = area * h / (cp * mass)
+    con_cool = (area_t * U_t + area_s * U_s) / (cp * mass)
 
     # Create an array of times
     times = np.arange(time_range[0], time_range[1] + dt, dt)
