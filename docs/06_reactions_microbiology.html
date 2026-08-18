@@ -545,7 +545,7 @@ c_{\ce{NH3}(aq)} = \frac{\frac{K_a} {c_{\ce{H+}}} \cdot c_{\text{TAN}}} {(\frac{
 c_{\ce{NH3}(aq)} = \frac{c_{\text{TAN}}} {1 + \frac {c_{\ce{H+}}} {K_a}}.
 \tag{6.13}\]</span></span></p>
 <p>Let’s implement <a href="#eq-free-nh3-calc" class="quarto-xref">Equation&nbsp;<span>6.13</span></a> in Python for a simple free ammonia calculator.</p>
-<div id="69050079" class="cell" data-execution_count="1">
+<div id="d765f2ae" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">Description:</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">    A free ammonia calculator function. Does not include corrections</span></span>
@@ -586,7 +586,7 @@ c_{\ce{NH3}(aq)} = \frac{c_{\text{TAN}}} {1 + \frac {c_{\ce{H+}}} {K_a}}.
 <span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> c_NH3 </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We can test it.</p>
-<div id="2d8605a5" class="cell" data-execution_count="2">
+<div id="5425e09e" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(free_NH3(<span class="dv">1</span>, <span class="fl">9.56</span>))</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(free_NH3(<span class="dv">1</span>, <span class="dv">7</span>))</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(free_NH3(<span class="dv">1</span>, <span class="dv">10</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -602,7 +602,7 @@ c_{\ce{NH3}(aq)} = \frac{c_{\text{TAN}}} {1 + \frac {c_{\ce{H+}}} {K_a}}.
 <h2 data-number="6.5" class="anchored" data-anchor-id="matrix-operations"><span class="header-section-number">6.5</span> Matrix operations</h2>
 <p>Matrices are convenient for oranizing stoichiometric coefficients and then even using in compact code for speciation calculations. Here we will use the carbonate system as as demo.</p>
 <p>We’ll start with a stoichiometry matrix. First we need to think about how to set it up, because at this point there are multiple routes that could be taken. We need to select what are sometimes called “master species” or we might call “funamental species”. These species will be the reactants for all reactions. We’ll use <span class="math inline">\(\ce{H2CO3^*}\)</span> and <span class="math inline">\(\ce{H+}\)</span>. These reactants will define the columns in our stoichiometry matrix, and products will define rows. This too is arbitrary, but seems most convenient. If we only consider the species <span class="math inline">\(\ce{H2CO3^*}\)</span>, <span class="math inline">\(\ce{HCO3-}\)</span>, <span class="math inline">\(\ce{CO3^2-}\)</span>, and of course <span class="math inline">\(\ce{H+}\)</span> and <span class="math inline">\(\ce{OH-}\)</span>, our coefficient matrix is:</p>
-<div id="1fc3f2fb" class="cell" data-execution_count="3">
+<div id="578665b9" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>       <span class="op">|</span> H2CO3<span class="op">*|</span>  H<span class="op">+</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>       <span class="op">--------|----</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>HCO3<span class="op">-</span>  <span class="op">|</span>  <span class="op">-</span><span class="dv">1</span>   <span class="op">|</span>  <span class="dv">1</span></span>
@@ -614,7 +614,7 @@ c_{\ce{NH3}(aq)} = \frac{c_{\text{TAN}}} {1 + \frac {c_{\ce{H+}}} {K_a}}.
 \ce{H2CO3^* &lt;=&gt; CO3^2- + 2H+}.
 \tag{6.14}\]</span></span></p>
 <p>So what is the use of this matrix? We’ll demonstrate after first creating the matrix in Python.</p>
-<div id="49b0c5ca" class="cell" data-execution_count="4">
+<div id="2d7e6b03" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Stoichometry matrix</span></span>
@@ -636,7 +636,7 @@ c_{\ce{NH3}(aq)} = \frac{c_{\text{TAN}}} {1 + \frac {c_{\ce{H+}}} {K_a}}.
 </div>
 <p>Note that we do not get row or column names with a matrix. So good comments (as above) are helpful.</p>
 <p>To use the matrix, we need equilibrium constants for each reaction–so three here, one for each row.</p>
-<div id="05344a3c" class="cell" data-execution_count="5">
+<div id="9fdba55a" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>keq <span class="op">=</span> <span class="dv">10</span><span class="op">**</span>np.array([<span class="op">-</span><span class="fl">6.3</span>, <span class="op">-</span><span class="fl">16.6</span>, <span class="op">-</span><span class="fl">14.0</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The first thing we can do with the matrix is to calculate reactant species concentrations once we have master species concentrations. Look at <a href="#eq-carb2" class="quarto-xref">Equation&nbsp;<span>6.14</span></a>. The relevant mass action expression is</p>
@@ -648,7 +648,7 @@ k_2 = \frac{c_{\ce{CO3^2-}} \cdot c_{\ce{H+}}^2}{c_{\ce{H2CO3^*}}}.
 c_{\ce{CO3^2-}} = k_2 \cdot \frac{c_{\ce{H2CO3^*}}} {c_{\ce{H+}}^2}.
 \tag{6.16}\]</span></span></p>
 <p>We can actually carry out this calculation using the <code>sc</code> stoichiometry matrix.</p>
-<div id="51230160" class="cell" data-execution_count="6">
+<div id="65088a9e" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>cH2CO3s <span class="op">=</span> <span class="fl">0.001</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>cHp <span class="op">=</span> <span class="fl">1e-6</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>keq[<span class="dv">1</span>] <span class="op">*</span> cH2CO3s<span class="op">**</span>(<span class="op">-</span>sc[<span class="dv">1</span>, <span class="dv">0</span>]) <span class="op">/</span> cHp<span class="op">**</span>(sc[<span class="dv">1</span>, <span class="dv">1</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -657,7 +657,7 @@ c_{\ce{CO3^2-}} = k_2 \cdot \frac{c_{\ce{H2CO3^*}}} {c_{\ce{H+}}^2}.
 </div>
 </div>
 <p>Do you see what we’ve done? Do you understand why we included the <code>**(-sc[1, 0])</code> bit? That makes it more general, and adaptable to the complete calculations for all reactants, which we can do using matrix operations like this:</p>
-<div id="cd910ecf" class="cell" data-execution_count="7">
+<div id="79ac1dbb" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>conc <span class="op">=</span> keq <span class="op">*</span> cH2CO3s<span class="op">**</span>(<span class="op">-</span>sc[:, <span class="dv">0</span>]) <span class="op">/</span> (cHp<span class="op">**</span>sc[:, <span class="dv">1</span>])</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>conc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
@@ -665,7 +665,7 @@ c_{\ce{CO3^2-}} = k_2 \cdot \frac{c_{\ce{H2CO3^*}}} {c_{\ce{H+}}^2}.
 </div>
 </div>
 <p>This approach could work with more reactants and species with different stoichiometric coefficients. Of course, we don’t typically know master species concentrations. When we make measurements on a water sample, create a solution in the laboratory, or simulate mass transfer and reaction of chemicals, it is the <em>total</em> concentrations that we know. So it takes a bit more conceptual and programming trickery to come up with a general approach for solving chemical speciation problems. In the example <code>carb_spec()</code> function below, we use two: (1) a proton balance and (2) an iterative root finder. Take a look.</p>
-<div id="1fbc15b9" class="cell" data-execution_count="8">
+<div id="0f9e55f2" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">File: carb_mods.py</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">Authors: Sasha D. Hafner and Frederik R. Dalby</span></span>
@@ -753,7 +753,7 @@ c_{\ce{CO3^2-}} = k_2 \cdot \frac{c_{\ce{H2CO3^*}}} {c_{\ce{H+}}^2}.
 <span id="cb12-85"><a href="#cb12-85" aria-hidden="true" tabindex="-1"></a>    <span class="co"># And return species concentrations (mol/kg)</span></span>
 <span id="cb12-86"><a href="#cb12-86" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> res</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="2e5c88d5" class="cell" data-execution_count="9">
+<div id="0966e406" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">'modules'</span>)</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -771,7 +771,7 @@ c_{\ce{CO3^2-}} = k_2 \cdot \frac{c_{\ce{H2CO3^*}}} {c_{\ce{H+}}^2}.
 </div>
 </div>
 <p>We can get predicted pH:</p>
-<div id="4dc351a7" class="cell" data-execution_count="10">
+<div id="d4e73715" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="op">-</span>np.log10(concs[<span class="st">'H+'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <pre><code>np.float64(5.601205291420791)</code></pre>
@@ -815,14 +815,14 @@ r = c_{x_a} \cdot \frac{\hat{q}_{max} \cdot c_s} {c_s + k_s},
 <section id="problems" class="level2" data-number="6.7">
 <h2 data-number="6.7" class="anchored" data-anchor-id="problems"><span class="header-section-number">6.7</span> Problems</h2>
 <ol type="1">
-<li><p>Formulate (pencil and paper) and implement (in Python) a simple urea hydrolysis model. You can assume the reaction is first-order. Plot predicted urea, ammonia, and carbon dioxide concentration over time.</p></li>
+<li><p>Formulate (pencil and paper or digital equivalent) and implement (in Python) a simple urea hydrolysis model. You can assume the reaction is first-order. Assume all products accumulate in a fixed solution volume (or solvent, water, mass). Plot predicted urea, ammonia, and carbon dioxide concentration over time.</p></li>
 <li><p>Create a Python function that calcuates free ammonia <span class="math inline">\(\ce{NH3(aq)}\)</span> from TAN, pH, and temperature. You can use this expression for the temperature dependency of <span class="math inline">\(K_a\)</span>:</p>
 <p><span class="math display">\[
 \log_{10}{K_a} = 0.0905 + \frac{2729.31}{T},
 \]</span></p>
 <p>where <span class="math inline">\(T\)</span> is temperature in K. Plot free ammonia concentration vs.&nbsp;temperature in one plot and vs.&nbsp;pH in another.</p></li>
+<li><p>Formulate and implement a model for a microbial community consuming milk processing wastewater that includes two groups: aerobic bacteria that use dissolved oxygen to oxidize the wastewater organice matter and fermentative bacteria that produce lactic acid. The reactor runs in batch mode, and you do not need to include aeration; there are no inputs or outputs to the reactor. You can use the following empirical formula for the substrate: <span class="math inline">\(\ce{C14H24O6N}\)</span>. The Microbial Stoichiometry Calculator can be used to sort out stoichiometry: <a href="https://micstoich.com" class="uri">https://micstoich.com</a>. For kinetics, use whichever approach you prefer: first-order, second-order, or Monod. Use your Python model to predict the effect of initial dissolved oxygen concentration on microbial populations and final lactic acid concentration.</p></li>
 <li><p>Derive equations for calculating carbonate species concentrations from <span class="math inline">\(\ce{CO2}\)</span> partial pressure and solution pH. Try to implement it in Python as a function. This is a difficult problem. Bonus: Can you include calculation of pH instead of using it as an input?</p></li>
-<li><p>Formulate and implement a model for a microbial community consuming milk processing wastewater that includes two groups: aerobic bacteria that use dissolved oxygen to oxidize the wastewater organice matter and fermentative bacteria that produce lactic acid. The reactor runs in batch mode, and you do not need to include aeration; there are no inputs or outputs to the reactor. You can use the following empirical formula for the substrate: . The Microbial Stoichiometry Calculator can be used to sort out stoichiometry: <a href="https://micstoich.com" class="uri">https://micstoich.com</a>. For kinetics, use whichever approach you prefer: first-order, second-order, or Monod. Use your Python model to predict the effect of initial dissolved oxygen concentration on microbial populations and final lactic acid concentration.</p></li>
 </ol>
 </section>
 <section id="references" class="level2 unnumbered">

@@ -1,7 +1,6 @@
 # Preface {.unnumbered}
 
 This book is a textbook for the course "Modelling" in the bachelor programs in Biotechnology and Chemical Engineering at the Department of Biological and Chemical Engineering, Aarhus University.
-The book is currently under development, with expected completion by August 2026.
 
 There are a lot of different ways to write a book about modeling (see @sec-appx-reading for some examples).
 Here we have focused on dynamic models mainly related to heat and mass transfer.
@@ -17,12 +16,13 @@ See LICENSE.md in the [source repository](https://github.com/AU-BCE-EE/modelling
 
 If you have any suggestions or find errors in text or code, please reach out!
 You can find contact information [here for Sasha](https://au.dk/sasha.hafner@bce.au.dk) and [here for Frederik](https://au.dk/fd@bce.au.dk).
+(But note that some of the later chapters are not yet finished.)
 
 
 Sasha D. Hafner and Frederik R. Dalby
 
 Aarhus University, Aarhus, Denmark
 
-Version: 0.1 (2026 July)
+Version: 0.2 (2026 August)
 
 
