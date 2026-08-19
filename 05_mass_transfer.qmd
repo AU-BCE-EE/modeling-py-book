@@ -153,7 +153,8 @@ But you can do a lot with this simple explanation if you just make sure that uni
 Linking equations are generally not needed in simple mass transfer models.
 It is a difference in mass concentration that drives mass transfer.
 
-We won't get into modelling concentration profiles until the spatial sections later in this book.
+We won't get into explicitly modelling concentration profiles until the spatial sections later in this book.
+Here we may think about the shape of the profiles, but we won't try to quantitatively describe them--that has to wait for @sec-spatial. 
 
 ## Problems{.unnumbered}
 
