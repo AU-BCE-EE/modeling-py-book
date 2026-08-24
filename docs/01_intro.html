@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.24">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>1&nbsp; An introduction to models – An Introduction to Modeling with Python</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -59,7 +65,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -89,15 +94,14 @@ div.csl-indent {
 <link href="./index.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-03fb02fc132b93ec4eef7e9886d99257.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-631496449bf32ff9b0bb69a6bfd9195d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -164,7 +168,7 @@ MathJax = {
 </script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -217,9 +221,7 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
-      <a href="./index.html" class="sidebar-logo-link">
-      </a>
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">An Introduction to Modeling with Python</a> 
     </div>
@@ -488,7 +490,7 @@ Figure&nbsp;1.3: Conceptual model of coffee cooling.
 <p><span id="eq-coffee-sol1"><span class="math display">\[
 T(t) = (T_0 - T_{air}) \cdot e^{(-c \cdot t)} + T_{air}.
 \tag{1.2}\]</span></span></p>
-<div id="5500970d" class="cell" data-execution_count="1">
+<div id="e632404c" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import modules</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -548,7 +550,7 @@ T =  T_{air}.
 <section id="mechanistic-versus-empirical" class="level3" data-number="1.2.5">
 <h3 data-number="1.2.5" class="anchored" data-anchor-id="mechanistic-versus-empirical"><span class="header-section-number">1.2.5</span> Mechanistic versus empirical</h3>
 <p>Models that include a representation the underlying physics, chemistry, or biology are called <em>mechanistic</em>. Conversely, models based on simple relationship between inputs and outputs that is independent of the underlying mechanisms are called <em>empirical</em>. In reality, all models include some empirical components. Let’s compare the two using a single concrete system.</p>
-<p>In a biomethanation reactor hydrogen gas (<span class="math inline">\(\text{H}_2\)</span>) is combined with carbon dioxide (<span class="math inline">\(\text{CO}_2\)</span>) to form methane (<span class="math inline">\(\text{CH}_4\)</span>) (<span class="citation" data-cites="rafrafi2021">Rafrafi, Laguillaumie, and Dumas (<a href="#ref-rafrafi2021" role="doc-biblioref">2021</a>)</span>). The rate of the reaction increases with temperature. So an empirical model could look like this, a simple equation:</p>
+<p>In a biomethanation reactor hydrogen gas (<span class="math inline">\(\text{H}_2\)</span>) is combined with carbon dioxide (<span class="math inline">\(\text{CO}_2\)</span>) to form methane (<span class="math inline">\(\text{CH}_4\)</span>) (<span class="citation" data-cites="rafrafi2021">Rafrafi et al. (<a href="#ref-rafrafi2021" role="doc-biblioref">2021</a>)</span>). The rate of the reaction increases with temperature. So an empirical model could look like this, a simple equation:</p>
 <p><span class="math display">\[
 r = k_{T} \cdot T,
 \]</span></p>
@@ -646,9 +648,9 @@ c(x, y, z) = e \cdot f(h, \sigma_y, \sigma_z) ,
 <h2 class="unnumbered anchored" data-anchor-id="references">References</h2>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-batstone_iwa_2002" class="csl-entry" role="listitem">
-Batstone, D J, J Keller, I Angelidaki, S V Kalyuzhnyi, S G Pavlostathis, A Rozzi, W T M Sanders, H Siegrist, and V A Vavilin. 2002. <span>“The IWA Anaerobic Digestion Model No 1 (ADM1).”</span> <em>Water Science and Technology: A Journal of the International Association on Water Pollution Research</em> 45 (10): 65–73.
+Batstone, D J, J Keller, I Angelidaki, et al. 2002. <span>“The IWA Anaerobic Digestion Model No 1 (ADM1).”</span> <em>Water Science and Technology: A Journal of the International Association on Water Pollution Research</em> 45 (10): 65–73.
 </div>
 <div id="ref-NLES52022" class="csl-entry" role="listitem">
 Børgesen, Christen D., Johannes WM Pullens, Jin Zhao, Gitte Blicher-Mathiesen, Peter Sørensen, and Jørgen E. Olesen. 2022. <span>“NLES5 an Empirical Model for Estimating Nitrate Leaching from the Root Zone of Agricultural Land.”</span> <em>European Journal of Agronomy</em> 134 (March): 126465. <a href="https://doi.org/10.1016/j.eja.2022.126465">https://doi.org/10.1016/j.eja.2022.126465</a>.
