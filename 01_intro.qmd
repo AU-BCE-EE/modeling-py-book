@@ -207,7 +207,7 @@ In other cases the steady-state solution is more interesting and useful.
 
 Models that include a representation the underlying physics, chemistry, or biology are called *mechanistic*.
 Conversely, models based on simple relationship between inputs and outputs that is independent of the underlying mechanisms are called *empirical*.
-In reality, all models include some empirical components.
+In reality, most models include some empirical components, and there is a continuum between the two categories.
 Let's compare the two using a single concrete system.
 
 In a biomethanation reactor hydrogen gas ($\text{H}_2$) is combined with carbon dioxide ($\text{CO}_2$) to form methane ($\text{CH}_4$) (@rafrafi2021).
@@ -216,15 +216,36 @@ So an empirical model could look like this, a simple equation:
 
 $$
 r = k_{T} \cdot T,
-$$
+$$ {#eq-methmode}
 
-where the reaction rate $r$ could be in $\kgps$, temperature $T$ in $\degC$, and $k_T$ is an empirical coefficient, determined from fitting to measurements.
+where the reaction rate $r$ could be in $\gps$, temperature $T$ in $\degC$, and $k_T$ is an empirical coefficient, determined from fitting to measurements.
 Some measurements might look like those shown in @fig-biomethmod1.
 
 ![Hypothetical measurements of biomethanation rate.](drawings/biometh_mod1.png){#fig-biomethmod1 fig-alt="Hypothetical biomethanation measurements"}
 
+The empirical model could fit the measurements quite well, and would be very easy to implement.
+
+In contrast to @eq-methmode, a mechanistic model for this system would be difficult or impossible to present as a single equation.
+The rate of the reaction might depend on the active methanogen biomass, and the concentrations of dissolved $\ce{H2}$ and $\ce{CO2}$.
+These reactant concentrations in turn depend on the solubility (from physical chemistry relationships) and flow rates.
+A mechanistic model could explicitly track all of these quantities as state variables.
+Parameter values may be determined from fitting the model (or a simpler one) to measurements, but a mechanistic approach would still better represent the underlying physical, chemical, and biological processes.
+
+Does the distinction matter much?
+It does.
+This simple empirical approach would break down if the system were changed in any substantial way.
+For example, even application of the model (@eq-methmode) to a larger reactor would fail.
+Other effects could be caused by changes in gas flow rates.
+*Extrapolation*, or application of the model outside of the range of inputs that have been used for parameter estimation or validation, is risky for any model.
+But to the degree that a mechanistic model accurately reflects underlying processes, it is more likely to be accurate when used for extrapolation.
+Some possible responses are explored in @fig-biomethmod2.
+
+![Hypothetical comparison between results from an empirical and two mechanistic models for the measurements from @fig-biomethmod1. Mechanistic model A explicitly tracks available $\ce{H2}$ and $\ce{CO2}$ as state variables, and reaction rate levels off because flow rates of these reactants become limiting, which B also includes a plausible temperature response of the methanogen population.](drawings/biometh_mod2.png){#fig-biomethmod2 fig-alt="Biomethanation models"}
+
 ### Linear versus nonlinear models
-A model is linear if it obeys the superposition principle: if you scale the inputs, the output scales by the same factor, and the response to a sum of inputs equals the sum of the individual responses. In practice, this comes down to one simple check: **does the equation contain any state variable multiplied by itself, by another state variable, raised to a power other than 1, or passed through a nonlinear function (like sin, exp, or square root?). If no- the model is linear. If yes, it's nonlinear. 
+A model is linear if it obeys the superposition principle: if you scale the inputs, the output scales by the same factor, and the response to a sum of inputs equals the sum of the individual responses. In practice, this comes down to one simple check: **does the equation contain any state variable multiplied by itself, by another state variable, raised to a power other than 1, or passed through a nonlinear function (like sin, exp, or square root)?** 
+If no, the model is linear. 
+If yes, it's nonlinear. 
 
 For a system of ODEs a linear model can always be written in the form:
 

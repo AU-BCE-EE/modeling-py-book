@@ -2,23 +2,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.18">
+<meta name="generator" content="quarto-1.8.24">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>1&nbsp; An introduction to models – An Introduction to Modeling with Python</title>
 <style>
-/* Default styles provided by pandoc.
-** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-*/
+code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: 1.5em;}
-div.column{flex: auto;}
-@media screen {
-div.columns{gap: min(4vw, 1.5em);}
-div.column{overflow-x: auto;}
-}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -65,6 +59,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -94,14 +89,15 @@ div.csl-indent {
 <link href="./index.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-631496449bf32ff9b0bb69a6bfd9195d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-03fb02fc132b93ec4eef7e9886d99257.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -168,7 +164,7 @@ MathJax = {
 </script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -221,7 +217,9 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">An Introduction to Modeling with Python</a> 
     </div>
@@ -490,7 +488,7 @@ Figure&nbsp;1.3: Conceptual model of coffee cooling.
 <p><span id="eq-coffee-sol1"><span class="math display">\[
 T(t) = (T_0 - T_{air}) \cdot e^{(-c \cdot t)} + T_{air}.
 \tag{1.2}\]</span></span></p>
-<div id="e632404c" class="cell" data-execution_count="1">
+<div id="250272f0" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import modules</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -549,12 +547,12 @@ T =  T_{air}.
 </section>
 <section id="mechanistic-versus-empirical" class="level3" data-number="1.2.5">
 <h3 data-number="1.2.5" class="anchored" data-anchor-id="mechanistic-versus-empirical"><span class="header-section-number">1.2.5</span> Mechanistic versus empirical</h3>
-<p>Models that include a representation the underlying physics, chemistry, or biology are called <em>mechanistic</em>. Conversely, models based on simple relationship between inputs and outputs that is independent of the underlying mechanisms are called <em>empirical</em>. In reality, all models include some empirical components. Let’s compare the two using a single concrete system.</p>
-<p>In a biomethanation reactor hydrogen gas (<span class="math inline">\(\text{H}_2\)</span>) is combined with carbon dioxide (<span class="math inline">\(\text{CO}_2\)</span>) to form methane (<span class="math inline">\(\text{CH}_4\)</span>) (<span class="citation" data-cites="rafrafi2021">Rafrafi et al. (<a href="#ref-rafrafi2021" role="doc-biblioref">2021</a>)</span>). The rate of the reaction increases with temperature. So an empirical model could look like this, a simple equation:</p>
-<p><span class="math display">\[
+<p>Models that include a representation the underlying physics, chemistry, or biology are called <em>mechanistic</em>. Conversely, models based on simple relationship between inputs and outputs that is independent of the underlying mechanisms are called <em>empirical</em>. In reality, most models include some empirical components, and there is a continuum between the two categories. Let’s compare the two using a single concrete system.</p>
+<p>In a biomethanation reactor hydrogen gas (<span class="math inline">\(\text{H}_2\)</span>) is combined with carbon dioxide (<span class="math inline">\(\text{CO}_2\)</span>) to form methane (<span class="math inline">\(\text{CH}_4\)</span>) (<span class="citation" data-cites="rafrafi2021">Rafrafi, Laguillaumie, and Dumas (<a href="#ref-rafrafi2021" role="doc-biblioref">2021</a>)</span>). The rate of the reaction increases with temperature. So an empirical model could look like this, a simple equation:</p>
+<p><span id="eq-methmode"><span class="math display">\[
 r = k_{T} \cdot T,
-\]</span></p>
-<p>where the reaction rate <span class="math inline">\(r\)</span> could be in <span class="math inline">\(\kgps\)</span>, temperature <span class="math inline">\(T\)</span> in <span class="math inline">\(\degC\)</span>, and <span class="math inline">\(k_T\)</span> is an empirical coefficient, determined from fitting to measurements. Some measurements might look like those shown in <a href="#fig-biomethmod1" class="quarto-xref">Figure&nbsp;<span>1.4</span></a>.</p>
+\tag{1.4}\]</span></span></p>
+<p>where the reaction rate <span class="math inline">\(r\)</span> could be in <span class="math inline">\(\gps\)</span>, temperature <span class="math inline">\(T\)</span> in <span class="math inline">\(\degC\)</span>, and <span class="math inline">\(k_T\)</span> is an empirical coefficient, determined from fitting to measurements. Some measurements might look like those shown in <a href="#fig-biomethmod1" class="quarto-xref">Figure&nbsp;<span>1.4</span></a>.</p>
 <div id="fig-biomethmod1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Hypothetical biomethanation measurements">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-biomethmod1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -565,10 +563,23 @@ Figure&nbsp;1.4: Hypothetical measurements of biomethanation rate.
 </figcaption>
 </figure>
 </div>
+<p>The empirical model could fit the measurements quite well, and would be very easy to implement.</p>
+<p>In contrast to <a href="#eq-methmode" class="quarto-xref">Equation&nbsp;<span>1.4</span></a>, a mechanistic model for this system would be difficult or impossible to present as a single equation. The rate of the reaction might depend on the active methanogen biomass, and the concentrations of dissolved <span class="math inline">\(\ce{H2}\)</span> and <span class="math inline">\(\ce{CO2}\)</span>. These reactant concentrations in turn depend on the solubility (from physical chemistry relationships) and flow rates. A mechanistic model could explicitly track all of these quantities as state variables. Parameter values may be determined from fitting the model (or a simpler one) to measurements, but a mechanistic approach would still better represent the underlying physical, chemical, and biological processes.</p>
+<p>Does the distinction matter much? It does. This simple empirical approach would break down if the system were changed in any substantial way. For example, even application of the model (<a href="#eq-methmode" class="quarto-xref">Equation&nbsp;<span>1.4</span></a>) to a larger reactor would fail. Other effects could be caused by changes in gas flow rates. <em>Extrapolation</em>, or application of the model outside of the range of inputs that have been used for parameter estimation or validation, is risky for any model. But to the degree that a mechanistic model accurately reflects underlying processes, it is more likely to be accurate when used for extrapolation. Some possible responses are explored in <a href="#fig-biomethmod2" class="quarto-xref">Figure&nbsp;<span>1.5</span></a>.</p>
+<div id="fig-biomethmod2" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Biomethanation models">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-biomethmod2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="drawings/biometh_mod2.png" class="img-fluid figure-img" alt="Biomethanation models">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biomethmod2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.5: Hypothetical comparison between results from an empirical and two mechanistic models for the measurements from <a href="#fig-biomethmod1" class="quarto-xref">Figure&nbsp;<span>1.4</span></a>. Mechanistic model A explicitly tracks available <span class="math inline">\(\ce{H2}\)</span> and <span class="math inline">\(\ce{CO2}\)</span> as state variables, and reaction rate levels off because flow rates of these reactants become limiting, which B also includes a plausible temperature response of the methanogen population.
+</figcaption>
+</figure>
+</div>
 </section>
 <section id="linear-versus-nonlinear-models" class="level3" data-number="1.2.6">
 <h3 data-number="1.2.6" class="anchored" data-anchor-id="linear-versus-nonlinear-models"><span class="header-section-number">1.2.6</span> Linear versus nonlinear models</h3>
-<p>A model is linear if it obeys the superposition principle: if you scale the inputs, the output scales by the same factor, and the response to a sum of inputs equals the sum of the individual responses. In practice, this comes down to one simple check: **does the equation contain any state variable multiplied by itself, by another state variable, raised to a power other than 1, or passed through a nonlinear function (like sin, exp, or square root?). If no- the model is linear. If yes, it’s nonlinear.</p>
+<p>A model is linear if it obeys the superposition principle: if you scale the inputs, the output scales by the same factor, and the response to a sum of inputs equals the sum of the individual responses. In practice, this comes down to one simple check: <strong>does the equation contain any state variable multiplied by itself, by another state variable, raised to a power other than 1, or passed through a nonlinear function (like sin, exp, or square root)?</strong> If no, the model is linear. If yes, it’s nonlinear.</p>
 <p>For a system of ODEs a linear model can always be written in the form:</p>
 <p><span class="math display">\[
 y' = A \cdot y + b
@@ -606,14 +617,14 @@ y' = A \cdot y + b
 <h3 class="unnumbered anchored" data-anchor-id="model-classification">Model classification</h3>
 <p>Some different models are described below. Apply the labels conceptual, mathematical, computer, analytical, numerical, lumped parameter, distributed parameter, 1D, steady-state, dynamic, mechanistic, and empirical appropriately. Is the answer always clear?</p>
 <ol type="1">
-<li><p>The NLES5 model predicts nitrate leaching based on the equation shown in the figure below (<a href="#fig-NLES5" class="quarto-xref">Figure&nbsp;<span>1.5</span></a>), where <span class="math inline">\(L\)</span> is the predicted leaching rate and the other terms are input variables or model parameters. Is it mechanistic or empirical?</p>
+<li><p>The NLES5 model predicts nitrate leaching based on the equation shown in the figure below (<a href="#fig-NLES5" class="quarto-xref">Figure&nbsp;<span>1.6</span></a>), where <span class="math inline">\(L\)</span> is the predicted leaching rate and the other terms are input variables or model parameters. Is it mechanistic or empirical?</p>
 <div id="fig-NLES5" class="quarto-float quarto-figure quarto-figure-center anchored" alt="NLES5 model.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-NLES5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images-web/NLES5.png" class="img-fluid figure-img" alt="NLES5 model.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-NLES5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1.5: The NLES5 model, from <span class="citation" data-cites="NLES52022">Børgesen et al. (<a href="#ref-NLES52022" role="doc-biblioref">2022</a>)</span>.
+Figure&nbsp;1.6: The NLES5 model, from <span class="citation" data-cites="NLES52022">Børgesen et al. (<a href="#ref-NLES52022" role="doc-biblioref">2022</a>)</span>.
 </figcaption>
 </figure>
 </div></li>
@@ -624,7 +635,7 @@ Figure&nbsp;1.5: The NLES5 model, from <span class="citation" data-cites="NLES52
 <img src="images-web/ADM1-1.png" class="img-fluid figure-img" alt="ADM1 model.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ADM1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1.6: The ADM1 model, from <span class="citation" data-cites="batstone_iwa_2002">Batstone et al. (<a href="#ref-batstone_iwa_2002" role="doc-biblioref">2002</a>)</span>.
+Figure&nbsp;1.7: The ADM1 model, from <span class="citation" data-cites="batstone_iwa_2002">Batstone et al. (<a href="#ref-batstone_iwa_2002" role="doc-biblioref">2002</a>)</span>.
 </figcaption>
 </figure>
 </div></li>
@@ -648,9 +659,9 @@ c(x, y, z) = e \cdot f(h, \sigma_y, \sigma_z) ,
 <h2 class="unnumbered anchored" data-anchor-id="references">References</h2>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-batstone_iwa_2002" class="csl-entry" role="listitem">
-Batstone, D J, J Keller, I Angelidaki, et al. 2002. <span>“The IWA Anaerobic Digestion Model No 1 (ADM1).”</span> <em>Water Science and Technology: A Journal of the International Association on Water Pollution Research</em> 45 (10): 65–73.
+Batstone, D J, J Keller, I Angelidaki, S V Kalyuzhnyi, S G Pavlostathis, A Rozzi, W T M Sanders, H Siegrist, and V A Vavilin. 2002. <span>“The IWA Anaerobic Digestion Model No 1 (ADM1).”</span> <em>Water Science and Technology: A Journal of the International Association on Water Pollution Research</em> 45 (10): 65–73.
 </div>
 <div id="ref-NLES52022" class="csl-entry" role="listitem">
 Børgesen, Christen D., Johannes WM Pullens, Jin Zhao, Gitte Blicher-Mathiesen, Peter Sørensen, and Jørgen E. Olesen. 2022. <span>“NLES5 an Empirical Model for Estimating Nitrate Leaching from the Root Zone of Agricultural Land.”</span> <em>European Journal of Agronomy</em> 134 (March): 126465. <a href="https://doi.org/10.1016/j.eja.2022.126465">https://doi.org/10.1016/j.eja.2022.126465</a>.

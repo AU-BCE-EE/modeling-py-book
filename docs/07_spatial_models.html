@@ -2,23 +2,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.18">
+<meta name="generator" content="quarto-1.8.24">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>7&nbsp; Spatial models – An Introduction to Modeling with Python</title>
 <style>
-/* Default styles provided by pandoc.
-** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-*/
+code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: 1.5em;}
-div.column{flex: auto;}
-@media screen {
-div.columns{gap: min(4vw, 1.5em);}
-div.column{overflow-x: auto;}
-}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -75,14 +69,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="./06_reactions_microbiology.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-631496449bf32ff9b0bb69a6bfd9195d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-03fb02fc132b93ec4eef7e9886d99257.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -149,7 +144,7 @@ MathJax = {
 </script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -202,7 +197,9 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">An Introduction to Modeling with Python</a> 
     </div>
@@ -618,7 +615,7 @@ f''(x) = \frac{f(x) - 2 \cdot f(x-\Delta x) + f(x -2\cdot \Delta x)}{\Delta x^2}
 <p>This gives us the 5 coupled ODEs and with information about boundary conditions included in red. Since we simplified the example by removing advection, we would need to apply finite difference formulas for the first derivative as well to solve the real problem. In <a href="appx_fdm_formulas.html" class="quarto-xref"><span>Appendix E</span></a> a complete overview of the finite difference formulas (backward, forward, central) are given for the first and second derivatives.</p>
 <p><strong>Implementation in Python</strong></p>
 <p>Lets now go to python to encode and solve the ODE system in <a href="#eq-fiveODE" class="quarto-xref">Equation&nbsp;<span>7.10</span></a>. We want to see something happening so lets assume that the water is <span class="math inline">\(0 \degC\)</span> everywhere to stat with, except at the left side (<span class="math inline">\(10 \degC\)</span>). We will run the simulation for 10 minutes.</p>
-<div id="7bf1ebdd" class="cell" data-execution_count="1">
+<div id="92210d90" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># we need the following libraries</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -704,7 +701,7 @@ f''(x) = \frac{f(x) - 2 \cdot f(x-\Delta x) + f(x -2\cdot \Delta x)}{\Delta x^2}
 </div>
 <p>So the plot tells us that the temperature in the end of the pipe almost does not change (see y-axis 1e-11). This is not so strange because we only have heat transferred by conduction (from left) in the code, and we have not included the heat source (S) either. This hints to us that heat transfer by conduction is probably not so important in our case, but lets first try and implement advection and the source term as well. We will reduce simulation time to 20 seconds, which should be long enough to reach a steady state with a velocity of 0.5 m/s in a pipe that is only 2 m long.</p>
 <p>However! For the advection term we would now be tempted to use central difference discretization in the interior nodes, simply because we know it has a higher order of accuracy than backward and forward difference. But here is a special case. For advection, which is a unidirectional phenomenon we must NEVER use information from downwind nodes to approximate the derivative (which is what central difference does). This will cause the solution to oscillate or be unstable, a topic that will be dealt more with in a later chapter. So we must in this case use backward difference for the advection to avoid that.</p>
-<div id="2a23157d" class="cell" data-execution_count="2">
+<div id="43d9d13f" class="cell" data-execution_count="2">
 <div id="lst-pipe_model" class="python cell-code listing quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-lst figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-pipe_model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -816,7 +813,7 @@ c(x = a, t) = \alpha(t)
 <p>A model that predicts how oxygen concentration changes with time and with depth of a small pond. At the top boundary (surface of the water) the concentration of oxygen is in equilibrium with the atmospheric oxygen concentration. At this boundary the value (oxygen concentration) does not change if the air is constantly exchanged, which is the case if the wind blows just mildly. This situation would be well described with a Dirichlet BC. If we had put a closed chamber on top of the water, such that air could not be exchanged, then we could not do this because the concentration of oxygen in the air would decline over time as it diffuses into the water (assuming it was not saturated with oxygen already).</p>
 <p><strong>Implementation in Python</strong></p>
 <p>The Dirichlet BC can be enforced in many ways. Below is an example where it is enforced by setting the IC at the boundary equal to the BC. Inside the <code>rates()</code> function we initially set the derivatives at all nodes to 0 through this command <code>dcdt = np.zeros_like(c)</code>. In the <code>for loop</code> we only loop through interior nodes, because the start index is 1 (<code>range(1, len(c)-1)</code>) and we stop before the last index. Hence <code>dcdt[0]</code> will stay as 0 (meaning change in c over change in time is zero) and effectively ensure that the state variable value at index 0 (the boundary node) never changes from its initial value. The initial value at index 0 is set to 10 in this command after the <code>rates()</code> function: <code>c0[0] = 10</code>. Because our for loop does not include the last index, it means that we also have a Dirichlet BC at the bottom (last index), which is 0 from this command: <code>c0 = np.zeros(len(x_grid))</code>. This may not be what we want for the model, unless something is instantly consuming oxygen at the bottom of the pond. Therefore we might have to handle the bottom boundary with a different type of BC, but for simplicity we will keep the Dirichlet BCs at both ends of the domain.</p>
-<div id="5fb33563" class="cell" data-execution_count="3">
+<div id="92a0ccf8" class="cell" data-execution_count="3">
 <div id="lst-dirichlet_pond" class="python cell-code listing quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-lst figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-dirichlet_pond-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -938,7 +935,7 @@ T(x_{L+1}) = T(x_{L-1})
 \tag{7.11}\]</span></span></p>
 <p>This equation enforces the Neumann boundary condition at the top boundary, L. Earlier in <a href="#lst-pipe_model" class="quarto-xref">Listing&nbsp;<span>7.1</span></a>, we avoided the whole ghost point problematic by using backward difference instead and we did not state anything about a BC. But implicitely, by using the backward difference we silently just extrapolated the physics to outside the model domain. What does that mean? It means that there is no change in the second derivative and the BC was actually <span class="math inline">\(\frac{\partial^3 T}{\partial z^3} = 0\)</span>. The math to derive that is out of the scope for this book and we will not use such a BC again going forward.</p>
 <p>Lets implement Neumann BC derived above in our code and assume that the living room is <span class="math inline">\(10 \degC\)</span> to start with:</p>
-<div id="4141e2be" class="cell" data-execution_count="4">
+<div id="d14fb5e6" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># importing libraries</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> solve_ivp </span>
@@ -1035,7 +1032,7 @@ D\cdot\frac{\partial c(x=L, t)}{\partial x} = &amp;D \cdot \frac{c(x_{L+1}) - 2\
 \frac{2\cdot D}{\Delta x^2}\cdot \left( c(x_{L-1}) - c(x_L) \right )-\frac{2k_c}{\Delta x}\cdot \left( c(x_L) - c_{bulk} \right )
 \]</span> and it nicely parallels the Neumann result: the first term is the same diffusive exchange with the interior node (except now it is mass, not temperature as in <a href="#eq-neumann" class="quarto-xref">Equation&nbsp;<span>7.11</span></a>), and the second term is the new convective loss/gain at the boundary, vanishing as <span class="math inline">\(k_c \to 0\)</span> (back to Neumann) and dominating as <span class="math inline">\(k_c \to \infty\)</span> (forcing <span class="math inline">\(c_L \to c_{bulk}\)</span>, which is equivalent to a Dirichlet BC).</p>
 <p><strong>Implementation in Python</strong></p>
-<div id="eafd6476" class="cell" data-execution_count="5">
+<div id="76eb6286" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># importing libraries</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> solve_ivp </span>
@@ -1109,7 +1106,7 @@ D\cdot\frac{\partial c(x=L, t)}{\partial x} = &amp;D \cdot \frac{c(x_{L+1}) - 2\
 <p>There are two sides to this question, and they pull in opposite directions. On one hand, a finer grid (smaller <span class="math inline">\(\Delta x\)</span> ) gives a more accurate approximation of the true continuous solution — this is the convergence question, and we will look at how to verify it empirically rather than just trusting it. On the other hand, computational cost increases as we refine the grid: more nodes means more equations to solve at every time step, and, as we will see, refining <span class="math inline">\(\Delta x\)</span> can also force us to take much smaller time steps for the solution to remain numerically stable — particularly if we ever switch from solve_ivp’s adaptive solvers to a simple explicit scheme.</p>
 <p>In other words, choosing a grid size is a balancing act between accuracy and cost, and the goal of this subsection is to give you the tools to make that choice deliberately rather than by guesswork: first by checking whether — and how fast — our solution converges as we refine the grid, and second by being aware of the stability constraints that link grid size to time step size.</p>
 <p><strong>example case</strong> We return to the pond example code in <a href="#lst-dirichlet_pond" class="quarto-xref">Listing&nbsp;<span>7.2</span></a>. We want to compare the model with different <span class="math inline">\(\Delta x\)</span>. To compare runs meaningfully, we need a single number to track — not the entire concentration profile, but one quantity that we can follow as the grid changes. We will use the oxygen concentration at a fixed depth (5 cm) at the end of the simulation, t = 7 days. If our discretization is working correctly, this value should converge towards some fixed number as <span class="math inline">\(\Delta x\)</span> gets smaller, rather than jumping around unpredictably.</p>
-<div id="83e3add4" class="cell" data-execution_count="6">
+<div id="d9b49c4c" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> solve_ivp</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -1165,7 +1162,7 @@ dx = 0.00125 m -&gt; c(5 cm, 7 days) = 3.07071 mg/L</code></pre>
 </div>
 </div>
 <p>We see convergence around <span class="math inline">\(\Delta x = 0.01\)</span>, but it is clear that <span class="math inline">\(\Delta x = 0.02\)</span> was not a good choice. There is no need to decrease <span class="math inline">\(\Delta x\)</span> further than 0.01, this may increase simulation time for the two reasons mentioned before: smaller <span class="math inline">\(\Delta x\)</span> increases the number of ODEs to be solved and <code>solve_ivp()</code> automatically also decreases the time step size to keep a stable solution. We can try and compare computation times with three different <span class="math inline">\(\Delta x\)</span>:</p>
-<div id="b74c6b87" class="cell" data-execution_count="7">
+<div id="f33d99ac" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># -*- coding: utf-8 -*-</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> solve_ivp</span>
@@ -1210,8 +1207,8 @@ dx = 0.00125 m -&gt; c(5 cm, 7 days) = 3.07071 mg/L</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>dx = 0.01 m -&gt; 11 nodes, runtime = 0.003 s
 dx = 0.005 m -&gt; 21 nodes, runtime = 0.006 s
-dx = 0.001 m -&gt; 101 nodes, runtime = 0.168 s
-dx = 0.0005 m -&gt; 201 nodes, runtime = 1.214 s</code></pre>
+dx = 0.001 m -&gt; 101 nodes, runtime = 0.110 s
+dx = 0.0005 m -&gt; 201 nodes, runtime = 0.523 s</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>
@@ -1230,7 +1227,7 @@ dx = 0.0005 m -&gt; 201 nodes, runtime = 1.214 s</code></pre>
 <p><span class="math display">\[
 \frac{\Delta x^2}{2\cdot D} = \frac{0.01^2}{2 \cdot 2.0 * 10^{-9}} = 25000
 \]</span> Lets replace solve_ivp with a nested euler forward loop with time steps below, above and exactly at the stability criterion.</p>
-<div id="694d93a7" class="cell" data-execution_count="8">
+<div id="36affa4e" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># -*- coding: utf-8 -*-</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
