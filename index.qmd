@@ -23,6 +23,6 @@ Sasha D. Hafner and Frederik R. Dalby
 
 Aarhus University, Aarhus, Denmark
 
-Version: 0.2 (2026 August)
+Version: 0.3 (2026 August)
 
 
