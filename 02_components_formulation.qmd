@@ -123,12 +123,15 @@ Units for our conservation equation, @eq-coffee-conservation, should be W, i.e.,
 ## Constitutive equations {#sec-constitutive}
 
 *Constitutive equations* describe how matter or energy are transferred.
-We will need a constitutive equation for each term in the model conservation equation.
+We will need either a constitutive equation or a known input value for each term on the RHS of the model conservation equation.
 Figuring out what equations to use here requires familiarity with the different options.
+Some of the equations may be so simple we might not identify them as constitutive equations--reaction rates and advective flow are two examples.
 We'll take a look at just a couple here and present more in @sec-heat, @sec-mass, and @sec-reactions.
-These equations typically have a name like "someone's law".
-In general, constitutive equations include a difference or derivative and a proportionality constant on the right-hand side (RHS).
-The left-hand side (LHS) is usually some kind of *flux*, which is a flow rate per unit cross-sectional area.
+Constitutive equations often have a name like "someone's law".
+In general, they include a difference or derivative and a proportionality constant on the right-hand side (RHS).
+The left-hand side (LHS) is often some kind of *flux*, which is a flow rate per unit cross-sectional area.
+In other cases, the LHS may simply be a rate of change in concentration or even mass and the RHS may be a simple product (e.g., advection or reaction rates).
+The important thing is to have some way of knowing the value for each term on the RHS of the conservation equation.
 
 For our coffee model, we only need one constitutive equation (take a look at @eq-coffee-conservation to see why), and the appropriate one is called *Newton's law of cooling*.
 It is:
