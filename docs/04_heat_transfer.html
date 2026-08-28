@@ -132,7 +132,7 @@ MathJax = {
     packages: {'[+]': ['mhchem']},
     macros: {
       degC: "{^\\circ\\mathrm{C}}",
-      degCpm: "{^\\circ\\mathrm{C}~m^{-1}}",
+      degCpm: "{^\\circ\\mathrm{C~m^{-1}}}",
       Wpms: "{\\mathrm{W~m^{-2}}}",
       WpmspK: "{\\mathrm{W~m^{-2}~K^{-1}}}",
       WpmpK: "{\\mathrm{W~m^{-1}~K^{-1}}}",
@@ -386,11 +386,10 @@ window.Quarto = {
   <li><a href="#sec-advection" id="toc-sec-advection" class="nav-link" data-scroll-target="#sec-advection"><span class="header-section-number">4.2</span> Advection</a></li>
   <li><a href="#sec-fourier" id="toc-sec-fourier" class="nav-link" data-scroll-target="#sec-fourier"><span class="header-section-number">4.3</span> Conduction and Fourier’s law</a></li>
   <li><a href="#sec-newtons-law" id="toc-sec-newtons-law" class="nav-link" data-scroll-target="#sec-newtons-law"><span class="header-section-number">4.4</span> Convection and Newton’s law of cooling</a></li>
-  <li><a href="#resistance-in-series" id="toc-resistance-in-series" class="nav-link" data-scroll-target="#resistance-in-series"><span class="header-section-number">4.5</span> Resistance in series</a></li>
+  <li><a href="#sec-series" id="toc-sec-series" class="nav-link" data-scroll-target="#sec-series"><span class="header-section-number">4.5</span> Resistance in series</a></li>
   <li><a href="#parameter-values" id="toc-parameter-values" class="nav-link" data-scroll-target="#parameter-values"><span class="header-section-number">4.6</span> Parameter values</a></li>
-  <li><a href="#sec-heat-link" id="toc-sec-heat-link" class="nav-link" data-scroll-target="#sec-heat-link"><span class="header-section-number">4.7</span> Linking equation</a></li>
-  <li><a href="#phase-changes" id="toc-phase-changes" class="nav-link" data-scroll-target="#phase-changes"><span class="header-section-number">4.8</span> Phase changes</a></li>
-  <li><a href="#example-lumped-parameter-model-with-multiple-modes" id="toc-example-lumped-parameter-model-with-multiple-modes" class="nav-link" data-scroll-target="#example-lumped-parameter-model-with-multiple-modes"><span class="header-section-number">4.9</span> Example: lumped-parameter model with multiple modes</a></li>
+  <li><a href="#sec-heat-link" id="toc-sec-heat-link" class="nav-link" data-scroll-target="#sec-heat-link"><span class="header-section-number">4.7</span> Linking equations</a></li>
+  <li><a href="#example-lumped-parameter-model-with-multiple-modes" id="toc-example-lumped-parameter-model-with-multiple-modes" class="nav-link" data-scroll-target="#example-lumped-parameter-model-with-multiple-modes"><span class="header-section-number">4.8</span> Example: lumped-parameter model with multiple modes</a></li>
   <li><a href="#problems" id="toc-problems" class="nav-link" data-scroll-target="#problems">Problems</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
@@ -455,10 +454,10 @@ Figure&nbsp;4.1: A tank of water with a fixed volume <span class="math inline">\
 \tag{4.1}\]</span></span></p>
 <p>where <span class="math inline">\(\dot{Q}\)</span> is energy flow in W, <span class="math inline">\(\rho=\)</span> fluid density in <span class="math inline">\(\kgpmc\)</span>, and <span class="math inline">\(c_p=\)</span> specific heat capacity (<span class="math inline">\(\kJpkgpK\)</span>). (Specific heat capacity is discussed more below in <a href="#sec-heat-link" class="quarto-xref"><span>Section 4.7</span></a>.) That, <a href="#eq-advection1" class="quarto-xref">Equation&nbsp;<span>4.1</span></a>, is the fundamental constitutive equation for advection. For our tank example, it would be applied to flow in and flow out, both based on the same constant value <span class="math inline">\(\dot{V}\)</span>. Then net energy flow would be calculated by difference, giving:</p>
 <p><span id="eq-tank1"><span class="math display">\[
-\dot{Q}_{in} - \dot{Q}_{out} = \dot{V} \cdot{\rho} \cdot c_p \cdot (T_{inflow} - T_{tank}).
+\dot{Q}_{in} - \dot{Q}_{out} = \frac{dQ}{dt} = \dot{V} \cdot{\rho} \cdot c_p \cdot (T_{inflow} - T_{tank}).
 \tag{4.2}\]</span></span></p>
 <p>Do you see how <span class="math inline">\(T_{ref}\)</span> drops out?</p>
-<p>As long as density and specific heat capacity are constant (we will always assume they are in this book), we can always derive an equation for the rate of temperature change by recognizing that <span class="math inline">\(dT = \frac{\dot{Q}}{\dot{V} \cdot{\rho} \cdot c_p}\)</span>. Start with substitution:</p>
+<p>As long as density and specific heat capacity are constant (we will always assume they are in this book), we can always derive an equation for the rate of temperature change by recognizing that <span class="math inline">\(dT = \frac{\dot{Q}}{\dot{V} \cdot{\rho} \cdot c_p}\)</span>. So we can get a temperature derivative from <a href="#eq-tank1" class="quarto-xref">Equation&nbsp;<span>4.2</span></a> by dividing by <span class="math inline">\(\dot{V} \cdot{\rho} \cdot c_p\)</span>:</p>
 <p><span class="math display">\[
 \frac{dT}{dt} = \frac{\dot{V} \cdot{\rho} \cdot c_p \cdot (T_{inflow} - T_{tank})}{V \cdot{\rho} \cdot c_p}.
 \]</span></p>
@@ -508,8 +507,8 @@ Figure&nbsp;4.2: A fluid flowing through a constant-diameter round pipe at a con
 \tag{4.10}\]</span></span></p>
 <p><a href="#eq-advection-ode1" class="quarto-xref">Equation&nbsp;<span>4.10</span></a> is actually pretty intuitive. It says that the rate of temperature change at a fixed location is equal to the temperature derivative over space and the rate at which fluid flows over that same space.</p>
 <p><a href="#eq-advection-ode1" class="quarto-xref">Equation&nbsp;<span>4.10</span></a>, along with <a href="#eq-advection1" class="quarto-xref">Equation&nbsp;<span>4.1</span></a>, will together suffice for the constitutive equations for advection in most of the systems we’ll encounter in this book. For others, derivation of an advection equation is pretty simple.</p>
-<p>In our pipe conceptual model, we’ve implicitly assumed that radial position has no bearing on transfer. In reality, we could have both differences in longitudinal transfer with radial position (slower flow near the wall) and significant radial resistance to trasnfer.</p>
-<p>In heat transfer models (as well as mass transfer), it is common to work with flow rates normalized by the cross-sectional area of the space through which the flow is moving, i.e., heat <em>flux</em>. Our heat flow units are typically W and heat flow <span class="math inline">\(\Wpms\)</span>. One reason to use flux is because it gives us more general models that are easy to apply at different scales without making any changes. For example, thinking about the second advection example above, the pipe (<a href="#fig-pipe1" class="quarto-xref">Figure&nbsp;<span>4.2</span></a>), does the diameter of the pipe play any role?</p>
+<p>In our pipe conceptual model, we’ve implicitly assumed that radial position has no bearing on transfer. In reality, we could have both differences in longitudinal transfer with radial position (slower flow near the wall) and significant radial resistance to transfer.</p>
+<p>In heat transfer models (as well as mass transfer), it is common to work with flow rates normalized by the cross-sectional area of the space through which the flow is moving. This normalized flow is called heat <em>flux</em> in engineering (flux <em>density</em> in physics and probably elsewhere). Our heat flow units are typically W and heat flux <span class="math inline">\(\Wpms\)</span>. One reason to use flux is because it gives us more general models that are easy to apply at different scales without making any changes. For example, thinking about the second advection example above, the pipe (<a href="#fig-pipe1" class="quarto-xref">Figure&nbsp;<span>4.2</span></a>), does the diameter of the pipe play any role?</p>
 <p>Well, the heat flow at one location, say <span class="math inline">\(x=0\)</span> is:</p>
 <p><span id="eq-advection10"><span class="math display">\[
 \dot{Q}_{x=0} = \dot{V} \cdot{\rho} \cdot c_p \cdot (T_{x=0} - T_{ref}).
@@ -519,6 +518,7 @@ Figure&nbsp;4.2: A fluid flowing through a constant-diameter round pipe at a con
 q_{x=0} = v_x \cdot{\rho} \cdot c_p \cdot (T_{x=0} - T_{ref}),
 \tag{4.12}\]</span></span></p>
 <p>we get an equation that does not depend on pipe size, but only the superficial fluid velocity. So for a given velocity, the diameter is immaterial. (Of course this is true only if our assumption about uniform radial profile, i.e., a 1D system, is accurate.)</p>
+<p>Another reason is that the consitutive equations are most simply expressed for flux–it is flux not flow that depends on a temperature gradient.</p>
 </section>
 <section id="sec-fourier" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="sec-fourier"><span class="header-section-number">4.3</span> Conduction and Fourier’s law</h2>
@@ -528,7 +528,7 @@ q_{x=0} = v_x \cdot{\rho} \cdot c_p \cdot (T_{x=0} - T_{ref}),
 q = -k \cdot \frac{dT}{dx}
 \tag{4.13}\]</span></span></p>
 <p><a href="#eq-fouriers-law1" class="quarto-xref">Equation&nbsp;<span>4.13</span></a> says that the heat flux in the <span class="math inline">\(x\)</span> direction is proportional to derivative of temperature with respect to <span class="math inline">\(x\)</span>, or the temperature gradient. The two–heat flux and temperature gradient–are linked through a proportionality constant called <em>thermal conductivity</em>, which typically has units of <span class="math inline">\(\WpmpK\)</span> and depends strongly on the substance through which heat is diffusing. Thermal conductivity is high for metals (around <span class="math inline">\(10^2\)</span> <span class="math inline">\(\WpmpK\)</span>), low for gases (around <span class="math inline">\(10^{-2}\)</span> to <span class="math inline">\(10^{-1}\)</span> <span class="math inline">\(\WpmpK\)</span>), and somewhere in the middle for other materials.</p>
-<p>So <a href="#eq-fouriers-law1" class="quarto-xref">Equation&nbsp;<span>4.13</span></a> depends on material properties and a state variable–temperature, or more specifically, the temperature gradient. This is a characteristic of constitutive equations.</p>
+<p>So <a href="#eq-fouriers-law1" class="quarto-xref">Equation&nbsp;<span>4.13</span></a> depends on material properties and a state variable–temperature, or more specifically, the temperature gradient. This dependency is a characteristic of constitutive equations.</p>
 <p>Heat energy flows via conduction from high temperature to low temperature, and this is ensured by the negative sign in front of thermal conductivity. That simple concept underlies a simple tool for inferring heat transfer and temperature change from temperature differences, gradients, or derivatives.</p>
 <p>A <em>temperature profile</em> is a graphical representation of temperature over space, and it can be useful for understanding Fourier’s law. For example, <a href="#fig-wall1" class="quarto-xref">Figure&nbsp;<span>4.3</span></a> shows the temperature profile of a wall with one fixed temperature at the left surface, <span class="math inline">\(T_o\)</span>, where <span class="math inline">\(o\)</span> is for outside, and another at the right surface, <span class="math inline">\(T_i\)</span>. It is common to show space horizontally–here the <span class="math inline">\(x\)</span> dimension–and temperature vertically.</p>
 <div id="fig-wall1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Wall temperature profile.">
@@ -537,7 +537,7 @@ q = -k \cdot \frac{dT}{dx}
 <img src="drawings/wall_temp_prof1.png" class="img-fluid figure-img" alt="Wall temperature profile.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-wall1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.3: A temperature profile through a slab wall.
+Figure&nbsp;4.3: A temperature profile through a plane wall.
 </figcaption>
 </figure>
 </div>
@@ -555,14 +555,14 @@ Figure&nbsp;4.4: Control volume heat flow in a plane wall. Heat is flowing by co
 </figure>
 </div>
 <p>OK, so what does all this mean about cases where the temperature gradient is not linear, i.e., the temperature derivative varies over space? For example, see <a href="#fig-wall2" class="quarto-xref">Figure&nbsp;<span>4.5</span></a>.</p>
-<p>Well, the nonlinear temperature profile means the temperature derivative <span class="math inline">\(\frac{dT}{dx}\)</span> is not constant over space, which means that the rate of heat transfer, the heat flux really, by convection, is not constant over space either. At the left side, there is a <em>positive</em> temperature derivative, so the heat flux is <em>negative</em>, or to the left. Alternatively, we can just see that the temperature is increasing from the edge in, and because heat flows from high to low temperature through conduction, heat flow must be flowing to the left. Get used to this intuitive approach–it is helpful for model implementation, debugging, and verification. Using the same concepts, we can see there is heat flow to the right at the right edge. Together this means the wall must be losing heat. It is not at steady state unless there is some source of heat within the wall. In fact, downward curvature in a temperature profile in a plane wall can always be used to infer that a wall is either cooling or, if at steady-state, has an internal heat source.</p>
+<p>Well, the nonlinear temperature profile means the temperature derivative <span class="math inline">\(\frac{dT}{dx}\)</span> is not constant over space, which means that the rate of heat transfer, the heat flux really, is not constant over space either. At the left side, there is a <em>positive</em> temperature derivative, so the heat flux is <em>negative</em>, or to the left. Alternatively, we can just see that the temperature is increasing from the edge in, and because heat flows from high to low temperature through conduction, heat flow must be flowing to the left. Get used to this intuitive approach–it is helpful for model implementation, debugging, and verification. Using the same concepts, we can see there is heat flow to the right at the right edge. Together this means the wall must be losing heat. It is not at steady state unless there is some source of heat within the wall. In fact, downward curvature in a temperature profile in a plane wall can always be used to infer that a wall is either cooling or, if at steady-state, has an internal heat source.</p>
 <div id="fig-wall2" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Wall temperature profile.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-wall2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="drawings/wall_temp_prof2.png" class="img-fluid figure-img" alt="Wall temperature profile.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-wall2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.5: A different temperature profile through a slab wall.
+Figure&nbsp;4.5: A different temperature profile through a plane wall.
 </figcaption>
 </figure>
 </div>
@@ -570,16 +570,16 @@ Figure&nbsp;4.5: A different temperature profile through a slab wall.
 <p><span id="eq-fouriers-law2"><span class="math display">\[
 q = -k \cdot \frac{\Delta T}{L},
 \tag{4.14}\]</span></span></p>
-<p>where <span class="math inline">\(\Delta T\)</span> is the temperature difference across the wall (<span class="math inline">\(T_o - T_i\)</span>) and <span class="math inline">\(L\)</span> is the wall thickness. This works because the gradient or derivative is the same everywhere, so can be calculated from the overall difference <span class="math inline">\(\Delta T\)</span> and <span class="math inline">\(L\)</span>. For our work in this book, this is the fundamental form of Fourier’s law that we will apply. We’ll see it a lot more in the following sections.</p>
+<p>where <span class="math inline">\(\Delta T\)</span> is the temperature difference across the wall (<span class="math inline">\(T_o - T_i\)</span>) and <span class="math inline">\(L\)</span> is the wall thickness. This works because the gradient or derivative is the same everywhere, so can be calculated from the overall difference <span class="math inline">\(\Delta T\)</span> and <span class="math inline">\(L\)</span>. For our work in this book, this is the fundamental form of Fourier’s law that we will apply.</p>
 <p>With this approach (<a href="#eq-fouriers-law2" class="quarto-xref">Equation&nbsp;<span>4.14</span></a>) we can also use a <em>resistance</em> concept. We will define resistance <span class="math inline">\(R\)</span> as <span class="math inline">\(\frac{L}{k}\)</span>. For a fixed wall thickness, resistance is inversely proportional to thermal conductivity. So the analog to <a href="#eq-fouriers-law2" class="quarto-xref">Equation&nbsp;<span>4.14</span></a> is <a href="#eq-resistance1" class="quarto-xref">Equation&nbsp;<span>4.15</span></a>:</p>
 <p><span id="eq-resistance1"><span class="math display">\[
 q = \frac{\Delta T}{R}.
 \tag{4.15}\]</span></span></p>
-<p>Note that the term resistance and the symbol can be defined for total heat flow <span class="math inline">\(\dot{Q}\)</span> instead of heat flux <span class="math inline">\(q\)</span> in other sources. Below, we will see how the resistance approach can be used to combine resistance from multiple layers in a <em>composite wall</em>, even including convection.</p>
+<p>Note that the term resistance and the symbol can be defined for total heat flow <span class="math inline">\(\dot{Q}\)</span> instead of heat flux <span class="math inline">\(q\)</span> in other sources. In <a href="#sec-series" class="quarto-xref"><span>Section 4.5</span></a>, we will see how the resistance approach can be used to combine resistance from multiple layers in a <em>composite wall</em>, even including convection.</p>
 </section>
 <section id="sec-newtons-law" class="level2" data-number="4.4">
 <h2 data-number="4.4" class="anchored" data-anchor-id="sec-newtons-law"><span class="header-section-number">4.4</span> Convection and Newton’s law of cooling</h2>
-<p>If you are bald and go outside in Canada in the winter without covering your head (<a href="#fig-head1" class="quarto-xref">Figure&nbsp;<span>4.6</span></a>) the mode of heat loss that you experience is called <em>convection</em>. The term is, unfortunately, used in some different ways, but we’ll follow <span class="citation" data-cites="Bergman2013">Bergman et al. (<a href="#ref-Bergman2013" role="doc-biblioref">2013</a>)</span> and use it for a combination of conduction and advection that causes heat transfer between a fluid and a surface. Temperature gradients driving convection are commonly shown like <a href="#fig-convection-prof1" class="quarto-xref">Figure&nbsp;<span>4.7</span></a>. It is common to use the symbol <span class="math inline">\(T_\infty\)</span> for the <em>bulk</em> fluid temperature, “far away” from the surface. In practice this means far enough away to not be influenced by the surface temperature, or outside of the fluid <em>boundary layer</em>.</p>
+<p>If you are bald and go outside in Norway in the winter without covering your head (<a href="#fig-head1" class="quarto-xref">Figure&nbsp;<span>4.6</span></a>) the mode of heat loss that you experience is called <em>convection</em>. The term is, unfortunately, used in some different ways, but we’ll follow <span class="citation" data-cites="Bergman2013">Bergman et al. (<a href="#ref-Bergman2013" role="doc-biblioref">2013</a>)</span> and use it for a combination of conduction and advection that causes heat transfer between a fluid and a surface. Temperature gradients driving convection are commonly shown as in <a href="#fig-convection-prof1" class="quarto-xref">Figure&nbsp;<span>4.7</span></a>. It is common to use the symbol <span class="math inline">\(T_\infty\)</span> for the <em>bulk</em> fluid temperature, “far away” from the surface. In practice this means far enough away to not be influenced by the surface temperature, or outside of the fluid <em>boundary layer</em>.</p>
 <div id="fig-head1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Bald person in cold wind.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-head1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -606,12 +606,16 @@ q = h \cdot (T_s - T_\infty).
 \tag{4.16}\]</span></span></p>
 <p>It is a simple, phenomenological, relationship that posits that the rate of heat loss is proportional to the temperature <em>difference</em> (note that distance is not involved) between the surface temperature <span class="math inline">\(T_s\)</span> and fluid temperature <span class="math inline">\(T_\infty\)</span> and some proportionality constant <span class="math inline">\(h\)</span> called the <em>convection heat transfer coefficient</em>. We’ll often call <span class="math inline">\(h\)</span> a shorter name: convection coefficient. It depends on the physical properties of the fluid as well as whether and how it is flowing–the speed and turbulence. We’ll use tabulated values or guesses in our work.</p>
 <p>As with conduction, we can use a resistance-based form for Newton’s law:</p>
-<p><span id="eq-newtons-restance1"><span class="math display">\[
+<p><span id="eq-newtons-resistance1"><span class="math display">\[
 q = \frac{T_s - T_\infty}{R}.
 \tag{4.17}\]</span></span></p>
+<p>Here <span class="math inline">\(R\)</span> is just the inverse of <span class="math inline">\(h\)</span>:</p>
+<p><span id="eq-newtons-resistance2"><span class="math display">\[
+R = \frac{1}{h}.
+\tag{4.18}\]</span></span></p>
 </section>
-<section id="resistance-in-series" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="resistance-in-series"><span class="header-section-number">4.5</span> Resistance in series</h2>
+<section id="sec-series" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="sec-series"><span class="header-section-number">4.5</span> Resistance in series</h2>
 <p>With multiple layers in series, in a composite wall for example as in <a href="#fig-composite-wall1" class="quarto-xref">Figure&nbsp;<span>4.8</span></a>, the multiple layers together influence heat flow.</p>
 <div id="fig-composite-wall1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Composite wall.">
 <figure class="quarto-float quarto-float-fig figure">
@@ -626,9 +630,9 @@ Figure&nbsp;4.8: A composite wall, including a layer of concrete and insulation.
 <p>It turns out that multiple sources of resistance can easily be combined by summing resistances. This can be shown with a little bit of simple symbolic math. If the individual values for <span class="math inline">\(k\)</span> and <span class="math inline">\(L\)</span> are known, then the overall resistance is:</p>
 <p><span id="eq-series-resistance1"><span class="math display">\[
 R = \frac{L_1}{k_1} + \frac{L_2}{k_2} + ... + \frac{L_n}{k_n}.
-\tag{4.18}\]</span></span></p>
+\tag{4.19}\]</span></span></p>
 <p>Although intermediate temperatures, like <span class="math inline">\(T_m\)</span> in <a href="#fig-composite-wall1" class="quarto-xref">Figure&nbsp;<span>4.8</span></a>, could be calculated, only the overall temperature difference, <span class="math inline">\(\Delta T = T_l - T_r\)</span> is needed for application of <a href="#eq-resistance1" class="quarto-xref">Equation&nbsp;<span>4.15</span></a>.</p>
-<p>Looking at <a href="#eq-newtons-restance1" class="quarto-xref">Equation&nbsp;<span>4.17</span></a>, you might be able to see that convection and conduction together in series, as in <a href="#fig-composite-wall2" class="quarto-xref">Figure&nbsp;<span>4.9</span></a>, can also be combined using the same approach.</p>
+<p>Looking at <a href="#eq-newtons-resistance1" class="quarto-xref">Equation&nbsp;<span>4.17</span></a>, you might be able to see that convection and conduction together in series, as in <a href="#fig-composite-wall2" class="quarto-xref">Figure&nbsp;<span>4.9</span></a>, can also be combined using the same approach.</p>
 <div id="fig-composite-wall2" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Composite wall with fluids.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-composite-wall2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -641,45 +645,43 @@ Figure&nbsp;4.9: A composite wall, including a layer of concrete and insultions 
 </div>
 <p>For example, with <span class="math inline">\(n_d\)</span> layers with conduction and <span class="math inline">\(n_v\)</span> with convection, <span id="eq-series-resistance2"><span class="math display">\[
 R = \frac{L_1}{k_1} + \frac{L_2}{k_2} + ... + \frac{L_n}{k_{n_d}} + \frac{1}{h_1} + \frac{1}{h_2} + ... + \frac{1}{h_{n_v}}.
-\tag{4.19}\]</span></span></p>
+\tag{4.20}\]</span></span></p>
 <p>For calculating heat flux, the overall temperature difference <span class="math inline">\(\Delta T\)</span> is <em>divided</em> by resistance <span class="math inline">\(R\)</span>. It is a matter of preference to use instead the inverse of <span class="math inline">\(R\)</span>. Of course, for a single layer, the inverse of <span class="math inline">\(R\)</span> is <span class="math inline">\(\frac{k}{L}\)</span> or <span class="math inline">\(h\)</span>. For multiple layers, the quantity is called <em>overall heat transfer coefficient</em> and the symbol <span class="math inline">\(U\)</span> is used, so,</p>
 <p><span id="eq-series-overall-u1"><span class="math display">\[
 U = \frac{1}{\frac{L_1}{k_1} + \frac{L_2}{k_2} + ... + \frac{L_n}{k_{n_d}} + \frac{1}{h_1} + \frac{1}{h_2} + ... + \frac{1}{h_{n_v}}}.
-\tag{4.20}\]</span></span></p>
+\tag{4.21}\]</span></span></p>
 <p>And for flux,</p>
 <p><span id="eq-series-flux1"><span class="math display">\[
 q = U \cdot \Delta T.
-\tag{4.21}\]</span></span></p>
-<p>Remember that <span class="math inline">\(\Delta T\)</span> is the overall temperature difference. So for <a href="#fig-composite-wall2" class="quarto-xref">Figure&nbsp;<span>4.9</span></a>, for example, <span class="math inline">\(\Delta T = T_{\infty, l} - T_{\infty, r}\)</span>. And for <a href="#fig-composite-wall1" class="quarto-xref">Figure&nbsp;<span>4.8</span></a>, <span class="math inline">\(\Delta T = T_{l} - T_{r}\)</span>. Does it seem inconsistent, that both expressions could be true? Really the two figures could be different interpretations of the same physical system. The resolution comes from defining <span class="math inline">\(U\)</span> correctly (it is conceptually and numerically different for the two) and using the appropriate temperatures. We could, in fact, use <span class="math inline">\(\Delta T = T_{l} - T_{r}\)</span> for the system in <a href="#fig-composite-wall2" class="quarto-xref">Figure&nbsp;<span>4.9</span></a>, but then (1) should not include the fluids in the calculation of <span class="math inline">\(U\)</span> and (2) must use the temperatures at the fluid/solid interfaces (<span class="math inline">\(T_l\)</span> and <span class="math inline">\(T_r\)</span>) for calculating flux. If the fluids actually do contribute significant resistance to heat flow, those interface temperatures could be quite different from the bulk fluid temperatures <span class="math inline">\(T_{\infty...}\)</span>, and difficult to determine.</p>
+\tag{4.22}\]</span></span></p>
+<p>Remember that <span class="math inline">\(\Delta T\)</span> is the overall temperature difference. So for <a href="#fig-composite-wall2" class="quarto-xref">Figure&nbsp;<span>4.9</span></a>, for example, <span class="math inline">\(\Delta T = T_{\infty, l} - T_{\infty, r}\)</span>. And for <a href="#fig-composite-wall1" class="quarto-xref">Figure&nbsp;<span>4.8</span></a>, <span class="math inline">\(\Delta T = T_{l} - T_{r}\)</span>. Does it seem inconsistent that both expressions could be true? Really the two figures could be different interpretations of the same physical system. The resolution comes from defining <span class="math inline">\(U\)</span> correctly (it is conceptually and numerically different for the two) and using the appropriate temperatures. We could, in fact, use <span class="math inline">\(\Delta T = T_{l} - T_{r}\)</span> for the system in <a href="#fig-composite-wall2" class="quarto-xref">Figure&nbsp;<span>4.9</span></a>, but then 1) we should not include the fluids in the calculation of <span class="math inline">\(U\)</span> and 2) we must use the temperatures at the fluid/solid interfaces (<span class="math inline">\(T_l\)</span> and <span class="math inline">\(T_r\)</span>) for calculating flux. If the fluids actually do contribute significant resistance to heat flow, those interface temperatures could be quite different from the bulk fluid temperatures <span class="math inline">\(T_{\infty...}\)</span>, and difficult to determine.</p>
 <p>This general approach is quite useful and we’ll use it extensively. Remember that it is defined for steady-state conditions–otherwise we cannot assume that conduction temperature gradients are linear or really that convective heat loss is directly proportional to the temperature difference. But the approach can still be applied to non-steady-state conditions, as long as the heat energy stored within those zones with a gradient is small compared to the overall system.</p>
 </section>
 <section id="parameter-values" class="level2" data-number="4.6">
 <h2 data-number="4.6" class="anchored" data-anchor-id="parameter-values"><span class="header-section-number">4.6</span> Parameter values</h2>
-<p>In modeling, there are two ways to get parameter values: from (1) theory or (2) measurements. For example, for the system in <a href="#fig-composite-wall2" class="quarto-xref">Figure&nbsp;<span>4.9</span></a> we could use individual <span class="math inline">\(k\)</span> (from compilations by material) and <span class="math inline">\(h\)</span> (from published correlations and fluid properties) values and combine them as in <a href="#eq-series-overall-u1" class="quarto-xref">Equation&nbsp;<span>4.20</span></a> to estimate <span class="math inline">\(U\)</span>. Or, we could use some measurements of heat flow and temperature to estimate best-fit or empirical parameter values. Really the two approaches are not completely separate. After all, the starting parameters from the theoretical approach often originally come from fitting to measurements. For this book and course, we’ll add (3) from guesses. Using a very rough estimate based on values in <a href="appx_parameter_values.html" class="quarto-xref"><span>Appendix F</span></a> combined with a gut feeling is perfectly acceptable <em>for this course</em> and for the examples and problems in this book.</p>
+<p>In modeling, there are two ways to get parameter values: from 1) theory or 2) measurements. For example, for the system in <a href="#fig-composite-wall2" class="quarto-xref">Figure&nbsp;<span>4.9</span></a> we could use individual <span class="math inline">\(k\)</span> (from compilations by material) and <span class="math inline">\(h\)</span> (from published correlations and fluid properties) values and combine them as in <a href="#eq-series-overall-u1" class="quarto-xref">Equation&nbsp;<span>4.21</span></a> to estimate <span class="math inline">\(U\)</span>. Or, we could use some measurements of heat flow and temperature to estimate best-fit or empirical parameter values. Really the two approaches are not completely separate. After all, the starting parameters from the theoretical approach often originally come from fitting to measurements. For this book and course, we’ll add 3) from guesses. Using a very rough estimate based on values in <a href="appx_parameter_values.html" class="quarto-xref"><span>Appendix F</span></a> combined with a gut feeling is perfectly acceptable <em>for this course</em> and for the examples and problems in this book.</p>
 </section>
 <section id="sec-heat-link" class="level2" data-number="4.7">
-<h2 data-number="4.7" class="anchored" data-anchor-id="sec-heat-link"><span class="header-section-number">4.7</span> Linking equation</h2>
+<h2 data-number="4.7" class="anchored" data-anchor-id="sec-heat-link"><span class="header-section-number">4.7</span> Linking equations</h2>
 <p>The constitutive equations given above describe the rate of heat energy transfer. Ultimately it is typically temperature we are interested in modeling. And furthermore, it is temperature that determines the rate of transfer. So we need a way of linking heat energy to temperature. This was done above in <a href="#sec-advection" class="quarto-xref"><span>Section 4.2</span></a>, but in general is applicable to any heat transfer model. In general,</p>
 <p><span id="eq-cp-def"><span class="math display">\[
 \dot{Q} = \frac{dT}{dt} \cdot c_p \cdot M,
-\tag{4.22}\]</span></span></p>
-<p>where <span class="math inline">\(M =\)</span> the material mass and <span class="math inline">\(c_p =\)</span> specific heat capacity.</p>
-</section>
-<section id="phase-changes" class="level2" data-number="4.8">
-<h2 data-number="4.8" class="anchored" data-anchor-id="phase-changes"><span class="header-section-number">4.8</span> Phase changes</h2>
-<p>If a substance remains in a single phase, any change in thermal energy causes a change in temperature following <a href="#eq-cp-def" class="quarto-xref">Equation&nbsp;<span>4.22</span></a>. But when a change, between solid, liquid, and gas, occurs, energy is consumed or released in the phase change, and does not show up in temperature. For example, a cube of ice can absorb a large quantity of heat energy without any noticeable change in temperature if it is undergoing melting, a phase change. The heat energy has not disappeared though–the laws of thermodynamics don’t allow that! Instead we have a conversion between <em>sensible</em> and <em>latent</em> heat energy.</p>
-<p>In systems with phase changes, it is necessary to track one or more specific phases as a state variable. We can think of the equations that relate energy transfer and phase change as linking equations. There are only two important parameters, which are physical constants: the heat of fusion <span class="math inline">\(h_f\)</span> and heat of vaporization <span class="math inline">\(h_v\)</span>, both typically <span class="math inline">\(\kJpkg\)</span> or <span class="math inline">\(\Jpg\)</span>. These constants directly link the mass-based rate of phase change to energy flow.</p>
-<p><span id="eq-hf-link"><span class="math display">\[
-\dot{m_m} = \frac{\dot{Q}} {h_f}
 \tag{4.23}\]</span></span></p>
-<p><span id="eq-hv-link"><span class="math display">\[
-\dot{m_v} = \frac{\dot{Q}} {h_v}
+<p>where <span class="math inline">\(M =\)</span> the material mass and <span class="math inline">\(c_p =\)</span> specific heat capacity.</p>
+<p>If a substance remains in a single phase, any change in thermal energy causes a change in temperature following <a href="#eq-cp-def" class="quarto-xref">Equation&nbsp;<span>4.23</span></a>. But when a change, between solid, liquid, and gas, occurs, energy is consumed or released in the phase change, and does not show up in temperature. For example, a cube of ice can absorb a large quantity of heat energy without any noticeable change in temperature if it is undergoing melting, a phase change. The heat energy has not disappeared though–the laws of thermodynamics don’t allow that! Instead we have a conversion between <em>sensible</em> and <em>latent</em> heat energy.</p>
+<p>In systems with phase changes, it is necessary to track one or more specific phases as a state variable. We can think of the equations that relate energy transfer and phase change as linking equations. There are only two important parameters, which are physical constants: the heat of fusion <span class="math inline">\(h_f\)</span> and heat of vaporization <span class="math inline">\(h_v\)</span>, both typically <span class="math inline">\(\kJpkg\)</span> or <span class="math inline">\(\Jpg\)</span>. These constants directly link the mass-based rate of phase change to energy flow:</p>
+<p><span id="eq-hf-link"><span class="math display">\[
+\dot{m}_m = \frac{\dot{Q}} {h_f},
 \tag{4.24}\]</span></span></p>
+<p><span id="eq-hv-link"><span class="math display">\[
+\dot{m}_v = \frac{\dot{Q}} {h_v},
+\tag{4.25}\]</span></span></p>
+<p>where</p>
 <!-- Specific heat capacity links energy and temperature. -->
 </section>
-<section id="example-lumped-parameter-model-with-multiple-modes" class="level2" data-number="4.9">
-<h2 data-number="4.9" class="anchored" data-anchor-id="example-lumped-parameter-model-with-multiple-modes"><span class="header-section-number">4.9</span> Example: lumped-parameter model with multiple modes</h2>
-<p>Let’s extend our coffee model as an application of some of the concepts explored in this chapter. <a href="#fig-coffee2modes" class="quarto-xref">Figure&nbsp;<span>4.10</span></a> is a revised model sketch. Now we will explicitly consider heat loss through two different routes: the exposed coffee surface (through two fluid layers) and the mug sides (two fluids and one solid wall). We have a choice of using more fundamental parameter inputs or more empirical. The more fundamental approach would be to include parameters for liquid phase convection coefficients, conductivity and thickness of the cup itself, and convection coefficients for the air, and calculate both <span class="math inline">\(U\)</span> parameters internally. We’ll go with the more empirical route, where only <span class="math inline">\(U_t\)</span> (t for top) and <span class="math inline">\(U_s\)</span> (s for side) are specified as inputs. This is done in the module <code>cooling_mods_2m.py</code> (<code>2m</code> is for “2 modes”).</p>
+<section id="example-lumped-parameter-model-with-multiple-modes" class="level2" data-number="4.8">
+<h2 data-number="4.8" class="anchored" data-anchor-id="example-lumped-parameter-model-with-multiple-modes"><span class="header-section-number">4.8</span> Example: lumped-parameter model with multiple modes</h2>
+<p>Let’s extend our coffee model as an application of some of the concepts explored in this chapter. <a href="#fig-coffee2modes" class="quarto-xref">Figure&nbsp;<span>4.10</span></a> is a revised model sketch. Now we will explicitly consider heat loss through two different routes: the exposed coffee surface (through two fluid layers: coffe and air) and the mug sides (two fluids and one solid wall). We have a choice of using more fundamental parameter inputs or more empirical. The more fundamental approach would be to include parameters for liquid phase convection coefficients, conductivity and thickness of the cup itself, and convection coefficients for the air, and calculate both <span class="math inline">\(U\)</span> parameters internally. We’ll go with the more empirical route, where only <span class="math inline">\(U_t\)</span> (t for top) and <span class="math inline">\(U_s\)</span> (s for side) are specified as inputs. This is done in the module <code>cooling_mods_2m.py</code> (<code>2m</code> is for “2 modes”). Of course, they could be calculated from the same inputs externally.</p>
 <div id="fig-coffee2modes" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Extended coffee model sketch.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-coffee2modes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -690,8 +692,11 @@ Figure&nbsp;4.10: Extended coffee model.
 </figcaption>
 </figure>
 </div>
-<div id="76c8fa42" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>cooling_mods_2m.py</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-filename="cooling_mods_2m.py"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">File: cooling_mods_2m.py</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">Authors: Sasha D. Hafner and Frederik R. Dalby</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">Course: Modelling 2026</span></span>
@@ -759,10 +764,12 @@ Figure&nbsp;4.10: Extended coffee model.
 <span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
 <span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>        <span class="st">'times'</span>: res.t,</span>
 <span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>        <span class="st">'T_coffee'</span>: res.y[<span class="dv">0</span>, :],</span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>    }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Then, to use the model, we first <em>import</em> the module we defined and then run the function, like this:</p>
-<div id="6e6c0d6c" class="cell" data-execution_count="2">
+<div id="274c9b18" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">File: cool_pred_2m.py</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">Authors: Sasha D. Hafner and Frederik R. Dalby</span></span>
@@ -797,7 +804,7 @@ Figure&nbsp;4.10: Extended coffee model.
        26.88395357, 25.54456378, 24.46448286])}</code></pre>
 </div>
 </div>
-<div id="cell-fig-coffee-preds5" class="cell" data-execution_count="3">
+<div id="cell-fig-coffee-preds5" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>plt.plot(pred[<span class="st">'times'</span>] <span class="op">/</span> <span class="dv">60</span>, pred[<span class="st">'T_coffee'</span>])</span>
