@@ -442,7 +442,7 @@ plt.show()
 
 1. You have a fermenter that is heated to around 45 $\degC$ using a water jacket. 
    The water flowing into the water jacket has a constant temperature of 50 $\degC$.
-   Develop and implement a steady-state model to predict fermenter temperature based on heating water flow and relevant parameters and system characteristics.
+   Develop and implement a steady-state model to predict fermenter temperature based on heating water temperature and relevant parameters and system characteristics.
 
 2. How long will it take for an ice cube to melt once it is exposed to room temperature air?
    Follow the model formulation steps we covered in class to develop a model to simulate the processes.
