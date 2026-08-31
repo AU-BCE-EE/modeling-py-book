@@ -206,7 +206,7 @@ how we can reduce complexity. This will primarily be done by eliminating
 dimensions that are not important for the problem and by including only
 modes of transfer that is relevant to our problem.
 
-##example case##
+**example case**
 
 Lets continue with the example of water being pumped through a pipe in
 @fig-pipedisc and assign it a cross sectional area, $A$, of $0.02~m^2$ a

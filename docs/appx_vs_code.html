@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.35">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,10 +12,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -76,10 +79,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-46f66b053e56abd73bb6e954d61a315b.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-ab693432cab16cfdbb00b7627394bce9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-631496449bf32ff9b0bb69a6bfd9195d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -422,7 +425,7 @@ MathJax = {
 <section id="python-libraries" class="level3" data-number="D.2.4">
 <h3 data-number="D.2.4" class="anchored" data-anchor-id="python-libraries"><span class="header-section-number">D.2.4</span> Python libraries</h3>
 <p>In this course you will need a few external Python libraries (collections of modules, which provide the functions that we will need). You can install them all by opening up a new terminal window (PowerShell), either with “Terminal” -&gt; “New Terminal” or the keyboard shortcut (<code>Ctrl + Shift + æ</code> for me) and running the following command:</p>
-<div id="1663f032" class="cell" data-execution_count="1">
+<div id="724672d4" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>python <span class="op">-</span>m pip install numpy scipy matplotlib pandas</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
@@ -475,7 +478,7 @@ MathJax = {
 <h2 data-number="D.7" class="anchored" data-anchor-id="create-and-edit-a-script-in-vs-code"><span class="header-section-number">D.7</span> Create and edit a script in VS Code</h2>
 <p>A <em>script</em> is just a text file with commands in Python or some other computer language. Python scripts are typically named with the <code>.py</code> extension, e.g., <code>simple1.py</code>.</p>
 <p>In VS Code you can create a new script with the <code>File</code> menu by selecting <code>New File</code> or <code>New Text File</code> (or using the keyboard shortcuts that are shown in the menu, e.g., <code>Ctrl + n</code>). You can now edit the file using the feature-rich script editor. Open a new file and add some content, e.g.,</p>
-<div id="ab22774c" class="cell" data-execution_count="2">
+<div id="1c1b3685" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">file: simple1.py</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">author: Your Name</span></span>
@@ -501,7 +504,7 @@ MathJax = {
 <p>Under the <code>Terminal</code> menu select <code>New terminal</code>. You should then see something like this at the bottom of your VS Code window:</p>
 <p><img src="images-vs-code/be613d51-ce46-4b61-a806-ea1f0f6e87d6.png" class="img-fluid" width="1420"></p>
 <p>Now you can tell that this terminal pane is running PowerShell (right?). And that is exactly what we need to run the <code>simple1.py</code> script in Python in <em>script mode</em>. To do that, click in the terminal pane and enter this command:</p>
-<div id="6c156bdb" class="cell" data-execution_count="3">
+<div id="8afce08a" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>python simple1.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>You should see this:</p>
@@ -523,7 +526,7 @@ MathJax = {
 <p><img src="images-vs-code/5f602ae6-de5d-437b-8c92-a2d331b6efb2.png" class="img-fluid" width="1387"></p>
 <p>There is a keyboard shortcut for the <code>Run in Python</code> button: <code>Ctrl + F5</code> (or, on a laptop, <code>Fn + Ctrl + F5</code>). The first time you use it you will have to select a “debugger”, and the recommendation is fine. (It won’t actually be used unless you just hit <code>F5</code> without the <code>Ctrl</code> key.)</p>
 <p>What if you wrote another script with only this line:</p>
-<div id="e7c24b58" class="cell" data-execution_count="4">
+<div id="94a7713c" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Would it in fact print the value of <code>x</code>, calculated in the <code>simple1.py</code> script, if you ran first <code>script1.py</code> and then <code>script2.py</code> in script mode? We can try to prove a point!</p>
