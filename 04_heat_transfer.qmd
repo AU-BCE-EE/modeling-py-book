@@ -375,7 +375,7 @@ $$
 \dot{m}_v = \frac{\dot{Q}} {h_v}, 
 $${#eq-hv-link}
 
-where $\dot{m}_m=$ the mass-based rate of melting ($\gps$), $\dot{m}_m=$ the mass-based rate of vaporization (evaporation) ($\gps$), $\dot{Q}=$ the rate of energy flow into the melting material at its freezing point (W), $h_f=$ heat of fusion ($\Jpg$), and $h_v=$ heat of vaporization ($\Jpg$).
+where $\dot{m}_m=$ the mass-based rate of melting ($\gps$), $\dot{m}_v=$ the mass-based rate of vaporization (evaporation) ($\gps$), $\dot{Q}=$ the rate of energy flow into the melting material at its freezing point (W), $h_f=$ heat of fusion ($\Jpg$), and $h_v=$ heat of vaporization ($\Jpg$).
 
 ## Example: lumped-parameter model with multiple modes
 
