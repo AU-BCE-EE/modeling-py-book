@@ -233,11 +233,14 @@ For a fixed wall thickness, resistance is inversely proportional to thermal cond
 So the analog to @eq-fouriers-law2 is @eq-resistance1:
 
 $$
-q = \frac{\Delta T}{R}.
+q = - \frac{\Delta T}{R}.
 $${#eq-resistance1}
 
 Note that the term resistance and the symbol can be defined for total heat flow $\dot{Q}$ instead of heat flux $q$ in other sources.
 In @sec-series, we will see how the resistance approach can be used to combine resistance from multiple layers in a *composite wall*, even including convection.
+
+How you calculate $\Delta T$ and whether your equation needs a negative sign depends on the convention you use in your model: Does a positive energy flow term in your model mean that heat is flowing into or out of the domain?
+Pick some fixed temperatures, or imagine a difference, and check, mentally!
 
 ## Convection and Newton's law of cooling {#sec-newtons-law}
 
@@ -372,9 +375,7 @@ $$
 \dot{m}_v = \frac{\dot{Q}} {h_v}, 
 $${#eq-hv-link}
 
-where
-
-<!-- Specific heat capacity links energy and temperature. -->
+where $\dot{m}_m=$ the mass-based rate of melting ($\gps$), $\dot{m}_m=$ the mass-based rate of vaporization (evaporation) ($\gps$), $\dot{Q}=$ the rate of energy flow into the melting material at its freezing point (W), $h_f=$ heat of fusion ($\Jpg$), and $h_v=$ heat of vaporization ($\Jpg$).
 
 ## Example: lumped-parameter model with multiple modes
 
