@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.24">
+<meta name="generator" content="quarto-1.9.35">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>6&nbsp; Chemical reactions and microbiology – An Introduction to Modeling with Python</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -59,7 +62,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -89,15 +91,14 @@ div.csl-indent {
 <link href="./05_mass_transfer.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-46f66b053e56abd73bb6e954d61a315b.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-03fb02fc132b93ec4eef7e9886d99257.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-ab693432cab16cfdbb00b7627394bce9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -164,7 +165,7 @@ MathJax = {
 </script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -217,9 +218,7 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
-      <a href="./index.html" class="sidebar-logo-link">
-      </a>
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">An Introduction to Modeling with Python</a> 
     </div>
@@ -385,14 +384,16 @@ window.Quarto = {
   <li><a href="#stoichiometry" id="toc-stoichiometry" class="nav-link active" data-scroll-target="#stoichiometry"><span class="header-section-number">6.1</span> Stoichiometry</a></li>
   <li><a href="#sec-rxn-rates" id="toc-sec-rxn-rates" class="nav-link" data-scroll-target="#sec-rxn-rates"><span class="header-section-number">6.2</span> Reaction rates</a></li>
   <li><a href="#equilibrium-reactions" id="toc-equilibrium-reactions" class="nav-link" data-scroll-target="#equilibrium-reactions"><span class="header-section-number">6.3</span> Equilibrium reactions</a></li>
-  <li><a href="#ammonia-equilibrium" id="toc-ammonia-equilibrium" class="nav-link" data-scroll-target="#ammonia-equilibrium"><span class="header-section-number">6.4</span> Ammonia equilibrium</a></li>
-  <li><a href="#matrix-operations" id="toc-matrix-operations" class="nav-link" data-scroll-target="#matrix-operations"><span class="header-section-number">6.5</span> Matrix operations</a></li>
-  <li><a href="#microbiology" id="toc-microbiology" class="nav-link" data-scroll-target="#microbiology"><span class="header-section-number">6.6</span> Microbiology</a>
+  <li><a href="#sec-rxn-ex1" id="toc-sec-rxn-ex1" class="nav-link" data-scroll-target="#sec-rxn-ex1"><span class="header-section-number">6.4</span> Reaction implementation</a></li>
+  <li><a href="#ammonia-equilibrium" id="toc-ammonia-equilibrium" class="nav-link" data-scroll-target="#ammonia-equilibrium"><span class="header-section-number">6.5</span> Ammonia equilibrium</a></li>
+  <li><a href="#matrix-operations" id="toc-matrix-operations" class="nav-link" data-scroll-target="#matrix-operations"><span class="header-section-number">6.6</span> Matrix operations</a></li>
+  <li><a href="#microbiology" id="toc-microbiology" class="nav-link" data-scroll-target="#microbiology"><span class="header-section-number">6.7</span> Microbiology</a>
   <ul class="collapse">
-  <li><a href="#stoichiometry-1" id="toc-stoichiometry-1" class="nav-link" data-scroll-target="#stoichiometry-1"><span class="header-section-number">6.6.1</span> Stoichiometry</a></li>
-  <li><a href="#kinetics" id="toc-kinetics" class="nav-link" data-scroll-target="#kinetics"><span class="header-section-number">6.6.2</span> Kinetics</a></li>
+  <li><a href="#sec-mic-stoich" id="toc-sec-mic-stoich" class="nav-link" data-scroll-target="#sec-mic-stoich"><span class="header-section-number">6.7.1</span> Microbial stoichiometry</a></li>
+  <li><a href="#sec-mic-kin" id="toc-sec-mic-kin" class="nav-link" data-scroll-target="#sec-mic-kin"><span class="header-section-number">6.7.2</span> Microbial kinetics</a></li>
+  <li><a href="#microbial-growth" id="toc-microbial-growth" class="nav-link" data-scroll-target="#microbial-growth"><span class="header-section-number">6.7.3</span> Microbial growth</a></li>
   </ul></li>
-  <li><a href="#problems" id="toc-problems" class="nav-link" data-scroll-target="#problems"><span class="header-section-number">6.7</span> Problems</a></li>
+  <li><a href="#problems" id="toc-problems" class="nav-link" data-scroll-target="#problems"><span class="header-section-number">6.8</span> Problems</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
@@ -422,7 +423,7 @@ window.Quarto = {
 <p>Chemical reactions, including those carried out by microorganisms, are important in innumerable processes in both engineered and natural systems. This chapter will scratch the surface, barely, of the topics.</p>
 <section id="stoichiometry" class="level2" data-number="6.1">
 <h2 data-number="6.1" class="anchored" data-anchor-id="stoichiometry"><span class="header-section-number">6.1</span> Stoichiometry</h2>
-<p>Chemical <em>stoichiometry</em> is about the coefficients that accompany the reactants and products in a balanced chemical reaction. For example, the simple organic compound urea (a waste product in mammal urine) is hydrolyzed like this:</p>
+<p>Chemical <em>stoichiometry</em> is all about the coefficients that accompany the reactants and products in a balanced chemical reaction. Stoichiometric coefficients indicate the relative quantities of chemical substances that are consumed or produced in a reaction. For example, the simple organic compound urea (a waste product in mammal urine) is hydrolyzed like this:</p>
 <p><span id="eq-urea1"><span class="math display">\[
 \ce{CO(NH2)2 + H2O -&gt; 2NH3 + CO2}
 \tag{6.1}\]</span></span></p>
@@ -448,7 +449,7 @@ window.Quarto = {
 </section>
 <section id="sec-rxn-rates" class="level2" data-number="6.2">
 <h2 data-number="6.2" class="anchored" data-anchor-id="sec-rxn-rates"><span class="header-section-number">6.2</span> Reaction rates</h2>
-<p>The constitutive equation for a chemical reaction must quantify its <em>rate</em>, or how fast it proceeds, e.g., <span class="math inline">\(\molps\)</span>, <span class="math inline">\(\molpmcps\)</span>, or on a mass basis, e.g., <span class="math inline">\(\gpmcps\)</span>. The term <em>kinetics</em> is used to describe reaction rates. Here we will look at only two simple, and to some degree, idealized, cases: first-order reactions and second-order reactions.</p>
+<p>The constitutive equation for a chemical reaction must quantify its <em>rate</em>, or how fast it proceeds, e.g., <span class="math inline">\(\molps\)</span>, <span class="math inline">\(\molpmcps\)</span>, or on a mass basis, e.g., <span class="math inline">\(\gpmcps\)</span>. The term <em>kinetics</em> is used to describe reaction rates. Here we will look at only two simple, and to some degree, idealized, cases: first-order reactions and second-order reactions. Below in <a href="#sec-mic-kin" class="quarto-xref"><span>Section 6.7.2</span></a> we’ll consider a third approach.</p>
 <p>A reaction that follows first-order kinetics has a rate that is proportional to the quantity of reactant present. So that means:</p>
 <p><span id="eq-fom1"><span class="math display">\[
 r_m = \frac{dM}{dt} = - k \cdot M,
@@ -458,7 +459,7 @@ r_m = \frac{dM}{dt} = - k \cdot M,
 r_c = \frac{dc}{dt} = - k \cdot c,
 \tag{6.3}\]</span></span></p>
 <p>for concentration. The inclusion of the derivatives in <a href="#eq-fom1" class="quarto-xref">Equation&nbsp;<span>6.2</span></a> and <a href="#eq-fom2" class="quarto-xref">Equation&nbsp;<span>6.3</span></a> only makes sense if the reaction is the <em>only</em> process affecting the quantity of reactant, i.e., a batch system with no addition of non-reaction removal of reactant. The <span class="math inline">\(k\)</span> is the first-order reaction rate constant with dimensions <span class="math inline">\(\text{T}^{-1}\)</span>. It is not necessarily constant, and depends at least on temperature for most chemical reactions. But its value does not change as the reaction proceeds, at least not for a true first-order reaction. A classic example of a first-order reaction is radioactive decay. Many other chemical reactions are not truly first-order, but come close enough for modelling purposes. Or, more honestly, an accurate description of the relevant kinetics is not available or too complicated, and a first-order model is assumed to be close enough! Even where the concentration of a reactant seems to follow first-order kinetics over time, the true rate often depends on other factors, e.g., the constant concentration of another reactant or competitor, or the solution pH, for example, These effects can be important when applying the model–the rate “constant” from one system may not apply directly to another.</p>
-<p>Thinking about math and implementation, the rate of a simple first-order reaction can be described analytically with the exponential model (see <a href="03_solving.html#sec-expmodel" class="quarto-xref"><span>Section 3.3</span></a>). You could have (should have, really!) realized this just from the form of <a href="#eq-fom1" class="quarto-xref">Equation&nbsp;<span>6.2</span></a> or <a href="#eq-fom2" class="quarto-xref">Equation&nbsp;<span>6.3</span></a>! Compare <a href="#eq-fom2" class="quarto-xref">Equation&nbsp;<span>6.3</span></a> to <a href="03_solving.html#eq-exp-ode" class="quarto-xref">Equation&nbsp;<span>3.1</span></a>. What specific variables or parameters go in for the <span class="math inline">\(x\)</span> and <span class="math inline">\(\lambda\)</span> in <a href="03_solving.html#eq-exp-ode" class="quarto-xref">Equation&nbsp;<span>3.1</span></a>? Well, <span class="math inline">\(x = c\)</span> and <span class="math inline">\(\lambda = -k\)</span>. Note the minus sign! Now take a look at <a href="03_solving.html#eq-exp-solution" class="quarto-xref">Equation&nbsp;<span>3.2</span></a> and plug these in. That gives:</p>
+<p>Thinking about math and implementation, the rate of a simple first-order reaction can be described analytically with the exponential model (see <a href="03_solving.html#sec-expmodel" class="quarto-xref"><span>Section 3.3</span></a>). You could have (should have, really) realized this just from the form of <a href="#eq-fom1" class="quarto-xref">Equation&nbsp;<span>6.2</span></a> or <a href="#eq-fom2" class="quarto-xref">Equation&nbsp;<span>6.3</span></a>! Compare <a href="#eq-fom2" class="quarto-xref">Equation&nbsp;<span>6.3</span></a> to <a href="03_solving.html#eq-exp-ode" class="quarto-xref">Equation&nbsp;<span>3.1</span></a>. What specific variables or parameters go in for the <span class="math inline">\(x\)</span> and <span class="math inline">\(\lambda\)</span> in <a href="03_solving.html#eq-exp-ode" class="quarto-xref">Equation&nbsp;<span>3.1</span></a>? Well, <span class="math inline">\(x = c\)</span> and <span class="math inline">\(\lambda = -k\)</span>. Note the minus sign. Now take a look at <a href="03_solving.html#eq-exp-solution" class="quarto-xref">Equation&nbsp;<span>3.2</span></a> and plug these in. That gives:</p>
 <p><span id="eq-fom-solution1"><span class="math display">\[
 c = c_0 \cdot e^{-k \cdot t}.
 \tag{6.4}\]</span></span></p>
@@ -468,9 +469,9 @@ c = c_0 \cdot e^{-k \cdot t}.
 <p><span id="eq-som1"><span class="math display">\[
 r_c = \frac{dc}{dt} = - k \cdot c_1 \cdot c_2,
 \tag{6.5}\]</span></span></p>
-<p>where <span class="math inline">\(c_1\)</span> is the concentration of the first reactant and <span class="math inline">\(c_2\)</span> the second one. While there are analytical solutions for some second-order reaction scenarios, we won’t cover them (you can read more <a href="https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Supplemental_Modules_(Physical_and_Theoretical_Chemistry)/Kinetics/02%3A_Reaction_Rates/2.08%3A_Second-Order_Reactions">here</a>). But <a href="#eq-som1" class="quarto-xref">Equation&nbsp;<span>6.5</span></a> can be dropped into a numerical model easily!</p>
+<p>where <span class="math inline">\(c_1\)</span> is the concentration of the first reactant and <span class="math inline">\(c_2\)</span> the second one. While there are analytical solutions for some second-order reaction scenarios, we won’t cover them (you can read more <a href="https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Supplemental_Modules_(Physical_and_Theoretical_Chemistry)/Kinetics/02%3A_Reaction_Rates/2.08%3A_Second-Order_Reactions">here</a>). But <a href="#eq-som1" class="quarto-xref">Equation&nbsp;<span>6.5</span></a> can be dropped into a numerical model easily.</p>
 <p>You can find some guidance on determining reaction rate constant values in <a href="appx_parameter_values.html" class="quarto-xref"><span>Appendix F</span></a>.</p>
-<p>Here is a Python example. . .</p>
+<p>We’ll present an example in <a href="#sec-rxn-ex1" class="quarto-xref"><span>Section 6.4</span></a>.</p>
 </section>
 <section id="equilibrium-reactions" class="level2" data-number="6.3">
 <h2 data-number="6.3" class="anchored" data-anchor-id="equilibrium-reactions"><span class="header-section-number">6.3</span> Equilibrium reactions</h2>
@@ -481,7 +482,7 @@ r_c = \frac{dc}{dt} = - k \cdot c_1 \cdot c_2,
 <li><span class="math inline">\(\ce{CO2(aq)}\)</span> is a what you get when <span class="math inline">\(\ce{CO2}\)</span> dissolves in water–it is an uncharged solute surrounded by water molecules,</li>
 <li><span class="math inline">\(\ce{H2CO3}\)</span> is called carbonic acid, and is formed when <span class="math inline">\(\ce{CO2(aq)}\)</span> reacts with water in a hydration reaction,</li>
 <li><span class="math inline">\(\ce{H2CO3*}\)</span> is not actually a chemical species, but the sum of <span class="math inline">\(\ce{CO2(aq)}\)</span> and <span class="math inline">\(\ce{H2CO3}\)</span>, used because it is difficult to measure the two separately,</li>
-<li><span class="math inline">\(\ce{HCO3-}\)</span> is bicarbonate, and is the most important buffer component in some systems, and</li>
+<li><span class="math inline">\(\ce{HCO3-}\)</span> is bicarbonate, and is the most important buffer component in many natural and some engineered systems, and</li>
 <li><span class="math inline">\(\ce{CO3^2-}\)</span> is carbonate.</li>
 </ul>
 <p>Chemical speciation models are used to determine the concentration of specific chemical species. A fundamental concept here is that the <em>mass action expression</em> or <em>reaction quotient</em> takes on a specific numeric value at equilibrium. For example, let’s look at a reaction between only two of the carbonate system species:</p>
@@ -492,35 +493,155 @@ r_c = \frac{dc}{dt} = - k \cdot c_1 \cdot c_2,
 <p><span id="eq-carb-rq1"><span class="math display">\[
 \frac{c_{\ce{HCO3-}} \cdot c_{\ce{H+}}}{c_{\ce{H2CO3^*}}},
 \tag{6.7}\]</span></span></p>
-<p>where <span class="math inline">\(c=\)</span> molar or molal concentration, i.e., moles of species per L of water or moles per kg of water. At equilibrium, the numeric value of that reaction quotient, <a href="#eq-carb-rq1" class="quarto-xref">Equation&nbsp;<span>6.7</span></a>, is know: at 15<span class="math inline">\(\degC\)</span> it is <span class="math inline">\(3.80 \cdot 10^{-7}\)</span> (<span class="citation" data-cites="Snoeyink1980">Snoeyink (<a href="#ref-Snoeyink1980" role="doc-biblioref">1980</a>)</span>: p.&nbsp;157). Actually, except for very dilute solutions, for accurate results a correction is needed for interactions between ions, but the use of concentrations can still give decent approximate values. See <span class="citation" data-cites="Snoeyink1980">Snoeyink (<a href="#ref-Snoeyink1980" role="doc-biblioref">1980</a>)</span> for more information on chemical activity and ionic strength. But typically, because the value of constants vary by orders of magnitude, these constants are expressed as the negative logarithm (base 10) and we’ll see <span class="math inline">\(pK_a\)</span>. So here, <span class="math inline">\(pK_a = 6.42\)</span>. The numeric value is called the <em>equilibrium constant</em></p>
+<p>where <span class="math inline">\(c=\)</span> molar or molal concentration, i.e., moles of species per L of water or moles per kg of water. At equilibrium, the numeric value of that reaction quotient, <a href="#eq-carb-rq1" class="quarto-xref">Equation&nbsp;<span>6.7</span></a>, is know: at 15<span class="math inline">\(\degC\)</span> it is <span class="math inline">\(3.80 \cdot 10^{-7}\)</span> (<span class="citation" data-cites="Snoeyink1980">Snoeyink (<a href="#ref-Snoeyink1980" role="doc-biblioref">1980</a>)</span>: p.&nbsp;157). Actually, except for very dilute solutions, for accurate results a correction is needed for interactions between ions, but the use of concentrations can still give decent approximate values. See <span class="citation" data-cites="Snoeyink1980">Snoeyink (<a href="#ref-Snoeyink1980" role="doc-biblioref">1980</a>)</span> for more information on chemical activity and ionic strength. Typically, because the value of constants vary by orders of magnitude, these constants are expressed as the negative logarithm (base 10) and we’ll see <span class="math inline">\(pK_a\)</span>. So here, <span class="math inline">\(pK_a = 6.42\)</span>. The numeric value is called the <em>equilibrium constant</em>.</p>
 <p>So, if we know the concentration of <span class="math inline">\(\ce{H2CO3^*}\)</span> and <span class="math inline">\(\ce{H^+}\)</span> we can calculate the concentration of bicarbonate <span class="math inline">\(\ce{HCO3-}\)</span> using the equilibrium constant. The hydrogen ion (or “proton”, because that it what it is) concentration is commonly take from pH, i.e.,</p>
 <p><span id="eq-pH-def"><span class="math display">\[
 p\text{H} = - log_{10}(c_{H^+}).
 \tag{6.8}\]</span></span></p>
-<p>Even better, if we could use other, independent, information, we can solve for all species concentrations, including <span class="math inline">\(\ce{H+}\)</span>, which means we could calculate pH. We can use element balance (commonly H balance) or charge balance for that other information. The programming might be a bit much for this course, so we will include an example in an appendix . . .</p>
+<p>Even better, if we could use other, independent, information, we can solve for all species concentrations, including <span class="math inline">\(\ce{H+}\)</span>, which means we could calculate pH. We can use element balance (commonly H balance) or charge balance for that other information. The programming might be a bit much for this course though.</p>
 </section>
-<section id="ammonia-equilibrium" class="level2" data-number="6.4">
-<h2 data-number="6.4" class="anchored" data-anchor-id="ammonia-equilibrium"><span class="header-section-number">6.4</span> Ammonia equilibrium</h2>
+<section id="sec-rxn-ex1" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="sec-rxn-ex1"><span class="header-section-number">6.4</span> Reaction implementation</h2>
+<p>Let’s look at the implementation of a kintic model for carbon dioxide hydration. We’ll consider only two reactions:</p>
+<p><span id="eq-hyd-f"><span class="math display">\[
+\ce{CO2 (aq) + H2O -&gt; H2CO3}
+\tag{6.9}\]</span></span></p>
+<p>and</p>
+<p><span id="eq-hyd-r"><span class="math display">\[
+\ce{H2CO3 -&gt; CO2 (aq) + H2O}.
+\tag{6.10}\]</span></span></p>
+<p>Of course these are the same reaction, just written in different directions. We can treat both of them as first-order reactions. Assuming water is present at a vastly higher concentration than either of the inorganic carbon species (this is typically the case for water chemistry problems), we can ignore it, and then have two state variables, the concentrations of <span class="math inline">\(\ce{CO2 (aq)}\)</span> and <span class="math inline">\(\ce{H2CO3}\)</span>. Let’s implement this model.</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>hydration_mods.py</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-filename="hydration_mods.py"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">File: hydration_mods.py</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">Author: Sasha D. Hafner</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">Class: Modelling 2026</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">Description:</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">    A simple kinetic model for carbon dioxide hydration.</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> solve_ivp</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> co2_hydration(cco2, ch2co3, rf, rr, times):</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">    Dynamic model of dissolved carbon dioxide hydration.</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co">    c_co2 : float</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co">        Initial dissolved carbon dioxide concentration (mol/kg)</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co">    rf : float</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co">        First-order forward reaction rate constant (1/s)</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co">    rr : float</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co">        First-order reverse reaction rate constant (1/s)</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co">    times : array-like</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co">        Times for evaluation</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="co">    -------</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="co">    dictionary with times and concentrations </span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Define rates function</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> rates(t, conc):</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>        frate <span class="op">=</span> conc[<span class="dv">0</span>] <span class="op">*</span> rf</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>        rrate <span class="op">=</span> conc[<span class="dv">1</span>] <span class="op">*</span> rr</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>        dco2dt <span class="op">=</span> <span class="op">-</span> frate <span class="op">+</span> rrate </span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>        dh2co3dt <span class="op">=</span> <span class="op">-</span> rrate <span class="op">+</span> frate</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> [dco2dt, dh2co3dt]</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>    res <span class="op">=</span> solve_ivp(</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>        rates, </span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>        t_span <span class="op">=</span> [<span class="bu">min</span>(times), <span class="bu">max</span>(times)], </span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>        y0 <span class="op">=</span> [cco2, ch2co3], </span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>        t_eval <span class="op">=</span> times</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Return user-friendly results object (dictionary here)</span></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>    out <span class="op">=</span> {</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>        <span class="st">"t"</span>: res.t, </span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>        <span class="st">"co2"</span>: res.y[<span class="dv">0</span>, :],</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>        <span class="st">"h2co3"</span>: res.y[<span class="dv">1</span>, :],</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> out</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="b8408e71" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> importlib <span class="im">import</span> <span class="bu">reload</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> hydration_mods <span class="im">as</span> hm</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="bu">reload</span>(hm)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> hm.co2_hydration(<span class="fl">0.2</span>, <span class="fl">0.</span>, rf<span class="op">=</span><span class="fl">0.03</span>, rr<span class="op">=</span><span class="dv">20</span>, times<span class="op">=</span>np.linspace(<span class="dv">0</span>, <span class="dv">300</span>, <span class="dv">100</span>))</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>plt.plot(res[<span class="st">'t'</span>], res[<span class="st">'co2'</span>], label <span class="op">=</span> <span class="st">'CO2'</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>plt.plot(res[<span class="st">'t'</span>], res[<span class="st">'h2co3'</span>], label <span class="op">=</span> <span class="st">'H2CO3'</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>plt.legend()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_reactions_microbiology_files/figure-html/cell-2-output-1.png" width="587" height="411" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>That is not very interesting! Do you see what is happening? Look at the rate constants and think about an equilibrium constant.</p>
+<div id="91e088d8" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> importlib <span class="im">import</span> <span class="bu">reload</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> hydration_mods <span class="im">as</span> hm</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="bu">reload</span>(hm)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> hm.co2_hydration(<span class="fl">0.</span>, <span class="fl">0.2</span>, rf<span class="op">=</span><span class="fl">0.03</span>, rr<span class="op">=</span><span class="dv">20</span>, times<span class="op">=</span>np.linspace(<span class="dv">0</span>, <span class="dv">300</span>, <span class="dv">100</span>))</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>plt.plot(res[<span class="st">'t'</span>], res[<span class="st">'co2'</span>], label <span class="op">=</span> <span class="st">'CO2'</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>plt.plot(res[<span class="st">'t'</span>], res[<span class="st">'h2co3'</span>], label <span class="op">=</span> <span class="st">'H2CO3'</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>plt.legend()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_reactions_microbiology_files/figure-html/cell-3-output-1.png" width="587" height="411" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Still not so interesting–with that high first-order rate constant, carbonic acid is very quickly all converted to dissolved carbon dioxide through the dehydration reation. We would have to make the model more realistic by including other, ionic, species in equilibrium with carbonic acid to get some interesting results.</p>
+</section>
+<section id="ammonia-equilibrium" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="ammonia-equilibrium"><span class="header-section-number">6.5</span> Ammonia equilibrium</h2>
 <p>Here is a simple example for ammonia. This is another thing all environmental engineers should know!</p>
 <p>The relevant proton exchange (acid-base) reaction is:</p>
 <p><span id="eq-amm-dis"><span class="math display">\[
 \ce{NH4+ &lt;=&gt; NH3 + H+},
-\tag{6.9}\]</span></span></p>
+\tag{6.11}\]</span></span></p>
 <p>with an equilbrium constant <span class="math inline">\(K_a\)</span>, where the <span class="math inline">\(a\)</span> is for acid dissociation constant. The numeric value is around <span class="math inline">\(pK_a = 9.56\)</span> at 15 <span class="math inline">\(\degC\)</span> (<span class="citation" data-cites="clegg_chemical-model_1995">Clegg and Whitfield (<a href="#ref-clegg_chemical-model_1995" role="doc-biblioref">1995</a>)</span>).</p>
 <p>Let’s write the mass action expression and set it to the acid dissociation constant:</p>
 <p><span id="eq-amm-mae1"><span class="math display">\[
 K_a = \frac{c_{\ce{NH3(aq)}} \cdot c_{\ce{H+}}} {c_{\ce{NH4+}}}.
-\tag{6.10}\]</span></span></p>
+\tag{6.12}\]</span></span></p>
 <p>What else can we use? Well, we cannot measure the ammonium (<span class="math inline">\(\ce{NH4+}\)</span>) concentration directly. But it is trivial to measure the sum of <span class="math inline">\(\ce{NH4+}\)</span> and <span class="math inline">\(\ce{NH3}\)</span> as N mass, which is often called TAN (for total ammoniacal nitrogen) concentration in agriculture and related fields. And then from mass conservation, we know that:</p>
 <p><span id="eq-amm-mass-bal"><span class="math display">\[
 c_{\text{TAN}} = c_{\ce{NH4+}} + c_{\ce{NH3}(aq)}.
-\tag{6.11}\]</span></span></p>
-<p>Lastly, we can estimate <span class="math inline">\(\ce{H+}\)</span> from measured pH, or anyway use it as an input here. That’s all we need. To get an explicit closed-form solution, we can rearrange <a href="#eq-amm-mass-bal" class="quarto-xref">Equation&nbsp;<span>6.11</span></a> to solve for <span class="math inline">\(\ce{NH4+}\)</span>, and insert the result into <a href="#eq-amm-mae1" class="quarto-xref">Equation&nbsp;<span>6.10</span></a>, and finally rearrange to solve for <span class="math inline">\(\ce{NH3(aq)}\)</span>. We’ll show these steps below, in part because the ability to do these kinds of simple mathematical derivations seems to be declining among students!</p>
-<p>First, rearrange <a href="#eq-amm-mass-bal" class="quarto-xref">Equation&nbsp;<span>6.11</span></a> to solve for <span class="math inline">\(\ce{NH4+}\)</span>:</p>
+\tag{6.13}\]</span></span></p>
+<p>Lastly, we can estimate <span class="math inline">\(\ce{H+}\)</span> from measured pH, or anyway use it as an input here. That’s all we need. To get an explicit closed-form solution, we can rearrange <a href="#eq-amm-mass-bal" class="quarto-xref">Equation&nbsp;<span>6.13</span></a> to solve for <span class="math inline">\(\ce{NH4+}\)</span>, and insert the result into <a href="#eq-amm-mae1" class="quarto-xref">Equation&nbsp;<span>6.12</span></a>, and finally rearrange to solve for <span class="math inline">\(\ce{NH3(aq)}\)</span>. We’ll show these steps below, in part because the ability to do these kinds of simple mathematical derivations seems to be declining among students!</p>
+<p>First, rearrange <a href="#eq-amm-mass-bal" class="quarto-xref">Equation&nbsp;<span>6.13</span></a> to solve for <span class="math inline">\(\ce{NH4+}\)</span>:</p>
 <p><span id="eq-amm-der1"><span class="math display">\[
 c_{\ce{NH4+}} = c_{\text{TAN}} - c_{\ce{NH3}(aq)}.
-\tag{6.12}\]</span></span></p>
-<p>And insert this into <a href="#eq-amm-mae1" class="quarto-xref">Equation&nbsp;<span>6.10</span></a>:</p>
+\tag{6.14}\]</span></span></p>
+<p>And insert this into <a href="#eq-amm-mae1" class="quarto-xref">Equation&nbsp;<span>6.12</span></a>:</p>
 <p><span class="math display">\[
 K_a = \frac{c_{\ce{NH3(aq)}} \cdot c_{\ce{H+}}} {c_{\text{TAN}} - c_{\ce{NH3}(aq)}}.
 \]</span></p>
@@ -543,53 +664,59 @@ c_{\ce{NH3}(aq)} = \frac{\frac{K_a} {c_{\ce{H+}}} \cdot c_{\text{TAN}}} {(\frac{
 <p>which, finally, can be simplified to</p>
 <p><span id="eq-free-nh3-calc"><span class="math display">\[
 c_{\ce{NH3}(aq)} = \frac{c_{\text{TAN}}} {1 + \frac {c_{\ce{H+}}} {K_a}}.
-\tag{6.13}\]</span></span></p>
-<p>Let’s implement <a href="#eq-free-nh3-calc" class="quarto-xref">Equation&nbsp;<span>6.13</span></a> in Python for a simple free ammonia calculator.</p>
-<div id="d765f2ae" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">Description:</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">    A free ammonia calculator function. Does not include corrections</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">    for non-ideal behavior; technically only accurate for very</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">    dilute solutions. </span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> free_NH3(TAN, pH, pKa <span class="op">=</span> <span class="fl">9.56</span>):</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">    Calculate free ammonia concentration (NH3 (aq)) from pH and TAN concentration.</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">    TAN : float</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">        Total ammoniacal nitrogen (TAN) concentration (any concentration units)</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">    pH : float</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">        Solution pH</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">    pKa : float</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co">        Acid dissociation constant for NH4+</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co">    -------</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co">    float with free ammonia concentration in same units as TAN input</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate H+ concentration from pH</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    c_H <span class="op">=</span> <span class="dv">10</span><span class="op">**</span>(<span class="op">-</span>pH)</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># And Ka</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    Ka <span class="op">=</span> <span class="dv">10</span><span class="op">**</span>(<span class="op">-</span>pKa)</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Apply equation from text</span></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    c_NH3 <span class="op">=</span> TAN <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> c_H <span class="op">/</span> Ka)</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Return solution</span></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> c_NH3 </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+\tag{6.15}\]</span></span></p>
+<p>Let’s implement <a href="#eq-free-nh3-calc" class="quarto-xref">Equation&nbsp;<span>6.15</span></a> in Python for a simple free ammonia calculator.</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>ammonia_mods.py</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" data-filename="ammonia_mods.py"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">Description:</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">    A free ammonia calculator function. Does not include corrections</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">    for non-ideal behavior; technically only accurate for very</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">    dilute solutions. </span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> free_NH3(TAN, pH, pKa <span class="op">=</span> <span class="fl">9.56</span>):</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">    Calculate free ammonia concentration (NH3 (aq)) from pH and TAN concentration.</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">    TAN : float</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">        Total ammoniacal nitrogen (TAN) concentration (any concentration units)</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">    pH : float</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">        Solution pH</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">    pKa : float</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co">        Acid dissociation constant for NH4+</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="co">    -------</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="co">    float with free ammonia concentration in same units as TAN input</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate H+ concentration from pH</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    c_H <span class="op">=</span> <span class="dv">10</span><span class="op">**</span>(<span class="op">-</span>pH)</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># And Ka</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    Ka <span class="op">=</span> <span class="dv">10</span><span class="op">**</span>(<span class="op">-</span>pKa)</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Apply equation from text</span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>    c_NH3 <span class="op">=</span> TAN <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> c_H <span class="op">/</span> Ka)</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Return solution</span></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> c_NH3 </span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We can test it.</p>
-<div id="5425e09e" class="cell" data-execution_count="2">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(free_NH3(<span class="dv">1</span>, <span class="fl">9.56</span>))</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(free_NH3(<span class="dv">1</span>, <span class="dv">7</span>))</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(free_NH3(<span class="dv">1</span>, <span class="dv">10</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="5c586519" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ammonia_mods <span class="im">as</span> am</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(am.free_NH3(<span class="dv">1</span>, <span class="fl">9.56</span>))</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(am.free_NH3(<span class="dv">1</span>, <span class="dv">7</span>))</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(am.free_NH3(<span class="dv">1</span>, <span class="dv">10</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>0.5
 0.0027466637631632404
@@ -598,36 +725,36 @@ c_{\ce{NH3}(aq)} = \frac{c_{\text{TAN}}} {1 + \frac {c_{\ce{H+}}} {K_a}}.
 </div>
 <p>We see <span class="math inline">\(\ce{NH4(aq)}\)</span> is exactly half of TAN when <span class="math inline">\(p\text{K}_a\)</span> = pH, very small at pH 7, and high at pH 10, all of which are expected.</p>
 </section>
-<section id="matrix-operations" class="level2" data-number="6.5">
-<h2 data-number="6.5" class="anchored" data-anchor-id="matrix-operations"><span class="header-section-number">6.5</span> Matrix operations</h2>
+<section id="matrix-operations" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="matrix-operations"><span class="header-section-number">6.6</span> Matrix operations</h2>
 <p>Matrices are convenient for oranizing stoichiometric coefficients and then even using in compact code for speciation calculations. Here we will use the carbonate system as as demo.</p>
 <p>We’ll start with a stoichiometry matrix. First we need to think about how to set it up, because at this point there are multiple routes that could be taken. We need to select what are sometimes called “master species” or we might call “funamental species”. These species will be the reactants for all reactions. We’ll use <span class="math inline">\(\ce{H2CO3^*}\)</span> and <span class="math inline">\(\ce{H+}\)</span>. These reactants will define the columns in our stoichiometry matrix, and products will define rows. This too is arbitrary, but seems most convenient. If we only consider the species <span class="math inline">\(\ce{H2CO3^*}\)</span>, <span class="math inline">\(\ce{HCO3-}\)</span>, <span class="math inline">\(\ce{CO3^2-}\)</span>, and of course <span class="math inline">\(\ce{H+}\)</span> and <span class="math inline">\(\ce{OH-}\)</span>, our coefficient matrix is:</p>
-<div id="578665b9" class="cell" data-execution_count="3">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>       <span class="op">|</span> H2CO3<span class="op">*|</span>  H<span class="op">+</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>       <span class="op">--------|----</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>HCO3<span class="op">-</span>  <span class="op">|</span>  <span class="op">-</span><span class="dv">1</span>   <span class="op">|</span>  <span class="dv">1</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>CO3<span class="op">-</span><span class="dv">2</span>  <span class="op">|</span>  <span class="op">-</span><span class="dv">1</span>   <span class="op">|</span>  <span class="dv">2</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  OH<span class="op">-</span>  <span class="op">|</span>   <span class="dv">0</span>   <span class="op">|</span>  <span class="dv">1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="52a63c83" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>       <span class="op">|</span> H2CO3<span class="op">*|</span>  H<span class="op">+</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>       <span class="op">--------|----</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>HCO3<span class="op">-</span>  <span class="op">|</span>  <span class="op">-</span><span class="dv">1</span>   <span class="op">|</span>  <span class="dv">1</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>CO3<span class="op">-</span><span class="dv">2</span>  <span class="op">|</span>  <span class="op">-</span><span class="dv">1</span>   <span class="op">|</span>  <span class="dv">2</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  OH<span class="op">-</span>  <span class="op">|</span>   <span class="dv">0</span>   <span class="op">|</span>  <span class="dv">1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Although <span class="math inline">\(\ce{CO3^2-}\)</span> forms from <span class="math inline">\(\ce{H2CO3^*}\)</span>, here our reactant is carbonic acid <span class="math inline">\(\ce{H2CO3^*}\)</span>, so in this model <span class="math inline">\(\ce{CO3^2-}\)</span> production is expressed as two reactions combined:</p>
+<p>Although <span class="math inline">\(\ce{CO3^2-}\)</span> forms from <span class="math inline">\(\ce{HCO3-}\)</span>, here our reactant is carbonic acid <span class="math inline">\(\ce{H2CO3^*}\)</span>, so in this model <span class="math inline">\(\ce{CO3^2-}\)</span> production is expressed as two reactions combined:</p>
 <p><span id="eq-carb2"><span class="math display">\[
 \ce{H2CO3^* &lt;=&gt; CO3^2- + 2H+}.
-\tag{6.14}\]</span></span></p>
+\tag{6.16}\]</span></span></p>
 <p>So what is the use of this matrix? We’ll demonstrate after first creating the matrix in Python.</p>
-<div id="2d7e6b03" class="cell" data-execution_count="4">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Stoichometry matrix</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#        | H2CO3*|  H+</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#        --------|----</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># HCO3-  |  -1   |  1</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># CO3-2  |  -1   |  2</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#   OH-  |   0   |  1</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>sc <span class="op">=</span> np.array([[<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>],</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>               [<span class="op">-</span><span class="dv">1</span>, <span class="dv">2</span>],</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>               [ <span class="dv">0</span>, <span class="dv">1</span>]])</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sc)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="86e48480" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Stoichometry matrix</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#        | H2CO3*|  H+</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#        --------|----</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># HCO3-  |  -1   |  1</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># CO3-2  |  -1   |  2</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">#   OH-  |   0   |  1</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>sc <span class="op">=</span> np.array([[<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>],</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>               [<span class="op">-</span><span class="dv">1</span>, <span class="dv">2</span>],</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>               [ <span class="dv">0</span>, <span class="dv">1</span>]])</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sc)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[-1  1]
  [-1  2]
@@ -636,133 +763,133 @@ c_{\ce{NH3}(aq)} = \frac{c_{\text{TAN}}} {1 + \frac {c_{\ce{H+}}} {K_a}}.
 </div>
 <p>Note that we do not get row or column names with a matrix. So good comments (as above) are helpful.</p>
 <p>To use the matrix, we need equilibrium constants for each reaction–so three here, one for each row.</p>
-<div id="9fdba55a" class="cell" data-execution_count="5">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>keq <span class="op">=</span> <span class="dv">10</span><span class="op">**</span>np.array([<span class="op">-</span><span class="fl">6.3</span>, <span class="op">-</span><span class="fl">16.6</span>, <span class="op">-</span><span class="fl">14.0</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="196da25e" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>keq <span class="op">=</span> <span class="dv">10</span><span class="op">**</span>np.array([<span class="op">-</span><span class="fl">6.3</span>, <span class="op">-</span><span class="fl">16.6</span>, <span class="op">-</span><span class="fl">14.0</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>The first thing we can do with the matrix is to calculate reactant species concentrations once we have master species concentrations. Look at <a href="#eq-carb2" class="quarto-xref">Equation&nbsp;<span>6.14</span></a>. The relevant mass action expression is</p>
+<p>The first thing we can do with the matrix is to calculate reactant species concentrations once we have master species concentrations. Look at <a href="#eq-carb2" class="quarto-xref">Equation&nbsp;<span>6.16</span></a>. The relevant mass action expression is</p>
 <p><span id="eq-carb-ma2"><span class="math display">\[
 k_2 = \frac{c_{\ce{CO3^2-}} \cdot c_{\ce{H+}}^2}{c_{\ce{H2CO3^*}}}.
-\tag{6.15}\]</span></span></p>
+\tag{6.17}\]</span></span></p>
 <p>Rearranging gives an equation for the reactant species concentration,</p>
 <p><span id="eq-carb-ma2"><span class="math display">\[
 c_{\ce{CO3^2-}} = k_2 \cdot \frac{c_{\ce{H2CO3^*}}} {c_{\ce{H+}}^2}.
-\tag{6.16}\]</span></span></p>
+\tag{6.18}\]</span></span></p>
 <p>We can actually carry out this calculation using the <code>sc</code> stoichiometry matrix.</p>
-<div id="65088a9e" class="cell" data-execution_count="6">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>cH2CO3s <span class="op">=</span> <span class="fl">0.001</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>cHp <span class="op">=</span> <span class="fl">1e-6</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>keq[<span class="dv">1</span>] <span class="op">*</span> cH2CO3s<span class="op">**</span>(<span class="op">-</span>sc[<span class="dv">1</span>, <span class="dv">0</span>]) <span class="op">/</span> cHp<span class="op">**</span>(sc[<span class="dv">1</span>, <span class="dv">1</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="5">
+<div id="9c210775" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>cH2CO3s <span class="op">=</span> <span class="fl">0.001</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>cHp <span class="op">=</span> <span class="fl">1e-6</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>keq[<span class="dv">1</span>] <span class="op">*</span> cH2CO3s<span class="op">**</span>(<span class="op">-</span>sc[<span class="dv">1</span>, <span class="dv">0</span>]) <span class="op">/</span> cHp<span class="op">**</span>(sc[<span class="dv">1</span>, <span class="dv">1</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>np.float64(2.5118864315095718e-08)</code></pre>
 </div>
 </div>
 <p>Do you see what we’ve done? Do you understand why we included the <code>**(-sc[1, 0])</code> bit? That makes it more general, and adaptable to the complete calculations for all reactants, which we can do using matrix operations like this:</p>
-<div id="79ac1dbb" class="cell" data-execution_count="7">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>conc <span class="op">=</span> keq <span class="op">*</span> cH2CO3s<span class="op">**</span>(<span class="op">-</span>sc[:, <span class="dv">0</span>]) <span class="op">/</span> (cHp<span class="op">**</span>sc[:, <span class="dv">1</span>])</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>conc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
+<div id="3b677d1b" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>conc <span class="op">=</span> keq <span class="op">*</span> cH2CO3s<span class="op">**</span>(<span class="op">-</span>sc[:, <span class="dv">0</span>]) <span class="op">/</span> (cHp<span class="op">**</span>sc[:, <span class="dv">1</span>])</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>conc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>array([5.01187234e-04, 2.51188643e-08, 1.00000000e-08])</code></pre>
 </div>
 </div>
 <p>This approach could work with more reactants and species with different stoichiometric coefficients. Of course, we don’t typically know master species concentrations. When we make measurements on a water sample, create a solution in the laboratory, or simulate mass transfer and reaction of chemicals, it is the <em>total</em> concentrations that we know. So it takes a bit more conceptual and programming trickery to come up with a general approach for solving chemical speciation problems. In the example <code>carb_spec()</code> function below, we use two: (1) a proton balance and (2) an iterative root finder. Take a look.</p>
-<div id="0f9e55f2" class="cell" data-execution_count="8">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">File: carb_mods.py</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">Authors: Sasha D. Hafner and Frederik R. Dalby</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">Course: Modelling 2026</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">Description:</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">    A module with carbonate speciation functions.</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> root_scalar</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> carb_spec_tot(tot):</span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="co">    Calculate pH and speciation given solute totals.</span></span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="co">    tot: ndarray or float</span></span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a><span class="co">        total concentration of dissolved inorganic carbon (mol/kg)</span></span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="co">    -------</span></span>
-<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a><span class="co">    dictionary</span></span>
-<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a><span class="co">        concentrations of individual species (mol/kg)</span></span>
-<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Set values for some constants</span></span>
-<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Stoichometry matrix</span></span>
-<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>    <span class="co">#        | H2CO3*|  H+</span></span>
-<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>    <span class="co">#        --------|----</span></span>
-<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># HCO3-  |  -1   |  1</span></span>
-<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>    <span class="co"># CO3-2  |  -1   |  2</span></span>
-<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>    <span class="co">#   OH-  |   0   |  1</span></span>
-<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>    sc <span class="op">=</span> np.array([[<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>],</span>
-<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>                   [<span class="op">-</span><span class="dv">1</span>, <span class="dv">2</span>],</span>
-<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>                   [ <span class="dv">0</span>, <span class="dv">1</span>]])</span>
-<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Equilibrium constant vector</span></span>
-<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a>    keq <span class="op">=</span> <span class="dv">10</span><span class="op">**</span>np.array([<span class="op">-</span><span class="fl">6.3</span>, <span class="op">-</span><span class="fl">16.6</span>, <span class="op">-</span><span class="fl">14.0</span>])</span>
-<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Define master species error function</span></span>
-<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> residC(cH2CO3):</span>
-<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""</span></span>
-<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a><span class="co">        Residual of total inorganic carbon concentration</span></span>
-<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a><span class="co">        for a given H2CO3* concentration</span></span>
-<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span>        </span>
-<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Define proton error function</span></span>
-<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a>        <span class="kw">def</span> residH(cH):</span>
-<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a>            <span class="co">"""</span></span>
-<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a><span class="co">            Residual of charge balance or proton condition for given </span></span>
-<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a><span class="co">            proton concentration cH.</span></span>
-<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a><span class="co">            """</span>        </span>
-<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Calculate concentrations of pH-dependent species</span></span>
-<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a>            conc <span class="op">=</span> keq <span class="op">*</span> cH2CO3<span class="op">**</span>(<span class="op">-</span>sc[:, <span class="dv">0</span>]) <span class="op">/</span> (cH<span class="op">**</span>sc[:, <span class="dv">1</span>])</span>
-<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Get charge balance</span></span>
-<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> cH <span class="op">-</span> np.<span class="bu">sum</span>(sc[:, <span class="dv">1</span>] <span class="op">*</span> conc)</span>
-<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Get H+ concentration</span></span>
-<span id="cb12-65"><a href="#cb12-65" aria-hidden="true" tabindex="-1"></a>        cH <span class="op">=</span> root_scalar(residH, bracket<span class="op">=</span>[<span class="fl">1E-14</span>, <span class="dv">1</span>], method<span class="op">=</span><span class="st">'brentq'</span>).root</span>
-<span id="cb12-66"><a href="#cb12-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-67"><a href="#cb12-67" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Species concentrations</span></span>
-<span id="cb12-68"><a href="#cb12-68" aria-hidden="true" tabindex="-1"></a>        conc <span class="op">=</span> keq <span class="op">*</span> cH2CO3 <span class="op">*</span> <span class="op">-</span>sc[:, <span class="dv">0</span>] <span class="op">/</span> (cH<span class="op">**</span>sc[:, <span class="dv">1</span>])</span>
-<span id="cb12-69"><a href="#cb12-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-70"><a href="#cb12-70" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Calculate error in total IC balance</span></span>
-<span id="cb12-71"><a href="#cb12-71" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Note that intermediate results cH and conc are returned here in addition to actual residual</span></span>
-<span id="cb12-72"><a href="#cb12-72" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> tot <span class="op">-</span> (cH2CO3 <span class="op">+</span> np.<span class="bu">sum</span>(conc <span class="op">*</span> <span class="op">-</span>sc[:, <span class="dv">0</span>])), cH, conc</span>
-<span id="cb12-73"><a href="#cb12-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Solve for H2CO3* concentration (mol/kg) </span></span>
-<span id="cb12-75"><a href="#cb12-75" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Because residC() returns more than just residual, lambda function and indexing of result is needed</span></span>
-<span id="cb12-76"><a href="#cb12-76" aria-hidden="true" tabindex="-1"></a>    cH2CO3 <span class="op">=</span> root_scalar(<span class="kw">lambda</span> x: residC(x)[<span class="dv">0</span>], bracket<span class="op">=</span>[<span class="fl">1E-10</span>, tot], method<span class="op">=</span><span class="st">'brentq'</span>).root</span>
-<span id="cb12-77"><a href="#cb12-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-78"><a href="#cb12-78" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get associated cH and concentrations of all species</span></span>
-<span id="cb12-79"><a href="#cb12-79" aria-hidden="true" tabindex="-1"></a>    resid, cH, conc <span class="op">=</span> residC(cH2CO3)</span>
-<span id="cb12-80"><a href="#cb12-80" aria-hidden="true" tabindex="-1"></a>    all_conc <span class="op">=</span> np.concatenate(([cH2CO3, cH], conc))</span>
-<span id="cb12-81"><a href="#cb12-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-82"><a href="#cb12-82" aria-hidden="true" tabindex="-1"></a>    nms <span class="op">=</span> [<span class="st">'H2CO3*'</span>, <span class="st">'H+'</span>, <span class="st">'HCO3-'</span>, <span class="st">'CO3-2'</span>, <span class="st">'OH-'</span>]</span>
-<span id="cb12-83"><a href="#cb12-83" aria-hidden="true" tabindex="-1"></a>    res <span class="op">=</span> <span class="bu">dict</span>(<span class="bu">zip</span>(nms, all_conc))</span>
-<span id="cb12-84"><a href="#cb12-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-85"><a href="#cb12-85" aria-hidden="true" tabindex="-1"></a>    <span class="co"># And return species concentrations (mol/kg)</span></span>
-<span id="cb12-86"><a href="#cb12-86" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> res</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="c52eb2a7" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co">File: carb_mods.py</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">Authors: Sasha D. Hafner and Frederik R. Dalby</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">Course: Modelling 2026</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">Description:</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co">    A module with carbonate speciation functions.</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> root_scalar</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> carb_spec_tot(tot):</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="co">    Calculate pH and speciation given solute totals.</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a><span class="co">    tot: ndarray or float</span></span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a><span class="co">        total concentration of dissolved inorganic carbon (mol/kg)</span></span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a><span class="co">    -------</span></span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a><span class="co">    dictionary</span></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a><span class="co">        concentrations of individual species (mol/kg)</span></span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Set values for some constants</span></span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Stoichometry matrix</span></span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>    <span class="co">#        | H2CO3*|  H+</span></span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>    <span class="co">#        --------|----</span></span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># HCO3-  |  -1   |  1</span></span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>    <span class="co"># CO3-2  |  -1   |  2</span></span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>    <span class="co">#   OH-  |   0   |  1</span></span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a>    sc <span class="op">=</span> np.array([[<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>],</span>
+<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a>                   [<span class="op">-</span><span class="dv">1</span>, <span class="dv">2</span>],</span>
+<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a>                   [ <span class="dv">0</span>, <span class="dv">1</span>]])</span>
+<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Equilibrium constant vector</span></span>
+<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a>    keq <span class="op">=</span> <span class="dv">10</span><span class="op">**</span>np.array([<span class="op">-</span><span class="fl">6.3</span>, <span class="op">-</span><span class="fl">16.6</span>, <span class="op">-</span><span class="fl">14.0</span>])</span>
+<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Define master species error function</span></span>
+<span id="cb15-45"><a href="#cb15-45" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> residC(cH2CO3):</span>
+<span id="cb15-46"><a href="#cb15-46" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""</span></span>
+<span id="cb15-47"><a href="#cb15-47" aria-hidden="true" tabindex="-1"></a><span class="co">        Residual of total inorganic carbon concentration</span></span>
+<span id="cb15-48"><a href="#cb15-48" aria-hidden="true" tabindex="-1"></a><span class="co">        for a given H2CO3* concentration</span></span>
+<span id="cb15-49"><a href="#cb15-49" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span>        </span>
+<span id="cb15-50"><a href="#cb15-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-51"><a href="#cb15-51" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Define proton error function</span></span>
+<span id="cb15-52"><a href="#cb15-52" aria-hidden="true" tabindex="-1"></a>        <span class="kw">def</span> residH(cH):</span>
+<span id="cb15-53"><a href="#cb15-53" aria-hidden="true" tabindex="-1"></a>            <span class="co">"""</span></span>
+<span id="cb15-54"><a href="#cb15-54" aria-hidden="true" tabindex="-1"></a><span class="co">            Residual of charge balance or proton condition for given </span></span>
+<span id="cb15-55"><a href="#cb15-55" aria-hidden="true" tabindex="-1"></a><span class="co">            proton concentration cH.</span></span>
+<span id="cb15-56"><a href="#cb15-56" aria-hidden="true" tabindex="-1"></a><span class="co">            """</span>        </span>
+<span id="cb15-57"><a href="#cb15-57" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb15-58"><a href="#cb15-58" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Calculate concentrations of pH-dependent species</span></span>
+<span id="cb15-59"><a href="#cb15-59" aria-hidden="true" tabindex="-1"></a>            conc <span class="op">=</span> keq <span class="op">*</span> cH2CO3<span class="op">**</span>(<span class="op">-</span>sc[:, <span class="dv">0</span>]) <span class="op">/</span> (cH<span class="op">**</span>sc[:, <span class="dv">1</span>])</span>
+<span id="cb15-60"><a href="#cb15-60" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb15-61"><a href="#cb15-61" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Get charge balance</span></span>
+<span id="cb15-62"><a href="#cb15-62" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> cH <span class="op">-</span> np.<span class="bu">sum</span>(sc[:, <span class="dv">1</span>] <span class="op">*</span> conc)</span>
+<span id="cb15-63"><a href="#cb15-63" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb15-64"><a href="#cb15-64" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Get H+ concentration</span></span>
+<span id="cb15-65"><a href="#cb15-65" aria-hidden="true" tabindex="-1"></a>        cH <span class="op">=</span> root_scalar(residH, bracket<span class="op">=</span>[<span class="fl">1E-14</span>, <span class="dv">1</span>], method<span class="op">=</span><span class="st">'brentq'</span>).root</span>
+<span id="cb15-66"><a href="#cb15-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-67"><a href="#cb15-67" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Species concentrations</span></span>
+<span id="cb15-68"><a href="#cb15-68" aria-hidden="true" tabindex="-1"></a>        conc <span class="op">=</span> keq <span class="op">*</span> cH2CO3 <span class="op">*</span> <span class="op">-</span>sc[:, <span class="dv">0</span>] <span class="op">/</span> (cH<span class="op">**</span>sc[:, <span class="dv">1</span>])</span>
+<span id="cb15-69"><a href="#cb15-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-70"><a href="#cb15-70" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Calculate error in total IC balance</span></span>
+<span id="cb15-71"><a href="#cb15-71" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Note that intermediate results cH and conc are returned here in addition to actual residual</span></span>
+<span id="cb15-72"><a href="#cb15-72" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> tot <span class="op">-</span> (cH2CO3 <span class="op">+</span> np.<span class="bu">sum</span>(conc <span class="op">*</span> <span class="op">-</span>sc[:, <span class="dv">0</span>])), cH, conc</span>
+<span id="cb15-73"><a href="#cb15-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-74"><a href="#cb15-74" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Solve for H2CO3* concentration (mol/kg) </span></span>
+<span id="cb15-75"><a href="#cb15-75" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Because residC() returns more than just residual, lambda function and indexing of result is needed</span></span>
+<span id="cb15-76"><a href="#cb15-76" aria-hidden="true" tabindex="-1"></a>    cH2CO3 <span class="op">=</span> root_scalar(<span class="kw">lambda</span> x: residC(x)[<span class="dv">0</span>], bracket<span class="op">=</span>[<span class="fl">1E-10</span>, tot], method<span class="op">=</span><span class="st">'brentq'</span>).root</span>
+<span id="cb15-77"><a href="#cb15-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-78"><a href="#cb15-78" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get associated cH and concentrations of all species</span></span>
+<span id="cb15-79"><a href="#cb15-79" aria-hidden="true" tabindex="-1"></a>    resid, cH, conc <span class="op">=</span> residC(cH2CO3)</span>
+<span id="cb15-80"><a href="#cb15-80" aria-hidden="true" tabindex="-1"></a>    all_conc <span class="op">=</span> np.concatenate(([cH2CO3, cH], conc))</span>
+<span id="cb15-81"><a href="#cb15-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-82"><a href="#cb15-82" aria-hidden="true" tabindex="-1"></a>    nms <span class="op">=</span> [<span class="st">'H2CO3*'</span>, <span class="st">'H+'</span>, <span class="st">'HCO3-'</span>, <span class="st">'CO3-2'</span>, <span class="st">'OH-'</span>]</span>
+<span id="cb15-83"><a href="#cb15-83" aria-hidden="true" tabindex="-1"></a>    res <span class="op">=</span> <span class="bu">dict</span>(<span class="bu">zip</span>(nms, all_conc))</span>
+<span id="cb15-84"><a href="#cb15-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-85"><a href="#cb15-85" aria-hidden="true" tabindex="-1"></a>    <span class="co"># And return species concentrations (mol/kg)</span></span>
+<span id="cb15-86"><a href="#cb15-86" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> res</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="0966e406" class="cell" data-execution_count="9">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">'modules'</span>)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> carb_mods <span class="im">as</span> cm</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>tot <span class="op">=</span> <span class="fl">1.5E-5</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>concs <span class="op">=</span> cm.carb_spec_tot(tot)</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>concs</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="8">
+<div id="30489082" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">'modules'</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> carb_mods <span class="im">as</span> cm</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>tot <span class="op">=</span> <span class="fl">1.5E-5</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>concs <span class="op">=</span> cm.carb_spec_tot(tot)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>concs</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
 <pre><code>{'H2CO3*': np.float64(1.2499117289390624e-05),
  'H+': np.float64(2.5049248927154134e-06),
  'HCO3-': np.float64(2.500832673773985e-06),
@@ -771,23 +898,23 @@ c_{\ce{CO3^2-}} = k_2 \cdot \frac{c_{\ce{H2CO3^*}}} {c_{\ce{H+}}^2}.
 </div>
 </div>
 <p>We can get predicted pH:</p>
-<div id="d4e73715" class="cell" data-execution_count="10">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="op">-</span>np.log10(concs[<span class="st">'H+'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="9">
+<div id="b27c5aaf" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="op">-</span>np.log10(concs[<span class="st">'H+'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>np.float64(5.601205291420791)</code></pre>
 </div>
 </div>
 </section>
-<section id="microbiology" class="level2" data-number="6.6">
-<h2 data-number="6.6" class="anchored" data-anchor-id="microbiology"><span class="header-section-number">6.6</span> Microbiology</h2>
+<section id="microbiology" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="microbiology"><span class="header-section-number">6.7</span> Microbiology</h2>
 <p>From a modeling perspective, microbial systems are just a set of chemical reactions. There are multiple ways microbial activity can be modelled, and selection of an aproach should depend on the objectives the model needs to meet. An important consideration is whether active microbial biomass should be explictly included or not. For dynamics in microbial activity related to changes in the microbial population, it must be included. So here are some components for one approach to creating microbial models:</p>
 <ol type="1">
 <li>state variables: active microbial biomass, essential chemical substrates, and important products,</li>
 <li>linking equations: a balanced chemical reaction that includes all state variables (stoichiometry), and</li>
 <li>constitutive equation: an equation for the rate of the overall reaction (kinetics).</li>
 </ol>
-<section id="stoichiometry-1" class="level3" data-number="6.6.1">
-<h3 data-number="6.6.1" class="anchored" data-anchor-id="stoichiometry-1"><span class="header-section-number">6.6.1</span> Stoichiometry</h3>
+<section id="sec-mic-stoich" class="level3" data-number="6.7.1">
+<h3 data-number="6.7.1" class="anchored" data-anchor-id="sec-mic-stoich"><span class="header-section-number">6.7.1</span> Microbial stoichiometry</h3>
 <p>Unlike simple chemical reactions such as urea hydrolysis, it isn’t always possible to just look up the reaction. But there are a few different approaches that can be used, including the microbial stoiciometry approach presented by <span class="citation" data-cites="rittmann_environmental_2020">Rittmann and McCarty (<a href="#ref-rittmann_environmental_2020" role="doc-biblioref">2020</a>)</span>. <span class="citation" data-cites="rittmann_environmental_2020">Rittmann and McCarty (<a href="#ref-rittmann_environmental_2020" role="doc-biblioref">2020</a>)</span> is a worthwhile read for anyone working with microbial systems. Here we will give an introduction to the most essential parts.</p>
 <p>Microbes (and all known life) is powered by electron transfer. Chemotrophs harness energy from electrons transferred from reduced compounds to oxidized compounds. For organic compounds, reduced versions contain more C and H and oxidized more O. So these are sorted from most reduced to most oxidized: <span class="math inline">\(\ce{CH4}\)</span> (methane), <span class="math inline">\(\ce{C57H104O6}\)</span> (a lipid), <span class="math inline">\(\ce{C6H12O6}\)</span> (glucose), <span class="math inline">\(\ce{CO2}\)</span> (carbon dioxide, which provides no energy to chemotrophs). All of these compounds except <span class="math inline">\(\ce{CO2}\)</span> could serve as electron donors for some chemotroph (technically chemoorganotroph, which is a group of chemotrophs that use reduced <em>organic</em> compounds for energy). Of course the microorganism has to have the enzymatic machinery in place to use a particular substrate. But as a group, microorganisms are extremely capable.</p>
 <p>Chemotrophs need an electron acceptor too. These are oxidized chemicals with a strong affinity for electrons. Common electron acceptors include <span class="math inline">\(\ce{O2}\)</span>, <span class="math inline">\(\ce{NO3-}\)</span>, and <span class="math inline">\(\ce{SO4^2-}\)</span>.</p>
@@ -797,23 +924,25 @@ c_{\ce{CO3^2-}} = k_2 \cdot \frac{c_{\ce{H2CO3^*}}} {c_{\ce{H+}}^2}.
 <p><span id="eq-eth-ferm"><span class="math display">\[
 \ce{C6H12O6 + 0.24NH4+ + 0.24HCO3- -&gt;
 1.6CH3CH2OH + 1.84CO2 + 0.24C5H7O2N + 0.96H2O}.
-\tag{6.17}\]</span></span></p>
+\tag{6.19}\]</span></span></p>
 <p>The <span class="math inline">\(\ce{C5H7O2N}\)</span> “species” is yeast biomass, and is really an empirical chemical formula for microbial biomass. This reaction is balanced in terms of elements and reduction-oxidation (redox).</p>
 </section>
-<section id="kinetics" class="level3" data-number="6.6.2">
-<h3 data-number="6.6.2" class="anchored" data-anchor-id="kinetics"><span class="header-section-number">6.6.2</span> Kinetics</h3>
+<section id="sec-mic-kin" class="level3" data-number="6.7.2">
+<h3 data-number="6.7.2" class="anchored" data-anchor-id="sec-mic-kin"><span class="header-section-number">6.7.2</span> Microbial kinetics</h3>
 <p>We have looked at a first-order approach above, and while this can be a component of microbial models, it is more accurate and useful to link reaction rate to both the quantity of microbial biomass and substrate (electron donor). A second-order approach is one option. One common alternative is the Monod equation:</p>
 <p><span id="eq-monod1"><span class="math display">\[
 r = c_{x_a} \cdot \frac{\hat{q}_{max} \cdot c_s} {c_s + k_s},
-\tag{6.18}\]</span></span></p>
+\tag{6.20}\]</span></span></p>
 <p>where <span class="math inline">\(c_{x_a} =\)</span> active microbial biomass concentration (<span class="math inline">\(\gpmc\)</span>), <span class="math inline">\(\hat{q}_{max} =\)</span> maximum substrate utilization rate, and <span class="math inline">\(c_s =\)</span> substrate concentration.</p>
-<!-- Microbial rate of growth and biomass yield.
-     Monod kinetics.
-     Example: CSTR. -->
+</section>
+<section id="microbial-growth" class="level3" data-number="6.7.3">
+<h3 data-number="6.7.3" class="anchored" data-anchor-id="microbial-growth"><span class="header-section-number">6.7.3</span> Microbial growth</h3>
+<p>In environmental engineering, it is common to quantify microbial populations as active microbial biomass. This is the sum of the organic matter that makes up all microbial cells in a system. Unlike populations of humans or other animals, microbial populations are often quantified by total mass. So to track microbial growth, we just need to include microbial biomass as a state variable. Coupled with the information in <a href="#sec-mic-stoich" class="quarto-xref"><span>Section 6.7.1</span></a> and <a href="#sec-mic-kin" class="quarto-xref"><span>Section 6.7.2</span></a> above, we have everything we need for a microbial model. This is only because microbial biomass is already included in <a href="#eq-eth-ferm" class="quarto-xref">Equation&nbsp;<span>6.19</span></a> above as <span class="math inline">\(\ce{C5H7O2N}\)</span>.</p>
+<p>Yeast cells don’t live forever. In the approach presented here we don’t track individual yeast cells, so we cannot apply a probability of death (or survival) to individual cells. Instead, we can model death and decay as a first-order reaction.</p>
 </section>
 </section>
-<section id="problems" class="level2" data-number="6.7">
-<h2 data-number="6.7" class="anchored" data-anchor-id="problems"><span class="header-section-number">6.7</span> Problems</h2>
+<section id="problems" class="level2" data-number="6.8">
+<h2 data-number="6.8" class="anchored" data-anchor-id="problems"><span class="header-section-number">6.8</span> Problems</h2>
 <ol type="1">
 <li><p>Formulate (pencil and paper or digital equivalent) and implement (in Python) a simple urea hydrolysis model. You can assume the reaction is first-order. Assume all products accumulate in a fixed solution volume (or solvent, water, mass). Plot predicted urea, ammonia, and carbon dioxide concentration over time.</p></li>
 <li><p>Create a Python function that calcuates free ammonia <span class="math inline">\(\ce{NH3(aq)}\)</span> from TAN, pH, and temperature. You can use this expression for the temperature dependency of <span class="math inline">\(K_a\)</span>:</p>
@@ -829,12 +958,12 @@ r = c_{x_a} \cdot \frac{\hat{q}_{max} \cdot c_s} {c_s + k_s},
 <h2 class="unnumbered anchored" data-anchor-id="references">References</h2>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-clegg_chemical-model_1995" class="csl-entry" role="listitem">
 Clegg, S. L., and M. Whitfield. 1995. <span>“A Chemical-Model of Seawater Including Dissolved Ammonia and the Stoichiometric Dissociation-Constant of Ammonia in Estuarine Water and Seawater from -2C to 40C.”</span> <em>Geochimica Et Cosmochimica Acta</em> 59 (12): 2403–21.
 </div>
 <div id="ref-rittmann_environmental_2020" class="csl-entry" role="listitem">
-Rittmann, Bruce E., and Perry L. McCarty. 2020. <em>Environmental Biotechnology: Principles and Applications, Second Edition</em>. 2nd edition. New York, N.Y: McGraw Hill.
+Rittmann, Bruce E., and Perry L. McCarty. 2020. <em>Environmental Biotechnology: Principles and Applications, Second Edition</em>. 2nd edition. McGraw Hill.
 </div>
 <div id="ref-Snoeyink1980" class="csl-entry" role="listitem">
 Snoeyink, Vernon L. 1980. <em>Water Chemistry</em>. Wiley.

@@ -5,7 +5,8 @@ This chapter will scratch the surface, barely, of the topics.
 
 ## Stoichiometry
 
-Chemical *stoichiometry* is about the coefficients that accompany the reactants and products in a balanced chemical reaction.
+Chemical *stoichiometry* is all about the coefficients that accompany the reactants and products in a balanced chemical reaction.
+Stoichiometric coefficients indicate the relative quantities of chemical substances that are consumed or produced in a reaction.
 For example, the simple organic compound urea (a waste product in mammal urine) is hydrolyzed like this:
 
 $$
@@ -55,6 +56,7 @@ An advantage of 1 is that the coefficients have integer and usually obvious valu
 The constitutive equation for a chemical reaction must quantify its *rate*, or how fast it proceeds, e.g., $\molps$, $\molpmcps$, or on a mass basis, e.g., $\gpmcps$.
 The term *kinetics* is used to describe reaction rates.
 Here we will look at only two simple, and to some degree, idealized, cases: first-order reactions and second-order reactions.
+Below in @sec-mic-kin we'll consider a third approach.
 
 A reaction that follows first-order kinetics has a rate that is proportional to the quantity of reactant present.
 So that means:
@@ -81,11 +83,11 @@ Even where the concentration of a reactant seems to follow first-order kinetics 
 These effects can be important when applying the model--the rate "constant" from one system may not apply directly to another.
 
 Thinking about math and implementation, the rate of a simple first-order reaction can be described analytically with the exponential model (see @sec-expmodel). 
-You could have (should have, really!) realized this just from the form of @eq-fom1 or @eq-fom2!
+You could have (should have, really) realized this just from the form of @eq-fom1 or @eq-fom2!
 Compare @eq-fom2 to @eq-exp-ode.
 What specific variables or parameters go in for the $x$ and $\lambda$ in @eq-exp-ode?
 Well, $x = c$ and $\lambda = -k$.
-Note the minus sign!
+Note the minus sign.
 Now take a look at @eq-exp-solution and plug these in.
 That gives:
 
@@ -106,11 +108,11 @@ $${#eq-som1}
 
 where $c_1$ is the concentration of the first reactant and $c_2$ the second one.
 While there are analytical solutions for some second-order reaction scenarios, we won't cover them (you can read more [here](https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Supplemental_Modules_(Physical_and_Theoretical_Chemistry)/Kinetics/02%3A_Reaction_Rates/2.08%3A_Second-Order_Reactions)).
-But @eq-som1 can be dropped into a numerical model easily!
+But @eq-som1 can be dropped into a numerical model easily.
 
 You can find some guidance on determining reaction rate constant values in @sec-parameter-values.
 
-Here is a Python example. . . 
+We'll present an example in @sec-rxn-ex1. 
 
 ## Equilibrium reactions
 
@@ -127,7 +129,7 @@ Several *chemical species* play a role:
 * $\ce{CO2(aq)}$ is a what you get when $\ce{CO2}$ dissolves in water--it is an uncharged solute surrounded by water molecules,
 * $\ce{H2CO3}$ is called carbonic acid, and is formed when $\ce{CO2(aq)}$ reacts with water in a hydration reaction,
 * $\ce{H2CO3*}$ is not actually a chemical species, but the sum of $\ce{CO2(aq)}$ and $\ce{H2CO3}$, used because it is difficult to measure the two separately,
-* $\ce{HCO3-}$ is bicarbonate, and is the most important buffer component in some systems, and
+* $\ce{HCO3-}$ is bicarbonate, and is the most important buffer component in many natural and some engineered systems, and
 * $\ce{CO3^2-}$ is carbonate.
 
 Chemical speciation models are used to determine the concentration of specific chemical species.
@@ -150,9 +152,9 @@ where $c=$ molar or molal concentration, i.e., moles of species per L of water o
 At equilibrium, the numeric value of that reaction quotient, @eq-carb-rq1, is know: at 15$\degC$ it is $3.80 \cdot 10^{-7}$ (@Snoeyink1980: p. 157).
 Actually, except for very dilute solutions, for accurate results a correction is needed for interactions between ions, but the use of concentrations can still give decent approximate values. 
 See @Snoeyink1980 for more information on chemical activity and ionic strength.
-But typically, because the value of constants vary by orders of magnitude, these constants are expressed as the negative logarithm (base 10) and we'll see $pK_a$.
+Typically, because the value of constants vary by orders of magnitude, these constants are expressed as the negative logarithm (base 10) and we'll see $pK_a$.
 So here, $pK_a = 6.42$.
-The numeric value is called the *equilibrium constant*
+The numeric value is called the *equilibrium constant*.
 
 So, if we know the concentration of $\ce{H2CO3^*}$ and $\ce{H^+}$ we can calculate the concentration of bicarbonate $\ce{HCO3-}$ using the equilibrium constant.
 The hydrogen ion (or "proton", because that it what it is) concentration is commonly take from pH, i.e.,
@@ -163,7 +165,69 @@ $${#eq-pH-def}
 
 Even better, if we could use other, independent, information, we can solve for all species concentrations, including $\ce{H+}$, which means we could calculate pH. 
 We can use element balance (commonly H balance) or charge balance for that other information.
-The programming might be a bit much for this course, so we will include an example in an appendix . . .
+The programming might be a bit much for this course though.
+
+## Reaction implementation {#sec-rxn-ex1}
+
+Let's look at the implementation of a kintic model for carbon dioxide hydration.
+We'll consider only two reactions:
+
+$$
+\ce{CO2 (aq) + H2O -> H2CO3}
+$${#eq-hyd-f}
+
+and
+
+$$
+\ce{H2CO3 -> CO2 (aq) + H2O}.
+$${#eq-hyd-r}
+
+Of course these are the same reaction, just written in different directions.
+We can treat both of them as first-order reactions. 
+Assuming water is present at a vastly higher concentration than either of the inorganic carbon species (this is typically the case for water chemistry problems), we can ignore it, and then have two state variables, the concentrations of $\ce{CO2 (aq)}$ and $\ce{H2CO3}$. 
+Let's implement this model.
+
+```{.python filename="hydration_mods.py"}
+{{< include hydration_mods.py >}}
+```
+
+```{python}
+from importlib import reload
+import hydration_mods as hm
+import numpy as np
+import matplotlib.pyplot as plt
+
+reload(hm)
+
+res = hm.co2_hydration(0.2, 0., rf=0.03, rr=20, times=np.linspace(0, 300, 100))
+
+plt.plot(res['t'], res['co2'], label = 'CO2')
+plt.plot(res['t'], res['h2co3'], label = 'H2CO3')
+plt.legend()
+```
+
+That is not very interesting!
+Do you see what is happening?
+Look at the rate constants and think about an equilibrium constant.
+
+```{python}
+from importlib import reload
+import hydration_mods as hm
+import numpy as np
+import matplotlib.pyplot as plt
+
+reload(hm)
+
+res = hm.co2_hydration(0., 0.2, rf=0.03, rr=20, times=np.linspace(0, 300, 100))
+
+plt.plot(res['t'], res['co2'], label = 'CO2')
+plt.plot(res['t'], res['h2co3'], label = 'H2CO3')
+plt.legend()
+```
+
+Still not so interesting--with that high first-order rate constant, carbonic acid is very quickly all converted to dissolved carbon dioxide through the dehydration reation.
+We would have to make the model more realistic by including other, ionic, species in equilibrium with carbonic acid to get some interesting results.
+
 
 ## Ammonia equilibrium
 
@@ -244,60 +308,20 @@ $${#eq-free-nh3-calc}
 Let's implement @eq-free-nh3-calc in Python for a simple free ammonia calculator.
 
 
-```{python}
-"""
-Description:
-    A free ammonia calculator function. Does not include corrections
-    for non-ideal behavior; technically only accurate for very
-    dilute solutions. 
-"""
-
-import numpy as np
-
-def free_NH3(TAN, pH, pKa = 9.56):
-    """
-    Calculate free ammonia concentration (NH3 (aq)) from pH and TAN concentration.
-
-    Parameters
-    ----------
-    TAN : float
-        Total ammoniacal nitrogen (TAN) concentration (any concentration units)
-    pH : float
-        Solution pH
-    pKa : float
-        Acid dissociation constant for NH4+
-
-    Returns
-    -------
-    float with free ammonia concentration in same units as TAN input
-    """
-
-    # Calculate H+ concentration from pH
-    c_H = 10**(-pH)
-
-    # And Ka
-    Ka = 10**(-pKa)
-
-    # Apply equation from text
-    c_NH3 = TAN / (1 + c_H / Ka)
-
-    # Return solution
-    return c_NH3 
-
+```{.python filename="ammonia_mods.py"}
+{{< include ammonia_mods.py >}}
 ```
 
 We can test it.
 
 ```{python}
-print(free_NH3(1, 9.56))
-print(free_NH3(1, 7))
-print(free_NH3(1, 10))
+import ammonia_mods as am
+print(am.free_NH3(1, 9.56))
+print(am.free_NH3(1, 7))
+print(am.free_NH3(1, 10))
 ```
 
 We see $\ce{NH4(aq)}$ is exactly half of TAN when $p\text{K}_a$ = pH, very small at pH 7, and high at pH 10, all of which are expected.
-
-
-
 
 ## Matrix operations
 
@@ -322,7 +346,7 @@ CO3-2  |  -1   |  2
   OH-  |   0   |  1
 ```
 
-Although $\ce{CO3^2-}$ forms from $\ce{H2CO3^*}$, here our reactant is carbonic acid $\ce{H2CO3^*}$, so in this model $\ce{CO3^2-}$ production is expressed as two reactions combined:
+Although $\ce{CO3^2-}$ forms from $\ce{HCO3-}$, here our reactant is carbonic acid $\ce{H2CO3^*}$, so in this model $\ce{CO3^2-}$ production is expressed as two reactions combined:
 
 $$
 \ce{H2CO3^* <=> CO3^2- + 2H+}.
@@ -513,7 +537,7 @@ So here are some components for one approach to creating microbial models:
 2. linking equations: a balanced chemical reaction that includes all state variables (stoichiometry), and
 3. constitutive equation: an equation for the rate of the overall reaction (kinetics).
 
-### Stoichiometry
+### Microbial stoichiometry {#sec-mic-stoich}
 
 Unlike simple chemical reactions such as urea hydrolysis, it isn't always possible to just look up the reaction.
 But there are a few different approaches that can be used, including the microbial stoiciometry approach presented by @rittmann_environmental_2020.
@@ -553,7 +577,7 @@ $${#eq-eth-ferm}
 The $\ce{C5H7O2N}$ "species" is yeast biomass, and is really an empirical chemical formula for microbial biomass.
 This reaction is balanced in terms of elements and reduction-oxidation (redox). 
 
-### Kinetics
+### Microbial kinetics {#sec-mic-kin}
 
 We have looked at a first-order approach above, and while this can be a component of microbial models, it is more accurate and useful to link reaction rate to both the quantity of microbial biomass and substrate (electron donor).
 A second-order approach is one option.
@@ -565,10 +589,18 @@ $${#eq-monod1}
 
 where $c_{x_a} =$ active microbial biomass concentration ($\gpmc$), $\hat{q}_{max} =$ maximum substrate utilization rate, and $c_s =$ substrate concentration.
 
+### Microbial growth
 
-<!-- Microbial rate of growth and biomass yield.
-     Monod kinetics.
-     Example: CSTR. -->
+In environmental engineering, it is common to quantify microbial populations as active microbial biomass.
+This is the sum of the organic matter that makes up all microbial cells in a system.
+Unlike populations of humans or other animals, microbial populations are often quantified by total mass.
+So to track microbial growth, we just need to include microbial biomass as a state variable.
+Coupled with the information in @sec-mic-stoich and @sec-mic-kin above, we have everything we need for a microbial model.
+This is only because microbial biomass is already included in @eq-eth-ferm above as $\ce{C5H7O2N}$.
+
+Yeast cells don't live forever.
+In the approach presented here we don't track individual yeast cells, so we cannot apply a probability of death (or survival) to individual cells.
+Instead, we can model death and decay as a first-order reaction.
 
 ## Problems
 
