@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Appendix G — Parameter values – An Introduction to Modeling with Python</title>
+<title>Appendix E — Fixing VS Code problems – An Introduction to Modeling with Python</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -33,8 +33,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./appx_reading.html" rel="next">
-<link href="./appx_fdm_formulas.html" rel="prev">
+<link href="./appx_fdm_formulas.html" rel="next">
+<link href="./appx_vs_code.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -110,35 +110,6 @@ MathJax = {
 };
 </script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -151,7 +122,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./appx_symbols.html">Appendices</a></li><li class="breadcrumb-item"><a href="./appx_parameter_values.html"><span class="chapter-number">G</span>&nbsp; <span class="chapter-title">Parameter values</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./appx_symbols.html">Appendices</a></li><li class="breadcrumb-item"><a href="./appx_vsc_problems.html"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Fixing VS Code problems</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -299,7 +270,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appx_vsc_problems.html" class="sidebar-item-text sidebar-link">
+  <a href="./appx_vsc_problems.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Fixing VS Code problems</span></span></a>
   </div>
 </li>
@@ -311,7 +282,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./appx_parameter_values.html" class="sidebar-item-text sidebar-link active">
+  <a href="./appx_parameter_values.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">G</span>&nbsp; <span class="chapter-title">Parameter values</span></span></a>
   </div>
 </li>
@@ -333,22 +304,17 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#typical-numeric-values" id="toc-typical-numeric-values" class="nav-link active" data-scroll-target="#typical-numeric-values"><span class="header-section-number">G.1</span> Typical numeric values</a></li>
-  <li><a href="#mass-transfer-coefficients-and-diffusivity" id="toc-mass-transfer-coefficients-and-diffusivity" class="nav-link" data-scroll-target="#mass-transfer-coefficients-and-diffusivity"><span class="header-section-number">G.2</span> Mass transfer coefficients and diffusivity</a></li>
-  <li><a href="#reaction-rates" id="toc-reaction-rates" class="nav-link" data-scroll-target="#reaction-rates"><span class="header-section-number">G.3</span> Reaction rates</a>
-  <ul class="collapse">
-  <li><a href="#first-order" id="toc-first-order" class="nav-link" data-scroll-target="#first-order"><span class="header-section-number">G.3.1</span> First-order</a></li>
-  <li><a href="#second-order" id="toc-second-order" class="nav-link" data-scroll-target="#second-order"><span class="header-section-number">G.3.2</span> Second-order</a></li>
-  </ul></li>
+  <li><a href="#wsl-install-prompt-when-using-shiftenter" id="toc-wsl-install-prompt-when-using-shiftenter" class="nav-link active" data-scroll-target="#wsl-install-prompt-when-using-shiftenter"><span class="header-section-number">E.1</span> 1. WSL install prompt when using Shift+Enter</a></li>
+  <li><a href="#turning-off-copilot-ai-autocomplete" id="toc-turning-off-copilot-ai-autocomplete" class="nav-link" data-scroll-target="#turning-off-copilot-ai-autocomplete"><span class="header-section-number">E.2</span> 2. Turning off Copilot / AI autocomplete</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./appx_symbols.html">Appendices</a></li><li class="breadcrumb-item"><a href="./appx_parameter_values.html"><span class="chapter-number">G</span>&nbsp; <span class="chapter-title">Parameter values</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./appx_symbols.html">Appendices</a></li><li class="breadcrumb-item"><a href="./appx_vsc_problems.html"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Fixing VS Code problems</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-parameter-values" class="quarto-section-identifier">Appendix G — Parameter values</span></h1>
+<h1 class="title">Appendix E — Fixing VS Code problems</h1>
 </div>
 
 
@@ -365,121 +331,39 @@ window.Quarto = {
 </header>
 
 
-<p>Selection of appropriate parameter values for validation or application of a model is not always simple. In some cases they can be determined from theory, but often measurements are needed. The information presented below includes some approximate estimates for some common parameters for simple systems and approaches for making estimates for other systems.</p>
-<section id="typical-numeric-values" class="level2" data-number="G.1">
-<h2 data-number="G.1" class="anchored" data-anchor-id="typical-numeric-values"><span class="header-section-number">G.1</span> Typical numeric values</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 14%">
-<col style="width: 17%">
-<col style="width: 17%">
-<col style="width: 17%">
-<col style="width: 17%">
-<col style="width: 17%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Parameter</th>
-<th>Typical symbol</th>
-<th>Conditions</th>
-<th>Units</th>
-<th>Value</th>
-<th>Source</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Diffusivity</td>
-<td><span class="math inline">\(D\)</span></td>
-<td><span class="math inline">\(\text{O}_2\)</span> in water</td>
-<td><span class="math inline">\(\text{m}^2 ~ \text{s}^{-1}\)</span></td>
-<td><span class="math inline">\(2.1 \cdot 10^{-9}\)</span></td>
-<td>Cussler (2009)</td>
-</tr>
-<tr class="even">
-<td>Diffusivity</td>
-<td><span class="math inline">\(D\)</span></td>
-<td><span class="math inline">\(\text{NaCl}\)</span> in water</td>
-<td><span class="math inline">\(\text{m}^2 ~ \text{s}^{-1}\)</span></td>
-<td><span class="math inline">\(1.6 \cdot 10^{-9}\)</span></td>
-<td>Cussler (2009)</td>
-</tr>
-<tr class="odd">
-<td>Diffusivity</td>
-<td><span class="math inline">\(D\)</span></td>
-<td><span class="math inline">\(\text{CO}_2\)</span> in air</td>
-<td><span class="math inline">\(\text{m}^2 ~ \text{s}^{-1}\)</span></td>
-<td><span class="math inline">\(1.4 \cdot 10^{-5}\)</span></td>
-<td>Cussler (2009)</td>
-</tr>
-<tr class="even">
-<td>Mass transfer coefficient</td>
-<td><span class="math inline">\(k_c\)</span></td>
-<td>Air blowing over flat plate</td>
-<td><span class="math inline">\(\text{m} ~ \text{s}^{-1}\)</span></td>
-<td><span class="math inline">\(0.001 - 0.01\)</span></td>
-<td>Calculated from correlations</td>
-</tr>
-<tr class="odd">
-<td>Heat transfer coefficient</td>
-<td><span class="math inline">\(h\)</span></td>
-<td>Gases, free and forced</td>
-<td><span class="math inline">\(\text{W} ~ \text{m}^{-2} ~ \text{K}^{-1}\)</span></td>
-<td><span class="math inline">\(2 - 250\)</span></td>
-<td>Incropera (2003)</td>
-</tr>
-<tr class="even">
-<td>Heat transfer coefficient</td>
-<td><span class="math inline">\(h\)</span></td>
-<td>Liquids, free and forced</td>
-<td><span class="math inline">\(\text{W} ~ \text{m}^{-2} ~ \text{K}^{-1}\)</span></td>
-<td><span class="math inline">\(50 - 20,000\)</span></td>
-<td>Incropera (2003)</td>
-</tr>
-<tr class="odd">
-<td>Heat transfer coefficient</td>
-<td><span class="math inline">\(h\)</span></td>
-<td>With a phase change</td>
-<td><span class="math inline">\(\text{W} ~ \text{m}^{-2} ~ \text{K}^{-1}\)</span></td>
-<td><span class="math inline">\(2,500 - 100,000\)</span></td>
-<td>Incropera (2003)</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="mass-transfer-coefficients-and-diffusivity" class="level2" data-number="G.2">
-<h2 data-number="G.2" class="anchored" data-anchor-id="mass-transfer-coefficients-and-diffusivity"><span class="header-section-number">G.2</span> Mass transfer coefficients and diffusivity</h2>
-<p>If the primary resistance to mass transfer is through a thin film, diffusivity and the film thickness can be combined to estimate a mass transfer coefficient. The film may be real (e.g., a plastic membrane) or hypothesized (e.g., the stagnant fluid films at interfaces between phases). The appropriate equation can be derived from Fick’s law under steady-state conditions,</p>
-<p><span class="math display">\[
-k_c = \frac{D}{L},
-\]</span></p>
-<p>where <span class="math inline">\(L\)</span> is the film thickness (length, typically m), and <span class="math inline">\(D\)</span> is diffusivity (typically <span class="math inline">\(\text{m}^2 ~ \text{s}^{-1}\)</span>).</p>
-<p>Film thickness is usually calculated based on measurements of mass transfer, but once determined, can be instead used by modelers like us. For designated liquid mass transfer systems, values are usually around <span class="math inline">\(1 \cdot 10^{-4}\)</span> m (Cussler, 2009). For ponds, lakes, or oceans, effective values of the film thickness can be multiple mm, so up to, say, <span class="math inline">\(5 \cdot 10^{-3}\)</span> m.</p>
-<p>Diffusivity depends on both the diffusing component and what it is diffusing through. The values above give you some idea of what to expect (and you can find more values in <a href="https://brightspace.au.dk/d2l/le/lessons/184142/topics/2523814">Cussler’s Chapter 5</a>). In general, diffusion coefficients in water are around <span class="math inline">\(10^{-9} ~ \text{m}^2 ~ \text{s}^{-1}\)</span> and in air, around <span class="math inline">\(10^{-5} ~ \text{m}^2 ~ \text{s}^{-1}\)</span>. Diffusivity decreases with the size of the diffusing molecule. So for big molecules like sucrose, it is under <span class="math inline">\(1 \cdot 10^{-9} ~ \text{m}^2 ~ \text{s}^{-1}\)</span> and for huge molecules like hemogolbin it is under <span class="math inline">\(1 \cdot 10^{-10} ~ \text{m}^2 ~ \text{s}^{-1}\)</span>. Diffusivity for diffusion through solids can be several or many orders of magnitude lower.</p>
-</section>
-<section id="reaction-rates" class="level2" data-number="G.3">
-<h2 data-number="G.3" class="anchored" data-anchor-id="reaction-rates"><span class="header-section-number">G.3</span> Reaction rates</h2>
-<section id="first-order" class="level3" data-number="G.3.1">
-<h3 data-number="G.3.1" class="anchored" data-anchor-id="first-order"><span class="header-section-number">G.3.1</span> First-order</h3>
-<p>First-order reaction constants can be estimated given some knowledge (or a guess) about how fast a reaction proceeds. For a rough estimate, the relative rate of reaction can be taken directly as the rate constant. So, for example, if some reactant disappears at a rate of 3.5% per hour, the rate constant is around 0.035 <span class="math inline">\(\text{hr}^{-1}\)</span>, or <span class="math inline">\(9.7 \cdot 10^{-6} ~ \text{s}^{-1}\)</span>. Notice how small the values can be when expressed in the units we typically use!</p>
-<p>This approach fails if the measured change is large, e.g., 50% over some period. Instead, use the exact analytical approach,</p>
-<p><span class="math display">\[
-k = - \frac{\ln(c_t / c_0)}{\Delta t},
-\]</span></p>
-<p>where <span class="math inline">\(k\)</span> is the first-order rate constant, <span class="math inline">\(c_t\)</span> is the remaining reactant concentration after <span class="math inline">\(\Delta t\)</span> time, and <span class="math inline">\(c_0\)</span> is the initial value (mass could be used instead of concentration).</p>
-</section>
-<section id="second-order" class="level3" data-number="G.3.2">
-<h3 data-number="G.3.2" class="anchored" data-anchor-id="second-order"><span class="header-section-number">G.3.2</span> Second-order</h3>
-<p>Second-order reactions are a little trickier, but just a little. Here is a simple approach.</p>
+<p><em>Generated by Claude (Anthropic).</em></p>
+<section id="wsl-install-prompt-when-using-shiftenter" class="level2" data-number="E.1">
+<h2 data-number="E.1" class="anchored" data-anchor-id="wsl-install-prompt-when-using-shiftenter"><span class="header-section-number">E.1</span> 1. WSL install prompt when using Shift+Enter</h2>
+<p><strong>Symptom:</strong> Pressing Shift+Enter to run a line of code triggers a popup about installing WSL (Windows Subsystem for Linux), appearing in what looks like a command prompt window. Canceling it leaves a plain PowerShell terminal, where typing <code>python</code> manually gets Python running again.</p>
+<p><strong>Likely cause:</strong> VS Code has a WSL-based Python interpreter selected instead of a native Windows one. Shift+Enter (“Run Selection/Line in Python Terminal”) tries to launch through WSL, which triggers the install prompt if WSL isn’t actually set up. VS Code sometimes auto-detects and defaults to a WSL interpreter entry even when WSL isn’t properly installed.</p>
+<p><strong>Fix:</strong></p>
 <ol type="1">
-<li>Determine the change in a reactant over time when the second reactant is held constant (or make a guess).</li>
-<li>Apply the equation above.</li>
-<li>Divide the result by the fixed concentration of the second reactant.</li>
+<li><strong>Check the selected interpreter.</strong> Open the Command Palette (Ctrl+Shift+P) and run “Python: Select Interpreter” — or click the Python version in the bottom-right status bar. Review the list of interpreters VS Code found.</li>
+<li><strong>Look for a WSL entry.</strong> If an interpreter labeled something like <code>Python 3.x ('WSL: Ubuntu')</code> is checked as selected, that’s almost certainly the cause.</li>
+<li><strong>Select a native Windows interpreter instead.</strong> Choose one with a normal Windows path, e.g.&nbsp;<code>C:\Users\...\AppData\Local\Programs\Python\Python3xx\python.exe</code>, or a conda/venv path under the user’s folder. Avoid anything mentioning WSL.</li>
+<li><strong>If no Windows interpreter appears,</strong> Python isn’t actually installed on the Windows side. Install it from <a href="https://www.python.org">python.org</a> (check “Add python.exe to PATH” during install), then repeat step 1.</li>
+<li><strong>Close old terminals and retry.</strong> Close any existing integrated terminal tabs (trash icon in the terminal panel) so a fresh one opens with the newly selected interpreter, then try Shift+Enter again.</li>
+<li><strong>Fallback check.</strong> If the prompt still appears, check Ctrl+Shift+P → “Terminal: Select Default Profile” and make sure it’s set to Command Prompt or PowerShell, not WSL.</li>
 </ol>
-<p>Units on a second-order reaction rate constant are inverse concentration per unit time.</p>
-
-
+<p><em>Note: this is a Windows-specific issue — it won’t come up on macOS or Linux.</em></p>
 </section>
+<section id="turning-off-copilot-ai-autocomplete" class="level2" data-number="E.2">
+<h2 data-number="E.2" class="anchored" data-anchor-id="turning-off-copilot-ai-autocomplete"><span class="header-section-number">E.2</span> 2. Turning off Copilot / AI autocomplete</h2>
+<p><strong>Symptom:</strong> VS Code’s built-in AI (Copilot) auto-fills docstrings, parameter values, and even module structure, so students end up accepting generated code rather than writing it themselves.</p>
+<p><strong>Fix — several layers, pick what fits:</strong></p>
+<ol type="1">
+<li><p><strong>Status bar toggle (quickest, per-session).</strong> If Copilot is installed, there’s usually a Copilot icon in the bottom status bar. Click it for a menu with “Disable Completions” (globally or per file type).</p></li>
+<li><p><strong>Settings UI.</strong> Ctrl+Shift+P → “Preferences: Open Settings (UI)”, search “copilot”, and set “GitHub Copilot: Enable” to false.</p></li>
+<li><p><strong>settings.json (most reliable, shareable).</strong> Ctrl+Shift+P → “Preferences: Open User Settings (JSON)”, and add:</p>
+<pre class="{json}"><code>"github.copilot.enable": {
+  "*": false
+}</code></pre>
+<p>This snippet can be handed to students directly so everyone ends up in the same state. It can also be placed in a <code>.vscode/settings.json</code> file inside the course repo, so it’s off by default for anyone who opens the project — no per-student setup needed.</p></li>
+<li><p><strong>Disable the extension entirely.</strong> Extensions panel (Ctrl+Shift+X) → “GitHub Copilot” → gear icon → Disable (or Disable Workspace-only, if it should stay available outside the course folder).</p></li>
+<li><p><strong>Check for IntelliCode too.</strong> VS Code’s built-in IntelliCode extension does a milder ML-based autocomplete reordering. If students see suggestions with no Copilot installed, check Extensions → “IntelliCode” and disable if present.</p></li>
+</ol>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -885,13 +769,13 @@ k = - \frac{\ln(c_t / c_0)}{\Delta t},
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./appx_fdm_formulas.html" class="pagination-link" aria-label="Finite difference formulas">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Finite difference formulas</span></span>
+      <a href="./appx_vs_code.html" class="pagination-link" aria-label="Introduction to VS Code">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Introduction to VS Code</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./appx_reading.html" class="pagination-link" aria-label="Other books">
-        <span class="nav-page-text"><span class="chapter-number">H</span>&nbsp; <span class="chapter-title">Other books</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./appx_fdm_formulas.html" class="pagination-link" aria-label="Finite difference formulas">
+        <span class="nav-page-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Finite difference formulas</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

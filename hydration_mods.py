@@ -12,7 +12,7 @@ Description:
 import numpy as np
 from scipy.integrate import solve_ivp
 
-def co2_hydration(cco2, ch2co3, rf, rr, times):
+def co2_hydration(cco2, ch2co3, kf, kr, times):
     """
     Dynamic model of dissolved carbon dioxide hydration.
 
@@ -20,9 +20,9 @@ def co2_hydration(cco2, ch2co3, rf, rr, times):
     ----------
     c_co2 : float
         Initial dissolved carbon dioxide concentration (mol/kg)
-    rf : float
+    kf : float
         First-order forward reaction rate constant (1/s)
-    rr : float
+    kr : float
         First-order reverse reaction rate constant (1/s)
     times : array-like
         Times for evaluation
@@ -35,10 +35,10 @@ def co2_hydration(cco2, ch2co3, rf, rr, times):
     # Define rates function
     def rates(t, conc):
 
-        frate = conc[0] * rf
-        rrate = conc[1] * rr
-        dco2dt = - frate + rrate 
-        dh2co3dt = - rrate + frate
+        rf = conc[0] * kf
+        rr = conc[1] * kr
+        dco2dt = - rf + rr 
+        dh2co3dt = - rr + rf
 
         return [dco2dt, dh2co3dt]
 
@@ -49,7 +49,7 @@ def co2_hydration(cco2, ch2co3, rf, rr, times):
         t_eval = times
     )
 
-    # Return user-friendly results object (dictionary here)
+    # Return results
     out = {
         "t": res.t, 
         "co2": res.y[0, :],

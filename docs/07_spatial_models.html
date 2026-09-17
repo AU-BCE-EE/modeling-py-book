@@ -334,20 +334,26 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./appx_vsc_problems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Fixing VS Code problems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./appx_fdm_formulas.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Finite difference formulas</span></span></a>
+ <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Finite difference formulas</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./appx_parameter_values.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Parameter values</span></span></a>
+ <span class="menu-text"><span class="chapter-number">G</span>&nbsp; <span class="chapter-title">Parameter values</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./appx_reading.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">G</span>&nbsp; <span class="chapter-title">Other books</span></span></a>
+ <span class="menu-text"><span class="chapter-number">H</span>&nbsp; <span class="chapter-title">Other books</span></span></a>
   </div>
 </li>
       </ul>
@@ -612,7 +618,7 @@ f''(x) = \frac{f(x) - 2 \cdot f(x-\Delta x) + f(x -2\cdot \Delta x)}{\Delta x^2}
 &amp;\frac{dT(2.0)}{dt} = \alpha \cdot\frac{T(2.0) - 2 \cdot T(2.0 - 0.5) + T(2.0 -2\cdot 0.5)}{0.5^2}
 \end{align}
 \tag{7.10}\]</span></span></p>
-<p>This gives us the 5 coupled ODEs and with information about boundary conditions included in red. Since we simplified the example by removing advection, we would need to apply finite difference formulas for the first derivative as well to solve the real problem. In <a href="appx_fdm_formulas.html" class="quarto-xref"><span>Appendix E</span></a> a complete overview of the finite difference formulas (backward, forward, central) are given for the first and second derivatives.</p>
+<p>This gives us the 5 coupled ODEs and with information about boundary conditions included in red. Since we simplified the example by removing advection, we would need to apply finite difference formulas for the first derivative as well to solve the real problem. In <a href="appx_fdm_formulas.html" class="quarto-xref"><span>Appendix F</span></a> a complete overview of the finite difference formulas (backward, forward, central) are given for the first and second derivatives.</p>
 <p><strong>Implementation in Python</strong></p>
 <p>Lets now go to python to encode and solve the ODE system in <a href="#eq-fiveODE" class="quarto-xref">Equation&nbsp;<span>7.10</span></a>. We want to see something happening so lets assume that the water is <span class="math inline">\(0 \degC\)</span> everywhere to stat with, except at the left side (<span class="math inline">\(10 \degC\)</span>). We will run the simulation for 10 minutes.</p>
 <div id="c9979d61" class="cell" data-execution_count="1">

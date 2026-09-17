@@ -191,6 +191,8 @@ Let's implement this model.
 {{< include hydration_mods.py >}}
 ```
 
+And let's apply it, using the approximate rate constants given in @kern_hydration_1960.
+
 ```{python}
 from importlib import reload
 import hydration_mods as hm
@@ -199,7 +201,7 @@ import matplotlib.pyplot as plt
 
 reload(hm)
 
-res = hm.co2_hydration(0.2, 0., rf=0.03, rr=20, times=np.linspace(0, 300, 100))
+res = hm.co2_hydration(0.2, 0., kf=0.03, kr=20, times=np.linspace(0, 300, 100))
 
 plt.plot(res['t'], res['co2'], label = 'CO2')
 plt.plot(res['t'], res['h2co3'], label = 'H2CO3')
@@ -210,6 +212,8 @@ That is not very interesting!
 Do you see what is happening?
 Look at the rate constants and think about an equilibrium constant.
 
+Let's start with all the inorganic C in the carbonic acid form (i.e., on the slow side) and zoom in on the time.
+
 ```{python}
 from importlib import reload
 import hydration_mods as hm
@@ -218,16 +222,14 @@ import matplotlib.pyplot as plt
 
 reload(hm)
 
-res = hm.co2_hydration(0., 0.2, rf=0.03, rr=20, times=np.linspace(0, 300, 100))
+res = hm.co2_hydration(0., 0.2, kf=0.03, kr=20, times=np.linspace(0, 20, 100))
 
 plt.plot(res['t'], res['co2'], label = 'CO2')
 plt.plot(res['t'], res['h2co3'], label = 'H2CO3')
 plt.legend()
 ```
 
-Still not so interesting--with that high first-order rate constant, carbonic acid is very quickly all converted to dissolved carbon dioxide through the dehydration reation.
-We would have to make the model more realistic by including other, ionic, species in equilibrium with carbonic acid to get some interesting results.
-
+To make the model more realistic, we would have include the other, ionic, species in equilibrium with carbonic acid.
 
 ## Ammonia equilibrium
 
