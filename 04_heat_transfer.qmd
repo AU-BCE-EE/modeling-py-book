@@ -207,7 +207,7 @@ OK, so what does all this mean about cases where the temperature gradient is not
 For example, see @fig-wall2.
 
 Well, the nonlinear temperature profile means the temperature derivative $\frac{dT}{dx}$ is not constant over space, which means that the rate of heat transfer, the heat flux really, is not constant over space either.
-At the left side, there is a *positive* temperature derivative, so the heat flux is *negative*, or to the left.
+At the left side, there is a *positive* temperature derivative, so the heat flux is *negative*.
 Alternatively, we can just see that the temperature is increasing from the edge in, and because heat flows from high to low temperature through conduction, heat flow must be flowing to the left.
 Get used to this intuitive approach--it is helpful for model implementation, debugging, and verification.
 Using the same concepts, we can see there is heat flow to the right at the right edge.
@@ -381,7 +381,7 @@ where $\dot{m}_m=$ the mass-based rate of melting ($\gps$), $\dot{m}_v=$ the mas
 
 Let's extend our coffee model as an application of some of the concepts explored in this chapter.
 @fig-coffee2modes is a revised model sketch.
-Now we will explicitly consider heat loss through two different routes: the exposed coffee surface (through two fluid layers: coffe and air) and the mug sides (two fluids and one solid wall). 
+Now we will explicitly consider heat loss through two different routes: the exposed coffee surface (through two fluid layers: coffee and air) and the mug sides (two fluids and one solid wall). 
 We have a choice of using more fundamental parameter inputs or more empirical.
 The more fundamental approach would be to include parameters for liquid phase convection coefficients, conductivity and thickness of the cup itself, and convection coefficients for the air, and calculate both $U$ parameters internally.
 We'll go with the more empirical route, where only $U_t$ (t for top) and $U_s$ (s for side) are specified as inputs.
