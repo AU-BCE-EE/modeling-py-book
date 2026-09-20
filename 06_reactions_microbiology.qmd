@@ -598,39 +598,71 @@ This is the sum of the organic matter that makes up all microbial cells in a sys
 Unlike populations of humans or other animals, microbial populations are often quantified by total mass.
 So to track microbial growth, we just need to include microbial biomass as a state variable.
 Coupled with the information in @sec-mic-stoich and @sec-mic-kin above, we have everything we need for a microbial model.
-This is only because microbial biomass is already included in @eq-eth-ferm above as $\ce{C5H7O2N}$.
+This is only because microbial biomass is already included in @eq-eth-ferm above as $\ce{C5H7O2N}$; it was considered when developing the overall reaction.
+It is common to do this, to include microbial biomass in a reaction, by specifying a fraction of substrate that goes to producing biomass, with the balance going to energy production.
+In fact, it is convenient to separately consider the energy producing and biomass synthesis reactions.
+For this yeast fermentation system, these would be:
 
-Yeast cells don't live forever.
+$$
+\ce{C6H12O6 -> 2CH3CH2OH + CO2
+$$
+
+for energy and
+
+$$
+\ce{C6H12O6 + 1.2 NH4+ + 1.2 HCO3- ->
+1.2 C5H7O2N + 1.2 CO2 + 4.8 H2O}
+$$
+
+for yeast biomass.
+@eq-eth-ferm above just combines with the assumption that 20% of substrate goes to biomass production and the remaining 80% to energy production (recovery) via fermentation.
+Our own (human) bodies do this partitioning, just like microbes, at least when we are growing children. 
+Ideally, from the perspective of growth, reproduction, and survival, a large fraction of consumed substrate would go toward making new biomass.
+But it takes energy to turn substrate into live, functioning, biomass, and it takes energy to live.
+So this ideal is never realized.
+
+When an energy recovery pathway produces a lot of energy per unit substrate, less substrate needs to be used this way to make biomass.
+So the fraction going to synthesis can be much higher.
+Aerobic respiration is like this, while fermentation, and especially methanogenesis, produce less energy and so less biomass per unit substrate.
+
+Yeast cells, and other microbial cells, don't live forever.
 In the approach presented here we don't track individual yeast cells, so we cannot apply a probability of death (or survival) to individual cells.
 Instead, we can model death and decay as a first-order reaction.
 
 ## Problems
 
-1. Formulate (pencil and paper or digital equivalent) and implement (in Python) a simple urea hydrolysis model.
-   You can assume the reaction is first-order.
-   Assume all products accumulate in a fixed solution volume (or solvent, water, mass).
-   Plot predicted urea, ammonia, and carbon dioxide concentration over time.
-
-2. Create a Python function that calcuates free ammonia $\ce{NH3(aq)}$ from TAN, pH, and temperature.
+1. Create a Python function that calcuates free ammonia $\ce{NH3(aq)}$ from TAN, pH, and temperature.
    You can use this expression for the temperature dependency of $K_a$:
 
    $$
-   \log_{10}{K_a} = 0.0905 + \frac{2729.31}{T}, 
+   \log_{10}{K_a} = - 0.0905 - \frac{2729.31}{T}, 
+   $$
+
+   or, if you like the $p$ concept,
+
+   $$
+   pK_a =  0.0905 + \frac{2729.31}{T}, 
    $$
 
    where $T$ is temperature in K.
    Plot free ammonia concentration vs. temperature in one plot and vs. pH in another.
 
+2. Formulate (pencil and paper or digital equivalent) and implement (in Python) a simple urea hydrolysis model.
+   You can assume the reaction is first-order.
+   Assume all products accumulate in a fixed solution volume (or solvent, water, mass).
+   Can you use an array for stoichiometric coefficients?
+   Plot predicted urea, ammonia, and carbon dioxide concentration over time.
+
 3. Formulate and implement a model for a microbial community consuming milk processing wastewater that includes two groups: aerobic bacteria that use dissolved oxygen to oxidize the wastewater organice matter and fermentative bacteria that produce lactic acid. 
    The reactor runs in batch mode, and you do not need to include aeration; there are no inputs or outputs to the reactor.
    You can use the following empirical formula for the substrate: $\ce{C14H24O6N}$.
    The Microbial Stoichiometry Calculator can be used to sort out stoichiometry: <https://micstoich.com>. 
+   You can use a cell synthesis fraction of 50% for aerobes and 20% for the fermenters.
    For kinetics, use whichever approach you prefer: first-order, second-order, or Monod.
    Use your Python model to predict the effect of initial dissolved oxygen concentration on microbial populations and final lactic acid concentration.
 
 4. Derive equations for calculating carbonate species concentrations from $\ce{CO2}$ partial pressure and solution pH. 
-   Try to implement it in Python as a function.
-   This is a difficult problem.
-   Bonus: Can you include calculation of pH instead of using it as an input?
+   Implement it in Python as a function.
+   Can you include calculation of pH instead of using it as an input?
 
 ## References {.unnumbered}
