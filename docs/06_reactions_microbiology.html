@@ -443,7 +443,7 @@ window.Quarto = {
 \]</span></p>
 <p>and carbon dioxide,</p>
 <p><span class="math display">\[
-\frac{dc_{\ce{CO2}}}{dt} = 2 \cdot r,
+\frac{dc_{\ce{CO2}}}{dt} = 1 \cdot r,
 \]</span></p>
 <p>all with units of <span class="math inline">\(\molpmcps\)</span>. The coefficients in these ODEs come directly from <a href="#eq-urea1" class="quarto-xref">Equation&nbsp;<span>6.1</span></a>. Simple! When implemented in Python (or written down on paper as a mathematical model, for that matter) a coefficient array can be combined with a state variable array for compact and efficient code when there is more than one state variable, as implied in the above example. We will see some of that later.</p>
 <p>There are some complications that come from using other units. In many cases, it is not moles but species mass, or even mass of a particular element that is of interest; then the coefficients need to be adjusted, and this can be done in at least these two ways:</p>
@@ -582,7 +582,7 @@ p\text{H} = - log_{10}(c_{H^+}).
 <span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> out</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>And let’s apply it, using the approximate rate constants given in <span class="citation" data-cites="kern_hydration_1960">Kern (<a href="#ref-kern_hydration_1960" role="doc-biblioref">1960</a>)</span>.</p>
-<div id="f355d7a9" class="cell" data-execution_count="1">
+<div id="53b00be7" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> importlib <span class="im">import</span> <span class="bu">reload</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> hydration_mods <span class="im">as</span> hm</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -605,7 +605,7 @@ p\text{H} = - log_{10}(c_{H^+}).
 </div>
 <p>That is not very interesting! Do you see what is happening? Look at the rate constants and think about an equilibrium constant.</p>
 <p>Let’s start with all the inorganic C in the carbonic acid form (i.e., on the slow side) and zoom in on the time.</p>
-<div id="51e21fd0" class="cell" data-execution_count="2">
+<div id="89b23877" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> importlib <span class="im">import</span> <span class="bu">reload</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> hydration_mods <span class="im">as</span> hm</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -720,7 +720,7 @@ c_{\ce{NH3}(aq)} = \frac{c_{\text{TAN}}} {1 + \frac {c_{\ce{H+}}} {K_a}}.
 <span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We can test it.</p>
-<div id="970bfe37" class="cell" data-execution_count="3">
+<div id="c59d5e2e" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ammonia_mods <span class="im">as</span> am</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(am.free_NH3(<span class="dv">1</span>, <span class="fl">9.56</span>))</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(am.free_NH3(<span class="dv">1</span>, <span class="dv">7</span>))</span>
@@ -737,7 +737,7 @@ c_{\ce{NH3}(aq)} = \frac{c_{\text{TAN}}} {1 + \frac {c_{\ce{H+}}} {K_a}}.
 <h2 data-number="6.6" class="anchored" data-anchor-id="matrix-operations"><span class="header-section-number">6.6</span> Matrix operations</h2>
 <p>Matrices are convenient for oranizing stoichiometric coefficients and then even using in compact code for speciation calculations. Here we will use the carbonate system as as demo.</p>
 <p>We’ll start with a stoichiometry matrix. First we need to think about how to set it up, because at this point there are multiple routes that could be taken. We need to select what are sometimes called “master species” or we might call “funamental species”. These species will be the reactants for all reactions. We’ll use <span class="math inline">\(\ce{H2CO3^*}\)</span> and <span class="math inline">\(\ce{H+}\)</span>. These reactants will define the columns in our stoichiometry matrix, and products will define rows. This too is arbitrary, but seems most convenient. If we only consider the species <span class="math inline">\(\ce{H2CO3^*}\)</span>, <span class="math inline">\(\ce{HCO3-}\)</span>, <span class="math inline">\(\ce{CO3^2-}\)</span>, and of course <span class="math inline">\(\ce{H+}\)</span> and <span class="math inline">\(\ce{OH-}\)</span>, our coefficient matrix is:</p>
-<div id="3aaa559f" class="cell" data-execution_count="4">
+<div id="d1c7f3b1" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>       <span class="op">|</span> H2CO3<span class="op">*|</span>  H<span class="op">+</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>       <span class="op">--------|----</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>HCO3<span class="op">-</span>  <span class="op">|</span>  <span class="op">-</span><span class="dv">1</span>   <span class="op">|</span>  <span class="dv">1</span></span>
@@ -749,7 +749,7 @@ c_{\ce{NH3}(aq)} = \frac{c_{\text{TAN}}} {1 + \frac {c_{\ce{H+}}} {K_a}}.
 \ce{H2CO3^* &lt;=&gt; CO3^2- + 2H+}.
 \tag{6.16}\]</span></span></p>
 <p>So what is the use of this matrix? We’ll demonstrate after first creating the matrix in Python.</p>
-<div id="4e8ceb89" class="cell" data-execution_count="5">
+<div id="efdb59d9" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Stoichometry matrix</span></span>
@@ -771,7 +771,7 @@ c_{\ce{NH3}(aq)} = \frac{c_{\text{TAN}}} {1 + \frac {c_{\ce{H+}}} {K_a}}.
 </div>
 <p>Note that we do not get row or column names with a matrix. So good comments (as above) are helpful.</p>
 <p>To use the matrix, we need equilibrium constants for each reaction–so three here, one for each row.</p>
-<div id="b0105da9" class="cell" data-execution_count="6">
+<div id="eccc4c43" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>keq <span class="op">=</span> <span class="dv">10</span><span class="op">**</span>np.array([<span class="op">-</span><span class="fl">6.3</span>, <span class="op">-</span><span class="fl">16.6</span>, <span class="op">-</span><span class="fl">14.0</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The first thing we can do with the matrix is to calculate reactant species concentrations once we have master species concentrations. Look at <a href="#eq-carb2" class="quarto-xref">Equation&nbsp;<span>6.16</span></a>. The relevant mass action expression is</p>
@@ -783,7 +783,7 @@ k_2 = \frac{c_{\ce{CO3^2-}} \cdot c_{\ce{H+}}^2}{c_{\ce{H2CO3^*}}}.
 c_{\ce{CO3^2-}} = k_2 \cdot \frac{c_{\ce{H2CO3^*}}} {c_{\ce{H+}}^2}.
 \tag{6.18}\]</span></span></p>
 <p>We can actually carry out this calculation using the <code>sc</code> stoichiometry matrix.</p>
-<div id="1a1cdd37" class="cell" data-execution_count="7">
+<div id="71ec7dff" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>cH2CO3s <span class="op">=</span> <span class="fl">0.001</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>cHp <span class="op">=</span> <span class="fl">1e-6</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>keq[<span class="dv">1</span>] <span class="op">*</span> cH2CO3s<span class="op">**</span>(<span class="op">-</span>sc[<span class="dv">1</span>, <span class="dv">0</span>]) <span class="op">/</span> cHp<span class="op">**</span>(sc[<span class="dv">1</span>, <span class="dv">1</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -792,7 +792,7 @@ c_{\ce{CO3^2-}} = k_2 \cdot \frac{c_{\ce{H2CO3^*}}} {c_{\ce{H+}}^2}.
 </div>
 </div>
 <p>Do you see what we’ve done? Do you understand why we included the <code>**(-sc[1, 0])</code> bit? That makes it more general, and adaptable to the complete calculations for all reactants, which we can do using matrix operations like this:</p>
-<div id="6411ef41" class="cell" data-execution_count="8">
+<div id="eaa90c7b" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>conc <span class="op">=</span> keq <span class="op">*</span> cH2CO3s<span class="op">**</span>(<span class="op">-</span>sc[:, <span class="dv">0</span>]) <span class="op">/</span> (cHp<span class="op">**</span>sc[:, <span class="dv">1</span>])</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>conc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
@@ -800,7 +800,7 @@ c_{\ce{CO3^2-}} = k_2 \cdot \frac{c_{\ce{H2CO3^*}}} {c_{\ce{H+}}^2}.
 </div>
 </div>
 <p>This approach could work with more reactants and species with different stoichiometric coefficients. Of course, we don’t typically know master species concentrations. When we make measurements on a water sample, create a solution in the laboratory, or simulate mass transfer and reaction of chemicals, it is the <em>total</em> concentrations that we know. So it takes a bit more conceptual and programming trickery to come up with a general approach for solving chemical speciation problems. In the example <code>carb_spec()</code> function below, we use two: (1) a proton balance and (2) an iterative root finder. Take a look.</p>
-<div id="0ca21c25" class="cell" data-execution_count="9">
+<div id="32d7ce0b" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co">File: carb_mods.py</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">Authors: Sasha D. Hafner and Frederik R. Dalby</span></span>
@@ -888,7 +888,7 @@ c_{\ce{CO3^2-}} = k_2 \cdot \frac{c_{\ce{H2CO3^*}}} {c_{\ce{H+}}^2}.
 <span id="cb15-85"><a href="#cb15-85" aria-hidden="true" tabindex="-1"></a>    <span class="co"># And return species concentrations (mol/kg)</span></span>
 <span id="cb15-86"><a href="#cb15-86" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> res</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="beadbc79" class="cell" data-execution_count="10">
+<div id="4a6dc317" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">'modules'</span>)</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -906,7 +906,7 @@ c_{\ce{CO3^2-}} = k_2 \cdot \frac{c_{\ce{H2CO3^*}}} {c_{\ce{H+}}^2}.
 </div>
 </div>
 <p>We can get predicted pH:</p>
-<div id="13ccf80d" class="cell" data-execution_count="11">
+<div id="ea4e59a3" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="op">-</span>np.log10(concs[<span class="st">'H+'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>np.float64(5.601205291420791)</code></pre>

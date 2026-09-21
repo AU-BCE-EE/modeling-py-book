@@ -33,7 +33,7 @@ $$
 and carbon dioxide,
 
 $$
-\frac{dc_{\ce{CO2}}}{dt} = 2 \cdot r,
+\frac{dc_{\ce{CO2}}}{dt} = 1 \cdot r,
 $$
 
 all with units of $\molpmcps$.
