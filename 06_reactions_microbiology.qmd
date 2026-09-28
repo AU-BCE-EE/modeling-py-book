@@ -367,8 +367,9 @@ print(c_h2co3)
 print(c_co2)
 ```
 
-Lastly, let's recognize that the equilibrium constant (`k_eq`) in the code above must be equal to the ratio of the rates constants.
-We can see that by setting the rates of forward and reverse reactions equal, i.e., equilibrium, and solving for the ratio of cabonic acid to dissolved carbon dioxide concentrations.
+Where did the equilibrium constant (`k_eq` in the code above) come from?
+It must be equal to the ratio of the rates constants.
+We can see that by setting the rates of forward and reverse reactions equal, i.e., equilibrium, and solving for the ratio of cabonic acid to dissolved carbon dioxide concentrations, i.e., the mass action expression for the relevant reaction.
 
 ```{python}
 kf = 0.03
@@ -386,6 +387,8 @@ import numpy as np
 
 res = hm.co2_hydration(0., 0.2, kf=0.03, kr=20, times=np.linspace(0, 60, 2))
 print(res)
+print(res['co2'])
+print(res['h2co3'])
 ```
 
 We see the same result eventually.
