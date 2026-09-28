@@ -1,12 +1,12 @@
 """
-File: hydration_mods.py
+File: kin_eq_mods.py
 
 Author: Sasha D. Hafner
 
 Class: Modelling 2026
 
 Description:
-    A simple kinetic model for carbon dioxide hydration.
+    Variations on a simple partial carbonate system.
 """
 
 import numpy as np
@@ -20,8 +20,6 @@ def co2_hydration(cco2, ch2co3, kf, kr, times):
     ----------
     c_co2 : float
         Initial dissolved carbon dioxide concentration (mol/kg)
-    c_h2co3 : float
-        Initial carbonic acid concentration (mol/kg)
     kf : float
         First-order forward reaction rate constant (1/s)
     kr : float
