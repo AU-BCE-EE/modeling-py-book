@@ -116,9 +116,25 @@ We'll present an example in @sec-rxn-ex1.
 
 ## Equilibrium reactions
 
+All chemical reactions take some time to occur, but some are so fast, we can treat them as instaneous in models.
 Rapid reversible chemical reactions are often at *equilibrium*, meaning the concentrations of chemical species do not change over time.
 Here we will look at one important type of equibrium reaction: acid-base or proton exchange.
 For more on these types of problems, see @Snoeyink1980.
+
+First, it is useful to highlight the distinction between equilibrium and kinetic models for chemical reactions. 
+An equilibrium model is not dynamic; it predicts the composition of a chemical system once the concentrations of reactants and products are stable.
+For many systems, this state is rapidly attained and the predictions are accurate and useful.
+
+The concept of equilibrium not the same as steady state.
+A chemical system at steady state also has constant concentrations of all reactants and products, but reactions may be far away from equilibrium.
+Steady-state just requires that the conservation terms for each component balance out. 
+For example, a straw burning furnace is a chemical system based on a redox reaction between straw organic matter and $\ce{O2}$.
+The equilibrium state would contain only products, namely $\ce{CO2}$ and $\ce{H2O}$ (plus ash, if we include inorganic components), because the forward reaction is so strongly favored.
+A steady-state condition could have straw added to the furnace at a rate that matches the reaction rate, rate of ash removal, and smoke flow up a chimney.
+
+It is not uncommon to include equilibrium components in models with other reactions.
+Only those particular reactions are at equilibrium; others, generally slower, are explicitly modeled as kinetic reactions and are likely not at equilibrium and possibly not steady state either.
+These issues are demonstrated in @sec-eq-v-kin below; for now let's continue with the concept of equilibrium.
 
 Acid-base reactions are important in natural and engineered systems for influencing pH, which affects many processes.
 In both types of systems, a set of chemical species and reactions that are together called the *carbonate system* are an important system.
@@ -212,7 +228,7 @@ That is not very interesting!
 Do you see what is happening?
 Look at the rate constants and think about an equilibrium constant.
 
-Let's start with all the inorganic C in the carbonic acid form (i.e., on the slow side) and zoom in on the time.
+Let's start with all the inorganic C in the carbonic acid form (i.e., on the slow side) and zoom in on the time (3 seconds).
 
 ```{python}
 from importlib import reload
@@ -222,7 +238,7 @@ import matplotlib.pyplot as plt
 
 reload(hm)
 
-res = hm.co2_hydration(0., 0.2, kf=0.03, kr=20, times=np.linspace(0, 20, 100))
+res = hm.co2_hydration(0., 0.2, kf=0.03, kr=20, times=np.linspace(0, 3, 100))
 
 plt.plot(res['t'], res['co2'], label = 'CO2')
 plt.plot(res['t'], res['h2co3'], label = 'H2CO3')
@@ -324,6 +340,60 @@ print(am.free_NH3(1, 10))
 ```
 
 We see $\ce{NH4(aq)}$ is exactly half of TAN when $p\text{K}_a$ = pH, very small at pH 7, and high at pH 10, all of which are expected.
+
+## Equilibrium versus kinetic models {#sec-eq-v-kin}
+
+The implementation of the hydration reaction from the carbonate system above provides a good chance to demonstrate the difference between kinetic and equilibrium models.
+That model, described in @sec-rxn-ex1 above, looks like this:
+
+```{.python filename="hydration_mods.py"}
+{{< include hydration_mods.py >}}
+```
+
+Concentrations of both $\ce{CO2(aq)}$ and $\ce{H2CO3}$ are state variables, and we have two governing equations.
+To run the model, we need to specify initial values for both state variables through the `c_co2` and `c_h2co3` parameters.
+
+What would an equilibrium model look like?
+For this simple system, it could not be dynamic; equilibrium means the two chemical species have a constant concentration, so without some other state variables to vary over time, it would make no sense to even include time in this model!
+We have to figure out the model equations with algebra, following the ammonia example above.
+This gives the following equations:
+
+```{python}
+keq = 0.0015
+c_tot = 0.2
+c_h2co3 = c_tot * keq / (1 + keq)
+c_co2 = c_tot - c_h2co3
+print(c_h2co3)
+print(c_co2)
+```
+
+Where did the equilibrium constant (`k_eq` in the code above) come from?
+It must be equal to the ratio of the rates constants.
+We can see that by setting the rates of forward and reverse reactions equal, i.e., equilibrium, and solving for the ratio of cabonic acid to dissolved carbon dioxide concentrations, i.e., the mass action expression for the relevant reaction.
+
+```{python}
+kf = 0.03
+kr = 20
+keq = kf / kr
+print(keq)
+```
+
+How does this compare to the kinetic model?
+
+```{python}
+from importlib import reload
+import hydration_mods as hm
+import numpy as np
+
+res = hm.co2_hydration(0., 0.2, kf=0.03, kr=20, times=np.linspace(0, 60, 2))
+print(res)
+print(res['co2'])
+print(res['h2co3'])
+```
+
+We see the same result eventually.
+
+If we were to implement the equilibrium approach in a dynamic model, e.g., one where inorganic carbon is added or removed through some other processes (volatilization for example), it is important to note that there would only be a single state variable, `c_tot`, the sum of the concentrations of the two species.
 
 ## Matrix operations
 
