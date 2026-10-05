@@ -945,7 +945,6 @@ The higher up in the room, the longer it takes for the temperature to increase. 
 
 ### Robin boundary condition
 
-Robin boundary condition
 The Robin BC is also referred to as a boundary condition of the third type. Like the Neumann BC, it specifies something about the gradient at the boundary, but instead of fixing the gradient to a known value, it relates the gradient to the value of the state variable itself at the boundary — typically as a balance between flux leaving/entering the domain and exchange with the surroundings. For a 1D problem where $c$ is the state variable, $x$ is the spatial variable and $t$ is time, the Robin BC can in general be formulated as:
 
 $$
@@ -970,12 +969,12 @@ Which just means that at the boundary the change in concentration depends on the
 $$
 -k\frac{\partial T(x = a, t)}{\partial x}=h \cdot(T(x=a, t) - T_{bulk})
 $$
-With $k$ being the thermal conductivity and $h$ begin the heat transfer coefficient. We will be using these two Robin BCs frequently so 
+With $k$ being the thermal conductivity and $h$ begin the heat transfer coefficient. We will be using these two Robin BCs frequently. 
 
 **example case**
-Lets go with an example with mass transfer now. We could have a well which contains contaminated water in the bottom, releasing toxic hydrogen sulfide. The hydrogen sulfide diffuses upwards to the edge of well. At the edge the hydrogen sulfide is carried away from the wind blowing at the top by convection. This is where we will have the Robin BC. At the bottom we will use a Dirichlet BC for simplicity.
+Lets go with an example with mass transfer first. We could have a well which contains contaminated water in the bottom, releasing toxic hydrogen sulfide. The hydrogen sulfide diffuses upwards to the edge of well. At the edge the hydrogen sulfide is carried away from the wind blowing at the top by convection. This is where we will have the Robin BC. At the bottom we will use a Dirichlet BC for simplicity.
 
-Like for the Neumann BC we will with discretization with central difference have to handle a ghost point. This can be done in a similar manner by first discretizing the gradient so we get: 
+Like for the Neumann BC, we will use central difference for discretization and have to handle a ghost point. This can be done in a similar manner by first discretizing the gradient so we get: 
 
 $$
 -D\cdot \frac{\partial c(x = L, t)}{\partial x}= -D\cdot \frac{c(x_{L+1}) - c(x_{L-1})}{2 \cdot \Delta x} = k_c \cdot(c(x_L) - c_{bulk})
@@ -985,7 +984,7 @@ We now isolate the ghost point ($c(x_{L+1})$)
 $$
 c(x_{L+1}) = -\frac{2 \cdot \Delta x\cdot k_c}{D} \cdot \left( c(x_L) - c_{bulk} \right ) + c(x_{L-1})
 $$
-In our example the hydrogen sulfide is only transported by diffusion in the model domain. We will therefore substitute the ghost point in the discretized form of the diffusion term
+In our example the hydrogen sulfide is only transported by diffusion in the model domain. We will therefore substitute the ghost point in the discretized form of the diffusion term.
 
 $$
 \begin{align}
