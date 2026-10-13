@@ -380,7 +380,8 @@ window.Quarto = {
   <li><a href="#neumann-boundary-condition" id="toc-neumann-boundary-condition" class="nav-link" data-scroll-target="#neumann-boundary-condition"><span class="header-section-number">7.4.2</span> Neumann boundary condition</a></li>
   <li><a href="#robin-boundary-condition" id="toc-robin-boundary-condition" class="nav-link" data-scroll-target="#robin-boundary-condition"><span class="header-section-number">7.4.3</span> Robin boundary condition</a></li>
   </ul></li>
-  <li><a href="#grid-size-and-convergence" id="toc-grid-size-and-convergence" class="nav-link" data-scroll-target="#grid-size-and-convergence"><span class="header-section-number">7.5</span> Grid size and convergence</a></li>
+  <li><a href="#multiple-state-variables-or-dimensions" id="toc-multiple-state-variables-or-dimensions" class="nav-link" data-scroll-target="#multiple-state-variables-or-dimensions"><span class="header-section-number">7.5</span> Multiple state variables or dimensions</a></li>
+  <li><a href="#grid-size-and-convergence" id="toc-grid-size-and-convergence" class="nav-link" data-scroll-target="#grid-size-and-convergence"><span class="header-section-number">7.6</span> Grid size and convergence</a></li>
   </ul>
 </nav>
     </div>
@@ -421,7 +422,7 @@ Figure&nbsp;7.1: Water flowing through a constant-diameter round pipe at a const
 </figure>
 </div>
 <p>We will model this temperature distributed along the pipe (x dimension) by splitting the pipe into multiple control volumes <a href="#fig-pipedisc" class="quarto-xref">Figure&nbsp;<span>7.1</span></a> B and rather than a single conservation equation (0D), we will write a conversation equation for each control volume.</p>
-<p>The energy flowing in and out of a control volumes shall now be represented by two different modes of energy transport that was already touched upon in Chapter 4, that is advection and diffusion (or conduction for heat/energy diffusion). Advection is the transport of energy by the bulk movement of the fluid. Heat diffusion is the transport of energy by random molecular motion. In the case of a 0D problem we did not distinguish between these processes because diffusion was absent (perfect mixing) implicitely assuming “in” and “out” was through advection. Now it is different and a conservation equation must be made for each control volume by considering flow of energy into and out of the control volume, as well as any heat generated within the control volume. The conservation equation for a control volume can be written as:</p>
+<p>The energy flowing in and out of a control volumes shall now be represented by two different modes of energy transport that was already touched upon in Chapter 4, that is advection and diffusion (or conduction for heat/energy diffusion). Advection is the transport of energy by the bulk movement of the fluid. Heat diffusion is the transport of energy by random molecular motion. In the case of a 0D problem we did not distinguish between these processes because diffusion was absent (perfect mixing) implicitly assuming “in” and “out” was through advection. Now it is different and a conservation equation must be made for each control volume by considering flow of energy into and out of the control volume, as well as any heat generated within the control volume. The conservation equation for a control volume can be written as:</p>
 <p><span class="math display">\[
 \text{accumulation} = \text{adv}_{in} + \text{diff}_{in} - \text{adv}_{out} - \text{diff}_{out}  + \text{generated} - \text{consumed}
 \]</span> Earlier in Chapter 4, we already showed that advection was the product of the superficial velocity and temperature difference over the length of the control volume (gradient). We now flip the sign of the temperature difference to be consistent with the direction of flow, which gives us: <span class="math display">\[
@@ -532,16 +533,16 @@ Figure&nbsp;7.4: Spherical coordinate system, with three dimensions, r, theta, p
 </div>
 <p>While these equations looks quite terrifying at first, we shall now see how we can reduce complexity. This will primarily be done by eliminating dimensions that are not important for the problem and by including only modes of transfer that is relevant to our problem.</p>
 <p><strong>example case</strong></p>
-<p>Lets continue with the example of water being pumped through a pipe in <a href="#fig-pipedisc" class="quarto-xref">Figure&nbsp;<span>7.1</span></a> and assign it a cross sectional area, <span class="math inline">\(A\)</span>, of <span class="math inline">\(0.02~m^2\)</span> a superficial velocity, <span class="math inline">\(v\)</span>, of <span class="math inline">\(0.5~m~s^{-1}\)</span>, a total pipe length of <span class="math inline">\(2~m\)</span> and with heat being applied at a rate of <span class="math inline">\(1000~W\)</span> distributed on the whole pipe.</p>
+<p>Let’s continue with the example of water being pumped through a pipe in <a href="#fig-pipedisc" class="quarto-xref">Figure&nbsp;<span>7.1</span></a> and assign it a cross sectional area, <span class="math inline">\(A\)</span>, of <span class="math inline">\(0.02~m^2\)</span> a superficial velocity, <span class="math inline">\(v\)</span>, of <span class="math inline">\(0.5~m~s^{-1}\)</span>, a total pipe length of <span class="math inline">\(2~m\)</span> and with heat being applied at a rate of <span class="math inline">\(1000~W\)</span> distributed on the whole pipe.</p>
 <p>Since a pipe is a cylinder we will choose cylindrical coordinates and start from <a href="#eq-3D_cylindrical_heat" class="quarto-xref">Equation&nbsp;<span>7.5</span></a>. There is flow along the length of the pipe and we are mainly interested in the development along this axis (<span class="math inline">\(z\)</span> in cylindrical coordinates, but <span class="math inline">\(x\)</span> in <a href="#fig-pipedisc" class="quarto-xref">Figure&nbsp;<span>7.1</span></a>). We assume that the flow is turbulent and well mixed in the radial (<span class="math inline">\(r\)</span>) and angular (<span class="math inline">\(\theta\)</span>) dimension. What does that imply? Well if it is well mixed, the derivate with respect to those dimensions are 0. We can therefore eliminate the terms in <a href="#eq-3D_cylindrical_heat" class="quarto-xref">Equation&nbsp;<span>7.5</span></a> that includes derivatives with respect to <span class="math inline">\(r\)</span> and <span class="math inline">\(\theta\)</span>, because they are equal to 0. This gets us to</p>
 <p><span id="eq-1D_cylindrical_heat"><span class="math display">\[
 \frac{\partial T}{\partial t} = - v_z \cdot \frac{\partial T}{\partial z} + \frac{k}{\rho \cdot c_p}\cdot \left(\frac{\partial^2T}{\partial z^2} \right) + S
 \tag{7.6}\]</span></span></p>
 <p>Interesting, because that looks exactly like <a href="#eq-1D_heat" class="quarto-xref">Equation&nbsp;<span>7.1</span></a>, which was the governing equation for 1D and rectangular coordinates (except we call the dimension <span class="math inline">\(z\)</span> rather than <span class="math inline">\(x\)</span>). So we learned that the governing equations for 1D problems are similar for rectangular and cylindrical coordinates!</p>
-<p>We have bulk flow along the z direction (because we are given a velocity, <span class="math inline">\(v\)</span>, in the problem). This corresponds to the advection term (<span class="math inline">\(-v\cdot\frac{dT}{dz}\)</span>). What about diffusion? We know that diffusion always occurs, it is a law of nature that heat and mass spreads until there is no gradient. The question should rather be, is diffusion significant compared to the advection term here? We will get back to how we can estimate that, but for now we do not know, and therefore we keep the diffusion term (<span class="math inline">\(\frac{k}{\rho \cdot C_p}\cdot \frac{\partial^2T}{\partial z^2}\)</span>). We also have heat being added to the system, which is the S term, but the unit is currently in <span class="math inline">\(W\)</span>. We will use the linking equation from Chapter 4 to get the unit in <span class="math inline">\(K s^{-1}\)</span>. We know that <span class="math inline">\(C_p\)</span> of water is <span class="math inline">\(4180 \frac{J}{kg \cdot K}\)</span> and the density <span class="math inline">\(\rho\)</span> is <span class="math inline">\(1000~kg~m^{-3}\)</span>. The control volume, <span class="math inline">\(V = A \cdot \partial z\)</span>. So from <a href="04_heat_transfer.html#eq-advection3" class="quarto-xref">Equation&nbsp;<span>4.5</span></a> we get the S term in correct units.</p>
+<p>We have bulk flow along the z direction (because we are given a velocity, <span class="math inline">\(v\)</span>, in the problem). This corresponds to the advection term (<span class="math inline">\(-v\cdot\frac{dT}{dz}\)</span>). What about diffusion? We know that diffusion always occurs, it is a law of nature that heat and mass spreads until there is no gradient. The question should rather be, is diffusion significant compared to the advection term here? We will get back to how we can estimate that, but for now we do not know, and therefore we keep the diffusion term (<span class="math inline">\(\frac{k}{\rho \cdot c_p}\cdot \frac{\partial^2T}{\partial z^2}\)</span>). We also have heat being added to the system, which is the S term, but the unit is currently in <span class="math inline">\(W\)</span>. We will use the linking equation from Chapter 4 to get the unit in <span class="math inline">\(K s^{-1}\)</span>. We know that <span class="math inline">\(c_p\)</span> of water is <span class="math inline">\(4180 \frac{J}{kg \cdot K}\)</span> and the density <span class="math inline">\(\rho\)</span> is <span class="math inline">\(1000~kg~m^{-3}\)</span>. The control volume, <span class="math inline">\(V = A \cdot \partial z\)</span>. So from <a href="04_heat_transfer.html#eq-advection3" class="quarto-xref">Equation&nbsp;<span>4.5</span></a> we get the S term in correct units.</p>
 <p><span class="math display">\[
 \begin{align}
-\frac{\partial T}{\partial t} &amp;= \frac{\dot{Q}}{V \cdot \rho \cdot C_p}\\
+\frac{\partial T}{\partial t} &amp;= \frac{\dot{Q}}{V \cdot \rho \cdot c_p}\\
 &amp;=\frac{1000~J~s^{-1}~}{(A\cdot \partial z) \cdot 1000 ~kg~m^{-3} \cdot 4180~J~kg^{-1}~K^{-1}}\\
 &amp;= \frac{1000 s^{-1}}{(0.02~m^2 \cdot m)\cdot 1000~m^{-3} \cdot 4180~K^{-1}}\\
 &amp;= \frac{1000~s^{-1}}{0.02\cdot 1000 \cdot 4180~K^{-1}}=0.012\cdot\frac{K}{s}
@@ -559,14 +560,14 @@ Figure&nbsp;7.4: Spherical coordinate system, with three dimensions, r, theta, p
 <p>From these steps you should now be able to construct the simplied governing equation of a problem. Convince yourself by now assuming the problem has only two modes of heat transfer 1) conduction in the radial dimension and 2) advection in the z dimension. You should reach the following equation</p>
 <p><span class="math display">\[
 \begin{align}
-\frac{\partial T}{\partial t} = -v\cdot \frac{\partial T}{\partial z} + \frac{k}{\rho \cdot C_p}\cdot \left(\frac{1}{r} \cdot \frac{\partial}{\partial r}\left(r \cdot \frac{\partial T}{\partial r}\right)\right)
+\frac{\partial T}{\partial t} = -v\cdot \frac{\partial T}{\partial z} + \frac{k}{\rho \cdot c_p}\cdot \left(\frac{1}{r} \cdot \frac{\partial}{\partial r}\left(r \cdot \frac{\partial T}{\partial r}\right)\right)
 \end{align}
 \]</span></p>
 <p>The part <span class="math inline">\(\frac{1}{r} \cdot \frac{\partial}{\partial r}\left(r \cdot \frac{\partial T}{\partial r}\right)\)</span> can be tricky to interpret, but with the product rule of differentiation we can show that:</p>
 <p><span class="math display">\[
 \frac{1}{r} \cdot \frac{\partial}{\partial r}\left(r \cdot \frac{\partial T}{\partial r}\right) = \frac{1}{r} \cdot \left(r \cdot \frac{\partial^2 T}{\partial r^2} + \frac{\partial T}{\partial r}\right) = \frac{\partial^2 T}{\partial r^2} + \frac{1}{r} \cdot \frac{\partial T}{\partial r}
 \]</span></p>
-<p>The later form might be easier to encode when we get to that. A similar problem will occurs for the spherical coordinate system, in which case the product rule can also be applied.</p>
+<p>The later form might be easier to encode when we get to that. A similar problem will occur for the spherical coordinate system, in which case the product rule can also be applied.</p>
 </section>
 <section id="sec-MOL" class="level2" data-number="7.3">
 <h2 data-number="7.3" class="anchored" data-anchor-id="sec-MOL"><span class="header-section-number">7.3</span> Method of lines and discretization</h2>
@@ -624,7 +625,7 @@ f''(x) = \frac{f(x) - 2 \cdot f(x-\Delta x) + f(x -2\cdot \Delta x)}{\Delta x^2}
 <p>This gives us the 5 coupled ODEs and with information about boundary conditions included in red. Since we simplified the example by removing advection, we would need to apply finite difference formulas for the first derivative as well to solve the real problem. In <a href="appx_fdm_formulas.html" class="quarto-xref"><span>Appendix F</span></a> a complete overview of the finite difference formulas (backward, forward, central) are given for the first and second derivatives.</p>
 <p><strong>Implementation in Python</strong></p>
 <p>Lets now go to python to encode and solve the ODE system in <a href="#eq-fiveODE" class="quarto-xref">Equation&nbsp;<span>7.10</span></a>. We want to see something happening so lets assume that the water is <span class="math inline">\(0 \degC\)</span> everywhere to stat with, except at the left side (<span class="math inline">\(10 \degC\)</span>). We will run the simulation for 10 minutes.</p>
-<div id="fcc028ca" class="cell" data-execution_count="1">
+<div id="259e3371" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># we need the following libraries</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -710,7 +711,7 @@ f''(x) = \frac{f(x) - 2 \cdot f(x-\Delta x) + f(x -2\cdot \Delta x)}{\Delta x^2}
 </div>
 <p>So the plot tells us that the temperature in the end of the pipe almost does not change (see y-axis 1e-11). This is not so strange because we only have heat transferred by conduction (from left) in the code, and we have not included the heat source (S) either. This hints to us that heat transfer by conduction is probably not so important in our case, but lets first try and implement advection and the source term as well. We will reduce simulation time to 20 seconds, which should be long enough to reach a steady state with a velocity of 0.5 m/s in a pipe that is only 2 m long.</p>
 <p>However! For the advection term we would now be tempted to use central difference discretization in the interior nodes, simply because we know it has a higher order of accuracy than backward and forward difference. But here is a special case. For advection, which is a unidirectional phenomenon we must NEVER use information from downwind nodes to approximate the derivative (which is what central difference does). This will cause the solution to oscillate or be unstable, a topic that will be dealt more with in a later chapter. So we must in this case use backward difference for the advection to avoid that.</p>
-<div id="9e48aa4a" class="cell" data-execution_count="2">
+<div id="43908742" class="cell" data-execution_count="2">
 <div id="lst-pipe_model" class="python cell-code listing quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-lst figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-pipe_model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -809,7 +810,7 @@ Figure&nbsp;7.6: 2D grid representing model domain and boundary conditions
 </figure>
 </div>
 <p>In <a href="#fig-bcs" class="quarto-xref">Figure&nbsp;<span>7.6</span></a> we have 2 BCs on the r dimension (one in each end) and one BC for the z dimension (only at <span class="math inline">\(z = z_0\)</span>). We cannot specify a BC at z = L, because that could (most certainly) create a conflict with the laws of physics, which is described by the ODE system. We see that BC1 in <a href="#fig-bcs" class="quarto-xref">Figure&nbsp;<span>7.6</span></a> fixes the temperature to <span class="math inline">\(10 \degC\)</span> all along r axis and at all times. Each node is described with an ODE. This means that even though we say there is one boundary condition at <span class="math inline">\(z = z_0\)</span>, when we implement it in our model code, we need to apply it to each ODE (it just appears to be formulated the same way!). The number of ODEs would depend on the step size along r, <span class="math inline">\(\Delta r\)</span>. For BC2 and BC3, the boundary conditions also apply to all the nodes with r = r0 and r = R, respectively. BC2 ad BC3 are different types of boundary conditions than BC1. Rather than specifying the value of the state variable (T), they specify something about the derivative (gradient) of the state variable (<span class="math inline">\(\frac{dT}{dr}\)</span>). In BC2 the gradient is assigned a fixed value (0) and in BC3 the gradient is a function of the state variable at the boundary (<span class="math inline">\(T_R\)</span>) and two constants, <span class="math inline">\(k\)</span> and <span class="math inline">\(T_{bulk}\)</span>. We will get into details about these three types of BCs shortly as they are critical to formulate and solve a spatial model problem.</p>
-<p>First notice that in two of the corners, <span class="math inline">\((r_0, z_0)\)</span> and <span class="math inline">\((R, z_0)\)</span>, we have a potential conflict between BC1 and BC2 and BC1 and BC3, respectively. Here the modeller must make a choice, which BC should be satisfied or whether both needs to be satisfied at once. In addition we have all the ICs. All ODEs (all nodes in <a href="#fig-bcs" class="quarto-xref">Figure&nbsp;<span>7.6</span></a>, interior and boundaries) must have an IC. Again we see a potential conflict between BCs and ICs at the boundaries and the modeller must make a choice, which condition must be satisfied. This depends on your problem, but almost always the BCs overrule the ICs at the boundaries. In our pipe problem, we did exactly that - the initial temperature was set to 0 everywhere, except at the left side, where the BC had to be satisfied with a temperature of 10. We implemented this be incorporating the BC directly in our IC definition like this: <code>T0 = np.full(len(z_grid), 0)</code> and then <code>T0[0] = 10</code>.</p>
+<p>First notice that in two of the corners, <span class="math inline">\((r_0, z_0)\)</span> and <span class="math inline">\((R, z_0)\)</span>, we have a potential conflict between BC1 and BC2 and BC1 and BC3, respectively. Here the modeller must make a choice, which BC should be satisfied or whether both needs to be satisfied at once. In addition we have all the ICs. All ODEs (all nodes in <a href="#fig-bcs" class="quarto-xref">Figure&nbsp;<span>7.6</span></a>, interior and boundaries) must have an IC. Again we see a potential conflict between BCs and ICs at the boundaries and the modeller must make a choice, which condition must be satisfied. This depends on your problem, but almost always the BCs overrule the ICs at the boundaries. In our pipe problem, we did exactly that - the initial temperature was set to 0 everywhere, except at the left side, where the BC had to be satisfied with a temperature of 10. We implemented this by incorporating the BC directly in our IC definition like this: <code>T0 = np.full(len(z_grid), 0)</code> and then <code>T0[0] = 10</code>.</p>
 <p>Generally speaking there is no restrictions as to what type of BCs you can put at the boundaries For example two BCs of the same type are also allowed in the same dimension. The type of BCs needed will depends on the physical problem and what information you are given about. If the information is inconsistent or interpreted incorrectly, you can get conflicts between the BCs or conflicts with your physics. So lets learn how and when to use them.</p>
 <section id="dirichlet-boundary-condition" class="level3" data-number="7.4.1">
 <h3 data-number="7.4.1" class="anchored" data-anchor-id="dirichlet-boundary-condition"><span class="header-section-number">7.4.1</span> Dirichlet boundary condition</h3>
@@ -822,7 +823,7 @@ c(x = a, t) = \alpha(t)
 <p>A model that predicts how oxygen concentration changes with time and with depth of a small pond. At the top boundary (surface of the water) the concentration of oxygen is in equilibrium with the atmospheric oxygen concentration. At this boundary the value (oxygen concentration) does not change if the air is constantly exchanged, which is the case if the wind blows just mildly. This situation would be well described with a Dirichlet BC. If we had put a closed chamber on top of the water, such that air could not be exchanged, then we could not do this because the concentration of oxygen in the air would decline over time as it diffuses into the water (assuming it was not saturated with oxygen already).</p>
 <p><strong>Implementation in Python</strong></p>
 <p>The Dirichlet BC can be enforced in many ways. Below is an example where it is enforced by setting the IC at the boundary equal to the BC. Inside the <code>rates()</code> function we initially set the derivatives at all nodes to 0 through this command <code>dcdt = np.zeros_like(c)</code>. In the <code>for loop</code> we only loop through interior nodes, because the start index is 1 (<code>range(1, len(c)-1)</code>) and we stop before the last index. Hence <code>dcdt[0]</code> will stay as 0 (meaning change in c over change in time is zero) and effectively ensure that the state variable value at index 0 (the boundary node) never changes from its initial value. The initial value at index 0 is set to 10 in this command after the <code>rates()</code> function: <code>c0[0] = 10</code>. Because our for loop does not include the last index, it means that we also have a Dirichlet BC at the bottom (last index), which is 0 from this command: <code>c0 = np.zeros(len(x_grid))</code>. This may not be what we want for the model, unless something is instantly consuming oxygen at the bottom of the pond. Therefore we might have to handle the bottom boundary with a different type of BC, but for simplicity we will keep the Dirichlet BCs at both ends of the domain.</p>
-<div id="8a8a6bf4" class="cell" data-execution_count="3">
+<div id="ca4b2b3c" class="cell" data-execution_count="3">
 <div id="lst-dirichlet_pond" class="python cell-code listing quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-lst figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-dirichlet_pond-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -932,19 +933,19 @@ T(x_{L+1}) = T(x_{L-1})
 \]</span></p>
 <p>In our governing equation with rectangular coordinates we have</p>
 <p><span class="math display">\[
-\rho C_p \frac{\partial T}{\partial t} = k \frac{\partial^2T}{\partial x^2} - v\frac{\partial T}{\partial x} + S
+\rho c_p \frac{\partial T}{\partial t} = k \frac{\partial^2T}{\partial x^2} - v\frac{\partial T}{\partial x} + S
 \]</span></p>
 <p>We can eliminate the advection term (no bulk heat flow) and the S term and discretize the remaining conduction term.</p>
 <p><span class="math display">\[
-\frac{\partial T}{\partial t} = \frac{k}{\rho \cdot C_p}\cdot \frac{T(x_{L+1}) - 2\cdot T(x_L) + T(x_{L-1})}{\Delta x^2}
+\frac{\partial T}{\partial t} = \frac{k}{\rho \cdot c_p}\cdot \frac{T(x_{L+1}) - 2\cdot T(x_L) + T(x_{L-1})}{\Delta x^2}
 \]</span></p>
 <p>Here we see the ghost point again, but now we can substitute it with <span class="math inline">\(T(x_{L-1})\)</span>, which gets us to</p>
 <p><span id="eq-neumann"><span class="math display">\[
-\frac{\partial T}{\partial t} = \frac{k}{\rho \cdot C_p}\cdot  \frac{2\cdot T(x_{L-1}) - 2\cdot T(x_L)}{\Delta x^2}
+\frac{\partial T}{\partial t} = \frac{k}{\rho \cdot c_p}\cdot  \frac{2\cdot T(x_{L-1}) - 2\cdot T(x_L)}{\Delta x^2}
 \tag{7.11}\]</span></span></p>
 <p>This equation enforces the Neumann boundary condition at the top boundary, L. Earlier in <a href="#lst-pipe_model" class="quarto-xref">Listing&nbsp;<span>7.1</span></a>, we avoided the whole ghost point problematic by using backward difference instead and we did not state anything about a BC. But implicitely, by using the backward difference we silently just extrapolated the physics to outside the model domain. What does that mean? It means that there is no change in the second derivative and the BC was actually <span class="math inline">\(\frac{\partial^3 T}{\partial z^3} = 0\)</span>. The math to derive that is out of the scope for this book and we will not use such a BC again going forward.</p>
 <p>Lets implement Neumann BC derived above in our code and assume that the living room is <span class="math inline">\(10 \degC\)</span> to start with:</p>
-<div id="81f63762" class="cell" data-execution_count="4">
+<div id="5874a806" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># importing libraries</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> solve_ivp </span>
@@ -1041,7 +1042,7 @@ D\cdot\frac{\partial c(x=L, t)}{\partial x} = &amp;D \cdot \frac{c(x_{L+1}) - 2\
 \frac{2\cdot D}{\Delta x^2}\cdot \left( c(x_{L-1}) - c(x_L) \right )-\frac{2k_c}{\Delta x}\cdot \left( c(x_L) - c_{bulk} \right )
 \]</span> and it nicely parallels the Neumann result: the first term is the same diffusive exchange with the interior node (except now it is mass, not temperature as in <a href="#eq-neumann" class="quarto-xref">Equation&nbsp;<span>7.11</span></a>), and the second term is the new convective loss/gain at the boundary, vanishing as <span class="math inline">\(k_c \to 0\)</span> (back to Neumann) and dominating as <span class="math inline">\(k_c \to \infty\)</span> (forcing <span class="math inline">\(c_L \to c_{bulk}\)</span>, which is equivalent to a Dirichlet BC).</p>
 <p><strong>Implementation in Python</strong></p>
-<div id="55a51e9f" class="cell" data-execution_count="5">
+<div id="ee04f5e7" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># importing libraries</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> solve_ivp </span>
@@ -1109,52 +1110,393 @@ D\cdot\frac{\partial c(x=L, t)}{\partial x} = &amp;D \cdot \frac{c(x_{L+1}) - 2\
 </div>
 </section>
 </section>
-<section id="grid-size-and-convergence" class="level2" data-number="7.5">
-<h2 data-number="7.5" class="anchored" data-anchor-id="grid-size-and-convergence"><span class="header-section-number">7.5</span> Grid size and convergence</h2>
+<section id="multiple-state-variables-or-dimensions" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="multiple-state-variables-or-dimensions"><span class="header-section-number">7.5</span> Multiple state variables or dimensions</h2>
+<p>So far we have dealt with a single state variable, but we often encounter problems with multiple state variables that are coupled. This is the case when we have multiple chemical species and reactions, when problems involves both heat and mass balances, e.g.&nbsp;an exothermic reaction, or when we need multiple heat balances like for heat exchangers or reactors with cooling jackets. Now we will deal with a heat exchanger with incoming cold water that runs counter current with a warm water stream. Heat is exchanged across the two water streams, such that the cold water gets warmer along the pipe, and the warm water gets colder. A sketch of the problem is given in <a href="#fig-pipe-two-states" class="quarto-xref">Figure&nbsp;<span>7.8</span></a>.</p>
+<div id="fig-pipe-two-states" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Counter current heat exchanger, with two model domains that exchange heat">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pipe-two-states-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="drawings/pipe-two-states.png" class="img-fluid figure-img" alt="Counter current heat exchanger, with two model domains that exchange heat">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pipe-two-states-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.8: Counter current heat exchanger
+</figcaption>
+</figure>
+</div>
+<p>The inner pipe is the cold stream getting heated and that heat is transferred over the surface area of the interior pipe. The inner pipe wall is also where the boundaries of the two state variables interact. It is assumed that the warm water stream pipe is insulated on the outside, so no heat is lost to the surroundings. For simplicity lets assume the volume flow rates and flow velocities are similar for the two water streams and we want to model the temperature in both streams over the length of the heat exchanger and over time. We can ignore conduction along the pipe, because we will use a relatively high superficial velocity, <span class="math inline">\(v\)</span>.</p>
+<p>We are dealing with a 1D problem, since we are only modelling heat along the length of the pipe not in the radial dimension. But heat is lost radially through the pipe wall you may argue? And that is no problem when we assume there is no variation in temperature over the radial dimension, <span class="math inline">\((\frac{dT}{dr} = 0)\)</span>. So you can think of the heat lost (warm stream) or gained (cold stream) as from the bulk of each control volume along the length of the pipe. We can use rectangular or cylindrical coordinates (these are the same in this case), but lets use cylindrical coordinates in case we want to expand to a 2D model later. We will use a superficial velocity of <span class="math inline">\(v = 0.1~m~s^{-1}\)</span> and a pipe length of <span class="math inline">\(L = 10~m\)</span>. We set the diameter to <span class="math inline">\(D = 0.02 m\)</span>, the heat capacity of water to <span class="math inline">\(c_p = 4200~J~kg^{-1}~K^{-1}\)</span>, the density of water to <span class="math inline">\(\rho = 1000~kg~m^{-3}\)</span>, and will use a overall heat transfer coefficient to describe convective heat transfer from the warm to the cold water of <span class="math inline">\(U = 500~W~m^{-2}~K^{-1}\)</span>. That overall heat transfer coefficient lumps resistances through multiple layers including interface from water to pipe, conduction through pipe material and interface from pipe to water. Since we have two state variables we need two GEs. Lets use z as our spatial dimension and <span class="math inline">\(T_C\)</span> and <span class="math inline">\(T_W\)</span> as our state variables (C for cold, W for warm).</p>
+<p><span class="math display">\[
+\frac{\partial T_C}{\partial t} = -v\cdot \frac{\partial T_C}{\partial z} + S\\
+\frac{\partial T_W}{\partial t} = v\cdot \frac{\partial T_W}{\partial z} - S
+\]</span> Notice that due to opposite flow directions we need to have different front signs for <span class="math inline">\(v\)</span>, and we need to have opposite front signs for the source, <span class="math inline">\(S\)</span>, because what is lost from one stream must be gained in the other stream. Implicitely the unit of <span class="math inline">\(S\)</span> must be <span class="math inline">\(K~s^{-1}\)</span>, but to get there we need to first describe the energy flow and then use a linking equation to get to temperature change. The heat flux (<span class="math inline">\(q\)</span>) from the warm to the cold water stream is modeled with Newtons law of cooling <a href="04_heat_transfer.html#eq-series-flux1" class="quarto-xref">Equation&nbsp;<span>4.22</span></a>, where the temperature difference is the difference between <span class="math inline">\(T_W\)</span> and <span class="math inline">\(T_C\)</span>. We get to total heat flow through <span class="math inline">\(\dot{Q} = A_{surface} \cdot q\)</span>. Therefore</p>
+<p><span class="math display">\[
+\dot{Q} = A_{surface} \cdot U \cdot (T_W - T_C)
+\]</span> To get to temperature we use the linking equation from earlier in chapter 4 <a href="04_heat_transfer.html#eq-advection3" class="quarto-xref">Equation&nbsp;<span>4.5</span></a>. So we can describe <span class="math inline">\(S\)</span> like this</p>
+<p><span class="math display">\[
+S = \frac{\dot{Q}}{V \cdot \rho \cdot c_p} = \frac{A_{surface} \cdot U \cdot (T_W - T_C)}{V \cdot \rho \cdot c_p}
+\]</span> Because <span class="math inline">\(V = A_{cross} \cdot \Delta z\)</span> and <span class="math inline">\(A_{surface} = \pi \cdot D \cdot \Delta z\)</span>, we can simplify to</p>
+<p><span class="math display">\[
+S = \frac{\pi \cdot D}{A_{cross}}~\cdot\frac{U \cdot (T_W - T_C)}{\rho \cdot c_p}
+\]</span> So our final GEs are <span class="math display">\[
+\frac{\partial T_C}{\partial t} = -v\cdot \frac{\partial T_C}{\partial z} + \frac{\pi \cdot D}{A_{cross}}~\cdot\frac{U \cdot (T_W - T_C)}{\rho \cdot c_p}\\
+\frac{\partial T_W}{\partial t} = v\cdot \frac{\partial T_W}{\partial z} - \frac{\pi \cdot D}{A_{cross}}~\cdot\frac{U \cdot (T_W - T_C)}{\rho \cdot c_p}\\
+\]</span> When implementing in python we do as usual, except we just have to take care of the two state variables that need to be given in a 1D array, rather than two 1D arrays.</p>
+<div id="5cdf26c7" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import packages</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> solve_ivp</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>L <span class="op">=</span> <span class="dv">10</span> <span class="co"># m</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>dz <span class="op">=</span> <span class="fl">0.1</span> <span class="co"># m</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>z_grid <span class="op">=</span> np.arange(<span class="dv">0</span>, L <span class="op">+</span> dz, dz)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># we need to know the temperature at the inlet of each pipe. Also remember that it is counter current, so the inlet of the warm water is </span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co"># in the opposite end of the cold water inlet!</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>T_C_inlet <span class="op">=</span> <span class="dv">5</span> <span class="co"># C for cold</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>T_W_inlet <span class="op">=</span> <span class="dv">90</span> <span class="co"># W for warm</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co"># The initial conditions of temperature at all positions is set to the inlet temperature of the cold water for both pipes. Except at the very start of the warm water stream, we set it to 90 deg C</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="co"># we need to initiate two state variable arrays of initial conditions now!</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>T0_C <span class="op">=</span> np.zeros(<span class="bu">len</span>(z_grid))</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>T0_C[:] <span class="op">=</span> T_C_inlet </span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>T0_W <span class="op">=</span> np.zeros(<span class="bu">len</span>(z_grid))</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>T0_W[:] <span class="op">=</span> T_C_inlet</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="co"># the warm water enters at the opposite side of the cold water, so it is the last index on the z_grid reference </span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>T0_W[<span class="op">-</span><span class="dv">1</span>] <span class="op">=</span> T_W_inlet</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="co"># But our rates function expects a 1D array as initial conditions, so we have to combine our two initial condition vectors sequentially.</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="co"># state variable vectors into a single one. Then we "extract" it inside the rates function instead.</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>T0 <span class="op">=</span> np.concatenate((T0_C, T0_W))</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a><span class="co"># we need to define some constants</span></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>v <span class="op">=</span> <span class="fl">0.1</span> <span class="co"># m/s</span></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>U <span class="op">=</span> <span class="dv">500</span> <span class="co"># W/(m2 * K)</span></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>cp <span class="op">=</span> <span class="dv">4200</span> <span class="co"># J/(kg * K)</span></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>D <span class="op">=</span> <span class="fl">0.02</span> <span class="co"># m, diameter of the pipe</span></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>rho <span class="op">=</span> <span class="dv">1000</span> <span class="co"># kg/m3</span></span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Q = U * A_surf * (T_W - T_C)</span></span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a><span class="co"># the governing equation for cold water: dTdt_C = -v * dTdz + Q/(V * rho * Cp)</span></span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a><span class="co"># the governing equation for warm water: dTdt_W = v * dTdz - Q/(V * rho * Cp)</span></span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> rates(t, T, v, U, cp, rho, D, z_grid, dz):</span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>    <span class="co"># now we extract the two state variables from the 1D state variable. </span></span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>    <span class="co"># We know from how we constructed the 1D initial condition vector that the first half was the cold water</span></span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>    <span class="co"># and the remaining half was the warm water</span></span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>    T_C <span class="op">=</span> T[<span class="dv">0</span>:<span class="bu">len</span>(z_grid)]</span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>    T_W <span class="op">=</span> T[<span class="bu">len</span>(z_grid):]</span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>    <span class="co"># then we initial the derivatives as we normally do, but for each state variable</span></span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a>    dTdt_C <span class="op">=</span> np.zeros(<span class="bu">len</span>(T_C))</span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>    dTdt_W <span class="op">=</span> np.zeros(<span class="bu">len</span>(T_W))</span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a>    <span class="co"># The governing GE is:</span></span>
+<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a>    <span class="co"># dT/dt = -v * dT/dz + S (the source)</span></span>
+<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a>    <span class="co"># the source term should be positive when warm water is warmer than the cold water</span></span>
+<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a>    <span class="co"># and we need to calculate the source term for all nodes. A single node has no volume (it is       just a point),</span></span>
+<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a>    <span class="co"># but that node represents the space dz/2 to each side of the node. So the balance around that control volume is:</span></span>
+<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a>    <span class="co"># S = Q/(V * cp * rho) = U * A_surf * (T_W[i] - T_C[i])/(V*cp*rho).</span></span>
+<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a>    <span class="co"># The surface area of the control volume is: A_surf control volume = pi * D * dz</span></span>
+<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a>    <span class="co"># And the volume of the control volume is V = dz * A_cross</span></span>
+<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a>    <span class="co"># S = U * pi * D * dz * (T_W - T_C)/(dz * A_cross * cp * rho)</span></span>
+<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a>    <span class="co"># The dz goes out </span></span>
+<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a>    <span class="co"># S = U * pi * D * (T_W - T_C)/(A_cross * cp * rho)</span></span>
+<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a>    A_cross <span class="op">=</span> (np.pi <span class="op">*</span> D<span class="op">**</span><span class="dv">2</span>)<span class="op">/</span><span class="dv">4</span></span>
+<span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a>    <span class="co"># the cold stream BCs are Dirichlet at left side of the pipe. This also assumes that</span></span>
+<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a>    <span class="co"># heat is not exchanged between the streams at this node</span></span>
+<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a>    dTdt_C[<span class="dv">0</span>] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a>    <span class="co"># there is only 1 BC (because no conduction term), but we need to use backward difference at right side still</span></span>
+<span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a>    dTdt_C[<span class="op">-</span><span class="dv">1</span>] <span class="op">=</span> <span class="op">-</span>v <span class="op">*</span> (T_C[<span class="op">-</span><span class="dv">1</span>] <span class="op">-</span> T_C[<span class="op">-</span><span class="dv">2</span>])<span class="op">/</span>dz </span>
+<span id="cb9-68"><a href="#cb9-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-69"><a href="#cb9-69" aria-hidden="true" tabindex="-1"></a>    <span class="co"># the warm stream flows in the opposite direction! So it is Dirichlet at right side of the pipe. This also assumes that heat is not exchanged between the streams at this node</span></span>
+<span id="cb9-70"><a href="#cb9-70" aria-hidden="true" tabindex="-1"></a>    dTdt_W[<span class="op">-</span><span class="dv">1</span>] <span class="op">=</span> <span class="dv">0</span> </span>
+<span id="cb9-71"><a href="#cb9-71" aria-hidden="true" tabindex="-1"></a>    <span class="co"># only 1 BC, but at left side we need to use forward difference, due to opposite flow direction</span></span>
+<span id="cb9-72"><a href="#cb9-72" aria-hidden="true" tabindex="-1"></a>    <span class="co"># also the velocity is with opposite front sign, because it flows in the negative direction of how we defined our x_grid! </span></span>
+<span id="cb9-73"><a href="#cb9-73" aria-hidden="true" tabindex="-1"></a>    dTdt_W[<span class="dv">0</span>] <span class="op">=</span> v <span class="op">*</span> (T_W[<span class="dv">1</span>] <span class="op">-</span> T_W[<span class="dv">0</span>])<span class="op">/</span>dz</span>
+<span id="cb9-74"><a href="#cb9-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-75"><a href="#cb9-75" aria-hidden="true" tabindex="-1"></a>    <span class="co"># interior loop</span></span>
+<span id="cb9-76"><a href="#cb9-76" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="bu">len</span>(z_grid)<span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb9-77"><a href="#cb9-77" aria-hidden="true" tabindex="-1"></a>        S <span class="op">=</span> U <span class="op">*</span> np.pi <span class="op">*</span> D <span class="op">*</span> (T_W[i] <span class="op">-</span> T_C[i])<span class="op">/</span>(A_cross <span class="op">*</span> cp <span class="op">*</span> rho)</span>
+<span id="cb9-78"><a href="#cb9-78" aria-hidden="true" tabindex="-1"></a>        dTdt_C[i] <span class="op">=</span> <span class="op">-</span>v <span class="op">*</span> (T_C[i] <span class="op">-</span> T_C[i<span class="op">-</span><span class="dv">1</span>])<span class="op">/</span>dz <span class="op">+</span> S</span>
+<span id="cb9-79"><a href="#cb9-79" aria-hidden="true" tabindex="-1"></a>        dTdt_W[i] <span class="op">=</span> v <span class="op">*</span> (T_W[i<span class="op">+</span><span class="dv">1</span>] <span class="op">-</span> T_W[i])<span class="op">/</span>dz <span class="op">-</span> S</span>
+<span id="cb9-80"><a href="#cb9-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-81"><a href="#cb9-81" aria-hidden="true" tabindex="-1"></a>    <span class="co"># finally we must return the output as a single 1D array so we concatenate the derivatives again</span></span>
+<span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a>    dTdt <span class="op">=</span> np.concatenate((dTdt_C, dTdt_W))</span>
+<span id="cb9-83"><a href="#cb9-83" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> dTdt</span>
+<span id="cb9-84"><a href="#cb9-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-85"><a href="#cb9-85" aria-hidden="true" tabindex="-1"></a><span class="co"># now we solve it</span></span>
+<span id="cb9-86"><a href="#cb9-86" aria-hidden="true" tabindex="-1"></a>tmax <span class="op">=</span> <span class="dv">600</span> <span class="co">#</span></span>
+<span id="cb9-87"><a href="#cb9-87" aria-hidden="true" tabindex="-1"></a>times <span class="op">=</span> np.arange(<span class="dv">0</span>, tmax <span class="op">+</span> <span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb9-88"><a href="#cb9-88" aria-hidden="true" tabindex="-1"></a>sol <span class="op">=</span> solve_ivp(rates, (<span class="dv">0</span>, tmax), T0, t_eval<span class="op">=</span>times,</span>
+<span id="cb9-89"><a href="#cb9-89" aria-hidden="true" tabindex="-1"></a>                args<span class="op">=</span>(v, U, cp, rho, D, z_grid, dz), method<span class="op">=</span><span class="st">'BDF'</span>)</span>
+<span id="cb9-90"><a href="#cb9-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-91"><a href="#cb9-91" aria-hidden="true" tabindex="-1"></a><span class="co"># Lets plot temperatures at different positions at the end time</span></span>
+<span id="cb9-92"><a href="#cb9-92" aria-hidden="true" tabindex="-1"></a>T_C_tmax <span class="op">=</span> sol.y[<span class="dv">0</span>:<span class="bu">len</span>(z_grid), <span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb9-93"><a href="#cb9-93" aria-hidden="true" tabindex="-1"></a>T_W_tmax <span class="op">=</span> sol.y[<span class="bu">len</span>(z_grid):, <span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb9-94"><a href="#cb9-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-95"><a href="#cb9-95" aria-hidden="true" tabindex="-1"></a>plt.plot(z_grid, T_C_tmax, label<span class="op">=</span><span class="st">'Cold stream'</span>)</span>
+<span id="cb9-96"><a href="#cb9-96" aria-hidden="true" tabindex="-1"></a>plt.plot(z_grid, T_W_tmax, label<span class="op">=</span><span class="st">'Warm stream'</span>)</span>
+<span id="cb9-97"><a href="#cb9-97" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Position from left side (m)'</span>)</span>
+<span id="cb9-98"><a href="#cb9-98" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Temperature, (°C)'</span>)</span>
+<span id="cb9-99"><a href="#cb9-99" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb9-100"><a href="#cb9-100" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb9-101"><a href="#cb9-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-102"><a href="#cb9-102" aria-hidden="true" tabindex="-1"></a><span class="co"># Lets also plot the end points over time</span></span>
+<span id="cb9-103"><a href="#cb9-103" aria-hidden="true" tabindex="-1"></a>T_C_out <span class="op">=</span> sol.y[<span class="bu">len</span>(z_grid)<span class="op">-</span><span class="dv">1</span>, :]</span>
+<span id="cb9-104"><a href="#cb9-104" aria-hidden="true" tabindex="-1"></a>T_W_out <span class="op">=</span> sol.y[<span class="bu">len</span>(z_grid), :]</span>
+<span id="cb9-105"><a href="#cb9-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-106"><a href="#cb9-106" aria-hidden="true" tabindex="-1"></a><span class="co"># plot temperatures at the two outlets of the two streams</span></span>
+<span id="cb9-107"><a href="#cb9-107" aria-hidden="true" tabindex="-1"></a>plt.plot(times, T_C_out, label<span class="op">=</span><span class="st">'Cold stream outlet'</span>)</span>
+<span id="cb9-108"><a href="#cb9-108" aria-hidden="true" tabindex="-1"></a>plt.plot(times, T_W_out, label<span class="op">=</span><span class="st">'Warm stream outlet'</span>)</span>
+<span id="cb9-109"><a href="#cb9-109" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Time, s'</span>)</span>
+<span id="cb9-110"><a href="#cb9-110" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Temperature, (°C)'</span>)</span>
+<span id="cb9-111"><a href="#cb9-111" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb9-112"><a href="#cb9-112" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="07_spatial_models_files/figure-html/cell-7-output-1.png" width="585" height="429" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="07_spatial_models_files/figure-html/cell-7-output-2.png" width="585" height="429" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>So we see that having multiple state variables is solved by stacking the state variables before passing them to the rates function. A similar approach can be used if we had multiple dimensions. We could for example imagine that we want to model the temperature on a heat sink (really an aluminium plate) for a 3D printer. The aluminium plate is approximate 20 x 20 cm and 0.5 cm deep <a href="#fig-3D-printer" class="quarto-xref">Figure&nbsp;<span>7.9</span></a>.</p>
+<div id="fig-3D-printer" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Aluminium plate for a 3D printer, with heating from the side and heat loss from the top surface">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-3D-printer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="drawings/3D-printer.png" class="img-fluid figure-img" alt="Aluminium plate for a 3D printer, with heating from the side and heat loss from the top surface">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-3D-printer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.9: 3D printer heat sink
+</figcaption>
+</figure>
+</div>
+<p>It is heated equally from the 4 sides, and heat then spreads through the aluminum plate by conduction. Heat is lost from the top surfaces of the plate, the underside has been insulated.<br>
+We assume that temperature across the depth of the plate is invariant, and hence we can omit that dimension. We are left with the two dimensions (x and y) that each span 20 cm.</p>
+<p>First we derive the GE, where we use rectangular coordinates and remove the advection term (only conduction is at play here). We use the thermal diffusivity <span class="math inline">\(\alpha = \frac{k}{\rho \cdot c_p}\)</span> in the notation below.</p>
+<p><span class="math display">\[
+\frac{\partial T}{\partial t} = \alpha \cdot \left(\frac{\partial^2T}{\partial x^2} + \frac{\partial^2T}{\partial y^2}\right) - S
+\]</span> Again the tricky part is the source term, <span class="math inline">\(S\)</span>. In this case heat leaves the system, so if we define S as a positive quantity, we must subtract it.</p>
+<p><span class="math display">\[
+S = \frac{\dot{Q}}{V \cdot \rho \cdot c_p} = \frac{A_{surface} \cdot U \cdot (T - T_{air})}{V \cdot \rho \cdot c_p} = \frac{\Delta x \cdot \Delta y \cdot U \cdot (T - T_{air})}{\Delta x \cdot \Delta y \cdot depth \cdot \rho \cdot c_p} = \frac{U \cdot (T - T_{air})}{h \cdot \rho \cdot c_p}
+\]</span> With S defined, we are ready to implement it in python, by using a nested for loop - the outer one will loop through the x dimension and the inner will loop through the y dimension. Again we have to stack our state variables in a 1D array before passing it into the rates function. We can use two numpy methods for going back and fourth between 2D and 1D arrays. These are called <code>.flatten()</code> and <code>.reshape()</code>. This is handy because it is intuitively easy for us to imagine the 2D problem with a 2D array. In <a href="#fig-flatten-reshape" class="quarto-xref">Figure&nbsp;<span>7.10</span></a> a visual presentation of how these methods operate on array are presented.</p>
+<div id="fig-flatten-reshape" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Demonstration of flatten and reshape of a 2D and 1D array">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-flatten-reshape-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="drawings/flatten-reshape.png" class="img-fluid figure-img" alt="Demonstration of flatten and reshape of a 2D and 1D array">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-flatten-reshape-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.10: flattening and reshaping arrays in python
+</figcaption>
+</figure>
+</div>
+<p>We will now implement the 2D model in python</p>
+<div id="d006c410" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import packages</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> solve_ivp</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co"># extra packages needed for dynamic animation</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.ticker <span class="im">as</span> mticker</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.animation <span class="im">as</span> animation</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># ----------------------</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Parameters</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co"># ----------------------</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>Lx <span class="op">=</span> <span class="fl">0.20</span>  <span class="co"># m, length in x dim</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>Ly <span class="op">=</span> Lx</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>dx <span class="op">=</span> <span class="fl">0.005</span> <span class="co"># m, step size in x dim</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>dy <span class="op">=</span> dx</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="co"># ensure no rounding issues</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>Nx <span class="op">=</span> <span class="bu">int</span>(<span class="bu">round</span>(Lx <span class="op">/</span> dx)) <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>Ny <span class="op">=</span> Nx</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>x_grid <span class="op">=</span> np.linspace(<span class="dv">0</span>, Lx, Nx)</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>y_grid <span class="op">=</span> x_grid</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>T_air <span class="op">=</span> <span class="fl">20.0</span>      <span class="co"># ambient temperature</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="dv">205</span>         <span class="co"># W/(m K), conductivtiy of aluminum </span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>rho <span class="op">=</span> <span class="dv">2700</span>       <span class="co"># kg/m3, density</span></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>cp <span class="op">=</span> <span class="dv">900</span>        <span class="co"># J/(kg K), heat capacity of aluminum</span></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>alpha <span class="op">=</span> k <span class="op">/</span> (rho <span class="op">*</span> cp)  <span class="co"># thermal diffusivity</span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>h <span class="op">=</span> <span class="dv">10</span>         <span class="co"># W/(m2 K) heat transfer coefficient by convection top</span></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>depth <span class="op">=</span> <span class="fl">0.005</span>   <span class="co"># m, plate depth (or thickness)</span></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>temp_S <span class="op">=</span> <span class="dv">200</span>     <span class="co"># fixed side temperature</span></span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a><span class="co"># ----------------------</span></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Initial condition</span></span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a><span class="co"># ----------------------</span></span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a><span class="co"># This makes a np.array with Nx rows and Ny columns, all with the value of T_air, which is the initial temperature of all nodes. </span></span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>T0 <span class="op">=</span> np.full((Nx, Ny), T_air)</span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a><span class="co"># now we specify the temperature along all the four sides</span></span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a><span class="co"># first index is x and second index is y</span></span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>T0[:, <span class="dv">0</span>] <span class="op">=</span> temp_S    <span class="co"># y = 0 edge (left column of the printed array)</span></span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>T0[:, <span class="op">-</span><span class="dv">1</span>] <span class="op">=</span> temp_S   <span class="co"># y = Ly edge (right column of the printed array)</span></span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>T0[<span class="dv">0</span>, :] <span class="op">=</span> temp_S    <span class="co"># x = 0 edge (top row of the printed array)</span></span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>T0[<span class="op">-</span><span class="dv">1</span>, :] <span class="op">=</span> temp_S   <span class="co"># x = Lx edge (bottom row of the printed array)</span></span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a><span class="co"># we flatten the T0, which is a 2D array, to a 1D array, so it is compatible with rates and solve_ivp. The argument "order" determines if the 1D array should be stacking rows or columns. </span></span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a><span class="co"># order = "F" --&gt; means stack columns on top of each other.</span></span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a><span class="co"># we could also use order = "C", but it is not consistent with how we have done it in the</span></span>
+<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a><span class="co"># rest of the book</span></span>
+<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a>T0_flat <span class="op">=</span> T0.flatten(order<span class="op">=</span><span class="st">'F'</span>)</span>
+<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a><span class="co"># ----------------------</span></span>
+<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a><span class="co"># ODE function</span></span>
+<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a><span class="co"># ----------------------</span></span>
+<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> rates(t, T_flat, k, h, rho, alpha, T_air, dx, dy, depth, Nx, Ny, temp_S):</span>
+<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a>    <span class="co"># reshape the 1D state variable input to 2D format for better intuitive understanding</span></span>
+<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a>    <span class="co"># this gives the same format as the T0 we made outside rates. </span></span>
+<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a>    T <span class="op">=</span> T_flat.reshape((Nx, Ny), order <span class="op">=</span> <span class="st">'F'</span>) </span>
+<span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a>    dTdt <span class="op">=</span> np.zeros_like(T) <span class="co"># make the derivatives of zeros in a 2D array (same shape as T)</span></span>
+<span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a>    V <span class="op">=</span> dx <span class="op">*</span> dy <span class="op">*</span> depth <span class="co"># calculate the volume of a node (control volume )</span></span>
+<span id="cb10-63"><a href="#cb10-63" aria-hidden="true" tabindex="-1"></a>    A_surface <span class="op">=</span> dx <span class="op">*</span> dy <span class="co"># calculate the surface area of control volume (from which we loss heat)</span></span>
+<span id="cb10-64"><a href="#cb10-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-65"><a href="#cb10-65" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Interior nodes</span></span>
+<span id="cb10-66"><a href="#cb10-66" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, Nx<span class="op">-</span><span class="dv">1</span>): <span class="co"># loop over the x dimension in the outer loop</span></span>
+<span id="cb10-67"><a href="#cb10-67" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, Ny<span class="op">-</span><span class="dv">1</span>): <span class="co"># loop over the y dimension in the inner loop</span></span>
+<span id="cb10-68"><a href="#cb10-68" aria-hidden="true" tabindex="-1"></a>            <span class="co"># conduction in x direction (i varies, j is unchanged) </span></span>
+<span id="cb10-69"><a href="#cb10-69" aria-hidden="true" tabindex="-1"></a>            d2x <span class="op">=</span> (T[i<span class="op">-</span><span class="dv">1</span>,j] <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>T[i,j] <span class="op">+</span> T[i<span class="op">+</span><span class="dv">1</span>,j]) <span class="op">/</span> dx<span class="op">**</span><span class="dv">2</span> </span>
+<span id="cb10-70"><a href="#cb10-70" aria-hidden="true" tabindex="-1"></a>            <span class="co"># conduction in y direction (j varies, i is unchanged)</span></span>
+<span id="cb10-71"><a href="#cb10-71" aria-hidden="true" tabindex="-1"></a>            d2y <span class="op">=</span> (T[i,j<span class="op">-</span><span class="dv">1</span>] <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>T[i,j] <span class="op">+</span> T[i,j<span class="op">+</span><span class="dv">1</span>]) <span class="op">/</span> dy<span class="op">**</span><span class="dv">2</span> </span>
+<span id="cb10-72"><a href="#cb10-72" aria-hidden="true" tabindex="-1"></a>            S <span class="op">=</span> A_surface <span class="op">*</span> h <span class="op">*</span> (T[i,j] <span class="op">-</span> T_air)<span class="op">/</span>(V <span class="op">*</span> rho <span class="op">*</span> cp) <span class="co"># heat loss from each control volume through the top surface</span></span>
+<span id="cb10-73"><a href="#cb10-73" aria-hidden="true" tabindex="-1"></a>            <span class="co"># combine everything in the governing equation</span></span>
+<span id="cb10-74"><a href="#cb10-74" aria-hidden="true" tabindex="-1"></a>            dTdt[i,j] <span class="op">=</span> alpha <span class="op">*</span> (d2x <span class="op">+</span> d2y) <span class="op">-</span> S</span>
+<span id="cb10-75"><a href="#cb10-75" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-76"><a href="#cb10-76" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Left and right edges (Dirichlet fixed T, by setting the change to 0)</span></span>
+<span id="cb10-77"><a href="#cb10-77" aria-hidden="true" tabindex="-1"></a>    dTdt[:, <span class="dv">0</span>] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb10-78"><a href="#cb10-78" aria-hidden="true" tabindex="-1"></a>    dTdt[:, <span class="op">-</span><span class="dv">1</span>] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb10-79"><a href="#cb10-79" aria-hidden="true" tabindex="-1"></a>    <span class="co"># upper and lower edges (Dirichlet fixed T, by setting the change to 0)</span></span>
+<span id="cb10-80"><a href="#cb10-80" aria-hidden="true" tabindex="-1"></a>    dTdt[<span class="dv">0</span>, :] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb10-81"><a href="#cb10-81" aria-hidden="true" tabindex="-1"></a>    dTdt[<span class="op">-</span><span class="dv">1</span>, :] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb10-82"><a href="#cb10-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-83"><a href="#cb10-83" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ----------------------</span></span>
+<span id="cb10-84"><a href="#cb10-84" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Flatten to 1D so solve_ivp() can handle the input</span></span>
+<span id="cb10-85"><a href="#cb10-85" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ----------------------</span></span>
+<span id="cb10-86"><a href="#cb10-86" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> dTdt.flatten(order<span class="op">=</span><span class="st">'F'</span>)</span>
+<span id="cb10-87"><a href="#cb10-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-88"><a href="#cb10-88" aria-hidden="true" tabindex="-1"></a><span class="co"># ----------------------</span></span>
+<span id="cb10-89"><a href="#cb10-89" aria-hidden="true" tabindex="-1"></a><span class="co"># Solve ODE</span></span>
+<span id="cb10-90"><a href="#cb10-90" aria-hidden="true" tabindex="-1"></a><span class="co"># ----------------------</span></span>
+<span id="cb10-91"><a href="#cb10-91" aria-hidden="true" tabindex="-1"></a>tmax <span class="op">=</span> <span class="dv">500</span>  <span class="co"># seconds</span></span>
+<span id="cb10-92"><a href="#cb10-92" aria-hidden="true" tabindex="-1"></a>t_eval <span class="op">=</span> np.linspace(<span class="dv">0</span>, tmax, <span class="dv">1000</span>)</span>
+<span id="cb10-93"><a href="#cb10-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-94"><a href="#cb10-94" aria-hidden="true" tabindex="-1"></a>sol <span class="op">=</span> solve_ivp(</span>
+<span id="cb10-95"><a href="#cb10-95" aria-hidden="true" tabindex="-1"></a>    rates,</span>
+<span id="cb10-96"><a href="#cb10-96" aria-hidden="true" tabindex="-1"></a>    t_span<span class="op">=</span>[<span class="dv">0</span>, tmax],</span>
+<span id="cb10-97"><a href="#cb10-97" aria-hidden="true" tabindex="-1"></a>    y0<span class="op">=</span>T0_flat,</span>
+<span id="cb10-98"><a href="#cb10-98" aria-hidden="true" tabindex="-1"></a>    method<span class="op">=</span><span class="st">'BDF'</span>,</span>
+<span id="cb10-99"><a href="#cb10-99" aria-hidden="true" tabindex="-1"></a>    t_eval<span class="op">=</span>t_eval,</span>
+<span id="cb10-100"><a href="#cb10-100" aria-hidden="true" tabindex="-1"></a>    args<span class="op">=</span>(k, h, rho, alpha, T_air, dx, dy, depth, Nx, Ny, temp_S)</span>
+<span id="cb10-101"><a href="#cb10-101" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-102"><a href="#cb10-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-103"><a href="#cb10-103" aria-hidden="true" tabindex="-1"></a><span class="co"># Animation code below was made with help from AI. Try to run it in your own IDE</span></span>
+<span id="cb10-104"><a href="#cb10-104" aria-hidden="true" tabindex="-1"></a><span class="co">#fig, ax = plt.subplots()</span></span>
+<span id="cb10-105"><a href="#cb10-105" aria-hidden="true" tabindex="-1"></a><span class="co">#vmin, vmax = sol.y.min(), sol.y.max()</span></span>
+<span id="cb10-106"><a href="#cb10-106" aria-hidden="true" tabindex="-1"></a><span class="co">#pcm = ax.imshow(sol.y[:, 0].reshape((Nx, Ny), order='F').T,</span></span>
+<span id="cb10-107"><a href="#cb10-107" aria-hidden="true" tabindex="-1"></a><span class="co">#                vmin=vmin, vmax=vmax,</span></span>
+<span id="cb10-108"><a href="#cb10-108" aria-hidden="true" tabindex="-1"></a><span class="co">#                origin='lower', extent=[0, Lx, 0, Ly],</span></span>
+<span id="cb10-109"><a href="#cb10-109" aria-hidden="true" tabindex="-1"></a><span class="co">#                aspect='equal', cmap='hot')</span></span>
+<span id="cb10-110"><a href="#cb10-110" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb10-111"><a href="#cb10-111" aria-hidden="true" tabindex="-1"></a><span class="co">#cbar = fig.colorbar(pcm, ax=ax)</span></span>
+<span id="cb10-112"><a href="#cb10-112" aria-hidden="true" tabindex="-1"></a><span class="co">#cbar.ax.yaxis.set_major_formatter(mticker.ScalarFormatter())</span></span>
+<span id="cb10-113"><a href="#cb10-113" aria-hidden="true" tabindex="-1"></a><span class="co">#cbar.ax.yaxis.get_offset_text().set_visible(False)</span></span>
+<span id="cb10-114"><a href="#cb10-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-115"><a href="#cb10-115" aria-hidden="true" tabindex="-1"></a><span class="co">#ax.plot(Lx/2, Ly/2, 'bo', label='Center')</span></span>
+<span id="cb10-116"><a href="#cb10-116" aria-hidden="true" tabindex="-1"></a><span class="co">#ax.set_xlabel('x [m]')</span></span>
+<span id="cb10-117"><a href="#cb10-117" aria-hidden="true" tabindex="-1"></a><span class="co">#ax.set_ylabel('y [m]')</span></span>
+<span id="cb10-118"><a href="#cb10-118" aria-hidden="true" tabindex="-1"></a><span class="co">#ax.legend()</span></span>
+<span id="cb10-119"><a href="#cb10-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-120"><a href="#cb10-120" aria-hidden="true" tabindex="-1"></a><span class="co">#def update(frame):</span></span>
+<span id="cb10-121"><a href="#cb10-121" aria-hidden="true" tabindex="-1"></a><span class="co">#    T_frame = sol.y[:, frame].reshape((Nx, Ny), order='F')</span></span>
+<span id="cb10-122"><a href="#cb10-122" aria-hidden="true" tabindex="-1"></a><span class="co">#    pcm.set_data(T_frame.T)</span></span>
+<span id="cb10-123"><a href="#cb10-123" aria-hidden="true" tabindex="-1"></a><span class="co">#    ax.set_title(f"Time: {sol.t[frame]:.1f} s")</span></span>
+<span id="cb10-124"><a href="#cb10-124" aria-hidden="true" tabindex="-1"></a><span class="co">#    return [pcm]</span></span>
+<span id="cb10-125"><a href="#cb10-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-126"><a href="#cb10-126" aria-hidden="true" tabindex="-1"></a><span class="co">#ani = animation.FuncAnimation(fig, update, frames=len(sol.t), interval=500, blit=False)</span></span>
+<span id="cb10-127"><a href="#cb10-127" aria-hidden="true" tabindex="-1"></a><span class="co">#plt.show()</span></span>
+<span id="cb10-128"><a href="#cb10-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-129"><a href="#cb10-129" aria-hidden="true" tabindex="-1"></a><span class="co"># 2D animation is nice to look at but complicated to code. </span></span>
+<span id="cb10-130"><a href="#cb10-130" aria-hidden="true" tabindex="-1"></a><span class="co"># if we just want to know the temperature in the middle of the plate</span></span>
+<span id="cb10-131"><a href="#cb10-131" aria-hidden="true" tabindex="-1"></a><span class="co"># We find all the center positions </span></span>
+<span id="cb10-132"><a href="#cb10-132" aria-hidden="true" tabindex="-1"></a>center_idx <span class="op">=</span> (Nx<span class="op">//</span><span class="dv">2</span>) <span class="op">+</span> (Ny<span class="op">//</span><span class="dv">2</span>)<span class="op">*</span>Nx</span>
+<span id="cb10-133"><a href="#cb10-133" aria-hidden="true" tabindex="-1"></a>T_center <span class="op">=</span> sol.y[center_idx, :]</span>
+<span id="cb10-134"><a href="#cb10-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-135"><a href="#cb10-135" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb10-136"><a href="#cb10-136" aria-hidden="true" tabindex="-1"></a>plt.plot(sol.t, T_center)</span>
+<span id="cb10-137"><a href="#cb10-137" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Time [s]'</span>)</span>
+<span id="cb10-138"><a href="#cb10-138" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Center Temperature [°C]'</span>)</span>
+<span id="cb10-139"><a href="#cb10-139" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb10-140"><a href="#cb10-140" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="07_spatial_models_files/figure-html/cell-8-output-1.png" width="593" height="429" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The animation plot, will not play out here in the book and was therefore not plotted - but you could try it in your own IDE. The other plot shows that we are reaching close to <span class="math inline">\(190~\degC\)</span> in the middle of the plate after 150 min. After that the temperature will not increase as heat is constantly lost to the air.</p>
+</section>
+<section id="grid-size-and-convergence" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="grid-size-and-convergence"><span class="header-section-number">7.6</span> Grid size and convergence</h2>
 <p>Discretization replaces continuous derivatives with finite differences, accuracy depends on <span class="math inline">\(\Delta x\)</span>, and we have been picking <span class="math inline">\(\Delta x\)</span> somewhat arbitrarily in this whole chapter. But how do we know if a grid is “good enough,” and what’s the cost of making it finer?</p>
 <p>There are two sides to this question, and they pull in opposite directions. On one hand, a finer grid (smaller <span class="math inline">\(\Delta x\)</span> ) gives a more accurate approximation of the true continuous solution — this is the convergence question, and we will look at how to verify it empirically rather than just trusting it. On the other hand, computational cost increases as we refine the grid: more nodes means more equations to solve at every time step, and, as we will see, refining <span class="math inline">\(\Delta x\)</span> can also force us to take much smaller time steps for the solution to remain numerically stable — particularly if we ever switch from solve_ivp’s adaptive solvers to a simple explicit scheme.</p>
 <p>In other words, choosing a grid size is a balancing act between accuracy and cost, and the goal of this subsection is to give you the tools to make that choice deliberately rather than by guesswork: first by checking whether — and how fast — our solution converges as we refine the grid, and second by being aware of the stability constraints that link grid size to time step size.</p>
 <p><strong>example case</strong> We return to the pond example code in <a href="#lst-dirichlet_pond" class="quarto-xref">Listing&nbsp;<span>7.2</span></a>. We want to compare the model with different <span class="math inline">\(\Delta x\)</span>. To compare runs meaningfully, we need a single number to track — not the entire concentration profile, but one quantity that we can follow as the grid changes. We will use the oxygen concentration at a fixed depth (5 cm) at the end of the simulation, t = 7 days. If our discretization is working correctly, this value should converge towards some fixed number as <span class="math inline">\(\Delta x\)</span> gets smaller, rather than jumping around unpredictably.</p>
-<div id="0ee109d5" class="cell" data-execution_count="6">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> solve_ivp</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>L <span class="op">=</span> <span class="fl">0.1</span>  <span class="co"># depth of pond, m</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>D <span class="op">=</span> <span class="fl">2.0</span> <span class="op">*</span> <span class="dv">10</span><span class="op">**-</span><span class="dv">9</span>  <span class="co"># diffusion coefficient, m2/s</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>tmax <span class="op">=</span> <span class="dv">60</span> <span class="op">*</span> <span class="dv">60</span> <span class="op">*</span> <span class="dv">24</span> <span class="op">*</span> <span class="dv">7</span>  <span class="co"># 7 days, seconds</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>depth_of_interest <span class="op">=</span> <span class="fl">0.05</span>  <span class="co"># m, where we evaluate the solution</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> rates(t, c, D, dx):</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    dcdt <span class="op">=</span> np.zeros_like(c)</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="bu">len</span>(c)<span class="op">-</span><span class="dv">1</span>):</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>        dcdt[i] <span class="op">=</span> D <span class="op">*</span> (c[i<span class="op">-</span><span class="dv">1</span>] <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>c[i] <span class="op">+</span> c[i<span class="op">+</span><span class="dv">1</span>]) <span class="op">/</span> dx<span class="op">**</span><span class="dv">2</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> dcdt</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run_model(dx):</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    x_grid <span class="op">=</span> np.arange(<span class="dv">0</span>, L <span class="op">+</span> dx, dx)</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    c0 <span class="op">=</span> np.zeros(<span class="bu">len</span>(x_grid))</span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    c0[<span class="dv">0</span>] <span class="op">=</span> <span class="dv">10</span>  <span class="co"># Dirichlet BC at surface</span></span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    sol <span class="op">=</span> solve_ivp(rates, t_span<span class="op">=</span>[<span class="dv">0</span>, tmax], y0<span class="op">=</span>c0,</span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>                     method<span class="op">=</span><span class="st">"LSODA"</span>, t_eval<span class="op">=</span>[tmax],</span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>                     args<span class="op">=</span>(D, dx))</span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>    idx <span class="op">=</span> np.argmin(<span class="bu">abs</span>(x_grid <span class="op">-</span> depth_of_interest))</span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> sol.y[idx, <span class="op">-</span><span class="dv">1</span>]</span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>dx_values <span class="op">=</span> [<span class="fl">0.02</span>, <span class="fl">0.01</span>, <span class="fl">0.005</span>, <span class="fl">0.0025</span>, <span class="fl">0.00125</span>]</span>
-<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> [run_model(dx) <span class="cf">for</span> dx <span class="kw">in</span> dx_values]</span>
-<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> dx, c <span class="kw">in</span> <span class="bu">zip</span>(dx_values, results):</span>
-<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"dx = </span><span class="sc">{</span>dx<span class="sc">:.5f}</span><span class="ss"> m -&gt; c(5 cm, 7 days) = </span><span class="sc">{</span>c<span class="sc">:.5f}</span><span class="ss"> mg/L"</span>)</span>
-<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a><span class="co"># plotting</span></span>
-<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>plt.plot(dx_values, results, marker<span class="op">=</span><span class="st">"o"</span>)</span>
-<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"$</span><span class="ch">\\</span><span class="st">Delta x$, m"</span>)</span>
-<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Conc. at 5 cm after 7 days, mg/L"</span>)</span>
-<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>plt.gca().invert_xaxis()  <span class="co"># finer grids (smaller dx) on the right</span></span>
-<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>plt.show()   </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="aaa01595" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> solve_ivp</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>L <span class="op">=</span> <span class="fl">0.1</span>  <span class="co"># depth of pond, m</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>D <span class="op">=</span> <span class="fl">2.0</span> <span class="op">*</span> <span class="dv">10</span><span class="op">**-</span><span class="dv">9</span>  <span class="co"># diffusion coefficient, m2/s</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>tmax <span class="op">=</span> <span class="dv">60</span> <span class="op">*</span> <span class="dv">60</span> <span class="op">*</span> <span class="dv">24</span> <span class="op">*</span> <span class="dv">7</span>  <span class="co"># 7 days, seconds</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>depth_of_interest <span class="op">=</span> <span class="fl">0.05</span>  <span class="co"># m, where we evaluate the solution</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> rates(t, c, D, dx):</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    dcdt <span class="op">=</span> np.zeros_like(c)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="bu">len</span>(c)<span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>        dcdt[i] <span class="op">=</span> D <span class="op">*</span> (c[i<span class="op">-</span><span class="dv">1</span>] <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>c[i] <span class="op">+</span> c[i<span class="op">+</span><span class="dv">1</span>]) <span class="op">/</span> dx<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> dcdt</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run_model(dx):</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    x_grid <span class="op">=</span> np.arange(<span class="dv">0</span>, L <span class="op">+</span> dx, dx)</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    c0 <span class="op">=</span> np.zeros(<span class="bu">len</span>(x_grid))</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>    c0[<span class="dv">0</span>] <span class="op">=</span> <span class="dv">10</span>  <span class="co"># Dirichlet BC at surface</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    sol <span class="op">=</span> solve_ivp(rates, t_span<span class="op">=</span>[<span class="dv">0</span>, tmax], y0<span class="op">=</span>c0,</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>                     method<span class="op">=</span><span class="st">"LSODA"</span>, t_eval<span class="op">=</span>[tmax],</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>                     args<span class="op">=</span>(D, dx))</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>    idx <span class="op">=</span> np.argmin(<span class="bu">abs</span>(x_grid <span class="op">-</span> depth_of_interest))</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> sol.y[idx, <span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>dx_values <span class="op">=</span> [<span class="fl">0.02</span>, <span class="fl">0.01</span>, <span class="fl">0.005</span>, <span class="fl">0.0025</span>, <span class="fl">0.00125</span>]</span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> [run_model(dx) <span class="cf">for</span> dx <span class="kw">in</span> dx_values]</span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> dx, c <span class="kw">in</span> <span class="bu">zip</span>(dx_values, results):</span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"dx = </span><span class="sc">{</span>dx<span class="sc">:.5f}</span><span class="ss"> m -&gt; c(5 cm, 7 days) = </span><span class="sc">{</span>c<span class="sc">:.5f}</span><span class="ss"> mg/L"</span>)</span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a><span class="co"># plotting</span></span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>plt.plot(dx_values, results, marker<span class="op">=</span><span class="st">"o"</span>)</span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"$</span><span class="ch">\\</span><span class="st">Delta x$, m"</span>)</span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Conc. at 5 cm after 7 days, mg/L"</span>)</span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>plt.gca().invert_xaxis()  <span class="co"># finer grids (smaller dx) on the right</span></span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>plt.show()   </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>dx = 0.02000 m -&gt; c(5 cm, 7 days) = 2.18101 mg/L
 dx = 0.01000 m -&gt; c(5 cm, 7 days) = 3.06777 mg/L
@@ -1165,64 +1507,64 @@ dx = 0.00125 m -&gt; c(5 cm, 7 days) = 3.07071 mg/L</code></pre>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="07_spatial_models_files/figure-html/cell-7-output-2.png" width="589" height="430" class="figure-img"></p>
+<p><img src="07_spatial_models_files/figure-html/cell-9-output-2.png" width="589" height="430" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>We see convergence around <span class="math inline">\(\Delta x = 0.01\)</span>, but it is clear that <span class="math inline">\(\Delta x = 0.02\)</span> was not a good choice. There is no need to decrease <span class="math inline">\(\Delta x\)</span> further than 0.01, this may increase simulation time for the two reasons mentioned before: smaller <span class="math inline">\(\Delta x\)</span> increases the number of ODEs to be solved and <code>solve_ivp()</code> automatically also decreases the time step size to keep a stable solution. We can try and compare computation times with three different <span class="math inline">\(\Delta x\)</span>:</p>
-<div id="7b6f9e9b" class="cell" data-execution_count="7">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># -*- coding: utf-8 -*-</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> solve_ivp</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>L <span class="op">=</span> <span class="fl">0.1</span>  <span class="co"># depth of pond, m</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>D <span class="op">=</span> <span class="fl">2.0</span> <span class="op">*</span> <span class="dv">10</span><span class="op">**-</span><span class="dv">9</span>  <span class="co"># diffusion coefficient, m2/s</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>tmax <span class="op">=</span> <span class="dv">60</span> <span class="op">*</span> <span class="dv">60</span> <span class="op">*</span> <span class="dv">24</span> <span class="op">*</span> <span class="dv">7</span>  <span class="co"># 7 days, seconds</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> rates(t, c, D, dx):</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    dcdt <span class="op">=</span> np.zeros_like(c)</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="bu">len</span>(c)<span class="op">-</span><span class="dv">1</span>):</span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>        dcdt[i] <span class="op">=</span> D <span class="op">*</span> (c[i<span class="op">-</span><span class="dv">1</span>] <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>c[i] <span class="op">+</span> c[i<span class="op">+</span><span class="dv">1</span>]) <span class="op">/</span> dx<span class="op">**</span><span class="dv">2</span></span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> dcdt</span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>dx_values <span class="op">=</span> [<span class="fl">0.01</span>, <span class="fl">0.005</span>, <span class="fl">0.001</span>, <span class="fl">0.0005</span>]</span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>runtimes <span class="op">=</span> []</span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> dx <span class="kw">in</span> dx_values:</span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    x_grid <span class="op">=</span> np.arange(<span class="dv">0</span>, L <span class="op">+</span> dx, dx)</span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>    c0 <span class="op">=</span> np.zeros(<span class="bu">len</span>(x_grid))</span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>    c0[<span class="dv">0</span>] <span class="op">=</span> <span class="dv">10</span>  <span class="co"># Dirichlet BC at surface</span></span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>    start <span class="op">=</span> time.perf_counter()</span>
-<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>    sol <span class="op">=</span> solve_ivp(rates, t_span<span class="op">=</span>[<span class="dv">0</span>, tmax], y0<span class="op">=</span>c0,</span>
-<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>                     method<span class="op">=</span><span class="st">"LSODA"</span>, t_eval<span class="op">=</span>[tmax],</span>
-<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>                     args<span class="op">=</span>(D, dx))</span>
-<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>    elapsed <span class="op">=</span> time.perf_counter() <span class="op">-</span> start</span>
-<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>    runtimes.append(elapsed)</span>
-<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"dx = </span><span class="sc">{</span>dx<span class="sc">}</span><span class="ss"> m -&gt; </span><span class="sc">{</span><span class="bu">len</span>(x_grid)<span class="sc">}</span><span class="ss"> nodes, runtime = </span><span class="sc">{</span>elapsed<span class="sc">:.3f}</span><span class="ss"> s"</span>)</span>
-<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>plt.plot(dx_values, runtimes, marker<span class="op">=</span><span class="st">"o"</span>)</span>
-<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"$</span><span class="ch">\\</span><span class="st">Delta x$, m"</span>)</span>
-<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Runtime, s"</span>)</span>
-<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>plt.xscale(<span class="st">"log"</span>)</span>
-<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>plt.yscale(<span class="st">"log"</span>)</span>
-<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>plt.gca().invert_xaxis()  <span class="co"># finer grids (smaller dx) on the right</span></span>
-<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>plt.xticks(dx_values, [<span class="bu">str</span>(dx) <span class="cf">for</span> dx <span class="kw">in</span> dx_values])  <span class="co"># force ticks at actual dx values</span></span>
-<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="7da7f999" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># -*- coding: utf-8 -*-</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> solve_ivp</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>L <span class="op">=</span> <span class="fl">0.1</span>  <span class="co"># depth of pond, m</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>D <span class="op">=</span> <span class="fl">2.0</span> <span class="op">*</span> <span class="dv">10</span><span class="op">**-</span><span class="dv">9</span>  <span class="co"># diffusion coefficient, m2/s</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>tmax <span class="op">=</span> <span class="dv">60</span> <span class="op">*</span> <span class="dv">60</span> <span class="op">*</span> <span class="dv">24</span> <span class="op">*</span> <span class="dv">7</span>  <span class="co"># 7 days, seconds</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> rates(t, c, D, dx):</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    dcdt <span class="op">=</span> np.zeros_like(c)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="bu">len</span>(c)<span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>        dcdt[i] <span class="op">=</span> D <span class="op">*</span> (c[i<span class="op">-</span><span class="dv">1</span>] <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>c[i] <span class="op">+</span> c[i<span class="op">+</span><span class="dv">1</span>]) <span class="op">/</span> dx<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> dcdt</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>dx_values <span class="op">=</span> [<span class="fl">0.01</span>, <span class="fl">0.005</span>, <span class="fl">0.001</span>, <span class="fl">0.0005</span>]</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>runtimes <span class="op">=</span> []</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> dx <span class="kw">in</span> dx_values:</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>    x_grid <span class="op">=</span> np.arange(<span class="dv">0</span>, L <span class="op">+</span> dx, dx)</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    c0 <span class="op">=</span> np.zeros(<span class="bu">len</span>(x_grid))</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>    c0[<span class="dv">0</span>] <span class="op">=</span> <span class="dv">10</span>  <span class="co"># Dirichlet BC at surface</span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>    start <span class="op">=</span> time.perf_counter()</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>    sol <span class="op">=</span> solve_ivp(rates, t_span<span class="op">=</span>[<span class="dv">0</span>, tmax], y0<span class="op">=</span>c0,</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>                     method<span class="op">=</span><span class="st">"LSODA"</span>, t_eval<span class="op">=</span>[tmax],</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>                     args<span class="op">=</span>(D, dx))</span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>    elapsed <span class="op">=</span> time.perf_counter() <span class="op">-</span> start</span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>    runtimes.append(elapsed)</span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"dx = </span><span class="sc">{</span>dx<span class="sc">}</span><span class="ss"> m -&gt; </span><span class="sc">{</span><span class="bu">len</span>(x_grid)<span class="sc">}</span><span class="ss"> nodes, runtime = </span><span class="sc">{</span>elapsed<span class="sc">:.3f}</span><span class="ss"> s"</span>)</span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>plt.plot(dx_values, runtimes, marker<span class="op">=</span><span class="st">"o"</span>)</span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"$</span><span class="ch">\\</span><span class="st">Delta x$, m"</span>)</span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Runtime, s"</span>)</span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>plt.xscale(<span class="st">"log"</span>)</span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>plt.yscale(<span class="st">"log"</span>)</span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a>plt.gca().invert_xaxis()  <span class="co"># finer grids (smaller dx) on the right</span></span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a>plt.xticks(dx_values, [<span class="bu">str</span>(dx) <span class="cf">for</span> dx <span class="kw">in</span> dx_values])  <span class="co"># force ticks at actual dx values</span></span>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>dx = 0.01 m -&gt; 11 nodes, runtime = 0.006 s
-dx = 0.005 m -&gt; 21 nodes, runtime = 0.012 s
-dx = 0.001 m -&gt; 101 nodes, runtime = 0.262 s
-dx = 0.0005 m -&gt; 201 nodes, runtime = 1.453 s</code></pre>
+dx = 0.005 m -&gt; 21 nodes, runtime = 0.009 s
+dx = 0.001 m -&gt; 101 nodes, runtime = 0.202 s
+dx = 0.0005 m -&gt; 201 nodes, runtime = 1.166 s</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="07_spatial_models_files/figure-html/cell-8-output-2.png" width="599" height="430" class="figure-img"></p>
+<p><img src="07_spatial_models_files/figure-html/cell-10-output-2.png" width="599" height="430" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1236,59 +1578,59 @@ dx = 0.0005 m -&gt; 201 nodes, runtime = 1.453 s</code></pre>
 <p><span class="math display">\[
 \frac{\Delta x^2}{2\cdot D} = \frac{0.01^2}{2 \cdot 2.0 * 10^{-9}} = 25000
 \]</span> Lets replace solve_ivp with a nested euler forward loop with time steps below, above and exactly at the stability criterion.</p>
-<div id="98576c95" class="cell" data-execution_count="8">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># -*- coding: utf-8 -*-</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>D <span class="op">=</span> <span class="fl">2.0</span> <span class="op">*</span> <span class="dv">10</span><span class="op">**-</span><span class="dv">9</span>  <span class="co"># diffusion coefficient, m2/s</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>L <span class="op">=</span> <span class="fl">0.1</span>  <span class="co"># depth of pond, m</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>dx <span class="op">=</span> <span class="fl">0.01</span>  <span class="co"># m, just using 1 spatial step size</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>tmax <span class="op">=</span> <span class="dv">60</span> <span class="op">*</span> <span class="dv">60</span> <span class="op">*</span> <span class="dv">24</span> <span class="op">*</span> <span class="dv">7</span>  <span class="co"># 7 days, seconds</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>x_grid <span class="op">=</span> np.arange(<span class="dv">0</span>, L <span class="op">+</span> dx, dx)</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co"># max time step allowed</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>dt_crit <span class="op">=</span> dx<span class="op">**</span><span class="dv">2</span> <span class="op">/</span> (<span class="dv">2</span><span class="op">*</span>D)</span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"dx = </span><span class="sc">{</span>dx<span class="sc">}</span><span class="ss"> m -&gt; dt_crit = </span><span class="sc">{</span>dt_crit<span class="sc">:.0f}</span><span class="ss"> s"</span>)</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="co"># three time steps chosen, below, at, and above dt_crit</span></span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>dt_values <span class="op">=</span> [<span class="fl">0.8</span> <span class="op">*</span> dt_crit, dt_crit, <span class="fl">1.2</span> <span class="op">*</span> dt_crit]</span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> [<span class="st">"below criterion (stable)"</span>, <span class="st">"at criterion"</span>, <span class="st">"above criterion (unstable)"</span>]</span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="co"># empty list for holding results</span></span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> []</span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="co"># outer loop with different time steps chosen</span></span>
-<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> dt <span class="kw">in</span> dt_values:</span>
-<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>    t_grid <span class="op">=</span> np.arange(<span class="dv">0</span>, tmax <span class="op">+</span> dt, dt)</span>
-<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>    c <span class="op">=</span> np.zeros((<span class="bu">len</span>(t_grid), <span class="bu">len</span>(x_grid)))</span>
-<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>    c[<span class="dv">0</span>, <span class="dv">0</span>] <span class="op">=</span> <span class="dv">10</span>  <span class="co"># Dirichlet BC at surface</span></span>
-<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># looping through time</span></span>
-<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(t_grid) <span class="op">-</span> <span class="dv">1</span>):</span>
-<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>        <span class="co"># first dimension is time, second dimension is spatial dimension x</span></span>
-<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>        c[i<span class="op">+</span><span class="dv">1</span>, <span class="dv">0</span>] <span class="op">=</span> <span class="dv">10</span>  <span class="co"># Dirichlet BC at surface, re-imposed every step</span></span>
-<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>        <span class="co"># looping through x space in interior loop</span></span>
-<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="bu">len</span>(x_grid) <span class="op">-</span> <span class="dv">1</span>):</span>
-<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>            c[i<span class="op">+</span><span class="dv">1</span>, j] <span class="op">=</span> c[i, j] <span class="op">+</span> dt <span class="op">*</span> D <span class="op">*</span> (c[i, j<span class="op">-</span><span class="dv">1</span>] <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>c[i, j] <span class="op">+</span> c[i, j<span class="op">+</span><span class="dv">1</span>]) <span class="op">/</span> dx<span class="op">**</span><span class="dv">2</span></span>
-<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>    results.append(c)</span>
-<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"dt = </span><span class="sc">{</span>dt<span class="sc">:.0f}</span><span class="ss"> s, </span><span class="sc">{</span><span class="bu">len</span>(t_grid)<span class="op">-</span><span class="dv">1</span><span class="sc">}</span><span class="ss"> steps"</span>)</span>
-<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">4</span>), sharey<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a><span class="co"># plotting profile after 7 days for three simulations using different time steps</span></span>
-<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, label, c <span class="kw">in</span> <span class="bu">zip</span>(axes, labels, results):</span>
-<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a>    <span class="co"># converting from m to cm. </span></span>
-<span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a>    ax.plot(c[<span class="op">-</span><span class="dv">1</span>], x_grid <span class="op">*</span> <span class="dv">100</span>)</span>
-<span id="cb13-46"><a href="#cb13-46" aria-hidden="true" tabindex="-1"></a>    ax.invert_yaxis()</span>
-<span id="cb13-47"><a href="#cb13-47" aria-hidden="true" tabindex="-1"></a>    ax.set_title(label)</span>
-<span id="cb13-48"><a href="#cb13-48" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">"Depth, cm"</span>)</span>
-<span id="cb13-49"><a href="#cb13-49" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">"Concentration, mg/L"</span>)</span>
-<span id="cb13-50"><a href="#cb13-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-51"><a href="#cb13-51" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb13-52"><a href="#cb13-52" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="1e5909d3" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># -*- coding: utf-8 -*-</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>D <span class="op">=</span> <span class="fl">2.0</span> <span class="op">*</span> <span class="dv">10</span><span class="op">**-</span><span class="dv">9</span>  <span class="co"># diffusion coefficient, m2/s</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>L <span class="op">=</span> <span class="fl">0.1</span>  <span class="co"># depth of pond, m</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>dx <span class="op">=</span> <span class="fl">0.01</span>  <span class="co"># m, just using 1 spatial step size</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>tmax <span class="op">=</span> <span class="dv">60</span> <span class="op">*</span> <span class="dv">60</span> <span class="op">*</span> <span class="dv">24</span> <span class="op">*</span> <span class="dv">7</span>  <span class="co"># 7 days, seconds</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>x_grid <span class="op">=</span> np.arange(<span class="dv">0</span>, L <span class="op">+</span> dx, dx)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="co"># max time step allowed</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>dt_crit <span class="op">=</span> dx<span class="op">**</span><span class="dv">2</span> <span class="op">/</span> (<span class="dv">2</span><span class="op">*</span>D)</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"dx = </span><span class="sc">{</span>dx<span class="sc">}</span><span class="ss"> m -&gt; dt_crit = </span><span class="sc">{</span>dt_crit<span class="sc">:.0f}</span><span class="ss"> s"</span>)</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="co"># three time steps chosen, below, at, and above dt_crit</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>dt_values <span class="op">=</span> [<span class="fl">0.8</span> <span class="op">*</span> dt_crit, dt_crit, <span class="fl">1.2</span> <span class="op">*</span> dt_crit]</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> [<span class="st">"below criterion (stable)"</span>, <span class="st">"at criterion"</span>, <span class="st">"above criterion (unstable)"</span>]</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a><span class="co"># empty list for holding results</span></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> []</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a><span class="co"># outer loop with different time steps chosen</span></span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> dt <span class="kw">in</span> dt_values:</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>    t_grid <span class="op">=</span> np.arange(<span class="dv">0</span>, tmax <span class="op">+</span> dt, dt)</span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>    c <span class="op">=</span> np.zeros((<span class="bu">len</span>(t_grid), <span class="bu">len</span>(x_grid)))</span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>    c[<span class="dv">0</span>, <span class="dv">0</span>] <span class="op">=</span> <span class="dv">10</span>  <span class="co"># Dirichlet BC at surface</span></span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># looping through time</span></span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(t_grid) <span class="op">-</span> <span class="dv">1</span>):</span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>        <span class="co"># first dimension is time, second dimension is spatial dimension x</span></span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>        c[i<span class="op">+</span><span class="dv">1</span>, <span class="dv">0</span>] <span class="op">=</span> <span class="dv">10</span>  <span class="co"># Dirichlet BC at surface, re-imposed every step</span></span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>        <span class="co"># looping through x space in interior loop</span></span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="bu">len</span>(x_grid) <span class="op">-</span> <span class="dv">1</span>):</span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>            c[i<span class="op">+</span><span class="dv">1</span>, j] <span class="op">=</span> c[i, j] <span class="op">+</span> dt <span class="op">*</span> D <span class="op">*</span> (c[i, j<span class="op">-</span><span class="dv">1</span>] <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>c[i, j] <span class="op">+</span> c[i, j<span class="op">+</span><span class="dv">1</span>]) <span class="op">/</span> dx<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a>    results.append(c)</span>
+<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"dt = </span><span class="sc">{</span>dt<span class="sc">:.0f}</span><span class="ss"> s, </span><span class="sc">{</span><span class="bu">len</span>(t_grid)<span class="op">-</span><span class="dv">1</span><span class="sc">}</span><span class="ss"> steps"</span>)</span>
+<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">4</span>), sharey<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a><span class="co"># plotting profile after 7 days for three simulations using different time steps</span></span>
+<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, label, c <span class="kw">in</span> <span class="bu">zip</span>(axes, labels, results):</span>
+<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a>    <span class="co"># converting from m to cm. </span></span>
+<span id="cb15-45"><a href="#cb15-45" aria-hidden="true" tabindex="-1"></a>    ax.plot(c[<span class="op">-</span><span class="dv">1</span>], x_grid <span class="op">*</span> <span class="dv">100</span>)</span>
+<span id="cb15-46"><a href="#cb15-46" aria-hidden="true" tabindex="-1"></a>    ax.invert_yaxis()</span>
+<span id="cb15-47"><a href="#cb15-47" aria-hidden="true" tabindex="-1"></a>    ax.set_title(label)</span>
+<span id="cb15-48"><a href="#cb15-48" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">"Depth, cm"</span>)</span>
+<span id="cb15-49"><a href="#cb15-49" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">"Concentration, mg/L"</span>)</span>
+<span id="cb15-50"><a href="#cb15-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-51"><a href="#cb15-51" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb15-52"><a href="#cb15-52" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>dx = 0.01 m -&gt; dt_crit = 25000 s
 dt = 20000 s, 31 steps
@@ -1298,7 +1640,7 @@ dt = 30000 s, 21 steps</code></pre>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="07_spatial_models_files/figure-html/cell-9-output-2.png" width="1430" height="374" class="figure-img"></p>
+<p><img src="07_spatial_models_files/figure-html/cell-11-output-2.png" width="1430" height="374" class="figure-img"></p>
 </figure>
 </div>
 </div>
