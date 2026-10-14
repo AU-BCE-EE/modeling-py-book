@@ -1061,6 +1061,8 @@ of H2S at the top of the well is {sol.y[-1,-1]:.2f} ppm"
 
 ## Multiple state variables or dimensions
 
+### Multiple state variables
+
 So far we have dealt with a single state variable, but we often encounter problems with multiple state variables that are coupled. This is the case when we have multiple chemical species and reactions, when problems involves both heat and mass balances, e.g. an exothermic reaction, or when we need multiple heat balances like for heat exchangers or reactors with cooling jackets. Now we will deal with a heat exchanger with incoming cold water that runs counter current with a warm water stream. Heat is exchanged across the two water streams, such that the cold water gets warmer along the pipe, and the warm water gets colder. A sketch of the problem is given in @fig-pipe-two-states. 
 
 ![Counter current heat exchanger](drawings/pipe-two-states.png){#fig-pipe-two-states fig-alt="Counter current heat exchanger, with two model domains that exchange heat"}   
@@ -1210,24 +1212,26 @@ plt.legend()
 plt.show()
 ```
 
+### 2D or more dimensions
+
 So we see that having multiple state variables is solved by stacking the state variables before passing them to the rates function. A similar approach can be used if we had multiple dimensions. We could for example imagine that we want to model the temperature on a heat sink (really an aluminium plate) for a 3D printer. The aluminium plate is approximate 20 x 20 cm and 0.5 cm deep @fig-3D-printer. 
 
 ![3D printer heat sink](drawings/3D-printer.png){#fig-3D-printer fig-alt="Aluminium plate for a 3D printer, with heating from the side and heat loss from the top surface"}   
 
-It is heated equally from the 4 sides, and heat then spreads through the aluminum plate by conduction. Heat is lost from the top surfaces of the plate, the underside has been insulated.    
-We assume that temperature across the depth of the plate is invariant, and hence we can omit that dimension. We are left with the two dimensions (x and y) that each span 20 cm. 
+It is heated equally from the 4 sides, and heat then spreads through the aluminum plate by conduction. Heat is lost from the top surface of the plate. The underside has been insulated.    
+We assume that temperature across the depth of the plate is invariant $\frac{\partial T}{\partial z} = 0$, and hence we can omit that dimension. We are left with the two dimensions (x and y) that each span 20 cm. 
 
-First we derive the GE, where we use rectangular coordinates and remove the advection term (only conduction is at play here). We use the thermal diffusivity $\alpha = \frac{k}{\rho \cdot c_p}$ in the notation below.
+First we derive the GE using rectangular coordinates and without the advection term (only conduction is at play here). We use the thermal diffusivity $\alpha = \frac{k}{\rho \cdot c_p}$ in the notation below.
 
 $$
 \frac{\partial T}{\partial t} = \alpha \cdot \left(\frac{\partial^2T}{\partial x^2} + \frac{\partial^2T}{\partial y^2}\right) - S
 $$
-Again the tricky part is the source term, $S$. In this case heat leaves the system, so if we define S as a positive quantity, we must subtract it.
+Again the tricky part is the source term, $S$. In this case heat leaves the system, so if we define S as a positive quantity, we must subtract it. We rewrite $S$ using linking equations and Newtons law of cooling. 
 
 $$
 S = \frac{\dot{Q}}{V \cdot \rho \cdot c_p} = \frac{A_{surface} \cdot U \cdot (T - T_{air})}{V \cdot \rho \cdot c_p} = \frac{\Delta x \cdot \Delta y \cdot U \cdot (T - T_{air})}{\Delta x \cdot \Delta y \cdot depth \cdot \rho \cdot c_p} = \frac{U \cdot (T - T_{air})}{h \cdot \rho \cdot c_p}
 $$
-With S defined, we are ready to implement it in python, by using a nested for loop - the outer one will loop through the x dimension and the inner will loop through the y dimension. Again we have to stack our state variables in a 1D array before passing it into the rates function. We can use two numpy methods for going back and fourth between 2D and 1D arrays. These are called `.flatten()` and `.reshape()`. This is handy because it is intuitively easy for us to imagine the 2D problem with a 2D array. In @fig-flatten-reshape a visual presentation of how these methods operate on array are presented.
+With $S$ defined we are ready to implement it in python, by using a nested for loop - the outer looping through the x dimension (rows in this case) and the inner will loop through the y dimension (columns). We have to stack our state variables in a 1D array before passing it into the rates function. We can use two numpy methods for going back and fourth between 2D and 1D arrays. These are called `.flatten()` and `.reshape()`. This is handy because it is intuitively easy for us to imagine the 2D problem with a 2D array representing our state variable at different positions. In @fig-flatten-reshape a visual presentation of how these methods operate on arrays are presented.
 
 ![flattening and reshaping arrays in python](drawings/flatten-reshape.png){#fig-flatten-reshape fig-alt="Demonstration of flatten and reshape of a 2D and 1D array"} 
 
@@ -1375,7 +1379,9 @@ plt.ylabel('Center Temperature [°C]')
 plt.grid(True)
 plt.show()
 ```
-The animation plot, will not play out here in the book and was therefore not plotted - but you could try it in your own IDE. The other plot shows that we are reaching close to $190~\degC$ in the middle of the plate after 150 min. After that the temperature will not increase as heat is constantly lost to the air.
+The animation plot will not play out here in the book and was omitted on purpose - but you could try it in your own IDE. The other plot shows that we are reaching close to $190~\degC$ in the middle of the plate after 150 min. Hereafter the temperature will not increase further due to a constant heat loss to the air. 
+
+Changing to a 3D model could be done in a similar way - that is packing your states in a 1D array and extracting these correctly within rates. Also we would need 6 BCs to pose the problem correctly. However, running such a model is computationally heavy and other software is more suitable for such problems. Hence we will not cover that topic further in this book.  
 
 ## Grid size and convergence
 

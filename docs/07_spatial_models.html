@@ -380,7 +380,11 @@ window.Quarto = {
   <li><a href="#neumann-boundary-condition" id="toc-neumann-boundary-condition" class="nav-link" data-scroll-target="#neumann-boundary-condition"><span class="header-section-number">7.4.2</span> Neumann boundary condition</a></li>
   <li><a href="#robin-boundary-condition" id="toc-robin-boundary-condition" class="nav-link" data-scroll-target="#robin-boundary-condition"><span class="header-section-number">7.4.3</span> Robin boundary condition</a></li>
   </ul></li>
-  <li><a href="#multiple-state-variables-or-dimensions" id="toc-multiple-state-variables-or-dimensions" class="nav-link" data-scroll-target="#multiple-state-variables-or-dimensions"><span class="header-section-number">7.5</span> Multiple state variables or dimensions</a></li>
+  <li><a href="#multiple-state-variables-or-dimensions" id="toc-multiple-state-variables-or-dimensions" class="nav-link" data-scroll-target="#multiple-state-variables-or-dimensions"><span class="header-section-number">7.5</span> Multiple state variables or dimensions</a>
+  <ul class="collapse">
+  <li><a href="#multiple-state-variables" id="toc-multiple-state-variables" class="nav-link" data-scroll-target="#multiple-state-variables"><span class="header-section-number">7.5.1</span> Multiple state variables</a></li>
+  <li><a href="#d-or-more-dimensions" id="toc-d-or-more-dimensions" class="nav-link" data-scroll-target="#d-or-more-dimensions"><span class="header-section-number">7.5.2</span> 2D or more dimensions</a></li>
+  </ul></li>
   <li><a href="#grid-size-and-convergence" id="toc-grid-size-and-convergence" class="nav-link" data-scroll-target="#grid-size-and-convergence"><span class="header-section-number">7.6</span> Grid size and convergence</a></li>
   </ul>
 </nav>
@@ -625,7 +629,7 @@ f''(x) = \frac{f(x) - 2 \cdot f(x-\Delta x) + f(x -2\cdot \Delta x)}{\Delta x^2}
 <p>This gives us the 5 coupled ODEs and with information about boundary conditions included in red. Since we simplified the example by removing advection, we would need to apply finite difference formulas for the first derivative as well to solve the real problem. In <a href="appx_fdm_formulas.html" class="quarto-xref"><span>Appendix F</span></a> a complete overview of the finite difference formulas (backward, forward, central) are given for the first and second derivatives.</p>
 <p><strong>Implementation in Python</strong></p>
 <p>Lets now go to python to encode and solve the ODE system in <a href="#eq-fiveODE" class="quarto-xref">Equation&nbsp;<span>7.10</span></a>. We want to see something happening so lets assume that the water is <span class="math inline">\(0 \degC\)</span> everywhere to stat with, except at the left side (<span class="math inline">\(10 \degC\)</span>). We will run the simulation for 10 minutes.</p>
-<div id="259e3371" class="cell" data-execution_count="1">
+<div id="2d39bb48" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># we need the following libraries</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -711,7 +715,7 @@ f''(x) = \frac{f(x) - 2 \cdot f(x-\Delta x) + f(x -2\cdot \Delta x)}{\Delta x^2}
 </div>
 <p>So the plot tells us that the temperature in the end of the pipe almost does not change (see y-axis 1e-11). This is not so strange because we only have heat transferred by conduction (from left) in the code, and we have not included the heat source (S) either. This hints to us that heat transfer by conduction is probably not so important in our case, but lets first try and implement advection and the source term as well. We will reduce simulation time to 20 seconds, which should be long enough to reach a steady state with a velocity of 0.5 m/s in a pipe that is only 2 m long.</p>
 <p>However! For the advection term we would now be tempted to use central difference discretization in the interior nodes, simply because we know it has a higher order of accuracy than backward and forward difference. But here is a special case. For advection, which is a unidirectional phenomenon we must NEVER use information from downwind nodes to approximate the derivative (which is what central difference does). This will cause the solution to oscillate or be unstable, a topic that will be dealt more with in a later chapter. So we must in this case use backward difference for the advection to avoid that.</p>
-<div id="43908742" class="cell" data-execution_count="2">
+<div id="e1842cc8" class="cell" data-execution_count="2">
 <div id="lst-pipe_model" class="python cell-code listing quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-lst figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-pipe_model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -823,7 +827,7 @@ c(x = a, t) = \alpha(t)
 <p>A model that predicts how oxygen concentration changes with time and with depth of a small pond. At the top boundary (surface of the water) the concentration of oxygen is in equilibrium with the atmospheric oxygen concentration. At this boundary the value (oxygen concentration) does not change if the air is constantly exchanged, which is the case if the wind blows just mildly. This situation would be well described with a Dirichlet BC. If we had put a closed chamber on top of the water, such that air could not be exchanged, then we could not do this because the concentration of oxygen in the air would decline over time as it diffuses into the water (assuming it was not saturated with oxygen already).</p>
 <p><strong>Implementation in Python</strong></p>
 <p>The Dirichlet BC can be enforced in many ways. Below is an example where it is enforced by setting the IC at the boundary equal to the BC. Inside the <code>rates()</code> function we initially set the derivatives at all nodes to 0 through this command <code>dcdt = np.zeros_like(c)</code>. In the <code>for loop</code> we only loop through interior nodes, because the start index is 1 (<code>range(1, len(c)-1)</code>) and we stop before the last index. Hence <code>dcdt[0]</code> will stay as 0 (meaning change in c over change in time is zero) and effectively ensure that the state variable value at index 0 (the boundary node) never changes from its initial value. The initial value at index 0 is set to 10 in this command after the <code>rates()</code> function: <code>c0[0] = 10</code>. Because our for loop does not include the last index, it means that we also have a Dirichlet BC at the bottom (last index), which is 0 from this command: <code>c0 = np.zeros(len(x_grid))</code>. This may not be what we want for the model, unless something is instantly consuming oxygen at the bottom of the pond. Therefore we might have to handle the bottom boundary with a different type of BC, but for simplicity we will keep the Dirichlet BCs at both ends of the domain.</p>
-<div id="ca4b2b3c" class="cell" data-execution_count="3">
+<div id="22125ea3" class="cell" data-execution_count="3">
 <div id="lst-dirichlet_pond" class="python cell-code listing quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-lst figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-dirichlet_pond-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -945,7 +949,7 @@ T(x_{L+1}) = T(x_{L-1})
 \tag{7.11}\]</span></span></p>
 <p>This equation enforces the Neumann boundary condition at the top boundary, L. Earlier in <a href="#lst-pipe_model" class="quarto-xref">Listing&nbsp;<span>7.1</span></a>, we avoided the whole ghost point problematic by using backward difference instead and we did not state anything about a BC. But implicitely, by using the backward difference we silently just extrapolated the physics to outside the model domain. What does that mean? It means that there is no change in the second derivative and the BC was actually <span class="math inline">\(\frac{\partial^3 T}{\partial z^3} = 0\)</span>. The math to derive that is out of the scope for this book and we will not use such a BC again going forward.</p>
 <p>Lets implement Neumann BC derived above in our code and assume that the living room is <span class="math inline">\(10 \degC\)</span> to start with:</p>
-<div id="5874a806" class="cell" data-execution_count="4">
+<div id="21e7a71a" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># importing libraries</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> solve_ivp </span>
@@ -1042,7 +1046,7 @@ D\cdot\frac{\partial c(x=L, t)}{\partial x} = &amp;D \cdot \frac{c(x_{L+1}) - 2\
 \frac{2\cdot D}{\Delta x^2}\cdot \left( c(x_{L-1}) - c(x_L) \right )-\frac{2k_c}{\Delta x}\cdot \left( c(x_L) - c_{bulk} \right )
 \]</span> and it nicely parallels the Neumann result: the first term is the same diffusive exchange with the interior node (except now it is mass, not temperature as in <a href="#eq-neumann" class="quarto-xref">Equation&nbsp;<span>7.11</span></a>), and the second term is the new convective loss/gain at the boundary, vanishing as <span class="math inline">\(k_c \to 0\)</span> (back to Neumann) and dominating as <span class="math inline">\(k_c \to \infty\)</span> (forcing <span class="math inline">\(c_L \to c_{bulk}\)</span>, which is equivalent to a Dirichlet BC).</p>
 <p><strong>Implementation in Python</strong></p>
-<div id="ee04f5e7" class="cell" data-execution_count="5">
+<div id="ede15aee" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># importing libraries</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> solve_ivp </span>
@@ -1112,6 +1116,8 @@ D\cdot\frac{\partial c(x=L, t)}{\partial x} = &amp;D \cdot \frac{c(x_{L+1}) - 2\
 </section>
 <section id="multiple-state-variables-or-dimensions" class="level2" data-number="7.5">
 <h2 data-number="7.5" class="anchored" data-anchor-id="multiple-state-variables-or-dimensions"><span class="header-section-number">7.5</span> Multiple state variables or dimensions</h2>
+<section id="multiple-state-variables" class="level3" data-number="7.5.1">
+<h3 data-number="7.5.1" class="anchored" data-anchor-id="multiple-state-variables"><span class="header-section-number">7.5.1</span> Multiple state variables</h3>
 <p>So far we have dealt with a single state variable, but we often encounter problems with multiple state variables that are coupled. This is the case when we have multiple chemical species and reactions, when problems involves both heat and mass balances, e.g.&nbsp;an exothermic reaction, or when we need multiple heat balances like for heat exchangers or reactors with cooling jackets. Now we will deal with a heat exchanger with incoming cold water that runs counter current with a warm water stream. Heat is exchanged across the two water streams, such that the cold water gets warmer along the pipe, and the warm water gets colder. A sketch of the problem is given in <a href="#fig-pipe-two-states" class="quarto-xref">Figure&nbsp;<span>7.8</span></a>.</p>
 <div id="fig-pipe-two-states" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Counter current heat exchanger, with two model domains that exchange heat">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1141,7 +1147,7 @@ S = \frac{\pi \cdot D}{A_{cross}}~\cdot\frac{U \cdot (T_W - T_C)}{\rho \cdot c_p
 \frac{\partial T_C}{\partial t} = -v\cdot \frac{\partial T_C}{\partial z} + \frac{\pi \cdot D}{A_{cross}}~\cdot\frac{U \cdot (T_W - T_C)}{\rho \cdot c_p}\\
 \frac{\partial T_W}{\partial t} = v\cdot \frac{\partial T_W}{\partial z} - \frac{\pi \cdot D}{A_{cross}}~\cdot\frac{U \cdot (T_W - T_C)}{\rho \cdot c_p}\\
 \]</span> When implementing in python we do as usual, except we just have to take care of the two state variables that need to be given in a 1D array, rather than two 1D arrays.</p>
-<div id="5cdf26c7" class="cell" data-execution_count="6">
+<div id="57ca400c" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import packages</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -1269,6 +1275,9 @@ S = \frac{\pi \cdot D}{A_{cross}}~\cdot\frac{U \cdot (T_W - T_C)}{\rho \cdot c_p
 </div>
 </div>
 </div>
+</section>
+<section id="d-or-more-dimensions" class="level3" data-number="7.5.2">
+<h3 data-number="7.5.2" class="anchored" data-anchor-id="d-or-more-dimensions"><span class="header-section-number">7.5.2</span> 2D or more dimensions</h3>
 <p>So we see that having multiple state variables is solved by stacking the state variables before passing them to the rates function. A similar approach can be used if we had multiple dimensions. We could for example imagine that we want to model the temperature on a heat sink (really an aluminium plate) for a 3D printer. The aluminium plate is approximate 20 x 20 cm and 0.5 cm deep <a href="#fig-3D-printer" class="quarto-xref">Figure&nbsp;<span>7.9</span></a>.</p>
 <div id="fig-3D-printer" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Aluminium plate for a 3D printer, with heating from the side and heat loss from the top surface">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1280,15 +1289,15 @@ Figure&nbsp;7.9: 3D printer heat sink
 </figcaption>
 </figure>
 </div>
-<p>It is heated equally from the 4 sides, and heat then spreads through the aluminum plate by conduction. Heat is lost from the top surfaces of the plate, the underside has been insulated.<br>
-We assume that temperature across the depth of the plate is invariant, and hence we can omit that dimension. We are left with the two dimensions (x and y) that each span 20 cm.</p>
-<p>First we derive the GE, where we use rectangular coordinates and remove the advection term (only conduction is at play here). We use the thermal diffusivity <span class="math inline">\(\alpha = \frac{k}{\rho \cdot c_p}\)</span> in the notation below.</p>
+<p>It is heated equally from the 4 sides, and heat then spreads through the aluminum plate by conduction. Heat is lost from the top surface of the plate. The underside has been insulated.<br>
+We assume that temperature across the depth of the plate is invariant <span class="math inline">\(\frac{\partial T}{\partial z} = 0\)</span>, and hence we can omit that dimension. We are left with the two dimensions (x and y) that each span 20 cm.</p>
+<p>First we derive the GE using rectangular coordinates and without the advection term (only conduction is at play here). We use the thermal diffusivity <span class="math inline">\(\alpha = \frac{k}{\rho \cdot c_p}\)</span> in the notation below.</p>
 <p><span class="math display">\[
 \frac{\partial T}{\partial t} = \alpha \cdot \left(\frac{\partial^2T}{\partial x^2} + \frac{\partial^2T}{\partial y^2}\right) - S
-\]</span> Again the tricky part is the source term, <span class="math inline">\(S\)</span>. In this case heat leaves the system, so if we define S as a positive quantity, we must subtract it.</p>
+\]</span> Again the tricky part is the source term, <span class="math inline">\(S\)</span>. In this case heat leaves the system, so if we define S as a positive quantity, we must subtract it. We rewrite <span class="math inline">\(S\)</span> using linking equations and Newtons law of cooling.</p>
 <p><span class="math display">\[
 S = \frac{\dot{Q}}{V \cdot \rho \cdot c_p} = \frac{A_{surface} \cdot U \cdot (T - T_{air})}{V \cdot \rho \cdot c_p} = \frac{\Delta x \cdot \Delta y \cdot U \cdot (T - T_{air})}{\Delta x \cdot \Delta y \cdot depth \cdot \rho \cdot c_p} = \frac{U \cdot (T - T_{air})}{h \cdot \rho \cdot c_p}
-\]</span> With S defined, we are ready to implement it in python, by using a nested for loop - the outer one will loop through the x dimension and the inner will loop through the y dimension. Again we have to stack our state variables in a 1D array before passing it into the rates function. We can use two numpy methods for going back and fourth between 2D and 1D arrays. These are called <code>.flatten()</code> and <code>.reshape()</code>. This is handy because it is intuitively easy for us to imagine the 2D problem with a 2D array. In <a href="#fig-flatten-reshape" class="quarto-xref">Figure&nbsp;<span>7.10</span></a> a visual presentation of how these methods operate on array are presented.</p>
+\]</span> With <span class="math inline">\(S\)</span> defined we are ready to implement it in python, by using a nested for loop - the outer looping through the x dimension (rows in this case) and the inner will loop through the y dimension (columns). We have to stack our state variables in a 1D array before passing it into the rates function. We can use two numpy methods for going back and fourth between 2D and 1D arrays. These are called <code>.flatten()</code> and <code>.reshape()</code>. This is handy because it is intuitively easy for us to imagine the 2D problem with a 2D array representing our state variable at different positions. In <a href="#fig-flatten-reshape" class="quarto-xref">Figure&nbsp;<span>7.10</span></a> a visual presentation of how these methods operate on arrays are presented.</p>
 <div id="fig-flatten-reshape" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Demonstration of flatten and reshape of a 2D and 1D array">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-flatten-reshape-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1300,7 +1309,7 @@ Figure&nbsp;7.10: flattening and reshaping arrays in python
 </figure>
 </div>
 <p>We will now implement the 2D model in python</p>
-<div id="d006c410" class="cell" data-execution_count="7">
+<div id="e119df52" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import packages</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -1449,7 +1458,9 @@ Figure&nbsp;7.10: flattening and reshaping arrays in python
 </div>
 </div>
 </div>
-<p>The animation plot, will not play out here in the book and was therefore not plotted - but you could try it in your own IDE. The other plot shows that we are reaching close to <span class="math inline">\(190~\degC\)</span> in the middle of the plate after 150 min. After that the temperature will not increase as heat is constantly lost to the air.</p>
+<p>The animation plot will not play out here in the book and was omitted on purpose - but you could try it in your own IDE. The other plot shows that we are reaching close to <span class="math inline">\(190~\degC\)</span> in the middle of the plate after 150 min. Hereafter the temperature will not increase further due to a constant heat loss to the air.</p>
+<p>Changing to a 3D model could be done in a similar way - that is packing your states in a 1D array and extracting these correctly within rates. Also we would need 6 BCs to pose the problem correctly. However, running such a model is computationally heavy and other software is more suitable for such problems. Hence we will not cover that topic further in this book.</p>
+</section>
 </section>
 <section id="grid-size-and-convergence" class="level2" data-number="7.6">
 <h2 data-number="7.6" class="anchored" data-anchor-id="grid-size-and-convergence"><span class="header-section-number">7.6</span> Grid size and convergence</h2>
@@ -1457,7 +1468,7 @@ Figure&nbsp;7.10: flattening and reshaping arrays in python
 <p>There are two sides to this question, and they pull in opposite directions. On one hand, a finer grid (smaller <span class="math inline">\(\Delta x\)</span> ) gives a more accurate approximation of the true continuous solution — this is the convergence question, and we will look at how to verify it empirically rather than just trusting it. On the other hand, computational cost increases as we refine the grid: more nodes means more equations to solve at every time step, and, as we will see, refining <span class="math inline">\(\Delta x\)</span> can also force us to take much smaller time steps for the solution to remain numerically stable — particularly if we ever switch from solve_ivp’s adaptive solvers to a simple explicit scheme.</p>
 <p>In other words, choosing a grid size is a balancing act between accuracy and cost, and the goal of this subsection is to give you the tools to make that choice deliberately rather than by guesswork: first by checking whether — and how fast — our solution converges as we refine the grid, and second by being aware of the stability constraints that link grid size to time step size.</p>
 <p><strong>example case</strong> We return to the pond example code in <a href="#lst-dirichlet_pond" class="quarto-xref">Listing&nbsp;<span>7.2</span></a>. We want to compare the model with different <span class="math inline">\(\Delta x\)</span>. To compare runs meaningfully, we need a single number to track — not the entire concentration profile, but one quantity that we can follow as the grid changes. We will use the oxygen concentration at a fixed depth (5 cm) at the end of the simulation, t = 7 days. If our discretization is working correctly, this value should converge towards some fixed number as <span class="math inline">\(\Delta x\)</span> gets smaller, rather than jumping around unpredictably.</p>
-<div id="aaa01595" class="cell" data-execution_count="8">
+<div id="03e2d279" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> solve_ivp</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -1513,7 +1524,7 @@ dx = 0.00125 m -&gt; c(5 cm, 7 days) = 3.07071 mg/L</code></pre>
 </div>
 </div>
 <p>We see convergence around <span class="math inline">\(\Delta x = 0.01\)</span>, but it is clear that <span class="math inline">\(\Delta x = 0.02\)</span> was not a good choice. There is no need to decrease <span class="math inline">\(\Delta x\)</span> further than 0.01, this may increase simulation time for the two reasons mentioned before: smaller <span class="math inline">\(\Delta x\)</span> increases the number of ODEs to be solved and <code>solve_ivp()</code> automatically also decreases the time step size to keep a stable solution. We can try and compare computation times with three different <span class="math inline">\(\Delta x\)</span>:</p>
-<div id="7da7f999" class="cell" data-execution_count="9">
+<div id="0310737e" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># -*- coding: utf-8 -*-</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> solve_ivp</span>
@@ -1556,10 +1567,10 @@ dx = 0.00125 m -&gt; c(5 cm, 7 days) = 3.07071 mg/L</code></pre>
 <span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a>plt.xticks(dx_values, [<span class="bu">str</span>(dx) <span class="cf">for</span> dx <span class="kw">in</span> dx_values])  <span class="co"># force ticks at actual dx values</span></span>
 <span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>dx = 0.01 m -&gt; 11 nodes, runtime = 0.006 s
-dx = 0.005 m -&gt; 21 nodes, runtime = 0.009 s
-dx = 0.001 m -&gt; 101 nodes, runtime = 0.202 s
-dx = 0.0005 m -&gt; 201 nodes, runtime = 1.166 s</code></pre>
+<pre><code>dx = 0.01 m -&gt; 11 nodes, runtime = 0.004 s
+dx = 0.005 m -&gt; 21 nodes, runtime = 0.007 s
+dx = 0.001 m -&gt; 101 nodes, runtime = 0.145 s
+dx = 0.0005 m -&gt; 201 nodes, runtime = 1.380 s</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>
@@ -1578,7 +1589,7 @@ dx = 0.0005 m -&gt; 201 nodes, runtime = 1.166 s</code></pre>
 <p><span class="math display">\[
 \frac{\Delta x^2}{2\cdot D} = \frac{0.01^2}{2 \cdot 2.0 * 10^{-9}} = 25000
 \]</span> Lets replace solve_ivp with a nested euler forward loop with time steps below, above and exactly at the stability criterion.</p>
-<div id="1e5909d3" class="cell" data-execution_count="10">
+<div id="23aa0a77" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># -*- coding: utf-8 -*-</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
