@@ -597,6 +597,32 @@ We can get predicted pH:
 -np.log10(concs['H+'])
 ```
 
+## Heat production
+
+Chemical reactions can, of course, produce heat.
+When chemical bonds form and break, heat energy can be released or absorbed.
+This is true in all kinds of reactions, not just oxidation-reduction (redox) reactions.
+The net heat energy produced (or consumed) by a chemical reaction is called the enthalpy of reaction.
+Like the chemical products of a reaction, it is directly proportional to the extent or rate of reaction.
+For example, when methane ($\ce{CH4}$) is burned, the underlying reaction is oxidation with molecular oxygen ($\ce{O2}$):
+
+$$
+\ce{CH4 + 2O2 \rightarrow CO2 + 2H2O}
+$${#eq-ch4-ox}
+
+Assuming the water produced remains as vapor, the enthalpy of reaction $H_{rxn}$ = -802.3 $\kJpmol$.
+The negative sign means that heat energy is released.
+
+How should this be included in a model?
+So far we have not worked with any models that include a heat production term.
+But that is where it would go in the conservation equation.
+For example, let's assume the above reaction is taking place in a chamber with heat transfer through advective flow of fuel and air in and exhaust out, as well as convection from a surface.
+Then the heat balance equation would be:
+
+accumulation = advection in - advection out - convective loss + production.
+
+In the GE step, the production term is simply calculated as the product of the reaction rate and the reaction enthalpy.
+
 ## Microbiology
 
 From a modeling perspective, microbial systems are just a set of chemical reactions.
@@ -616,7 +642,7 @@ But there are a few different approaches that can be used, including the microbi
 @rittmann_environmental_2020 is a worthwhile read for anyone working with microbial systems.
 Here we will give an introduction to the most essential parts.
 
-Microbes (and all known life) is powered by electron transfer.
+Microbes (and all known life) are powered by electron transfer.
 Chemotrophs harness energy from electrons transferred from reduced compounds to oxidized compounds.
 For organic compounds, reduced versions contain more C and H and oxidized more O.
 So these are sorted from most reduced to most oxidized: $\ce{CH4}$ (methane), $\ce{C57H104O6}$ (a lipid), $\ce{C6H12O6}$ (glucose), $\ce{CO2}$ (carbon dioxide, which provides no energy to chemotrophs).
@@ -629,7 +655,7 @@ These are oxidized chemicals with a strong affinity for electrons.
 Common electron acceptors include $\ce{O2}$, $\ce{NO3-}$, and $\ce{SO4^2-}$.
 
 Finally, fermenters do not use exactly the same approach; they do not use external electron acceptors.
-Instead they essentially split a single organic compound, and transfer electrons from one product to the other.
+Instead they essentially split a single organic compound into two product molecules, and transfer electrons from one to the other.
 We will work with a simple fermentation: glucose to ethanol and $\ce{CO2}$ by yeast.
 
 Microorganisms and all life also need material to build up biomass, including numerous elements.
