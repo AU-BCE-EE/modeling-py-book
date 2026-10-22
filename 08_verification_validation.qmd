@@ -3,7 +3,7 @@
 The statistician George Box is famous for a quote that goes something like "all models are wrong, but some are useful".
 Maybe he didn't use that exact wording but the sentiment is definitely correct (see @box_science_1976 and @Box_George_E_P_1987 for more).
 Indeed, both parts are true.
-Although model error cannot be completely eliminated, it can and should be evaluated and controlled.
+Although model error cannot be completely eliminated, the portion that can be eliminated should be, and the rest should be quantified and understood.
 Verification and validation address the problem of model error, and are essential steps in the "modelling process".
 They should be carried out before any confidence is placed in model predictions.
 
@@ -17,8 +17,8 @@ A clear and explicit model formulation and careful programming can reduce implem
 
 In contrast, validation is done by comparing model output to measurements from the system under study.
 Because validation is done after verification, code errors should already be eliminated, so any error seen in in validation can be interepreted as (most likely) coming from either model structure or parameter values.
-
-The model developer needs to determine whether changes are needed and then which of these two is likely to improve the model.
+It may be that a problem was missed during verification, however, so when a problem is found in the validation stage, the model developer should always think about the likely cause of the problem, and how to improve the model.
+Verification and validation are often together called "V&V".
 
 @fig-vv1 shows where verification and validation fit in the model development process.
 The connections between the software model (your Python code) and, first, the mathematical model (what you developed through model formulation), and some measurement data, called the "reality of interest" in the figure.
@@ -43,7 +43,9 @@ You should carefully check model code for:
 
 When checking code, you should look for equations completeness and correctness by comparison to your model equations, written with pencil and paper or typed out somewhere.
 Of course, this presumes that the original model formulation and description are accurate.
-Unit consistency can be checked by entering units above terms in equations right in the model code, like this, where line 2 has the original model code and 1 a comment with units:
+Unit consistency can be checked by entering units above terms in equations right in the model code.
+In the code chunk below, `Q-solar` is supposed to be the heat flux of solar energy, in units of W.
+Unit comments work like this, where line 2 has the original model code and line 1 a comment with units:
 
 ```{python}
 #| eval: false
@@ -65,120 +67,17 @@ Conservation can be checked by tracking cumulative transport.
 Cumulative transport can be added as a state variable by simply integrating the ODE for mass or energy flow at the domain boundaries
 The integrated cumulative totals can be compared it to the change in total energy or mass in the model domain for a conservation check.
 
-## Pool model code verification
+### Pool model code verification
 
-Let's use the swimming pool model as a demo for verification.
+Let's use a swimming pool model as a demo for verification.
+Conceptually, this model is similar to the cooling coffee cup model from @sec-solving and elsewhere.
+A pool exchanges heat energy with its environment through multiple pathways: with the air from the water surface, with the substrate through the sides and bottom of the pool, through an external heater, and, in one direction, from the sun.
+
 First, the model code from the `pool_mods` module:
 
-```{python}
-#| eval: false
 
-"""
-File name: pool_mods.py
-Author: Sasha D. Hafner and Frederik Dalby
-Course: Modelling 2026
-
-Description:
-    This module defines functions for modeling heat loss from a 
-    swimming pool. BEWARE: This version includes deliberate **errors**
-    because it is meant to be used for a verification demo.
-
-Usage:
-    See the file predictions.qmd for examples.
-"""
-
-# Load packages 
-import numpy as np
-from scipy.integrate import solve_ivp
-
-# Define model function
-def dynmod(a_top,    
-           a_wall,       
-           depth,
-           q_sol,
-           u_top,
-           u_wall,
-           temp_air,
-           temp_sub,
-           flow_renew,
-           temp_renew,
-           temp_init,
-           times, 
-           cp = 4180,
-           dens = 1000
-):  
-
-    """ 
-    Dynamic model for heat loss from an outdoor swimming pool. 
-
-    Parameters
-    ----------
-    a_top : float
-       Area of pool water surface at the top (m2) 
-    a_wall : float
-        Wall and floor area in contact with soil or substrate (m2)
-    depth : float
-        Pool depth (m)
-    q_sol : float
-        Global solar radiation flux (W/m2)
-    u_top : float
-        Overall heat transfer coefficient from the upper water surface (W/m2-K)
-    u_wall : float
-        Overall heat transfer coefficient for the walls and floor from water to substrate (W/m2-K)
-    temp_air : float
-        Constant air temperature (degree C)
-    temp_sub : float
-        Constant substrate temperature (degree C)
-    flow_renew : float
-        Flow rate of water cycling through pool (m3/s)
-    temp_renew : float
-        Temperature of heated water added to pool at rate of flow_renew (deg. C)
-    temp_init : float
-        Initial pool temperature (deg. C)
-    times : tuple, list, or array
-        Times for output (s)
-    cp : float 
-        Specific heat capacity of water (J/kg-K) 
-    dens : float
-        Density of water (kg/m3)
- 
-    """
-     
-    # Define rates function
-    def rates(t, temp_pool):
-
-        # Net energy, expressed as positive for increase 
-        # One nice things about numerical solutions is you are not required to simplify the governing equation.
-        # In fact it can be helpful to understand the different pathways to keep them separate
-
-        # Calculate heat flow (W) through individual pathways
-        # All are positive for heat flow in (this is arbitrary)
-        Q_solar = a_top * q_sol                                     # Solar energy
-        Q_top = a_top * u_top * (temp_air - temp_pool)              # Convection from top
-        Q_sub = a_wall * u_wall * (temp_sub - temp_pool)            # Conduction to/from substrate (soil or whatever is there)
-        Q_renew = cp * dens * flow_renew * (temp_pool - temp_renew) # Net energy coming in from renewal water
-        
-        # And sum them
-        Q_net = Q_solar + Q_top + Q_renew
-
-        # Express as temperature change
-        dtemp_dt = Q_net / (cp * dens * vol)
-
-        return dtemp_dt
-
-    # Total water volume (m3)
-    vol = a_top * depth
-
-    # Now solve with solve_ivp()
-    res = solve_ivp(rates, t_span = [min(times), max(times)], 
-                    y0 = [temp_init], t_eval = times
-    )
-
-    # Create a dictionary to hold results
-    out = {"t": res.t, "temp": res.y[0, :]}
-
-    return(out)
-
+```{.python filename="pool_mods.py"}
+{{< include pool_mods.py >}}
 ```
 
 And now some verification:
@@ -187,24 +86,25 @@ Let's start with a check of
 1. conservation, and
 2. constitutive equations.
 
-During model formulation we came up with this energy conservation equation:
+During model formulation for this model we came up with this energy conservation equation:
 
 ```{python}
 #| eval: false
 Rate of energy accumulation = solar + air/top + soil/substrate + renewal
 ```
 
-All in W.
-
-And the code has this:
+The `renewal` term is where the external heat comes in.
+All are in W.
+In verification, we should compare that original conservation equation to our model code.
+Here, the code has this:
 
 ```{python}
 #| eval: false
         Q_net = Q_solar + Q_top + Q_renew
 ```
 
-OK?
-Nope!
+Is it OK?
+No!
 We are missing energy transfer from soil/substrate.
 Checking the module code above shows it is actually calculated, just not used.
 So we can add it:
@@ -227,13 +127,14 @@ The code:
         Q_renew = cp * dens * flow_renew * (temp_pool - temp_renew) # Net energy coming in from renewal water
 ```
 
-The check, where we have copied a single line a few times to think about it in some different ways
+The checking part follows, where we have copied a single line a few times to think about it in some different ways.
+This just applies to one of the terms in the GE.
+Typically, not all of these comments would be left in the model code.
+The checks included below include two conceptual/qualitative checks on the calculation of heat flow and one to check the direction/sign.
+
 ```{python}
 #| eval: false
-        #         Area  * flux -> OK
-        Q_solar = a_top * q_sol                                     # Solar energy
-
-	#       CHTS = combined heat transfer coefficient
+    	#   CHTS = combined heat transfer coefficient
         #        Area *  CHTC * delta T -> OK
         Q_top = a_top * u_top * (temp_air - temp_pool)              # Convection from top
         #       Area  * ------flux------------------- -> OK
@@ -243,17 +144,19 @@ The check, where we have copied a single line a few times to think about it in s
 ```
 
 
-Now some check of units.
 During actual V&V, we would need to check *all* equations. 
+
+Now some check of units.
 But here let's focus on that same line of code from above as an example.
+Here we find that the units look OK.
 
 
 ```{python}
 #| eval: false
 
 #        Overall heat transfer coefficient from the upper water surface (W/m2-K)
-#               m^2   * W/m2-K  * ----------K---------- -> W OK 
-        Q_top = a_top * u_top   * (temp_air - temp_pool)              # Convection from top
+#               m^2   * W/m2-K  * ----------K---------- -> W  (OK)
+        Q_top = a_top * u_top   * (temp_air - temp_pool)              # Convection from top (W)
 ```
 
 To be sure that even this single line of code is correct, we have to check that the inputs `a_top` etc. have the correct units. 
@@ -288,7 +191,7 @@ Now the linking equation, starting with a conceptual check.
 And unit check.
 ```{python}
 #| eval: false
-        #          J/s   / J/K-kg * kg/m3 * m3 -> K/s OK
+        #          J/s   / J/K-kg * kg/m3 * m3 -> K/s  (OK)
         dtemp_dt = Q_net / (cp    * dens * vol)
 ```
 
@@ -305,16 +208,12 @@ Compare to the information in the model function docstring:
 All OK?
 Seems so, yes.
 
-## Verification with model calls
+### Verification with model calls
 
 Next, let's look at some model calls.
 
 ```{python}
-
 # Packages
-import sys
-sys.path.append('modules')
-
 import numpy as np
 import matplotlib.pyplot as plt
 from importlib import reload
@@ -335,18 +234,19 @@ a_top = length * width
 a_wall = 2 * (length + width) * depth + a_top
 
 # And a demo model call
-pred01 = pm.dynmod(a_top = a_top,
-                   a_wall = a_wall,
-                   depth = depth,
-                   q_sol = 0,
-                   u_top = 100,
-                   u_wall = 3,
-                   temp_air = 10,
-                   temp_sub = 10,
-                   flow_renew = 0,
-                   temp_renew = 0,
-                   temp_init = 30,
-                   times = np.arange(0, 12 * 3600 + 3600, 3600)
+pred01 = pm.dynmod(
+    a_top=a_top,
+    a_wall=a_wall,
+    depth=depth,
+    q_sol=0,
+    u_top=100,
+    u_wall=3,
+    temp_air=10,
+    temp_sub=10,
+    flow_renew=0,
+    temp_renew=0,
+    temp_init=30,
+    times=np.arange(0, 12 * 3600 + 3600, 3600)
 )
 
 # Check results
@@ -370,18 +270,19 @@ How about if we run the model for 10 days?
 
 ```{python}
 # And a demo model call
-pred01 = pm.dynmod(a_top = a_top,
-                   a_wall = a_wall,
-                   depth = depth,
-                   q_sol = 0,
-                   u_top = 100,
-                   u_wall = 3,
-                   temp_air = 10,
-                   temp_sub = 10,
-                   flow_renew = 0,
-                   temp_renew = 0,
-                   temp_init = 30,
-                   times = np.arange(0, 10 * 24 * 3600 + 3600, 3600)
+pred01 = pm.dynmod(
+    a_top=a_top,
+    a_wall=a_wall,
+    depth=depth,
+    q_sol=0,
+    u_top=100,
+    u_wall=3,
+    temp_air=10,
+    temp_sub=10,
+    flow_renew=0,
+    temp_renew=0,
+    temp_init=30,
+    times=np.arange(0, 10 * 24 * 3600 + 3600, 3600)
 )
 
 plt.plot(pred01['t'] / 86400, pred01['temp'])
@@ -399,35 +300,37 @@ Do we see that behavior?
 
 ```{python}
 # Let's add 200 W/m2 of sun, keep environment at 10, and see
-pred02 = pm.dynmod(a_top = a_top,
-                   a_wall = a_wall,
-                   depth = depth,
-                   q_sol = 200,
-                   u_top = 100,
-                   u_wall = 3,
-                   temp_air = 10,
-                   temp_sub = 10,
-                   flow_renew = 0,
-                   temp_renew = 0,
-                   temp_init = 10,
-                   times = np.arange(0, 12 * 3600 + 3600, 3600)
+pred02 = pm.dynmod(
+    a_top=a_top,
+    a_wall=a_wall,
+    depth=depth,
+    q_sol=200,
+    u_top=100,
+    u_wall=3,
+    temp_air=10,
+    temp_sub=10,
+    flow_renew=0,
+    temp_renew=0,
+    temp_init=10,
+    times=np.arange(0, 12 * 3600 + 3600, 3600)
 )
 
 pred02
 
 # Run it for a long time
-pred03 = pm.dynmod(a_top = a_top,
-                   a_wall = a_wall,
-                   depth = depth,
-                   q_sol = 200,
-                   u_top = 100,
-                   u_wall = 3,
-                   temp_air = 10,
-                   temp_sub = 10,
-                   flow_renew = 0,
-                   temp_renew = 0,
-                   temp_init = 10,
-                   times = np.arange(0, 30 * 86400 + 86400, 86400)
+pred03 = pm.dynmod(
+    a_top=a_top,
+    a_wall=a_wall,
+    depth=depth,
+    q_sol=200,
+    u_top=100,
+    u_wall=3,
+    temp_air=10,
+    temp_sub=10,
+    flow_renew=0,
+    temp_renew=0,
+    temp_init=10,
+    times=np.arange(0, 30 * 86400 + 86400, 86400)
 )
 
 pred03['temp']
@@ -441,70 +344,80 @@ As expected?
 Higher or lower than ambient?
 What about the oscillations?
 
-Does it match steady state model?
+When we have access to an analytical, or generally a simpler, version of a model, it is smart to use it for verification. 
+Although the simpler model may also have errors, perhaps even some of the same errors as the model we are trying to verify, simpler means easier to verify.
+Therefore verification errors are less likely in simpler models.
+
+Here, we do have a simpler, steady-state model, implemented in the `ssmod()` function.
+Does the steady-state result from the numerical model (i.e., after a long time) match the steady-state model?
 
 ```{python}
-pm.ssmod(a_top = a_top,
-         a_wall = a_wall,
-         depth = depth,
-         q_sol = 200,
-         u_top = 100,
-         u_wall = 3,
-         temp_air = 10,
-         temp_sub = 10,
-         flow_renew = 0,
-         temp_renew = 0
+pm.ssmod(
+    a_top=a_top,
+    a_wall=a_wall,
+    depth=depth,
+    q_sol=200,
+    u_top=100,
+    u_wall=3,
+    temp_air=10,
+    temp_sub=10,
+    flow_renew=0,
+    temp_renew=0
 )
+```
 
+```{python}
 pred03['temp'][10:]
 ```
 
-Hmmm. . . does it?
+Hmmm, does it?
 Is there an error in the model?
 
 Try renewal.
 If we are interested in steady state, we might just return a few times
 
 ```{python}
-pm.dynmod(a_top = a_top,
-          a_wall = a_wall,
-          depth = depth,
-          q_sol = 0,
-          u_top = 100,
-          u_wall = 3,
-          temp_air = 10,
-          temp_sub = 10,
-          flow_renew = 0.1,
-          temp_renew = 30,
-          temp_init = 10,
-          times = [0, 3600, 86400, 10*86400] 
+pm.dynmod(
+    a_top=a_top,
+    a_wall=a_wall,
+    depth=depth,
+    q_sol=0,
+    u_top=100,
+    u_wall=3,
+    temp_air=10,
+    temp_sub=10,
+    flow_renew=0.1,
+    temp_renew=30,
+    temp_init=10,
+    times=[0, 3600, 86400, 10*86400] 
 )
 ```
 
 Big problem!
 We get massively negative temperature
 Let's dig into this, first with some more model calls
-Think about it . . . 
-Try smaller delta T and shorter time to slow down heat transfer and time, in a sense
+Let's think about how model calls could be used to identify the problem.
+We can start by trying smaller delta T and shorter time to slow down heat transfer and time, in a sense.
 
 ```{python}
-pm.dynmod(a_top = a_top,
-          a_wall = a_wall,
-          depth = depth,
-          q_sol = 0,
-          u_top = 100,
-          u_wall = 3,
-          temp_air = 10,
-          temp_sub = 10,
-          flow_renew = 0.1,
-          temp_renew = 10.1,
-          temp_init = 10,
-          times = np.arange(0, 101)
+pm.dynmod(
+    a_top=a_top,
+    a_wall=a_wall,
+    depth=depth,
+    q_sol=0,
+    u_top=100,
+    u_wall=3,
+    temp_air=10,
+    temp_sub=10,
+    flow_renew=0.1,
+    temp_renew=10.1,
+    temp_init=10,
+    times=np.arange(0, 101)
 )
 
 ```
 
-Adjust the time a bit. . .
+Adjust the time a bit if needed (this was already done above).
 What does that tell us?
 
 Try `breakpoint()` to see what is happening.
@@ -545,18 +458,19 @@ Then we need to reload the module and call the function, like this.
 #| eval: false
 reload(pm)
 
-pm.dynmod(a_top = a_top,
-          a_wall = a_wall,
-          depth = depth,
-          q_sol = 0,
-          u_top = 100,
-          u_wall = 3,
-          temp_air = 10,
-          temp_sub = 10,
-          flow_renew = 0.1,
-          temp_renew = 10.1,
-          temp_init = 10,
-          times = np.arange(0, 101)
+pm.dynmod(
+    a_top=a_top,
+    a_wall=a_wall,
+    depth=depth,
+    q_sol=0,
+    u_top=100,
+    u_wall=3,
+    temp_air=10,
+    temp_sub=10,
+    flow_renew=0.1,
+    temp_renew=10.1,
+    temp_init=10,
+    times=np.arange(0, 101)
 )
 
 # Check:
@@ -595,7 +509,7 @@ It should look like this.
 
 ```{python}
 #| eval: false
-Q_renew = cp * dens * flow_renew * (temp_pool - temp_renew) # Net energy coming in from renewal water
+Q_renew = cp * dens * flow_renew * (temp_renew - temp_pool) # Net energy coming in from renewal water
 ```
 
 There are many ways that model calls can be used for model verification, but they depend on the specifics of the model.
@@ -625,8 +539,8 @@ def dynmod_pp(a_top,
               temp_renew,
               temp_init,
               times, 
-              cp = 4180,
-              dens = 1000
+              cp=4180,
+              dens=1000
 ):  
 
     """ 
@@ -695,18 +609,19 @@ Let's try this new version
 ```{python}
 reload(pm)
 
-pm.dynmod_pp(a_top = a_top,
-             a_wall = a_wall,
-             depth = depth,
-             q_sol = 0,
-             u_top = 100,
-             u_wall = 3,
-             temp_air = 10,
-             temp_sub = 10,
-             flow_renew = 0.1,
-             temp_renew = 10.1,
-             temp_init = 10,
-             times = np.arange(0, 10)
+pm.dynmod_pp(
+    a_top=a_top,
+    a_wall=a_wall,
+    depth=depth,
+    q_sol=0,
+    u_top=100,
+    u_wall=3,
+    temp_air=10,
+    temp_sub=10,
+    flow_renew=0.1,
+    temp_renew=10.1,
+    temp_init=10,
+    times=np.arange(0, 10)
 )
 ```
 
