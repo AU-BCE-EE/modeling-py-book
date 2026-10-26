@@ -1425,11 +1425,14 @@ def run_model(dx):
     return sol.y[idx, -1]
 
 dx_values = [0.02, 0.01, 0.005, 0.0025, 0.00125]
-results = [run_model(dx) for dx in dx_values]
 
-for dx, c in zip(dx_values, results):
-    print(f"dx = {dx:.5f} m -> c(5 cm, 7 days) = {c:.5f} mg/L")
-    
+results = []
+for dx in dx_values:
+    results.append(run_model(dx))
+
+for i in range(len(dx_values)):
+    print("dx =", dx_values[i], "m -> c(5 cm, 7 days) =", results[i], "mg/L")
+
 # plotting
 plt.plot(dx_values, results, marker="o")
 plt.xlabel("$\\Delta x$, m")

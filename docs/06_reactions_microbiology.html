@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.24">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>6&nbsp; Chemical reactions and microbiology – An Introduction to Modeling with Python</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -59,7 +65,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -89,15 +94,14 @@ div.csl-indent {
 <link href="./05_mass_transfer.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-03fb02fc132b93ec4eef7e9886d99257.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-631496449bf32ff9b0bb69a6bfd9195d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -152,7 +156,6 @@ MathJax = {
       msqps: "{\\mathrm{m^{2}~s^{-1}}}",
       kJpkg: "{\\mathrm{kJ~kg^{-1}}}",
       kJpkgpK: "{\\mathrm{kJ~kg^{-1}~K^{-1}}}",
-      kJpmol: "{\\mathrm{kJ~mol^{-1}}}",
       JpgpK: "{\\mathrm{J~g^{-1}~K^{-1}}}",
       molps: "{\\mathrm{mol~s^{-1}}}",
       molpmcps: "{\\mathrm{mol~m^{-3}~s^{-1}}}",
@@ -165,7 +168,7 @@ MathJax = {
 </script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -218,9 +221,7 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
-      <a href="./index.html" class="sidebar-logo-link">
-      </a>
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">An Introduction to Modeling with Python</a> 
     </div>
@@ -396,14 +397,13 @@ window.Quarto = {
   <li><a href="#ammonia-equilibrium" id="toc-ammonia-equilibrium" class="nav-link" data-scroll-target="#ammonia-equilibrium"><span class="header-section-number">6.5</span> Ammonia equilibrium</a></li>
   <li><a href="#sec-eq-v-kin" id="toc-sec-eq-v-kin" class="nav-link" data-scroll-target="#sec-eq-v-kin"><span class="header-section-number">6.6</span> Equilibrium versus kinetic models</a></li>
   <li><a href="#matrix-operations" id="toc-matrix-operations" class="nav-link" data-scroll-target="#matrix-operations"><span class="header-section-number">6.7</span> Matrix operations</a></li>
-  <li><a href="#heat-production" id="toc-heat-production" class="nav-link" data-scroll-target="#heat-production"><span class="header-section-number">6.8</span> Heat production</a></li>
-  <li><a href="#microbiology" id="toc-microbiology" class="nav-link" data-scroll-target="#microbiology"><span class="header-section-number">6.9</span> Microbiology</a>
+  <li><a href="#microbiology" id="toc-microbiology" class="nav-link" data-scroll-target="#microbiology"><span class="header-section-number">6.8</span> Microbiology</a>
   <ul class="collapse">
-  <li><a href="#sec-mic-stoich" id="toc-sec-mic-stoich" class="nav-link" data-scroll-target="#sec-mic-stoich"><span class="header-section-number">6.9.1</span> Microbial stoichiometry</a></li>
-  <li><a href="#sec-mic-kin" id="toc-sec-mic-kin" class="nav-link" data-scroll-target="#sec-mic-kin"><span class="header-section-number">6.9.2</span> Microbial kinetics</a></li>
-  <li><a href="#microbial-growth" id="toc-microbial-growth" class="nav-link" data-scroll-target="#microbial-growth"><span class="header-section-number">6.9.3</span> Microbial growth</a></li>
+  <li><a href="#sec-mic-stoich" id="toc-sec-mic-stoich" class="nav-link" data-scroll-target="#sec-mic-stoich"><span class="header-section-number">6.8.1</span> Microbial stoichiometry</a></li>
+  <li><a href="#sec-mic-kin" id="toc-sec-mic-kin" class="nav-link" data-scroll-target="#sec-mic-kin"><span class="header-section-number">6.8.2</span> Microbial kinetics</a></li>
+  <li><a href="#microbial-growth" id="toc-microbial-growth" class="nav-link" data-scroll-target="#microbial-growth"><span class="header-section-number">6.8.3</span> Microbial growth</a></li>
   </ul></li>
-  <li><a href="#problems" id="toc-problems" class="nav-link" data-scroll-target="#problems"><span class="header-section-number">6.10</span> Problems</a></li>
+  <li><a href="#problems" id="toc-problems" class="nav-link" data-scroll-target="#problems"><span class="header-section-number">6.9</span> Problems</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
@@ -459,7 +459,7 @@ window.Quarto = {
 </section>
 <section id="sec-rxn-rates" class="level2" data-number="6.2">
 <h2 data-number="6.2" class="anchored" data-anchor-id="sec-rxn-rates"><span class="header-section-number">6.2</span> Reaction rates</h2>
-<p>The constitutive equation for a chemical reaction must quantify its <em>rate</em>, or how fast it proceeds, e.g., <span class="math inline">\(\molps\)</span>, <span class="math inline">\(\molpmcps\)</span>, or on a mass basis, e.g., <span class="math inline">\(\gpmcps\)</span>. The term <em>kinetics</em> is used to describe reaction rates. Here we will look at only two simple, and to some degree, idealized, cases: first-order reactions and second-order reactions. Below in <a href="#sec-mic-kin" class="quarto-xref"><span>Section 6.9.2</span></a> we’ll consider a third approach.</p>
+<p>The constitutive equation for a chemical reaction must quantify its <em>rate</em>, or how fast it proceeds, e.g., <span class="math inline">\(\molps\)</span>, <span class="math inline">\(\molpmcps\)</span>, or on a mass basis, e.g., <span class="math inline">\(\gpmcps\)</span>. The term <em>kinetics</em> is used to describe reaction rates. Here we will look at only two simple, and to some degree, idealized, cases: first-order reactions and second-order reactions. Below in <a href="#sec-mic-kin" class="quarto-xref"><span>Section 6.8.2</span></a> we’ll consider a third approach.</p>
 <p>A reaction that follows first-order kinetics has a rate that is proportional to the quantity of reactant present. So that means:</p>
 <p><span id="eq-fom1"><span class="math display">\[
 r_m = \frac{dM}{dt} = - k \cdot M,
@@ -591,7 +591,7 @@ p\text{H} = - log_{10}(c_{H^+}).
 <span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> out</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>And let’s apply it, using the approximate rate constants given in <span class="citation" data-cites="kern_hydration_1960">Kern (<a href="#ref-kern_hydration_1960" role="doc-biblioref">1960</a>)</span>.</p>
-<div id="c5475b56" class="cell" data-execution_count="1">
+<div id="c89b1b63" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> importlib <span class="im">import</span> <span class="bu">reload</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> hydration_mods <span class="im">as</span> hm</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -607,14 +607,14 @@ p\text{H} = - log_{10}(c_{H^+}).
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="06_reactions_microbiology_files/figure-html/cell-2-output-1.png" width="588" height="411" class="figure-img"></p>
+<p><img src="06_reactions_microbiology_files/figure-html/cell-2-output-1.png" width="587" height="411" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>That is not very interesting! Do you see what is happening? Look at the rate constants and think about an equilibrium constant.</p>
 <p>Let’s start with all the inorganic C in the carbonic acid form (i.e., on the slow side) and zoom in on the time (3 seconds).</p>
-<div id="18f3eb69" class="cell" data-execution_count="2">
+<div id="c901068d" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> importlib <span class="im">import</span> <span class="bu">reload</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> hydration_mods <span class="im">as</span> hm</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -630,7 +630,7 @@ p\text{H} = - log_{10}(c_{H^+}).
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="06_reactions_microbiology_files/figure-html/cell-3-output-1.png" width="588" height="411" class="figure-img"></p>
+<p><img src="06_reactions_microbiology_files/figure-html/cell-3-output-1.png" width="587" height="411" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -729,7 +729,7 @@ c_{\ce{NH3}(aq)} = \frac{c_{\text{TAN}}} {1 + \frac {c_{\ce{H+}}} {K_a}}.
 <span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We can test it.</p>
-<div id="e3da0cdc" class="cell" data-execution_count="3">
+<div id="e43651b9" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ammonia_mods <span class="im">as</span> am</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(am.free_NH3(<span class="dv">1</span>, <span class="fl">9.56</span>))</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(am.free_NH3(<span class="dv">1</span>, <span class="dv">7</span>))</span>
@@ -813,7 +813,7 @@ c_{\ce{NH3}(aq)} = \frac{c_{\text{TAN}}} {1 + \frac {c_{\ce{H+}}} {K_a}}.
 </div>
 <p>Concentrations of both <span class="math inline">\(\ce{CO2(aq)}\)</span> and <span class="math inline">\(\ce{H2CO3}\)</span> are state variables, and we have two governing equations. To run the model, we need to specify initial values for both state variables through the <code>c_co2</code> and <code>c_h2co3</code> parameters.</p>
 <p>What would an equilibrium model look like? For this simple system, it could not be dynamic; equilibrium means the two chemical species have a constant concentration, so without some other state variables to vary over time, it would make no sense to even include time in this model! We have to figure out the model equations with algebra, following the ammonia example above. This gives the following equations:</p>
-<div id="521f7624" class="cell" data-execution_count="4">
+<div id="47cd872a" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>keq <span class="op">=</span> <span class="fl">0.0015</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>c_tot <span class="op">=</span> <span class="fl">0.2</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>c_h2co3 <span class="op">=</span> c_tot <span class="op">*</span> keq <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> keq)</span>
@@ -826,7 +826,7 @@ c_{\ce{NH3}(aq)} = \frac{c_{\text{TAN}}} {1 + \frac {c_{\ce{H+}}} {K_a}}.
 </div>
 </div>
 <p>Where did the equilibrium constant (<code>k_eq</code> in the code above) come from? It must be equal to the ratio of the rates constants. We can see that by setting the rates of forward and reverse reactions equal, i.e., equilibrium, and solving for the ratio of cabonic acid to dissolved carbon dioxide concentrations, i.e., the mass action expression for the relevant reaction.</p>
-<div id="91515781" class="cell" data-execution_count="5">
+<div id="1e3681f5" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>kf <span class="op">=</span> <span class="fl">0.03</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>kr <span class="op">=</span> <span class="dv">20</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>keq <span class="op">=</span> kf <span class="op">/</span> kr</span>
@@ -836,7 +836,7 @@ c_{\ce{NH3}(aq)} = \frac{c_{\text{TAN}}} {1 + \frac {c_{\ce{H+}}} {K_a}}.
 </div>
 </div>
 <p>How does this compare to the kinetic model?</p>
-<div id="2b8499c7" class="cell" data-execution_count="6">
+<div id="f9912a6c" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> importlib <span class="im">import</span> <span class="bu">reload</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> hydration_mods <span class="im">as</span> hm</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -858,7 +858,7 @@ c_{\ce{NH3}(aq)} = \frac{c_{\text{TAN}}} {1 + \frac {c_{\ce{H+}}} {K_a}}.
 <h2 data-number="6.7" class="anchored" data-anchor-id="matrix-operations"><span class="header-section-number">6.7</span> Matrix operations</h2>
 <p>Matrices are convenient for oranizing stoichiometric coefficients and then even using in compact code for speciation calculations. Here we will use the carbonate system as as demo.</p>
 <p>We’ll start with a stoichiometry matrix. First we need to think about how to set it up, because at this point there are multiple routes that could be taken. We need to select what are sometimes called “master species” or we might call “funamental species”. These species will be the reactants for all reactions. We’ll use <span class="math inline">\(\ce{H2CO3^*}\)</span> and <span class="math inline">\(\ce{H+}\)</span>. These reactants will define the columns in our stoichiometry matrix, and products will define rows. This too is arbitrary, but seems most convenient. If we only consider the species <span class="math inline">\(\ce{H2CO3^*}\)</span>, <span class="math inline">\(\ce{HCO3-}\)</span>, <span class="math inline">\(\ce{CO3^2-}\)</span>, and of course <span class="math inline">\(\ce{H+}\)</span> and <span class="math inline">\(\ce{OH-}\)</span>, our coefficient matrix is:</p>
-<div id="376dff5b" class="cell" data-execution_count="7">
+<div id="2902a354" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>       <span class="op">|</span> H2CO3<span class="op">*|</span>  H<span class="op">+</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>       <span class="op">--------|----</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>HCO3<span class="op">-</span>  <span class="op">|</span>  <span class="op">-</span><span class="dv">1</span>   <span class="op">|</span>  <span class="dv">1</span></span>
@@ -870,7 +870,7 @@ c_{\ce{NH3}(aq)} = \frac{c_{\text{TAN}}} {1 + \frac {c_{\ce{H+}}} {K_a}}.
 \ce{H2CO3^* &lt;=&gt; CO3^2- + 2H+}.
 \tag{6.16}\]</span></span></p>
 <p>So what is the use of this matrix? We’ll demonstrate after first creating the matrix in Python.</p>
-<div id="76097d11" class="cell" data-execution_count="8">
+<div id="b754947c" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Stoichometry matrix</span></span>
@@ -892,7 +892,7 @@ c_{\ce{NH3}(aq)} = \frac{c_{\text{TAN}}} {1 + \frac {c_{\ce{H+}}} {K_a}}.
 </div>
 <p>Note that we do not get row or column names with a matrix. So good comments (as above) are helpful.</p>
 <p>To use the matrix, we need equilibrium constants for each reaction–so three here, one for each row.</p>
-<div id="02cf62d3" class="cell" data-execution_count="9">
+<div id="0789002a" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>keq <span class="op">=</span> <span class="dv">10</span><span class="op">**</span>np.array([<span class="op">-</span><span class="fl">6.3</span>, <span class="op">-</span><span class="fl">16.6</span>, <span class="op">-</span><span class="fl">14.0</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The first thing we can do with the matrix is to calculate reactant species concentrations once we have master species concentrations. Look at <a href="#eq-carb2" class="quarto-xref">Equation&nbsp;<span>6.16</span></a>. The relevant mass action expression is</p>
@@ -904,7 +904,7 @@ k_2 = \frac{c_{\ce{CO3^2-}} \cdot c_{\ce{H+}}^2}{c_{\ce{H2CO3^*}}}.
 c_{\ce{CO3^2-}} = k_2 \cdot \frac{c_{\ce{H2CO3^*}}} {c_{\ce{H+}}^2}.
 \tag{6.18}\]</span></span></p>
 <p>We can actually carry out this calculation using the <code>sc</code> stoichiometry matrix.</p>
-<div id="6862e79f" class="cell" data-execution_count="10">
+<div id="33901373" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>cH2CO3s <span class="op">=</span> <span class="fl">0.001</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>cHp <span class="op">=</span> <span class="fl">1e-6</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>keq[<span class="dv">1</span>] <span class="op">*</span> cH2CO3s<span class="op">**</span>(<span class="op">-</span>sc[<span class="dv">1</span>, <span class="dv">0</span>]) <span class="op">/</span> cHp<span class="op">**</span>(sc[<span class="dv">1</span>, <span class="dv">1</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -913,7 +913,7 @@ c_{\ce{CO3^2-}} = k_2 \cdot \frac{c_{\ce{H2CO3^*}}} {c_{\ce{H+}}^2}.
 </div>
 </div>
 <p>Do you see what we’ve done? Do you understand why we included the <code>**(-sc[1, 0])</code> bit? That makes it more general, and adaptable to the complete calculations for all reactants, which we can do using matrix operations like this:</p>
-<div id="e9ff7219" class="cell" data-execution_count="11">
+<div id="65b5014d" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>conc <span class="op">=</span> keq <span class="op">*</span> cH2CO3s<span class="op">**</span>(<span class="op">-</span>sc[:, <span class="dv">0</span>]) <span class="op">/</span> (cHp<span class="op">**</span>sc[:, <span class="dv">1</span>])</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>conc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
@@ -921,7 +921,7 @@ c_{\ce{CO3^2-}} = k_2 \cdot \frac{c_{\ce{H2CO3^*}}} {c_{\ce{H+}}^2}.
 </div>
 </div>
 <p>This approach could work with more reactants and species with different stoichiometric coefficients. Of course, we don’t typically know master species concentrations. When we make measurements on a water sample, create a solution in the laboratory, or simulate mass transfer and reaction of chemicals, it is the <em>total</em> concentrations that we know. So it takes a bit more conceptual and programming trickery to come up with a general approach for solving chemical speciation problems. In the example <code>carb_spec()</code> function below, we use two: (1) a proton balance and (2) an iterative root finder. Take a look.</p>
-<div id="b76b849c" class="cell" data-execution_count="12">
+<div id="ae912fdd" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co">File: carb_mods.py</span></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co">Authors: Sasha D. Hafner and Frederik R. Dalby</span></span>
@@ -1009,7 +1009,7 @@ c_{\ce{CO3^2-}} = k_2 \cdot \frac{c_{\ce{H2CO3^*}}} {c_{\ce{H+}}^2}.
 <span id="cb22-85"><a href="#cb22-85" aria-hidden="true" tabindex="-1"></a>    <span class="co"># And return species concentrations (mol/kg)</span></span>
 <span id="cb22-86"><a href="#cb22-86" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> res</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="2514a1ed" class="cell" data-execution_count="13">
+<div id="a12aea0d" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">'modules'</span>)</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1027,57 +1027,46 @@ c_{\ce{CO3^2-}} = k_2 \cdot \frac{c_{\ce{H2CO3^*}}} {c_{\ce{H+}}^2}.
 </div>
 </div>
 <p>We can get predicted pH:</p>
-<div id="441714a2" class="cell" data-execution_count="14">
+<div id="844ccb4a" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="op">-</span>np.log10(concs[<span class="st">'H+'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
 <pre><code>np.float64(5.601205291420791)</code></pre>
 </div>
 </div>
 </section>
-<section id="heat-production" class="level2" data-number="6.8">
-<h2 data-number="6.8" class="anchored" data-anchor-id="heat-production"><span class="header-section-number">6.8</span> Heat production</h2>
-<p>Chemical reactions can, of course, produce heat. When chemical bonds form and break, heat energy can be released or absorbed. This is true in all kinds of reactions, not just oxidation-reduction (redox) reactions. The net heat energy produced (or consumed) by a chemical reaction is called the enthalpy of reaction. Like the chemical products of a reaction, it is directly proportional to the extent or rate of reaction. For example, when methane (<span class="math inline">\(\ce{CH4}\)</span>) is burned, the underlying reaction is oxidation with molecular oxygen (<span class="math inline">\(\ce{O2}\)</span>):</p>
-<p><span id="eq-ch4-ox"><span class="math display">\[
-\ce{CH4 + 2O2 \rightarrow CO2 + 2H2O}
-\tag{6.19}\]</span></span></p>
-<p>Assuming the water produced remains as vapor, the enthalpy of reaction <span class="math inline">\(H_{rxn}\)</span> = -802.3 <span class="math inline">\(\kJpmol\)</span>. The negative sign means that heat energy is released.</p>
-<p>How should this be included in a model? So far we have not worked with any models that include a heat production term. But that is where it would go in the conservation equation. For example, let’s assume the above reaction is taking place in a chamber with heat transfer through advective flow of fuel and air in and exhaust out, as well as convection from a surface. Then the heat balance equation would be:</p>
-<p>accumulation = advection in - advection out - convective loss + production.</p>
-<p>In the GE step, the production term is simply calculated as the product of the reaction rate and the reaction enthalpy.</p>
-</section>
-<section id="microbiology" class="level2" data-number="6.9">
-<h2 data-number="6.9" class="anchored" data-anchor-id="microbiology"><span class="header-section-number">6.9</span> Microbiology</h2>
+<section id="microbiology" class="level2" data-number="6.8">
+<h2 data-number="6.8" class="anchored" data-anchor-id="microbiology"><span class="header-section-number">6.8</span> Microbiology</h2>
 <p>From a modeling perspective, microbial systems are just a set of chemical reactions. There are multiple ways microbial activity can be modelled, and selection of an aproach should depend on the objectives the model needs to meet. An important consideration is whether active microbial biomass should be explictly included or not. For dynamics in microbial activity related to changes in the microbial population, it must be included. So here are some components for one approach to creating microbial models:</p>
 <ol type="1">
 <li>state variables: active microbial biomass, essential chemical substrates, and important products,</li>
 <li>linking equations: a balanced chemical reaction that includes all state variables (stoichiometry), and</li>
 <li>constitutive equation: an equation for the rate of the overall reaction (kinetics).</li>
 </ol>
-<section id="sec-mic-stoich" class="level3" data-number="6.9.1">
-<h3 data-number="6.9.1" class="anchored" data-anchor-id="sec-mic-stoich"><span class="header-section-number">6.9.1</span> Microbial stoichiometry</h3>
+<section id="sec-mic-stoich" class="level3" data-number="6.8.1">
+<h3 data-number="6.8.1" class="anchored" data-anchor-id="sec-mic-stoich"><span class="header-section-number">6.8.1</span> Microbial stoichiometry</h3>
 <p>Unlike simple chemical reactions such as urea hydrolysis, it isn’t always possible to just look up the reaction. But there are a few different approaches that can be used, including the microbial stoiciometry approach presented by <span class="citation" data-cites="rittmann_environmental_2020">Rittmann and McCarty (<a href="#ref-rittmann_environmental_2020" role="doc-biblioref">2020</a>)</span>. <span class="citation" data-cites="rittmann_environmental_2020">Rittmann and McCarty (<a href="#ref-rittmann_environmental_2020" role="doc-biblioref">2020</a>)</span> is a worthwhile read for anyone working with microbial systems. Here we will give an introduction to the most essential parts.</p>
-<p>Microbes (and all known life) are powered by electron transfer. Chemotrophs harness energy from electrons transferred from reduced compounds to oxidized compounds. For organic compounds, reduced versions contain more C and H and oxidized more O. So these are sorted from most reduced to most oxidized: <span class="math inline">\(\ce{CH4}\)</span> (methane), <span class="math inline">\(\ce{C57H104O6}\)</span> (a lipid), <span class="math inline">\(\ce{C6H12O6}\)</span> (glucose), <span class="math inline">\(\ce{CO2}\)</span> (carbon dioxide, which provides no energy to chemotrophs). All of these compounds except <span class="math inline">\(\ce{CO2}\)</span> could serve as electron donors for some chemotroph (technically chemoorganotroph, which is a group of chemotrophs that use reduced <em>organic</em> compounds for energy). Of course the microorganism has to have the enzymatic machinery in place to use a particular substrate. But as a group, microorganisms are extremely capable.</p>
+<p>Microbes (and all known life) is powered by electron transfer. Chemotrophs harness energy from electrons transferred from reduced compounds to oxidized compounds. For organic compounds, reduced versions contain more C and H and oxidized more O. So these are sorted from most reduced to most oxidized: <span class="math inline">\(\ce{CH4}\)</span> (methane), <span class="math inline">\(\ce{C57H104O6}\)</span> (a lipid), <span class="math inline">\(\ce{C6H12O6}\)</span> (glucose), <span class="math inline">\(\ce{CO2}\)</span> (carbon dioxide, which provides no energy to chemotrophs). All of these compounds except <span class="math inline">\(\ce{CO2}\)</span> could serve as electron donors for some chemotroph (technically chemoorganotroph, which is a group of chemotrophs that use reduced <em>organic</em> compounds for energy). Of course the microorganism has to have the enzymatic machinery in place to use a particular substrate. But as a group, microorganisms are extremely capable.</p>
 <p>Chemotrophs need an electron acceptor too. These are oxidized chemicals with a strong affinity for electrons. Common electron acceptors include <span class="math inline">\(\ce{O2}\)</span>, <span class="math inline">\(\ce{NO3-}\)</span>, and <span class="math inline">\(\ce{SO4^2-}\)</span>.</p>
-<p>Finally, fermenters do not use exactly the same approach; they do not use external electron acceptors. Instead they essentially split a single organic compound into two product molecules, and transfer electrons from one to the other. We will work with a simple fermentation: glucose to ethanol and <span class="math inline">\(\ce{CO2}\)</span> by yeast.</p>
+<p>Finally, fermenters do not use exactly the same approach; they do not use external electron acceptors. Instead they essentially split a single organic compound, and transfer electrons from one product to the other. We will work with a simple fermentation: glucose to ethanol and <span class="math inline">\(\ce{CO2}\)</span> by yeast.</p>
 <p>Microorganisms and all life also need material to build up biomass, including numerous elements. In modeling work and elsewhere, it is common to focus on C, H, O, and N, although others may be added depending on their importance (e.g., if S is limiting or removal in biomass is important, it can be included). For chemoorganotrophs, the electron donor typically also serves as the source of C, H, and O. N can come from the donor or inorganic compounds in the environment, like <span class="math inline">\(\ce{NH4+}\)</span>. H comes from the electron donor and <span class="math inline">\(\ce{H2O}\)</span>, which is always available where life is active. It is common to call the electron donor and C source the substrate.</p>
 <p>A balanced reaction for our fermentation system is:</p>
 <p><span id="eq-eth-ferm"><span class="math display">\[
 \ce{C6H12O6 + 0.24NH4+ + 0.24HCO3- -&gt;
 1.6CH3CH2OH + 1.84CO2 + 0.24C5H7O2N + 0.96H2O}.
-\tag{6.20}\]</span></span></p>
+\tag{6.19}\]</span></span></p>
 <p>The <span class="math inline">\(\ce{C5H7O2N}\)</span> “species” is yeast biomass, and is really an empirical chemical formula for microbial biomass. This reaction is balanced in terms of elements and reduction-oxidation (redox).</p>
 </section>
-<section id="sec-mic-kin" class="level3" data-number="6.9.2">
-<h3 data-number="6.9.2" class="anchored" data-anchor-id="sec-mic-kin"><span class="header-section-number">6.9.2</span> Microbial kinetics</h3>
+<section id="sec-mic-kin" class="level3" data-number="6.8.2">
+<h3 data-number="6.8.2" class="anchored" data-anchor-id="sec-mic-kin"><span class="header-section-number">6.8.2</span> Microbial kinetics</h3>
 <p>We have looked at a first-order approach above, and while this can be a component of microbial models, it is more accurate and useful to link reaction rate to both the quantity of microbial biomass and substrate (electron donor). A second-order approach is one option. One common alternative is the Monod equation:</p>
 <p><span id="eq-monod1"><span class="math display">\[
 r = c_{x_a} \cdot \frac{\hat{q}_{max} \cdot c_s} {c_s + k_s},
-\tag{6.21}\]</span></span></p>
+\tag{6.20}\]</span></span></p>
 <p>where <span class="math inline">\(c_{x_a} =\)</span> active microbial biomass concentration (<span class="math inline">\(\gpmc\)</span>), <span class="math inline">\(\hat{q}_{max} =\)</span> maximum substrate utilization rate, and <span class="math inline">\(c_s =\)</span> substrate concentration.</p>
 </section>
-<section id="microbial-growth" class="level3" data-number="6.9.3">
-<h3 data-number="6.9.3" class="anchored" data-anchor-id="microbial-growth"><span class="header-section-number">6.9.3</span> Microbial growth</h3>
-<p>In environmental engineering, it is common to quantify microbial populations as active microbial biomass. This is the sum of the organic matter that makes up all microbial cells in a system. Unlike populations of humans or other animals, microbial populations are often quantified by total mass. So to track microbial growth, we just need to include microbial biomass as a state variable. Coupled with the information in <a href="#sec-mic-stoich" class="quarto-xref"><span>Section 6.9.1</span></a> and <a href="#sec-mic-kin" class="quarto-xref"><span>Section 6.9.2</span></a> above, we have everything we need for a microbial model. This is only because microbial biomass is already included in <a href="#eq-eth-ferm" class="quarto-xref">Equation&nbsp;<span>6.20</span></a> above as <span class="math inline">\(\ce{C5H7O2N}\)</span>; it was considered when developing the overall reaction. It is common to do this, to include microbial biomass in a reaction, by specifying a fraction of substrate that goes to producing biomass, with the balance going to energy production. In fact, it is convenient to separately consider the energy producing and biomass synthesis reactions. For this yeast fermentation system, these would be:</p>
+<section id="microbial-growth" class="level3" data-number="6.8.3">
+<h3 data-number="6.8.3" class="anchored" data-anchor-id="microbial-growth"><span class="header-section-number">6.8.3</span> Microbial growth</h3>
+<p>In environmental engineering, it is common to quantify microbial populations as active microbial biomass. This is the sum of the organic matter that makes up all microbial cells in a system. Unlike populations of humans or other animals, microbial populations are often quantified by total mass. So to track microbial growth, we just need to include microbial biomass as a state variable. Coupled with the information in <a href="#sec-mic-stoich" class="quarto-xref"><span>Section 6.8.1</span></a> and <a href="#sec-mic-kin" class="quarto-xref"><span>Section 6.8.2</span></a> above, we have everything we need for a microbial model. This is only because microbial biomass is already included in <a href="#eq-eth-ferm" class="quarto-xref">Equation&nbsp;<span>6.19</span></a> above as <span class="math inline">\(\ce{C5H7O2N}\)</span>; it was considered when developing the overall reaction. It is common to do this, to include microbial biomass in a reaction, by specifying a fraction of substrate that goes to producing biomass, with the balance going to energy production. In fact, it is convenient to separately consider the energy producing and biomass synthesis reactions. For this yeast fermentation system, these would be:</p>
 <p><span class="math display">\[
 \ce{C6H12O6 -&gt; 2CH3CH2OH + CO2
 \]</span></p>
@@ -1086,13 +1075,13 @@ r = c_{x_a} \cdot \frac{\hat{q}_{max} \cdot c_s} {c_s + k_s},
 \ce{C6H12O6 + 1.2 NH4+ + 1.2 HCO3- -&gt;
 1.2 C5H7O2N + 1.2 CO2 + 4.8 H2O}
 \]</span></p>
-<p>for yeast biomass. <a href="#eq-eth-ferm" class="quarto-xref">Equation&nbsp;<span>6.20</span></a> above just combines with the assumption that 20% of substrate goes to biomass production and the remaining 80% to energy production (recovery) via fermentation. Our own (human) bodies do this partitioning, just like microbes, at least when we are growing children. Ideally, from the perspective of growth, reproduction, and survival, a large fraction of consumed substrate would go toward making new biomass. But it takes energy to turn substrate into live, functioning, biomass, and it takes energy to live. So this ideal is never realized.</p>
+<p>for yeast biomass. <a href="#eq-eth-ferm" class="quarto-xref">Equation&nbsp;<span>6.19</span></a> above just combines with the assumption that 20% of substrate goes to biomass production and the remaining 80% to energy production (recovery) via fermentation. Our own (human) bodies do this partitioning, just like microbes, at least when we are growing children. Ideally, from the perspective of growth, reproduction, and survival, a large fraction of consumed substrate would go toward making new biomass. But it takes energy to turn substrate into live, functioning, biomass, and it takes energy to live. So this ideal is never realized.</p>
 <p>When an energy recovery pathway produces a lot of energy per unit substrate, less substrate needs to be used this way to make biomass. So the fraction going to synthesis can be much higher. Aerobic respiration is like this, while fermentation, and especially methanogenesis, produce less energy and so less biomass per unit substrate.</p>
 <p>Yeast cells, and other microbial cells, don’t live forever. In the approach presented here we don’t track individual yeast cells, so we cannot apply a probability of death (or survival) to individual cells. Instead, we can model death and decay as a first-order reaction.</p>
 </section>
 </section>
-<section id="problems" class="level2" data-number="6.10">
-<h2 data-number="6.10" class="anchored" data-anchor-id="problems"><span class="header-section-number">6.10</span> Problems</h2>
+<section id="problems" class="level2" data-number="6.9">
+<h2 data-number="6.9" class="anchored" data-anchor-id="problems"><span class="header-section-number">6.9</span> Problems</h2>
 <ol type="1">
 <li><p>Create a Python function that calcuates free ammonia <span class="math inline">\(\ce{NH3(aq)}\)</span> from TAN, pH, and temperature. You can use this expression for the temperature dependency of <span class="math inline">\(K_a\)</span>:</p>
 <p><span class="math display">\[
@@ -1112,7 +1101,7 @@ pK_a =  0.0905 + \frac{2729.31}{T},
 <h2 class="unnumbered anchored" data-anchor-id="references">References</h2>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-clegg_chemical-model_1995" class="csl-entry" role="listitem">
 Clegg, S. L., and M. Whitfield. 1995. <span>“A Chemical-Model of Seawater Including Dissolved Ammonia and the Stoichiometric Dissociation-Constant of Ammonia in Estuarine Water and Seawater from -2C to 40C.”</span> <em>Geochimica Et Cosmochimica Acta</em> 59 (12): 2403–21.
 </div>
@@ -1120,7 +1109,7 @@ Clegg, S. L., and M. Whitfield. 1995. <span>“A Chemical-Model of Seawater Incl
 Kern, D. M. 1960. <span>“The Hydration of Carbon Dioxide.”</span> <em>Journal of Chemical Education</em> 37: 14–23.
 </div>
 <div id="ref-rittmann_environmental_2020" class="csl-entry" role="listitem">
-Rittmann, Bruce E., and Perry L. McCarty. 2020. <em>Environmental Biotechnology: Principles and Applications, Second Edition</em>. 2nd edition. New York, N.Y: McGraw Hill.
+Rittmann, Bruce E., and Perry L. McCarty. 2020. <em>Environmental Biotechnology: Principles and Applications, Second Edition</em>. 2nd edition. McGraw Hill.
 </div>
 <div id="ref-Snoeyink1980" class="csl-entry" role="listitem">
 Snoeyink, Vernon L. 1980. <em>Water Chemistry</em>. Wiley.
