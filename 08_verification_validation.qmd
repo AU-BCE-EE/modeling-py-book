@@ -36,10 +36,14 @@ Verification is about making sure your model has been implemented correctly.
 So how exactly do you do that?
 You should carefully check model code for:
 
+* accurate governing equations and 
+* consistent units.
+
+If relevant, also check code for:
+
 * accurate constitutive equations, 
 * accurate linking equations, and
-* accurate mass or energy conservation, and
-* consistent units.
+* accurate mass or energy conservation.
 
 When checking code, you should look for equations completeness and correctness by comparison to your model equations, written with pencil and paper or typed out somewhere.
 Of course, this presumes that the original model formulation and description are accurate.
@@ -75,13 +79,14 @@ A pool exchanges heat energy with its environment through multiple pathways: wit
 
 First, the model code from the `pool_mods` module:
 
-
 ```{.python filename="pool_mods.py"}
 {{< include pool_mods.py >}}
 ```
 
-And now some verification:
-Let's start with a check of
+And now some verification.
+If we have a clear GE from model formulation, we can check that.
+But for numerical models, it is common to calculate individual GE terms separately and then add them up using the appropriate variable symbols.
+So here let's start with a check of
 
 1. conservation, and
 2. constitutive equations.
@@ -751,86 +756,5 @@ It can be harder to understand a plot where measurements and model output are bo
 In practice, it is common to produce two distinct sets of model output when performing validation: one for graphical and one for quantitative validation.
 
 ![The same demonstration of model fit as in @fig-fit-stats1 but only showing the model output used for calculating fit statistics, i.e., perfect alignment of measurements and model output.](drawings/fit_stats2.png){#fig-fit-stats2 fig-alt="Fit statistics demo with points"}
-
-## Problems {.unnumbered}
-
-### Verification {.unnumbered}
-
-#### Ammonia emission model {.unnumbered}
-
-In this exercise you will work with a version of the ammonia volatilization model from the first mini-project.
-This document provides some details, the `amm_concept_model.pdf` has more, and for even more, see the solutions to that mini-project.
-Remember that you need to have a good understanding of the underlying conceptual and mathematical models in order to verify a computer model!
-So make use of those documents.
-
-You'll use the `dynmod()` function defined in the `amm_mods.py` file in the same subdirectory as this document.
-The `amm_mods.py` file is a *module* that defines the model as a Python function called `dynmod()`.
-The script `amm_demo.py` has a short demonstration.
-
-The model simulates total ammonia nitrogen (TAN, the sum of free ammonia (NH3) and ammonium (NH4+)) in manure in a storage tank.
-It includes continuous addition and removal of manure at a fixed rate, so the volume of manure in the tank does not change.
-But TAN is lost through volatilization of ammonia from the surface.
-
-1. Can you verify the model following the approach we went through in class? 
-   Save your work in a Python script and a text file, or really in any form that you think is appropriate.
-   If you prefer commenting in the module file `amm_mods.py` directly, that is fine.
-   
-   If you struggle to work with the volume-normalized variables and expressions, you can use the second model function `ddynmod()`, named for *double* dynamic model because can also simulation tank volume dynamics.
-   It does not use volume-normalize values, because the volume is variable over time.
-   In that case you probably want to set the manure pumping rate (flow) in and out to the same value for simplicity.
-   
-   For more details on the mass balance and constitutive equations, see `amm_concept_model.pdf`.
-
-#### Diffusion model {.unnumbered}
-
-In this exercise you will work with a 1D diffusion model.
-You will get some practice in verification of conservation with 1D models and try model validation.
-There are also two optional questions on some different ways to implement and verify (program) 1D models.
-
-The conceptual model is quite simple.
-We have a column with some solute (NaCl for example, which is what was used in the measurements) diffusing from one end to the other through water.
-We can represent the conceptual model it with text symbols:
-
-```{python}
-#| eval: false
-       --------------------------
-       |                        |
- c_l   |                        | c_r
- bc[0] |                        | bc[0] 
-       |                        |
-       --------------------------
-       x -->
-```
-
-Both boundaries, at the left and right, have fixed concentrations.
-And there is only one phase--an aqueous phase that is somehow stagnant (or assumed to be)!
-This same model could also be used for a semi-infinite plane.
-
-The model is implemented in the function `diff1D()` which is defined in the `diff_mod.py` module. 
-Check the docstring and, if needed, `rates()` to see exactly what `diff1D()` returns before starting.
-
-1. Qualitatively describe what you expect this model predict, both after short and then long periods of time.
-
-2. Given what you know about Fick's law of diffusion at steady-state in a plane wall, predict the steady-state flux of the solute without the model, and then compare your expected value to model predictions.
-
-3. Can you use the output from the `diff1D()` to verify implementation of mass balance in the model?
-   Check the function docstring (look at the module file contents or run `help(diff1D)` in Python) to check function parameters and outputs.
-   This is meant to be a quick check, and not a detailed verification, but it is still good practice to keep a record of your function calls, output, and interpretation.
-   That could be done in many ways, including a Markdown document or `*.txt` file with code and output (manually pasted in), or an MS Word file, a Jupyter Notebook file, or a Quarto Markdown (`q.md`) file.
-
-5. You may have noticed that the cumulative mass transfer at the left and right boundaries are both positive for flow to the right.
-   Create a new version of the `diff1D()` function and change this feature, so that both terms are positive for mass going into the column (model domain).
-   Make sure you give the new function a good name.
-   Save it in the same module as the original.
-   Now repeat your mass mass balance verification with this new function.
-
-### Validation {.unnumbered}
-
-1. See the data file `col_salt.csv` for some (fabricated) measurements of the total salt (NaCl here) mass within a 0.1 m long column with a diameter of 0.02 m. 
-   Fixed salt concentrations at the boundaries were 36 kg/m3 at the left and zero at the right.
-   Use the measurements to validate the model graphically and with relevant model fit statistics.
-   The diffusivity of NaCl in water is known to be around 1.6E-9 m2/s.
-   What do you think about the accuracy of the model?
-   Hint: Be careful with units and variables. You have to convert model predictions to the variable that was measured.
 
 ## References {.unnumbered}
