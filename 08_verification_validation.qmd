@@ -4,7 +4,7 @@ The statistician George Box is famous for a quote that goes something like "all 
 Maybe he didn't use that exact wording but the sentiment is definitely correct (see @box_science_1976 and @Box_George_E_P_1987 for more).
 Indeed, both parts are true.
 Although model error cannot be completely eliminated, the portion that can be eliminated should be, and the rest should be quantified and understood.
-Verification and validation address the problem of model error, and are essential steps in the "modelling process".
+Verification and validation address the problem of model error, and are essential steps in the modeling process.
 They should be carried out before any confidence is placed in model predictions.
 
 Verification is essentially ensuring that the mathematical model--developed through a model formulation process (@sec-formulation)--has been programmed or implemented correctly.
@@ -17,17 +17,16 @@ A clear and explicit model formulation and careful programming can reduce implem
 
 In contrast, validation is done by comparing model output to measurements from the system under study.
 Because validation is done after verification, code errors should already be eliminated, so any error seen in in validation can be interepreted as (most likely) coming from either model structure or parameter values.
-It may be that a problem was missed during verification, however, so when a problem is found in the validation stage, the model developer should always think about the likely cause of the problem, and how to improve the model.
-Verification and validation are often together called "V&V".
+It may be that a problem was missed during verification, however, so when a problem is found in the validation stage, the model developer should always think about the likely cause of the problem, and how to fix it.
+Verification and validation are often together called "V & V".
 
-@fig-vv1 shows where verification and validation fit in the model development process.
-The connections between the software model (your Python code) and, first, the mathematical model (what you developed through model formulation), and some measurement data, called the "reality of interest" in the figure.
+@fig-vv1 shows where verification and validation fit in the model development process, as well as the connections between the computer model (your Python code), the mathematical model (what you developed through model formulation), and some measurement data, called the "reality of interest" in the figure.
 
-![Where verification and validation fit into the modeling process. From @thackner_2004](images-web/Thackner_VV1.png){#fig-vv1 fig-alt="V&V concept."}
+![Where verification and validation fit into the modeling process. From @thackner_2004](images-web/Thackner_VV1.png){#fig-vv1 fig-alt="V & V concept."}
 
-One important point that model developers and users should both understand is that successful V&V does not prove that a model is correct. 
+One important point that model developers and users should both understand is that successful V & V does not prove that a model is correct. 
 In fact, only model failure shows anything with any certainty: that a model is wrong.
-But V&V can provide evidence that the model is accurate enough for application.
+But V & V can provide evidence that the model is accurate enough for application.
 Both verification and validation are described in more detail in the sections below.
 
 ## Verification
@@ -36,20 +35,20 @@ Verification is about making sure your model has been implemented correctly.
 So how exactly do you do that?
 You should carefully check model code for:
 
-* accurate governing equations and 
+* accurate governing equations, and 
 * consistent units.
 
 If relevant, also check code for:
 
 * accurate constitutive equations, 
 * accurate linking equations, and
-* accurate mass or energy conservation.
+* accurate implementation of mass or energy conservation.
 
-When checking code, you should look for equations completeness and correctness by comparison to your model equations, written with pencil and paper or typed out somewhere.
+When checking code, you should look for equations completeness and correctness by comparison to your mathematical model, i.e., the model equations, written with pencil and paper or typed out somewhere.
 Of course, this presumes that the original model formulation and description are accurate.
 Unit consistency can be checked by entering units above terms in equations right in the model code.
-In the code chunk below, `Q-solar` is supposed to be the heat flux of solar energy, in units of W.
-Unit comments work like this, where line 2 has the original model code and line 1 a comment with units:
+In the code chunk below, `Q_solar` is supposed to be the heat flux of solar energy, in units of W.
+Comments can be used to check units as in the example below, where line 2 has the original model code and line 1 a comment with units:
 
 ```{python}
 #| eval: false
@@ -58,7 +57,7 @@ Unit comments work like this, where line 2 has the original model code and line 
 ```
 
 Additionally, careful model calls themselves can be used for verification.
-Check ultimate or limiting cases, where you have a clear expectation of what the model should show.
+Check limiting or edge cases, where you have a clear expectation of what the model should show.
 If a simpler analytical model is available, its predictions can be compared to those from the more complex model under appropriate conditions.
 With this approach you can find problems without information on the causes.
 Then experience, model call "experiments", and a check of the code can help identify the causes.
@@ -68,12 +67,13 @@ Model verification requires a good understanding of the underlying conceptual an
 Otherwise, how would you know what to expect?
 
 Conservation can be checked by tracking cumulative transport.
-Cumulative transport can be added as a state variable by simply integrating the ODE for mass or energy flow at the domain boundaries
+Cumulative transport can be added as a state variable by simply integrating the ODE for mass or energy flow.
+If you are working with a spatial model, this should be done at the domain boundaries.
 The integrated cumulative totals can be compared it to the change in total energy or mass in the model domain for a conservation check.
 
 ### Pool model code verification
 
-Let's use a swimming pool model as a demo for verification.
+Let's use a swimming pool heat transfer model as a demo for verification.
 Conceptually, this model is similar to the cooling coffee cup model from @sec-solving and elsewhere.
 A pool exchanges heat energy with its environment through multiple pathways: with the air from the water surface, with the substrate through the sides and bottom of the pool, through an external heater, and, in one direction, from the sun.
 
@@ -133,14 +133,14 @@ The code:
 ```
 
 The checking part follows, where we have copied a single line a few times to think about it in some different ways.
+The checks included below include two conceptual/qualitative checks on the calculation of heat flow and one to check the direction/sign.
 This just applies to one of the terms in the GE.
 Typically, not all of these comments would be left in the model code.
-The checks included below include two conceptual/qualitative checks on the calculation of heat flow and one to check the direction/sign.
 
 ```{python}
 #| eval: false
     	#   CHTS = combined heat transfer coefficient
-        #        Area *  CHTC * delta T -> OK
+        #        Area *  CHTC *        delta T         -> OK
         Q_top = a_top * u_top * (temp_air - temp_pool)              # Convection from top
         #       Area  * ------flux------------------- -> OK
         Q_top = a_top * u_top * (temp_air - temp_pool)              # Convection from top
@@ -149,7 +149,7 @@ The checks included below include two conceptual/qualitative checks on the calcu
 ```
 
 
-During actual V&V, we would need to check *all* equations. 
+During actual V & V, we would need to check *all* equations. 
 
 Now some check of units.
 But here let's focus on that same line of code from above as an example.
@@ -183,7 +183,7 @@ We see:
 
 Those three look fine, once we remember that a temperature difference is the same in $\degC$ and K.
 Now, of course this doc string has no effect on the actual calculations carried out by the model, but it tells the user the units for the inputs.
-And if everything is correct up/back to here, the rest is up to the user.
+And if everything is correct up/back to here, the rest is up to the user, i.e., the model developer (you, us) have done our part.
 
 Now the linking equation, starting with a conceptual check.
 
@@ -196,7 +196,7 @@ Now the linking equation, starting with a conceptual check.
 And unit check.
 ```{python}
 #| eval: false
-        #          J/s   / J/K-kg * kg/m3 * m3 -> K/s  (OK)
+        #          J/s   / J/K-kg * kg/m3 * m3 -> K/s = deg. C / s (OK)
         dtemp_dt = Q_net / (cp    * dens * vol)
 ```
 
@@ -223,7 +223,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from importlib import reload
 
-# Get out pool model functions (loading a module here)
+# Get pool model functions (loading a module here)
 # This will not load a new version!
 import pool_mods as pm
 
@@ -297,14 +297,16 @@ plt.ylabel('Pool temperature (deg. C)')
 
 Ah, just a matter of time, right?
 And does that steady-state (or equilibrium?) temperature match expectations?
+Yes, because both air and substrate have the same fixed temperature of 10 $\degC$.
 
 We have no solar radiation in these scenarios.
 With the sun shining, the pool water should warm above ambient temperature.
 But as the water warms above air temperature, it will lose heat at a higher and higher rate, until the fixed rate of heat gain from the sun matches the variable rate of heat loss to air.
+This is an example of simple positive feedback that leads to a steady state condition.
 Do we see that behavior?
+Let's add 200 $\wpms$ of solar energy, keep environment at 10 $\degC$, and see.
 
 ```{python}
-# Let's add 200 W/m2 of sun, keep environment at 10, and see
 pred02 = pm.dynmod(
     a_top=a_top,
     a_wall=a_wall,
@@ -346,11 +348,13 @@ plt.ylabel('Pool temperature (deg. C)')
 ```
 
 As expected?
-Higher or lower than ambient?
+Yes--at least the temperature is a bit above ambient.
 What about the oscillations?
+These look like the result of numerical error.
+We could try different solver algorithms to see if that behavior can be improved.
 
 When we have access to an analytical, or generally a simpler, version of a model, it is smart to use it for verification. 
-Although the simpler model may also have errors, perhaps even some of the same errors as the model we are trying to verify, simpler means easier to verify.
+Simpler means easier to implement and verify.
 Therefore verification errors are less likely in simpler models.
 
 Here, we do have a simpler, steady-state model, implemented in the `ssmod()` function.
@@ -402,7 +406,7 @@ Big problem!
 We get massively negative temperature
 Let's dig into this, first with some more model calls
 Let's think about how model calls could be used to identify the problem.
-We can start by trying smaller delta T and shorter time to slow down heat transfer and time, in a sense.
+We can start by trying smaller delta T and shorter time to zoom in on time, in a sense.
 
 ```{python}
 pm.dynmod(
@@ -445,7 +449,7 @@ Let's edit the module like this, adding `breakpoint()` to a line where we can ch
         Q_sub = a_wall * u_wall * (temp_sub - temp_pool)            # Conduction to/from substrate (soil or whatever is there)
         Q_renew = cp * dens * flow_renew * (temp_pool - temp_renew) # Net energy coming in from renewal water
 
-        breakpoint()
+	breakpoint() # NOTE: here is the breakpoint() call
 
         # And sum them
         Q_net = Q_solar + Q_top + Q_renew
@@ -532,20 +536,21 @@ The function is copied below as well.
 
 # Define a model with cumulative transport state variables
 # pp is for ++, as in more than the original model :)
-def dynmod_pp(a_top,    
-              a_wall,       
-              depth,
-              q_sol,
-              u_top,
-              u_wall,
-              temp_air,
-              temp_sub,
-              flow_renew,
-              temp_renew,
-              temp_init,
-              times, 
-              cp=4180,
-              dens=1000
+def dynmod_pp(
+    a_top,    
+    a_wall,       
+    depth,
+    q_sol,
+    u_top,
+    u_wall,
+    temp_air,
+    temp_sub,
+    flow_renew,
+    temp_renew,
+    temp_init,
+    times, 
+    cp=4180,
+    dens=1000
 ):  
 
     """ 
