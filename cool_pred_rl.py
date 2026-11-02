@@ -1,5 +1,5 @@
 """
-File: cool_pred.py
+File: cool_pred_rel.py
 Authors: Sasha D. Hafner and Frederik R. Dalby
 Course: Modelling 2026
 

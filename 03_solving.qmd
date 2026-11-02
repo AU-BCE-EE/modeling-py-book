@@ -746,7 +746,7 @@ But if you are working in Python interactively, which is common during model dev
 The `import` command will not reload the module and put the newest version in memory, but it stubbornly holds on to the original version.
 Do this instead:
 
-```{.python filename="cool_pred.py"}
+```{.python filename="cool_pred_rl.py"}
 {{< include cool_pred_rl.py >}}
 ```
 
