@@ -436,7 +436,7 @@ window.Quarto = {
 <h2 data-number="3.1" class="anchored" data-anchor-id="numerical-solution-euler-method"><span class="header-section-number">3.1</span> Numerical solution: Euler method</h2>
 <p>The basic approach to numerical solutions of dynamic models is to repeatedly update the state of the system using the GE. Any dynamic model needs explicit initial conditions, a quantitative description of the state of the system at the start. For the coffee model, it means knowing the initial temperature of the coffee + mug system. In general, it means having a value for each state variable. These types of problems are often known as initial value problems (IVP) for this reason.</p>
 <p>In Python and other programming languages, explicit <em>for loops</em> can be used to implement a numerical model. The simplest numerical method is based on calculating the state variable derivative at each time and extrapolating into the future by some fixed <em>time step</em>. This approach is also called the <em>explicit forward finite difference method</em> or the <em>Euler method</em>. It was first described by Leonhard Euler more than 250 years ago. Let’s write some code to implement it using the coffee model.</p>
-<div id="c3849f22" class="cell" data-execution_count="1">
+<div id="da2adca8" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load NumPy package</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -493,7 +493,7 @@ Figure&nbsp;3.1: Predicted coffee temperature using Euler method.
 </div>
 <p>So there are some predictions from a simple numerical model (<a href="#fig-coffee-preds1" class="quarto-xref">Figure&nbsp;<span>3.1</span></a>). Whether or not it is accurate depends on the model structure as well as the input variables. We’ll come back to that question later. Certainly predictions are plausible and the model provides the qualitative response that we had expected (see <a href="01_intro.html" class="quarto-xref"><span>Chapter 1</span></a>).</p>
 <p>The points in <a href="#fig-coffee-preds1" class="quarto-xref">Figure&nbsp;<span>3.1</span></a> show the model predictions for specific times. Our model made no predictions for other times, and in the plot the straight lines just connect points. We had to explicitly select a time step, called <code>dt</code> in the code; it was set to 10 minutes (600 s) above. It is good practice to try some different values to see the effect. While we could edit the chunk of code above, a more efficient and reproducible approach is to create a Python <em>function</em> of the model. We will generally use this approach for all the following computer models in this book.</p>
-<div id="e1e9e5c9" class="cell" data-execution_count="3">
+<div id="bd2a92ba" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cool_eu(T_init, T_air, mass, area, h, time_range, dt, cp<span class="op">=</span><span class="fl">4.2</span>):</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Simulate coffee cooling using the Euler method.</span></span>
@@ -541,7 +541,7 @@ Figure&nbsp;3.1: Predicted coffee temperature using Euler method.
 <span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>    }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Now we can call the function and run the model with a single functin call (could be a single line of code, but we’ll split it across multiple lines for clarity).</p>
-<div id="af1b9f80" class="cell" data-execution_count="4">
+<div id="4169766a" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pred_temp1 <span class="op">=</span> cool_eu(</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    T_init<span class="op">=</span><span class="dv">80</span>, </span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    T_air<span class="op">=</span><span class="dv">20</span>, </span>
@@ -553,7 +553,7 @@ Figure&nbsp;3.1: Predicted coffee temperature using Euler method.
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>That result should exactly match our earlier result, because the inputs were identical.</p>
-<div id="f22ec3a4" class="cell" data-execution_count="5">
+<div id="b713c14b" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pred_temp1[<span class="st">'T_coffee'</span>])</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(T_coffee)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -564,7 +564,7 @@ Figure&nbsp;3.1: Predicted coffee temperature using Euler method.
 </div>
 </div>
 <p>Now let’s try a few different values for <code>dt</code>.</p>
-<div id="110ac053" class="cell" data-execution_count="6">
+<div id="b5271a0f" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>pred1 <span class="op">=</span> cool_eu(</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    T_init<span class="op">=</span><span class="dv">80</span>, </span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    T_air<span class="op">=</span><span class="dv">20</span>, </span>
@@ -644,7 +644,7 @@ Figure&nbsp;3.3: The slopes used in the classical Runge-Kutta method. <span clas
 </figure>
 </div>
 <p>So what does <code>solve_ivp()</code> look like in practice? In a way it is simpler to set up than the Euler method, because <code>solve_ivp()</code> takes care of the iterative bit that we have to program explicitly using a for loop. On the other hand, we need to define a function for calculating the derivate(s) of the state variable(s). Here we will define that function within our model and call it <code>rates()</code>, which is a convention we’ll use throughout this book. There are other good approaches, but this one makes self-contained model functions and work well. Here is an implementation of the coffee example.</p>
-<div id="c186fffa" class="cell" data-execution_count="8">
+<div id="d34f4b14" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> solve_ivp</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -701,7 +701,7 @@ Figure&nbsp;3.3: The slopes used in the classical Runge-Kutta method. <span clas
 <span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a>    }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Let’s see how it works, and compare it to the first solution from the Euler method.</p>
-<div id="61689f41" class="cell" data-execution_count="9">
+<div id="1c7e53b3" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>pred_eu <span class="op">=</span> cool_eu(</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    T_init<span class="op">=</span><span class="dv">80</span>, </span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    T_air<span class="op">=</span><span class="dv">20</span>, </span>
@@ -744,7 +744,7 @@ Figure&nbsp;3.4: Predicted coffee temperature using Euler method and an RK45 app
 </div>
 <p>What do you think? Could you make the two match? Give it a try.</p>
 <p>The object returned by <code>solve_ivp()</code> can be a little tricky to work with. Below there are three different ways of checking its structure, which we need to know if we want to extract components.</p>
-<div id="25c487ee" class="cell" data-execution_count="11">
+<div id="c6e4694a" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cool_rk_debug(T_init, T_air, mass, area, h, time_range, dt, cp<span class="op">=</span><span class="fl">4.2</span>):</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">    ...</span></span>
@@ -877,7 +877,7 @@ k_{cool} = \frac{A \cdot h}{c_p \cdot m},
 <section id="implementation" class="level3" data-number="3.3.3">
 <h3 data-number="3.3.3" class="anchored" data-anchor-id="implementation"><span class="header-section-number">3.3.3</span> Implementation</h3>
 <p>Implementing <a href="#eq-cooling-an-sol" class="quarto-xref">Equation&nbsp;<span>3.4</span></a> in Python is easier than implementing a numerical approach. Maybe the only tricky part is going between <span class="math inline">\(\theta\)</span> and <span class="math inline">\(T\)</span>.</p>
-<div id="f37f1996" class="cell" data-execution_count="12">
+<div id="d40120fe" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> solve_ivp</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -927,7 +927,7 @@ k_{cool} = \frac{A \cdot h}{c_p \cdot m},
 <span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a>    }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Finally, we can compare all three approaches, using identical inputs of course.</p>
-<div id="7566a4b9" class="cell" data-execution_count="13">
+<div id="a18ad634" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>pred_eu <span class="op">=</span> cool_eu(</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    T_init<span class="op">=</span><span class="dv">80</span>, </span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    T_air<span class="op">=</span><span class="dv">20</span>, </span>
@@ -1017,9 +1017,12 @@ Figure&nbsp;3.5: Predicted coffee temperature using Euler method, an RK45 approa
 <li>introduces you to concepts that will be useful for future work with Python.</li>
 </ul>
 <p>How does it work in practice? Let’s demonstrate with the RK45 model.</p>
-<p>First, we need to create a <code>.py</code> file with the function definition from above. This file will be a module. Here, we’ll name the file <code>cooling_mods.py</code>. Here are the contents:</p>
-<div id="283e647c" class="cell" data-execution_count="15">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<p>First, we need to create a <code>.py</code> file with the function definition from above. This file will be a <em>module</em>. Here, we’ll name the file <code>cooling_mods.py</code>. We would typically then call the module itself <code>cooling_mods</code>, without the extension. Here are the contents:</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>cooling_mods.py</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17" data-filename="cooling_mods.py"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">File: cooling_mods.py</span></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co">Authors: Sasha D. Hafner and Frederik R. Dalby</span></span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co">Course: Modelling 2026</span></span>
@@ -1082,42 +1085,83 @@ Figure&nbsp;3.5: Predicted coffee temperature using Euler method, an RK45 approa
 <span id="cb17-61"><a href="#cb17-61" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
 <span id="cb17-62"><a href="#cb17-62" aria-hidden="true" tabindex="-1"></a>        <span class="st">'times'</span>: res.t,</span>
 <span id="cb17-63"><a href="#cb17-63" aria-hidden="true" tabindex="-1"></a>        <span class="st">'T_coffee'</span>: res.y[<span class="dv">0</span>, :],</span>
-<span id="cb17-64"><a href="#cb17-64" aria-hidden="true" tabindex="-1"></a>    }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb17-64"><a href="#cb17-64" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb17-65"><a href="#cb17-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-66"><a href="#cb17-66" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Then, to use the model, we first <em>import</em> the module we defined and then run the function, like this:</p>
-<div id="aa45f696" class="cell" data-execution_count="16">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<p>If you want to try this module-based approach, you can copy the code from the chunk above and paste it in a text file, and save it with the appropriate name. Or, download the file from the GitHub repository for this book: <a href="https://github.com/AU-BCE-EE/modeling-py-book" class="uri">https://github.com/AU-BCE-EE/modeling-py-book</a>.</p>
+<p>Then, to use the model, it is typical to import the module and run it in a separate Python script. we first <em>import</em> the module we defined and then run the function, like this:</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>cool_pred.py</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18" data-filename="cool_pred.py"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co">File: cool_pred.py</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co">Authors: Sasha D. Hafner and Frederik R. Dalby</span></span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co">Course: Modelling 2026</span></span>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co">Description:</span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co">    Application of the `cool_rk()` model function.</span></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">'modules'</span>)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co">    Application of the `cool_rk()` model function from the</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co">    cooling_mods module.</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cooling_mods <span class="im">as</span> cm</span>
 <span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cooling_mods <span class="im">as</span> cm</span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>preds <span class="op">=</span> cm.cool(</span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>    T_init<span class="op">=</span><span class="dv">80</span>, </span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>    T_air<span class="op">=</span><span class="dv">20</span>, </span>
-<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>    mass<span class="op">=</span><span class="dv">300</span>, </span>
-<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>    area<span class="op">=</span><span class="fl">0.026</span>, </span>
-<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>    h<span class="op">=</span><span class="dv">75</span>, </span>
-<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>    time_range<span class="op">=</span>(<span class="fl">0.</span>, <span class="dv">60</span> <span class="op">*</span> <span class="dv">60</span>), </span>
-<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>    dt <span class="op">=</span> <span class="dv">5</span> <span class="op">*</span> <span class="dv">60</span></span>
-<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(preds)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>{'times': array([   0.,  300.,  600.,  900., 1200., 1500., 1800., 2100., 2400.,
-       2700., 3000., 3300., 3600.]), 'T_coffee': array([80.        , 57.71380501, 43.69419246, 34.90155755, 29.37050362,
-       25.89183041, 23.70565386, 22.32781616, 21.46773261, 20.91910358,
-       20.58098179, 20.36647379, 20.23041304])}</code></pre>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>preds <span class="op">=</span> cm.cool(</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>    T_init<span class="op">=</span><span class="dv">80</span>, </span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>    T_air<span class="op">=</span><span class="dv">20</span>, </span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>    mass<span class="op">=</span><span class="dv">300</span>, </span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>    area<span class="op">=</span><span class="fl">0.026</span>, </span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>    h<span class="op">=</span><span class="dv">75</span>, </span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>    time_range<span class="op">=</span>(<span class="fl">0.</span>, <span class="dv">60</span> <span class="op">*</span> <span class="dv">60</span>), </span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>    dt <span class="op">=</span> <span class="dv">5</span> <span class="op">*</span> <span class="dv">60</span></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(preds)</span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<p>Unless you need to modify the model code in the module, you don’t need to open up that <code>cooling_mods.py</code> file (module) or even think about it. The <code>import cooling_mods as cm</code> loads it, and that is all you need.</p>
+<p>But this book is about developing models, and if a module describes a model you developed, you will probably need to edit it. If you are running Python in batch mode (see <a href="appx_vs_code.html" class="quarto-xref"><span>Appendix D</span></a>), you can edit the module, and then run your script (<code>cool_pred.py</code> here) again without any problems. The new instance of Python loads the new (edited) module with the latest changes.</p>
+<p>But if you are working in Python interactively, which is common during model development, that approach won’t work. The <code>import</code> command will not reload the module and put the newest version in memory, but it stubbornly holds on to the original version. Do this instead:</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>cool_pred.py</strong></pre>
 </div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19" data-filename="cool_pred.py"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co">File: cool_pred.py</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co">Authors: Sasha D. Hafner and Frederik R. Dalby</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co">Course: Modelling 2026</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co">Description:</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co">    Application of the `cool_rk()` model function from the</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co">    cooling_mods module. This version uses reload().</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Original import of the model module</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cooling_mods <span class="im">as</span> cm</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the reload() function from the importlib</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="co"># It is the only one we need so we just take that</span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> importlib <span class="im">import</span> <span class="bu">reload</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Use as needed (reload(pm) if module code is changed)</span></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a><span class="co"># This line below can be run multiple times in the same Python session</span></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a><span class="bu">reload</span>(pm)</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>preds <span class="op">=</span> cm.cool(</span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>    T_init<span class="op">=</span><span class="dv">80</span>, </span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>    T_air<span class="op">=</span><span class="dv">20</span>, </span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>    mass<span class="op">=</span><span class="dv">300</span>, </span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>    area<span class="op">=</span><span class="fl">0.026</span>, </span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>    h<span class="op">=</span><span class="dv">75</span>, </span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>    time_range<span class="op">=</span>(<span class="fl">0.</span>, <span class="dv">60</span> <span class="op">*</span> <span class="dv">60</span>), </span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>    dt <span class="op">=</span> <span class="dv">5</span> <span class="op">*</span> <span class="dv">60</span></span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(preds)</span>
+<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Note that you could use the <code>from cooling_mods import cool</code> as well if that is the only function from your module that you want to use.</p>
 </section>
 <section id="problems" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="problems">Problems</h2>

@@ -1,4 +1,4 @@
-# Introduction to VS Code
+# Introduction to VS Code {#sec-appx-vsc-code}
 
 This introduction was taken from the guide at <https://github.com/AU-BCE-EE/guidance-python-vs-code>, written by Sasha Hafner.
 

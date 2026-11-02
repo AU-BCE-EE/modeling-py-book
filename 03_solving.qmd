@@ -716,109 +716,41 @@ How does it work in practice?
 Let's demonstrate with the RK45 model.
 
 First, we need to create a `.py` file with the function definition from above.
-This file will be a module.
+This file will be a *module*.
 Here, we'll name the file `cooling_mods.py`.
+We would typically then call the module itself `cooling_mods`, without the extension.
 Here are the contents:
 
-```{python}
-#| eval: false
-"""
-File: cooling_mods.py
-Authors: Sasha D. Hafner and Frederik R. Dalby
-Course: Modelling 2026
-
-Description:
-    A module with a single function implementing a numerical
-    model for a cooling cup of coffee.
-"""
-
-import numpy as np
-from scipy.integrate import solve_ivp
-
-def cool(T_init, T_air, mass, area, h, time_range, dt, cp=4.2):
-    """
-    Simulate coffee cooling using the RK45 method in `solve_ivp()`.
-
-    Parameters
-    ----------
-    T_init : float
-        Initial coffee temperature (deg. C)
-    T_air : float
-        Ambient air temperature (deg. C)
-    mass : float
-        Mass of coffee (g)
-    area : float
-        Surface area of mug (m2)
-    h : float
-        Convective heat transfer coefficient (W m-2 K-1)
-    time_range : tuple
-        Start and end time (s), e.g. (0, 3600)
-    dt : float
-        Time step (s)
-    cp : float, optional
-        Specific heat capacity of coffee (J g-1 K-1), default 4.2
-
-    Returns
-    -------
-    dict with keys 'times' (s) and 'T_coffee' (degC)
-    """
-
-    # Calculate constant, which does not change over time
-    con_cool = area * h / (cp * mass)
-
-    # Create an array of times
-    times = np.arange(time_range[0], time_range[1] + dt, dt)
-
-    # Define rates function
-    def rates(t, T_current):
-        return - con_cool * (T_current - T_air)
-
-    # And use the RK45 method with solve_ivp() defaults
-    res = solve_ivp(
-        rates, 
-        t_span=time_range, 
-        y0=[T_init], 
-        t_eval=times
-    )
-
-    # Return solution
-    return {
-        'times': res.t,
-        'T_coffee': res.y[0, :],
-    }
-
+```{.python filename="cooling_mods.py"}
+{{< include cooling_mods.py >}}
 ```
 
-Then, to use the model, we first *import* the module we defined and then run the function, like this:
+If you want to try this module-based approach, you can copy the code from the chunk above and paste it in a text file, and save it with the appropriate name.
+Or, download the file from the GitHub repository for this book: <https://github.com/AU-BCE-EE/modeling-py-book>.
 
+Then, to use the model, it is typical to import the module and run it in a separate Python script.
+we first *import* the module we defined and then run the function, like this:
 
-```{python}
-"""
-File: cool_pred.py
-Authors: Sasha D. Hafner and Frederik R. Dalby
-Course: Modelling 2026
-
-Description:
-    Application of the `cool_rk()` model function.
-"""
-
-import sys
-sys.path.append('modules')
-
-import cooling_mods as cm
-
-preds = cm.cool(
-    T_init=80, 
-    T_air=20, 
-    mass=300, 
-    area=0.026, 
-    h=75, 
-    time_range=(0., 60 * 60), 
-    dt = 5 * 60
-)
-
-print(preds)
+```{.python filename="cool_pred.py"}
+{{< include cool_pred.py >}}
 ```
+
+Unless you need to modify the model code in the module, you don't need to open up that `cooling_mods.py` file (module) or even think about it. 
+The `import cooling_mods as cm` loads it, and that is all you need.
+
+But this book is about developing models, and if a module describes a model you developed, you will probably need to edit it.
+If you are running Python in batch mode (see @sec-appx-vsc-code), you can edit the module, and then run your script (`cool_pred.py` here) again without any problems.
+The new instance of Python loads the new (edited) module with the latest changes.
+
+But if you are working in Python interactively, which is common during model development, that approach won't work.
+The `import` command will not reload the module and put the newest version in memory, but it stubbornly holds on to the original version.
+Do this instead:
+
+```{.python filename="cool_pred.py"}
+{{< include cool_pred_rl.py >}}
+```
+
+Note that you could use the `from cooling_mods import cool` as well if that is the only function from your module that you want to use. 
 
 ## Problems {.unnumbered}
 
