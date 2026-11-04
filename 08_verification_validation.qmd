@@ -33,20 +33,36 @@ Both verification and validation are described in more detail in the sections be
 
 Verification is about making sure your model has been implemented correctly.
 So how exactly do you do that?
-You should carefully check model code for:
+Here is a general road map.
 
-* accurate governing equations, and 
-* consistent units.
+1. Review the underlying conceptual and mathematical models. 
+   Effective verification without an understanding of these parts is not possible. 
+2. Ensure that the Python model function(s) docstring(s) is complete for both inputs and outputs, including units for any variables that represent quantities.
+3. Check equations for:
+   A. Completeness, with all the terms from the mathematical model,
+   B. conceptual correctness (e.g., flux is equal to a transfer coefficient times a difference), including transport direction (e.g., a surface hotter than air should lose heat energy), and
+   C. unit correctness, by multiplying and dividing units for each equation and confirming they match the expected units for the variable.
+4. Check model behavior through careful model function calls. 
+   Check results for:
+   A. Reasonable magnitudes, which may be difficult without experience, but alternative models or measurements can help, 
+   B. expected behavior at extremes or edge cases, and
+   C. expected direction of effects.
 
-If relevant, also check code for:
+For 3, which equations should you check?
+Ultimately all of them need to be checked.
+But it can be helpful to start with the GE(s) and work backwards.
+You may find that the GE is not written the same way in the code and in the mathematical model.
+The best pratice in this case is to change one so they match.
+It is also possible to make mental or pencil-and-paper simplifications or substitutions in order to make a comparison.
+For example, a mathematical GE may have a concentration term, but the code might instead have mass and volume.
+You could add an intermediate variable for concentration to the code, or do a mental conversion when checking.
 
-* accurate constitutive equations, 
-* accurate linking equations, and
-* accurate implementation of mass or energy conservation.
-
-When checking code, you should look for equations completeness and correctness by comparison to your mathematical model, i.e., the model equations, written with pencil and paper or typed out somewhere.
+When checking code, you should look for equation completeness and correctness by comparison to your mathematical model, i.e., the model equations, written with pencil and paper or typed out somewhere.
 Of course, this presumes that the original model formulation and description are accurate.
 Unit consistency can be checked by entering units above terms in equations right in the model code.
+
+Let's work through some examples.
+
 In the code chunk below, `Q_solar` is supposed to be the heat flux of solar energy, in units of W.
 Comments can be used to check units as in the example below, where line 2 has the original model code and line 1 a comment with units:
 
