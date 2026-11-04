@@ -778,4 +778,12 @@ In practice, it is common to produce two distinct sets of model output when perf
 
 ![The same demonstration of model fit as in @fig-fit-stats1 but only showing the model output used for calculating fit statistics, i.e., perfect alignment of measurements and model output.](drawings/fit_stats2.png){#fig-fit-stats2 fig-alt="Fit statistics demo with points"}
 
+Functions for model fit statistics are given below.
+
+```{.python filename="mod_fit.py"}
+{{< include mod_fit.py >}}
+```
+
+
+
 ## References {.unnumbered}
