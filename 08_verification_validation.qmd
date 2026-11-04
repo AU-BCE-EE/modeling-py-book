@@ -676,7 +676,7 @@ It is entirely possible, and probably often the case, that a model could show su
 Even when a variable has been identified, there are usually multiple ways that validation could be done.
 We will consider a few graphical (visual) approaches and some quantitative options here.
 
-## Graphical validation
+### Graphical validation
 
 Plots can be useful for comparing the overall goodness of fit between a model output and mesurements, as well as details about particular issues.
 Here are the approaches we will explore:
@@ -723,7 +723,7 @@ Comparing measurements and model output over time has limitations.
 Especially for simple models, we may only see if the model predicts a higher or lower rate of change.
 Plotting state variable values vs. other model inputs can provide insight into why a model fails.
 
-## Model fit statistics
+### Quantitative validation 
 
 Model fit statistics summarize how well the measurements and model output match.
 Here, a statistic is just some defined measurement that summarizes data.
@@ -783,7 +783,5 @@ Functions for model fit statistics are given below.
 ```{.python filename="mod_fit.py"}
 {{< include mod_fit.py >}}
 ```
-
-
 
 ## References {.unnumbered}
