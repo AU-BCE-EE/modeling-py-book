@@ -20,15 +20,16 @@ from scipy.interpolate import interp1d
 from scipy.interpolate import make_interp_spline
 
 # Define model function
-def melt(mass_0,
-         temp_air,
-         h, 
-         t_range, 
-         t_step,
-         dens = 920,
-         temp_freeze=0.,
-         Hf=333000
-    ):  
+def melt(
+    mass_0,
+    temp_air,
+    h, 
+    t_range, 
+    t_step,
+    dens = 920,
+    temp_freeze=0.,
+    Hf=333000
+):  
 
     """ 
     Dynamic model for heat transfer to a melting block of ice, with 
@@ -95,14 +96,15 @@ def melt(mass_0,
     return out
 
 
-def melt2(mass_0,
-          temp_air,
-          h, 
-          times, 
-          dens = 920,
-          temp_freeze=0.,
-          Hf=333000
-    ):  
+def melt2(
+    mass_0,
+    temp_air,
+    h, 
+    times, 
+    dens = 920,
+    temp_freeze=0.,
+    Hf=333000
+):  
 
     """ 
     Dynamic model for heat transfer to a melting block of ice, with 
@@ -167,14 +169,15 @@ def melt2(mass_0,
     return out
 
 
-def meltv(mass_0,
-          air_temp_dat,
-          h, 
-          times, 
-          dens = 920,
-          temp_freeze = 0,
-          Hf = 333000
-    ):  
+def meltv(
+    mass_0,
+    air_temp_dat,
+    h, 
+    times, 
+    dens = 920,
+    temp_freeze = 0,
+    Hf = 333000
+):  
 
     """ 
     Dynamic model for heat transfer to a melting block of ice, with 

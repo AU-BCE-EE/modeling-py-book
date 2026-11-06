@@ -1,13 +1,19 @@
 # Parameter estimation {#sec-param-est}
 
-Parameter estimation is about determining (estimating) the "best" (ideally, the most accurate) parameter values for a model based on comparing model output and measurements.
+Parameter estimation is about determining the best parameter values for a model, based on comparing model output and measurements.
 It is related to model validation.
+By "determining" parameter values we really mean "estimating" them--we will typically never know the true parameter values.
+And by "best" we mean the ones that seem to explain the data the best by resulting in model predictions with the smallest total error, i.e., the smallest differences between measurements and model output.
+
 Parameter estimation requires a model with some adjustable parameter(s) and some measurement data.
-The flexible approach that we will use has three steps: 
+Of course the parameter values that we get are linked to the model.
+Ideally, they have some, perhaps a strong, connection to physical reality.
+But in many cases, they are simply empirical quantities that facilitate a description of reality by application of a model.
+The flexible approach that we will use for parameter estimation has three steps: 
 
 1. run the model with a specific numeric parameter value to get output,
-2. quantify fit by comparing model output to measurement data, and see if the fit is good enough, and finally,
-3. if needed, come up with a new parameter value and return to step 1.
+2. quantify fit by comparing model output to measurement data, and see if the fit is good enough, and,
+3. if needed, come up with a new parameter value expected to have a better fit, and return to step 1.
 
 Note that parameter estimation is yet another area where terminology is not consistently used!
 What we call "measurements" or "measurement data" here are called "observations" or just "data" in other cases, but both are ambiguous.
@@ -21,7 +27,7 @@ For some hypothetical model, we might get the output shown as the orange line in
 ![Residuals shown as dotted gray lines between model output (orange line) and measurements (blue points).](drawings/par_est1.png){#fig-par-est1 fig-alt="Model residuals or error"}
 
 To quantify model fit, the residuals, shown as dotted gray lines, are used.
-These are the same residuals used in MAE, MBE, RMSE, and NSME.
+These are the same residuals used in MAE, MBE, RMSE, and NSME in @sec-vv.
 To summarize the fit in a single numeric value, it is typically the sum of squared residuals that is used:
 
 $$
@@ -32,26 +38,27 @@ $${#eq-ssr}
 In this case, we want to minimize it, so we could call it a *cost function*.
 Note that the numeric value itself is not so important.
 It is typically not seen or thought about during parameter estimation.
-It is not normalized by the number of observations or total variability because it does not need to be.
+It is not normalized by the number of observations or total variability because it does not need to be, but that does mean that the value cannot be compared across data sets--even adding a single observation will change it indepdent of model fit.
 
 Let's say we make two more guesses for the single model parameter we are estimating in this problem and they provide the output shown in @fig-par-est2.
 
-![Comparison of model output from three parameter guesses (colored lines) to measurements (blue points).](drawings/par_est2.png){#fig-par-est2 fig-alt="Parameter estimation"}
+![Comparison of model output from three parameter guesses (colored lines) to measurements (blue points). One model run, with one particular parameter value, (the light blue line) fits the measurements much better than the others.](drawings/par_est2.png){#fig-par-est2 fig-alt="Parameter estimation"}
 
 These plots are shown in $t, y$ space, but our optimization algorithm uses $p, SSR$ space, where $p$ is the parameter we want to estimate.
-In fact the $t$ (for time) dimension in the @fig-par-est1 and @fig-par-est2 does not enter the parameter optimization problem at all; it just helps us visualize the fit.
+In fact the $t$ (for time) dimension in the @fig-par-est1 and @fig-par-est2 does not enter the parameter optimization problem at all; the algorithm does not "see" it at all, but it helps us visualize the fit.
 Instead, the view of an optimization algorithm for those data shown in @fig-par-est2 is more like @fig-par-est3.
 
-![Sum of squared residuals versus parameter value for the example shown in @fig-par-est2.](drawings/par_est3.png){#fig-par-est3 fig-alt="SSR vs. parameter value"}
+![Sum of squared residuals versus parameter value for the example shown in @fig-par-est2. The dashed line shows the parameter guess that might be made after the two guesses to the left (red, orange, from the red and orange linesin  @fig-par-est2) had been tried. It was found by extrapolating to a $SSR$ of 0, i.e., a perfect fit. In fact the actual SSR at this point will be above 0, and a new slope is then determined and a new guess made.](drawings/par_est3.png){#fig-par-est3 fig-alt="SSR vs. parameter value"}
 
 And it is the change in $SSR$ between guesses that is used to come up with the next guess.
 A simple way of doing this is shown by the dotted gray line in @fig-par-est3, where the next estimate would that $p$ value shown by the arrow.
 This is the Newton-Raphson method.
 The methods we'll use are more sophisticated, but the principle is similar.
+We don't need to completely understand the method details to use them.
 
 ## Local and global minima
 
-To get the best parameter value, typically defined as that value that gives the lowest value for $SSR$, we would need to know the shape of the $SSR$ vs. $p$ curve for all possible values of $p$.
+To get the best parameter value, typically defined as that value that gives the lowest $SSR$, we would need to know the shape of the $SSR$ vs. $p$ curve for all possible values of $p$.
 But there is some cost to generating each value of $SSR$--it requires running a model.
 Without that complete curve, it is possible that our parameter estimation algorithm returns a value at the *local* minimum $SSR$, while in fact we would like the *global* minium.
 The difference is demonstrated in @fig-par-est4.
@@ -64,34 +71,37 @@ If you get a different and better estimate by switching to a new initial guess, 
 
 ## Loss function
 
-The simplest way to use the residuals in a parameter estimation problem is to sum them, as in @eq-ssr, giving SSR.
+The simplest way to use the residuals in a parameter estimation problem is to square and sum them, as in @eq-ssr, giving $SSR$.
 Other approaches can be used though.
 As with the model fit statistics $RMSE$ and $MAE$, squaring the residuals increases the relative effect of measurements far from the model output.
 In the optimization function we will use, `scipy.optimize.least_squares()`, there is a `loss` parameter that transforms residuals before calculation of the sum.
 The explicit purpose is to reduce the effect of outliers.
+We will generally use the default, $SSR$.
 
 ## Melting ice model example
 
-Let's load the model.
+Let's work with a model that simulates an ice cube melting.
+Actually the module defines three models; we'll work with the second one.
+Take a look at the inputs and outputs.
+
+```{.python filename="ice_mods.py"}
+{{< include ice_mods.py >}}
+```
+
+We'll load it.
 
 ```{python}
-
 # Python packages
 import numpy as np
 import matplotlib.pyplot as plt
-from importlib import reload
 import pandas as pd
-
-import sys
-
-sys.path.append('modules')
 
 # Our module
 import ice_mods as im
 ```
 
 Let's get some real measurements.
-These are actually real--made on a dining table a year or two ago.
+These were made on a dining table a couple years ago.
 Mass is in g.
 These were initially small ice cubes.
 
@@ -109,92 +119,13 @@ meas["ice_2"] = meas["ice_g_2"] / 1000.
 
 We need to have measurements and predictions at the same times in order to quantify model fit.
 The best approach to have a model function that returns specified times.
-
-We'll change the original one.
-In this version, there is a single `times` argument.
-
-```{python}
-
-def melt2(mass_0,
-          temp_air,
-          h, 
-          times, 
-          dens = 920,
-          temp_freeze = 0,
-          Hf = 333000
-    ):  
-
-    """ 
-    Dynamic model for heat transfer to a melting block of ice, with 
-    disappearance of the ice over time. This version accepts a single
-    times input, unlike the original above.
-
-    Parameters
-    ----------
-    mass_0 : float
-        Initial mass of ice (kg) 
-    temp_air : float
-        Air temperature (deg. C)
-    h : float
-        Convection heat transfer coefficient (W/m2-K)
-    times : list or tuple or array
-        time in output (s) 
-    dens : float
-        Ice density (kg/m3)
-    temp_freeze : float
-        Freezing point (deg. C)
-    Hf : float
-        Heat of fusion (J/kg)
-
-    Returns
-    -------
-    dictionary
-        With elements 't' for time (s) and 'm' for ice mass remaining (kg)
- 
-    """
-     
-    # Define rates function
-    def rates(t, mass_t):
-
-        # Skip when there is very little ice remaining (avoid power caculation error)
-        if mass_t > 1e-10:
-            # Get current exposed upper area, assuming hemisphere
-            area = 2 * np.pi * (3 * mass_t / (2 * np.pi * dens))**(2/3)
-
-            # Heat flow (W)
-            Q = area * h * (temp_air - temp_freeze)
-
-            # Melting rate (kg/s)
-            dmdt = - Q / Hf
-
-            return dmdt
-        else:
-            return 0.
-
-    res = solve_ivp(
-        rates, 
-        t_span = [min(times), max(times)], 
-        y0 = [mass_0], 
-        t_eval = times
-    )
-
-    # Return user-friendly results object (dictionary here)
-    out = {
-        "t": res.t, 
-        "m": res.y[0, :]
-    }
-
-    return out
-
-```
+So we'll use `melt2()`.
 
 So that is the software model we will work with.
 When calling it, we can extract the times from the measurement data frame `meas` and pass them right to the model function.
 Here is a demo with a reasonable value for the heat transfer coefficient $h$ for free convection.
 
 ```{python}
-reload(im)
-
 pred01 = im.melt2(
     mass_0 = 0.027, 
     temp_air = 24, 
