@@ -730,7 +730,7 @@ Figure&nbsp;9.4: Local vs.&nbsp;global minima.
 <span id="cb1-251"><a href="#cb1-251" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> out</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We’ll load it.</p>
-<div id="9835456c" class="cell" data-execution_count="1">
+<div id="b4e18d00" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python packages</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -740,7 +740,7 @@ Figure&nbsp;9.4: Local vs.&nbsp;global minima.
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ice_mods <span class="im">as</span> im</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Let’s get some real measurements. These were made on a dining table a couple years ago. Mass is in g. These were initially small ice cubes.</p>
-<div id="ef7aeb01" class="cell" data-execution_count="2">
+<div id="2c1af8d7" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>meas <span class="op">=</span> pd.read_csv(<span class="st">"data/ice/ice_mass.csv"</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>meas</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -751,9 +751,9 @@ Figure&nbsp;9.4: Local vs.&nbsp;global minima.
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>meas[<span class="st">"ice_1"</span>] <span class="op">=</span> meas[<span class="st">"ice_g_1"</span>] <span class="op">/</span> <span class="fl">1000.</span></span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>meas[<span class="st">"ice_2"</span>] <span class="op">=</span> meas[<span class="st">"ice_g_2"</span>] <span class="op">/</span> <span class="fl">1000.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>We need to have measurements and predictions at the same times in order to quantify model fit. The best approach to have a model function that returns specified times. So we’ll use <code>melt2()</code>.</p>
+<p>We need to have measurements and predictions at the same times in order to quantify model fit. The best approach to have a model function that returns times specified as an input. So we’ll use <code>melt2()</code>.</p>
 <p>So that is the software model we will work with. When calling it, we can extract the times from the measurement data frame <code>meas</code> and pass them right to the model function. Here is a demo with a reasonable value for the heat transfer coefficient <span class="math inline">\(h\)</span> for free convection.</p>
-<div id="43c247aa" class="cell" data-execution_count="3">
+<div id="53af68f8" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pred01 <span class="op">=</span> im.melt2(</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    mass_0 <span class="op">=</span> <span class="fl">0.027</span>, </span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    temp_air <span class="op">=</span> <span class="dv">24</span>, </span>
@@ -771,7 +771,7 @@ Figure&nbsp;9.4: Local vs.&nbsp;global minima.
 </div>
 </div>
 <p>Let’s plot measurements and model output together for simple validation.</p>
-<div id="111c815c" class="cell" data-execution_count="4">
+<div id="38115dcd" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>plt.plot(meas.time <span class="op">/</span> <span class="dv">3600</span>, <span class="dv">1000</span> <span class="op">*</span> meas.ice_1, <span class="st">"k."</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>plt.plot(pred01[<span class="st">"t"</span>] <span class="op">/</span> <span class="dv">3600</span>, <span class="dv">1000</span> <span class="op">*</span> pred01[<span class="st">"m"</span>])</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Time (h)"</span>)</span>
@@ -786,14 +786,14 @@ Figure&nbsp;9.4: Local vs.&nbsp;global minima.
 </div>
 <p>It looks like the model overestimates the melting rate, i.e., the model predicts faster melting than the measurement data show, with that value for <span class="math inline">\(h\)</span>. For a lower rate we need a lower value of <span class="math inline">\(h\)</span>. To automate parameter estimation and for reproducible and defensible estimates, we need to quantify model fit.</p>
 <p>Get sum of squared residuals</p>
-<div id="3b9078bd" class="cell" data-execution_count="5">
+<div id="a2664013" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">sum</span>((meas.ice_g_1 <span class="op">-</span> <span class="dv">1000</span> <span class="op">*</span> pred01[<span class="st">"m"</span>])<span class="op">**</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>548.430872262453</code></pre>
 </div>
 </div>
 <p>We need to create a function that will return residuals, which will be used by <code>least_squares()</code> to calculate the value of the cost function. The simplest approach is to use only a single function parameter (the model parameter we want to estimate) and pass others through the global namespace–we will do that here but use a better approach in following scripts.</p>
-<div id="885c1f1a" class="cell" data-execution_count="6">
+<div id="33adaefe" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> res_func(x):</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
@@ -828,16 +828,16 @@ Figure&nbsp;9.4: Local vs.&nbsp;global minima.
 <span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> res</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Let’s test it. We need to create some objects so they are in our global namespace. These are needed to call the model function:</p>
-<div id="eda56175" class="cell" data-execution_count="7">
+<div id="b22ec631" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>mass_0_meas <span class="op">=</span> <span class="fl">0.027</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>temp_air_meas <span class="op">=</span> <span class="dv">24</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>time_meas <span class="op">=</span> meas.time</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>These are the measurements compared to model output:</p>
-<div id="ff864299" class="cell" data-execution_count="8">
+<div id="a22b1ee2" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>ice_mass_meas <span class="op">=</span> meas[<span class="st">"ice_1"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="c36c807e" class="cell" data-execution_count="9">
+<div id="b31a5485" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>res_func(<span class="dv">50</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <pre><code>0    -0.000570
@@ -855,7 +855,7 @@ Name: ice_1, dtype: float64</code></pre>
 </div>
 </div>
 <p>Does that match the plot? It might help to use g.</p>
-<div id="67aab9dd" class="cell" data-execution_count="10">
+<div id="f93e2eb3" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1000</span> <span class="op">*</span> res_func(<span class="dv">50</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>0     -0.570000
@@ -873,7 +873,7 @@ Name: ice_1, dtype: float64</code></pre>
 </div>
 </div>
 <p>Now we can put it together. To use <code>least_squares()</code> we just need the name of the residuals function and an initial parameter guess. The <code>least_squares()</code> function will call <code>res_func()</code> with different values for <code>x</code> (our model <code>h</code> parameter) until it settles on the best value.</p>
-<div id="d1fc6308" class="cell" data-execution_count="11">
+<div id="8ebf0eb9" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We need to get least_squares() from the scipy.optimize module</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Normal approach is to get only that function when we just need one </span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> least_squares</span>
@@ -889,7 +889,7 @@ Name: ice_1, dtype: float64</code></pre>
 </div>
 <p>So our best-fit estimate is 21.6 <span class="math inline">\(\WpmspK\)</span>.</p>
 <p>We should, in the very least, do some graphical validation with this value.</p>
-<div id="2c9c5fb0" class="cell" data-execution_count="12">
+<div id="6f13880f" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>predval <span class="op">=</span> im.melt2(</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    mass_0 <span class="op">=</span> mass_0_meas, </span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    temp_air <span class="op">=</span> temp_air_meas, </span>

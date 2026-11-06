@@ -118,7 +118,7 @@ meas["ice_2"] = meas["ice_g_2"] / 1000.
 ```
 
 We need to have measurements and predictions at the same times in order to quantify model fit.
-The best approach to have a model function that returns specified times.
+The best approach to have a model function that returns times specified as an input.
 So we'll use `melt2()`.
 
 So that is the software model we will work with.
