@@ -263,13 +263,116 @@ plt.ylabel("Ice mass (g)")
 Do you think there is a trend in the residuals over time?
 What might that mean?
 
-# Passing additional parameters and more
+# Passing additional parameters
 
-# Value of measurements
+Notice that the `res_func()` function above has only a single function parameter `x`, an estimate of the model parameter, but the actual model call below in that function,
 
-Not all measurements are useful for 
+```{python}
+#| eval: false
+    # Model call
+    pred = im.melt2(
+        mass_0=mass_0_meas, 
+        temp_air=temp_air_meas, 
+        h=x,                      # The parameter guess x!
+        times=time_meas
+    )
+``` 
 
-Just having measurements does not necessarily mean that 
+uses other variables, `mass_0_meas` and `temp_air_meas` for example. 
+If they are not passed to the function as a parameter, how does this work?
+
+When the `res_func()` function is called, and these variables are encountered, Python will look for them in the global namespace, i.e., the active memory that contains, among other objects, any variables that you, the user, defined earlier.
+This works, but it means that the result from the `res_func()` (or other) function depends on more than the exact call details--it also depends on stuff defined earlier.
+A clearer and safer approach is to pass those other needed inputs explicitly.
+They can be put after the `x` parameter in `res_func()`, like this.
+
+
+```{python}
+def res_funce(x, mass_0_meas, temp_air_meas, time_meas, ice_mass_meas):
+
+    """
+    Function for calculating residuals for ice melting model for 
+    parameter estimation. This version uses only explicitly passed
+    objects (e at end is for explicit).
+
+    Parameters
+    ----------
+    x : float
+        Guess for values for the h parameter (convection heat transfer 
+        coefficient) in the melt2() model.
+    mass_0_meas : float
+        Initial measured mass of ice (kg)
+    temp_air_meas : float
+        Measured air temperature (deg. C)
+    time_meas : array-like
+        Measurement times associated with measured ice mass (s)
+    ice_mass_meas : array-like
+        Ice cube mass measured at time_meas times (kg)
+
+    Returns
+    -------
+    np.ndarray
+        Residuals
+    """
+
+    # Model call
+    pred = im.melt2(
+        mass_0=mass_0_meas, 
+        temp_air=temp_air_meas, 
+        h=x,                      # The parameter guess x!
+        times=time_meas
+    )
+
+    # Calculate residuals 
+    res = pred["m"] - ice_mass_meas
+
+    # Return residuals
+    return res
+```
+
+Now let's use it.
+These additional parameters to `res_funce()` are just put at the end of the `least_squares()` call, all grouped in a single parameter called `args`.
+
+
+```{python}
+from scipy.optimize import least_squares
+
+lspar = least_squares(
+    res_funce, 
+    x0=50, 
+    kwargs=dict(mass_0_meas=0.027, temp_air_meas=24, time_meas=meas.time, ice_mass_meas=meas["ice_1"])
+)
+
+lspar.x[0]
+```
+
+This explicit approach takes a little more programming, but is the better option.
+
+# Useful and not so useful measurements
+
+Just having measurements does not necessarily mean that parameter values can be uniquely determined.
+We can think of obvious examples with the ice model uses above. 
+A measurement of 0 kg of ice after 3 hours, for example, provides very little information that can be used to estimate a value for the heat transfer coefficient.
+The problem, the limitation, is that many different parameter values could reproduce this observation exactly.
+So the system is poorly constrained.
+
+The ice melting model has only a single adjustable parameter, the heat transfer coefficient.
+Models with multiple parameters can show *equifinality*, where different model parameter value combination return the same, or nearly the same, results.
+This situation can make parameter estimation very difficult.
+Models were rates (or internal intermediates) are simply the product or sum of multiple unknown parameters provide an easy-to-understand example.
+For example, methane production or emission 
+If the only available measurement is a single rate, there are an infinite number of parameter value combinations that could reproduce the measured value. 
+So there is no way to determine values of individual parameters separately.
+
+What can be done?
+In some cases, models need to be reformulated, or at least parameters combined.
+The volumetric mass transfer coefficient $K_{LA}$ is a good example of this type of parameter.
+It combines a regular mass transfer coefficient with a volumetric specific surface area.
+The two cannot be independently determined for most systems, so they are combined.
+
+In other cases, it is a matter of having appropriate measurements.
+While we won't go into this problem in any detail here, in general, measurements for estimation of a particular parameter must be (semi-)uniquely dependent on that parameter in reality.
+The most useful should come from experiments where inputs vary.
 
 <!-- Basic approach.
      Implementation with least_squares().
