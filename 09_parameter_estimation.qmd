@@ -81,6 +81,13 @@ We will generally use the default, $SSR$.
 ## Melting ice model example
 
 Let's work with a model that simulates an ice cube melting.
+Ther is convective heat transfer from the air to the ice, causing the cube to melt at the surface.
+This seems reasonable, because heat transfer requires a gradient, and heat energy is only transfered *down* a gradient, and the ice temperature is initially below freezing, so a location farther from the surface can never have more available heat energy than one closer. 
+Liquid water is lost from the model domain.
+
+![Conceptual model of melting ice model](drawings/ice_sol1.png){#fig-ice-sol1 fig-alt="Conceptual model of melting ice model"}
+
+Here is a model with an implementation of the model.
 Actually the module defines three models; we'll work with the second one.
 Take a look at the inputs and outputs.
 
