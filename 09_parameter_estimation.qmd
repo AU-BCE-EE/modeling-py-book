@@ -263,7 +263,7 @@ plt.ylabel("Ice mass (g)")
 Do you think there is a trend in the residuals over time?
 What might that mean?
 
-# Passing additional parameters
+# Passing additional arguments
 
 Notice that the `res_func()` function above has only a single function parameter `x`, an estimate of the model parameter, but the actual model call below in that function,
 
@@ -279,7 +279,7 @@ Notice that the `res_func()` function above has only a single function parameter
 ``` 
 
 uses other variables, `mass_0_meas` and `temp_air_meas` for example. 
-If they are not passed to the function as a parameter, how does this work?
+If they are not passed to the function as arguments, how does this work?
 
 When the `res_func()` function is called, and these variables are encountered, Python will look for them in the global namespace, i.e., the active memory that contains, among other objects, any variables that you, the user, defined earlier.
 This works, but it means that the result from the `res_func()` (or other) function depends on more than the exact call details--it also depends on stuff defined earlier.
@@ -331,7 +331,7 @@ def res_funce(x, mass_0_meas, temp_air_meas, time_meas, ice_mass_meas):
 ```
 
 Now let's use it.
-These additional parameters to `res_funce()` are just put at the end of the `least_squares()` call, all grouped in a single parameter called `args`.
+The values for these additional parameters are passed as arguments to `least_squares()`, grouped together in a dictionary given to its `kwargs` parameter, which passes them on to `res_funce()`.
 
 
 ```{python}
@@ -417,4 +417,4 @@ Are these results consistent with your hypothesis from 1?
 * Remember to try different starting values.
 * Do you need different values for `D` for the two solutes?
 * Use `print()` calls in your residuals function to see what the values of the parameter guesses (or residuals) are if you encounter problems.
-* If you ever see (or suspect) the completely implausible or impossible parameter guesses are causing problems, check out the `bounds` parameter (argument) in the `least_squares()` help file.
+* If you ever see (or suspect) the completely implausible or impossible parameter guesses are causing problems, check out the `bounds` parameter in the `least_squares()` help file.
