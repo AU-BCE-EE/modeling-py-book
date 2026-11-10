@@ -119,6 +119,12 @@ We'll call it `air_temp_dat` in the model function below.
 ```
 
 Note that we have excluded the possibility of *extrapolation*. 
+That is done here:
+
+```{python}
+#| eval: False
+    air_temp_func = PchipInterpolator(air_temp_dat.time, air_temp_dat.temp, extrapolate=False)
+```
 
 Let's try it.
 We have to get the measurement time into the right units.
@@ -182,3 +188,7 @@ plt.xlabel('Time (s)')
 plt.ylabel('Melting rate (g/s)')
 plt.legend()
 ```
+
+The basic approach used in the `melt_var()` model can be used for any kind of model input that is used as a scalar in the `rates()` function.
+Here it was an input variable, but the same approach could be used for a parameter.
+
