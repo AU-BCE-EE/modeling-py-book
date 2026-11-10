@@ -24,7 +24,7 @@ import matplotlib.pyplot as plt
 
 meas_temp = pd.read_csv('data/air_temp.csv')
 
-meas_temp.time_s = meas_temp.time * 3600
+meas_temp['time_s'] = meas_temp.time * 3600
 
 plt.plot(meas_temp.time_s, meas_temp.temp, 'ro')
 plt.xlabel('Time (s)')
