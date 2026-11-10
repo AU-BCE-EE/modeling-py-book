@@ -27,6 +27,7 @@ book:
     - appx_slicing.qmd
     - appx_vs_code.qmd
     - appx_vsc_problems.qmd
+    - appx_idle.qmd
     - appx_fdm_formulas.qmd
     - appx_parameter_values.qmd
     - appx_reading.qmd
