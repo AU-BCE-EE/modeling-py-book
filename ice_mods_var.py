@@ -51,7 +51,7 @@ def meltv(
     """
 
     # Make function for air temperature
-    air_temp_func = PchipInterpolator(air_temp_dat.time, air_temp_dat.temp)
+    air_temp_func = PchipInterpolator(air_temp_dat.time, air_temp_dat.temp, extrapolate=False)
      
     # Define rates function
     def rates(t, mass_t):
@@ -91,5 +91,3 @@ def meltv(
     }
 
     return out
-
-

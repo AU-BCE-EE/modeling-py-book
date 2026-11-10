@@ -118,18 +118,37 @@ We'll call it `air_temp_dat` in the model function below.
 {{< include ice_mods_var.py >}}
 ```
 
+Note that we have excluded the possibility of *extrapolation*. 
+
 Let's try it.
+We have to get the measurement time into the right units.
+
+```{python}
+meas_temp['time'] = meas_temp['time'] * 3600
+```
 
 ```{python}
 # Our module
 import ice_mods_var as imv
+import ice_mods as im
+from importlib import reload
+reload(imv)
 ```
 
 ```{python}
-pred01 = imv.meltv(
+predc = im.melt2(
+    mass_0 = 0.050, 
+    temp_air = 20,
+    h = 20, 
+    times = 3600 * np.linspace(0, 4, 100),
+)
+```
+
+```{python}
+predv = imv.meltv(
     mass_0 = 0.050, 
     air_temp_dat = meas_temp, 
-    h = 120, 
+    h = 20, 
     times = 3600 * np.linspace(0, 4, 100),
 )
 ```
@@ -137,25 +156,29 @@ pred01 = imv.meltv(
 And plot predictions.
 
 ```{python}
-plt.plot(pred01['time'] / 3600, 1000 * pred01['ice_mass'])
+plt.plot(predv['time'] / 3600, 1000 * predv['ice_mass'], label = 'Variable temperature')
+plt.plot(predc['t'] / 3600, 1000 * predc['m'], label = 'Constant temperature')
 plt.xlabel('Time (s)')
 plt.ylabel('Ice mass (g)')
 plt.legend()
 ```
 
+```{python}
+plt.plot(predv['time'] / 3600, predv['air_temp'])
+plt.xlabel('Time (s)')
+plt.ylabel('Air temperature (deg. C)')
+```
+
+That looks plausible.
+As we should have been able to predict, melting stops when the temperature is close to the freezing point.
+
 Because our state variable, ice mass, reflects the cumulative effect of a time-variable melting rate, it can be hard to see any effect of temperature variation.
 Let's look at differences instead.
 
 ```{python}
+plt.plot(predv['time'][1:] / 3600, 1000 * np.diff(predv['ice_mass']), label = 'Variable temperature')
+plt.plot(predc['t'][1:] / 3600, 1000 * np.diff(predc['m']), label = 'Constant temperature')
+plt.xlabel('Time (s)')
+plt.ylabel('Melting rate (g/s)')
+plt.legend()
 ```
-
-DE
-## Problems {.unnumbered}
-
-1. Working with the wastewater lagoon polishing model (see module in this subdirectory), make the reaction rate constant time-variable.
-Test your model by comparing OM predictions for the middle of the lagoon from the original with a constant rate and the a rate that varies 10x every 24 hours.
-
-Note that in the melting ice demo it was an input *variable* that we varied, while here it is a model *parameter*.
-But the same concepts and programming applies.
-
-If you have trouble seeing a difference, shorten the model run time and make sure you use a high resolution.
