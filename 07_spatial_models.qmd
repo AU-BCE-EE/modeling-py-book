@@ -1024,7 +1024,7 @@ def rates(t, c, D, kc, c_bulk, dx):
   dcdt[0] = 0
   # Robin BC at top of well (last index is: -1)
   # first ghost point
-  c_ghost = 2*dx*kc*(c[-1] - c_bulk)/D + c[-2]
+  c_ghost = -2*dx*kc*(c[-1] - c_bulk)/D + c[-2]
   dcdt[-1] = D * (c_ghost - 2*c[-1] + c[-2])/dx**2
   
   # interior loop from index 1 to index n exclusive
