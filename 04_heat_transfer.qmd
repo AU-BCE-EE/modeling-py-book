@@ -56,8 +56,8 @@ $${#eq-tank1}
 
 Do you see how $T_{ref}$ drops out?
 
-As long as density and specific heat capacity are constant (we will always assume they are in this book), we can always derive an equation for the rate of temperature change by recognizing that $dT = \frac{\dot{Q}}{\dot{V} \cdot{\rho} \cdot c_p}$.
-So we can get a temperature derivative from @eq-tank1 by dividing by $\dot{V} \cdot{\rho} \cdot c_p$: 
+As long as density and specific heat capacity are constant (we will always assume they are in this book), we can always derive an equation for the rate of temperature change by recognizing that $dT = \frac{\dot{Q}}{V \cdot{\rho} \cdot c_p}$.
+So we can get a temperature derivative from @eq-tank1 by dividing by $V \cdot{\rho} \cdot c_p$: 
 
 $$
 \frac{dT}{dt} = \frac{\dot{V} \cdot{\rho} \cdot c_p \cdot (T_{inflow} - T_{tank})}{V \cdot{\rho} \cdot c_p}.

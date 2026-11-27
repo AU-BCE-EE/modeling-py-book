@@ -101,7 +101,7 @@ div.csl-indent {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-631496449bf32ff9b0bb69a6bfd9195d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-ac64317ef8c58d2eaeb23a00b70076d2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -472,7 +472,7 @@ Figure&nbsp;4.1: A tank of water with a fixed volume <span class="math inline">\
 \dot{Q}_{in} - \dot{Q}_{out} = \frac{dQ}{dt} = \dot{V} \cdot{\rho} \cdot c_p \cdot (T_{inflow} - T_{tank}).
 \tag{4.2}\]</span></span></p>
 <p>Do you see how <span class="math inline">\(T_{ref}\)</span> drops out?</p>
-<p>As long as density and specific heat capacity are constant (we will always assume they are in this book), we can always derive an equation for the rate of temperature change by recognizing that <span class="math inline">\(dT = \frac{\dot{Q}}{\dot{V} \cdot{\rho} \cdot c_p}\)</span>. So we can get a temperature derivative from <a href="#eq-tank1" class="quarto-xref">Equation&nbsp;<span>4.2</span></a> by dividing by <span class="math inline">\(\dot{V} \cdot{\rho} \cdot c_p\)</span>:</p>
+<p>As long as density and specific heat capacity are constant (we will always assume they are in this book), we can always derive an equation for the rate of temperature change by recognizing that <span class="math inline">\(dT = \frac{\dot{Q}}{V \cdot{\rho} \cdot c_p}\)</span>. So we can get a temperature derivative from <a href="#eq-tank1" class="quarto-xref">Equation&nbsp;<span>4.2</span></a> by dividing by <span class="math inline">\(V \cdot{\rho} \cdot c_p\)</span>:</p>
 <p><span class="math display">\[
 \frac{dT}{dt} = \frac{\dot{V} \cdot{\rho} \cdot c_p \cdot (T_{inflow} - T_{tank})}{V \cdot{\rho} \cdot c_p}.
 \]</span></p>
@@ -784,7 +784,7 @@ Figure&nbsp;4.10: Extended coffee model.
 <span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Then, to use the model, we first <em>import</em> the module we defined and then run the function, like this:</p>
-<div id="ad487678" class="cell" data-execution_count="1">
+<div id="96de139c" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">File: cool_pred_2m.py</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">Authors: Sasha D. Hafner and Frederik R. Dalby</span></span>
@@ -827,7 +827,7 @@ Figure&nbsp;4.10: Extended coffee model.
 <div id="fig-coffee-preds5" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-coffee-preds5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="04_heat_transfer_files/figure-html/fig-coffee-preds5-output-1.png" width="587" height="429" class="figure-img">
+<img src="04_heat_transfer_files/figure-html/fig-coffee-preds5-output-1.png" width="585" height="431" class="figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-coffee-preds5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;4.11: Predicted coffee temperature using the cooling_mod_2m.

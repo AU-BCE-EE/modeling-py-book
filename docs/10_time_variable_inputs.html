@@ -82,7 +82,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-631496449bf32ff9b0bb69a6bfd9195d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-ac64317ef8c58d2eaeb23a00b70076d2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -387,7 +387,7 @@ MathJax = {
 <h2 data-number="10.1" class="anchored" data-anchor-id="interpolation"><span class="header-section-number">10.1</span> Interpolation</h2>
 <p>We’ll use the ice melting model from an earlier problem in a demo.</p>
 <p>Let’s say we have some measured temperature data that look like these:</p>
-<div id="0a10047b" class="cell" data-execution_count="1">
+<div id="cb62ea08" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -401,45 +401,45 @@ MathJax = {
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="10_time_variable_inputs_files/figure-html/cell-2-output-1.png" width="585" height="429" class="figure-img"></p>
+<p><img src="10_time_variable_inputs_files/figure-html/cell-2-output-1.png" width="585" height="431" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>We cannot just send those multiple discrete temperature values into our model function. Inside it, the <code>rates()</code> function needs to be able to access a temperature value for any time. We have to figure out the Python code for making that happen. The solution is <em>interpolation</em>, or the estimation of numeric values between measurements, e.g., estimating the temperature at 872 s from measurements at 700 and 900 s, and possibly others ealier and later. We create a Python interpolation <em>function</em> based on the measurements. Then when <code>rates()</code> needs a temperature, it can call the function, which can interpolate at any time.</p>
 <p>Let’s start with some interpolation outside of the model to understand what is going on. We’ll use the <code>make_interp_spline()</code> function from the interpolate module in the scipy library.</p>
-<div id="fa53d427" class="cell" data-execution_count="2">
+<div id="6feef2ca" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.interpolate <span class="im">import</span> make_interp_spline</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="f82945a9" class="cell" data-execution_count="3">
+<div id="afb75761" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>air_temp_func <span class="op">=</span> make_interp_spline(meas_temp.time_s, meas_temp.temp)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The result is a function, not any specific values.</p>
-<div id="4d1bd20e" class="cell" data-execution_count="4">
+<div id="483a2b62" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>air_temp_func</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
-<pre><code>&lt;scipy.interpolate._bsplines.BSpline at 0x28d7e8597f0&gt;</code></pre>
+<pre><code>&lt;scipy.interpolate._bsplines.BSpline at 0x71f85d1b2a50&gt;</code></pre>
 </div>
 </div>
 <p>To use it, it needs some <code>x</code> values (time here).</p>
-<div id="17292587" class="cell" data-execution_count="5">
+<div id="156403c7" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>air_temp_func(<span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>array(18.)</code></pre>
 </div>
 </div>
-<div id="bd43980a" class="cell" data-execution_count="6">
+<div id="b66ef566" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>air_temp_func(<span class="dv">5000</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>array(27.31375942)</code></pre>
 </div>
 </div>
 <p>To see what the function does, we can call it with some high-resolution input and plot results.</p>
-<div id="be82ed74" class="cell" data-execution_count="7">
+<div id="c4aefa9d" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>times <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">4</span> <span class="op">*</span> <span class="dv">3600</span>, <span class="dv">60</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="0eaa3748" class="cell" data-execution_count="8">
+<div id="d7aacfb0" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>plt.plot(meas_temp.time_s, meas_temp.temp, <span class="st">'ro'</span>)</span>
@@ -449,21 +449,21 @@ MathJax = {
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="10_time_variable_inputs_files/figure-html/cell-9-output-1.png" width="585" height="429" class="figure-img"></p>
+<p><img src="10_time_variable_inputs_files/figure-html/cell-9-output-1.png" width="585" height="431" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>The function created by the <code>make_interp_spline()</code> function is smooth–we do not have any kinks or corners at the points. This is good for ODE solvers, which can struggle with kinks, such as those we would get with linear interpolation. But the spline seems to have a mind of its own between the last two time points. It <em>overshoots</em> in order to avoid a kink at or near the second-to-last point around 9,000 seconds.</p>
 <p>While that interpolation function could be find with evenly spaced measurements, a safer alternative is the <code>PchipInterpolator()</code> function.</p>
-<div id="ed41813b" class="cell" data-execution_count="9">
+<div id="ad9c2e27" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.interpolate <span class="im">import</span> PchipInterpolator</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>It fits piecewise splines between points, and avoids overshooting.</p>
-<div id="c2d9aac2" class="cell" data-execution_count="10">
+<div id="6c2e3814" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>air_temp_func2 <span class="op">=</span> PchipInterpolator(meas_temp.time_s, meas_temp.temp)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="7a0cd7fa" class="cell" data-execution_count="11">
+<div id="895d6169" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>plt.plot(meas_temp.time_s, meas_temp.temp, <span class="st">'ro'</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>plt.plot(times, air_temp_func2(times))</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Time (s)'</span>)</span>
@@ -471,7 +471,7 @@ MathJax = {
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="10_time_variable_inputs_files/figure-html/cell-12-output-1.png" width="585" height="429" class="figure-img"></p>
+<p><img src="10_time_variable_inputs_files/figure-html/cell-12-output-1.png" width="585" height="431" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -580,24 +580,24 @@ MathJax = {
 <span id="cb15-93"><a href="#cb15-93" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> out</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Note that we have excluded the possibility of <em>extrapolation</em>. That is done here:</p>
-<div id="b05675f4" class="cell" data-execution_count="12">
+<div id="c7606613" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>    air_temp_func <span class="op">=</span> PchipInterpolator(air_temp_dat.time, air_temp_dat.temp, extrapolate<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Let’s try it. We have to get the measurement time into the right units.</p>
-<div id="f6843406" class="cell" data-execution_count="13">
+<div id="dbaee805" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>meas_temp[<span class="st">'time'</span>] <span class="op">=</span> meas_temp[<span class="st">'time'</span>] <span class="op">*</span> <span class="dv">3600</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="a466443a" class="cell" data-execution_count="14">
+<div id="0f3f7a7e" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Our module</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ice_mods_var <span class="im">as</span> imv</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ice_mods <span class="im">as</span> im</span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> importlib <span class="im">import</span> <span class="bu">reload</span></span>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="bu">reload</span>(imv)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
-<pre><code>&lt;module 'ice_mods_var' from 'C:\\Users\\au277187\\OneDrive - Aarhus universitet\\Documents\\GitHub\\AU-BCE-EE\\modeling-py-book\\ice_mods_var.py'&gt;</code></pre>
+<pre><code>&lt;module 'ice_mods_var' from '/home/sasha/repos/modeling-py-book/ice_mods_var.py'&gt;</code></pre>
 </div>
 </div>
-<div id="fb690906" class="cell" data-execution_count="15">
+<div id="a0de82ca" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>predc <span class="op">=</span> im.melt2(</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    mass_0 <span class="op">=</span> <span class="fl">0.050</span>, </span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    temp_air <span class="op">=</span> <span class="dv">20</span>,</span>
@@ -605,7 +605,7 @@ MathJax = {
 <span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    times <span class="op">=</span> <span class="dv">3600</span> <span class="op">*</span> np.linspace(<span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">100</span>),</span>
 <span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="410cde0d" class="cell" data-execution_count="16">
+<div id="10fa2b4c" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>predv <span class="op">=</span> imv.meltv(</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    mass_0 <span class="op">=</span> <span class="fl">0.050</span>, </span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    air_temp_dat <span class="op">=</span> meas_temp, </span>
@@ -614,7 +614,7 @@ MathJax = {
 <span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>And plot predictions.</p>
-<div id="da3d8ea2" class="cell" data-execution_count="17">
+<div id="e8917720" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>plt.plot(predv[<span class="st">'time'</span>] <span class="op">/</span> <span class="dv">3600</span>, <span class="dv">1000</span> <span class="op">*</span> predv[<span class="st">'ice_mass'</span>], label <span class="op">=</span> <span class="st">'Variable temperature'</span>)</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>plt.plot(predc[<span class="st">'t'</span>] <span class="op">/</span> <span class="dv">3600</span>, <span class="dv">1000</span> <span class="op">*</span> predc[<span class="st">'m'</span>], label <span class="op">=</span> <span class="st">'Constant temperature'</span>)</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Time (s)'</span>)</span>
@@ -623,26 +623,26 @@ MathJax = {
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="10_time_variable_inputs_files/figure-html/cell-18-output-1.png" width="585" height="429" class="figure-img"></p>
+<p><img src="10_time_variable_inputs_files/figure-html/cell-18-output-1.png" width="585" height="431" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<div id="531ed799" class="cell" data-execution_count="18">
+<div id="a7a7c397" class="cell" data-execution_count="18">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>plt.plot(predv[<span class="st">'time'</span>] <span class="op">/</span> <span class="dv">3600</span>, predv[<span class="st">'air_temp'</span>])</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Time (s)'</span>)</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Air temperature (deg. C)'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="10_time_variable_inputs_files/figure-html/cell-19-output-1.png" width="585" height="429" class="figure-img"></p>
+<p><img src="10_time_variable_inputs_files/figure-html/cell-19-output-1.png" width="585" height="431" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>That looks plausible. As we should have been able to predict, melting stops when the temperature is close to the freezing point.</p>
 <p>Because our state variable, ice mass, reflects the cumulative effect of a time-variable melting rate, it can be hard to see any effect of temperature variation. Let’s look at differences instead.</p>
-<div id="5f7350e8" class="cell" data-execution_count="19">
+<div id="b229dace" class="cell" data-execution_count="19">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>plt.plot(predv[<span class="st">'time'</span>][<span class="dv">1</span>:] <span class="op">/</span> <span class="dv">3600</span>, <span class="dv">1000</span> <span class="op">*</span> np.diff(predv[<span class="st">'ice_mass'</span>]), label <span class="op">=</span> <span class="st">'Variable temperature'</span>)</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>plt.plot(predc[<span class="st">'t'</span>][<span class="dv">1</span>:] <span class="op">/</span> <span class="dv">3600</span>, <span class="dv">1000</span> <span class="op">*</span> np.diff(predc[<span class="st">'m'</span>]), label <span class="op">=</span> <span class="st">'Constant temperature'</span>)</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Time (s)'</span>)</span>
@@ -651,7 +651,7 @@ MathJax = {
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="10_time_variable_inputs_files/figure-html/cell-20-output-1.png" width="600" height="429" class="figure-img"></p>
+<p><img src="10_time_variable_inputs_files/figure-html/cell-20-output-1.png" width="601" height="431" class="figure-img"></p>
 </figure>
 </div>
 </div>
